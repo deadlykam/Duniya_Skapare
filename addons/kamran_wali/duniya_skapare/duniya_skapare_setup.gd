@@ -7,6 +7,8 @@ const NAME_INPUT: GDScript = preload("res://addons/kamran_wali/duniya_skapare/na
 
 # Global Properties
 var _data_names: DS_FixedStringArray
+var _data_checkboxes: DS_FixedCheckBoxFlagArray
+var _data_noo: DS_NoO
 
 # Properties from the scene
 var _obtn_noo: OptionButton
@@ -25,15 +27,12 @@ var _obj_size:= -1
 
 func _enter_tree() -> void:
     _data_names = load("res://addons/kamran_wali/settings/data_names.tres")
-    _name_input_container = $MainScrollContainer/ScrollHolder/MainContainer/NameInputContainer
-    _obtn_noo = $MainScrollContainer/ScrollHolder/MainContainer/NoOHolder/OB_NoO
-    _name_horizontal_container = $MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer
-    _list_verticals_container = $MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer
-
-    # _setup_obtn_noo()
-    # _setup_array_data()
-    # _setup_check_boxes()
-    # _show_inputs() # Making sure at the start correct inputs are shown
+    _data_checkboxes = load("res://addons/kamran_wali/settings/data_checkboxes.tres")
+    _data_noo = load("res://addons/kamran_wali/settings/data_noo.tres")
+    _name_input_container = $MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer
+    _obtn_noo = $MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder/OB_NoO
+    _name_horizontal_container = $MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer
+    _list_verticals_container = $MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer
 
 func _ready() -> void:
     _setup_obtn_noo()
@@ -47,6 +46,8 @@ func _setup_obtn_noo() -> void:
     _obtn_noo.add_item("1")
     _obtn_noo.add_item("2")
     _obtn_noo.add_item("3")
+    _noo = _data_noo.get_value()
+    _obtn_noo.select(_noo)
 
 ## This method sets up the check boxes.
 func _setup_check_boxes() -> void:
@@ -56,7 +57,8 @@ func _setup_check_boxes() -> void:
     while _counter < _list_verticals_container.get_child_count():
         _counter2 = 1
         while _counter2 < _list_verticals_container.get_child(_counter).get_child_count():
-            _list_verticals_container.get_child(_counter).get_child(_counter2).setup(self, _counter - 1, _counter2 - 1)
+            _list_verticals_container.get_child(_counter).get_child(_counter2).setup(self, 
+                _counter - 1, _counter2 - 1, _data_checkboxes.get_element(_counter - 1, _counter2 - 1))
             _counter2 += 1
         _counter += 1
 
@@ -84,7 +86,13 @@ func _setup_array_data() -> void:
 func _on_ob_no_o_item_selected(index:int):
     if _noo != index: # Checking if a new selection is made
         _noo = index
+        _data_noo.set_value(_noo) # Setting the number of objects value in the data
         _show_inputs() # Showing the correct inputs
+
+func _on_btn_save_pressed():
+    _data_names.save()
+    _data_checkboxes.save()
+    _data_noo.save()
 
 ## This method shows the correct inputs.
 func _show_inputs() -> void:
@@ -112,4 +120,5 @@ func update_name(name:String , id:int) -> void:
 
 ## This method updates the check box toggle.
 func update_check_box(id_main:int, id_pos:int, toggle:bool) -> void:
-    print("Updating Object: ", id_main, " ", id_pos, " -> ", toggle)
+    # print("Updating Object: ", id_main, " ", id_pos, " -> ", toggle)
+    _data_checkboxes.update_element(id_main, id_pos, toggle)

@@ -13,7 +13,8 @@ func _on_btn_check_toggled(button_pressed:bool):
 	_manager.update_check_box(_id_main, _id_pos, _btn_check.button_pressed)
 
 ## This method sets up the check box data object.
-func setup(manager:DS_PluginSetup, id_main:int, id_pos:int) -> void:
+func setup(manager:DS_PluginSetup, id_main:int, id_pos:int, toggle:bool) -> void:
 	_manager = manager
 	_id_main = id_main
 	_id_pos = id_pos
+	_btn_check.button_pressed = toggle
