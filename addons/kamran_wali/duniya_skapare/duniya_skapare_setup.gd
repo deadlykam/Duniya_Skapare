@@ -25,15 +25,10 @@ var _obj_size:= -1
 
 func _enter_tree() -> void:
     _data_names = load("res://addons/kamran_wali/settings/data_names.tres")
-    _name_input_container = $MainScrollContainer/ScrollHolder/MainContainer/NameInputContainer
-    _obtn_noo = $MainScrollContainer/ScrollHolder/MainContainer/NoOHolder/OB_NoO
-    _name_horizontal_container = $MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer
-    _list_verticals_container = $MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer
-
-    # _setup_obtn_noo()
-    # _setup_array_data()
-    # _setup_check_boxes()
-    # _show_inputs() # Making sure at the start correct inputs are shown
+    _name_input_container = $MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer
+    _obtn_noo = $MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder/OB_NoO
+    _name_horizontal_container = $MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer
+    _list_verticals_container = $MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer
 
 func _ready() -> void:
     _setup_obtn_noo()
@@ -85,6 +80,9 @@ func _on_ob_no_o_item_selected(index:int):
     if _noo != index: # Checking if a new selection is made
         _noo = index
         _show_inputs() # Showing the correct inputs
+
+func _on_btn_save_pressed():
+    _data_names.save()
 
 ## This method shows the correct inputs.
 func _show_inputs() -> void:
