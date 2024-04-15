@@ -13,6 +13,11 @@ func _enter_tree() -> void:
 func _on_txt_name_text_changed(name:String):
     _manager.update_name(name, _id)
 
+## This method sets the name of the text name line edit.
+func set_txt_name(name:String) -> void:
+    _txt_name.text = name
+
+## This method sets the id of the label.
 func set_label_id() -> void:
     _lbl_id.text = "Object" + str((_id + 1)) + ":"
 

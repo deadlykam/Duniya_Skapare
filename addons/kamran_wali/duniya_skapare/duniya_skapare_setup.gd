@@ -5,6 +5,9 @@ extends Control
 # Constants
 const NAME_INPUT: GDScript = preload("res://addons/kamran_wali/duniya_skapare/name_input.gd")
 
+# Global Properties
+var _data_names: DS_FixedStringArray
+
 # Properties from the scene
 var _obtn_noo: OptionButton
 var _name_input_container: Control
@@ -21,11 +24,18 @@ var _counter2:= -1
 var _obj_size:= -1
 
 func _enter_tree() -> void:
+    _data_names = load("res://addons/kamran_wali/settings/data_names.tres")
     _name_input_container = $MainScrollContainer/ScrollHolder/MainContainer/NameInputContainer
     _obtn_noo = $MainScrollContainer/ScrollHolder/MainContainer/NoOHolder/OB_NoO
     _name_horizontal_container = $MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer
     _list_verticals_container = $MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer
 
+    # _setup_obtn_noo()
+    # _setup_array_data()
+    # _setup_check_boxes()
+    # _show_inputs() # Making sure at the start correct inputs are shown
+
+func _ready() -> void:
     _setup_obtn_noo()
     _setup_array_data()
     _setup_check_boxes()
@@ -60,8 +70,15 @@ func _setup_array_data() -> void:
         _name_inputs.append(_name_input_container.get_child(_counter))
         _name_inputs[_counter].set_manager(self)
         _name_inputs[_counter].set_id(_counter)
+        _name_inputs[_counter].set_label_id()
         _h_names.append(_name_horizontal_container.get_child(_counter))
         _v_data.append(_list_verticals_container.get_child(_counter + 1))
+        
+        # Updating the names from the save file
+        _name_inputs[_counter].set_txt_name(_data_names.get_element(_counter))
+        _h_names[_counter].text = _data_names.get_element(_counter)
+        _v_data[_counter].get_child(0).text = _data_names.get_element(_counter)
+
         _counter += 1
 
 func _on_ob_no_o_item_selected(index:int):
@@ -77,7 +94,6 @@ func _show_inputs() -> void:
     while _counter < _obj_size:
         if _counter <= _noo: # Condition for showing the inputs
             if !_name_inputs[_counter].visible:
-                _name_inputs[_counter].set_label_id()
                 _name_inputs[_counter].show()
                 _h_names[_counter].show()
                 _v_data[_counter].show()
@@ -92,6 +108,7 @@ func _show_inputs() -> void:
 func update_name(name:String , id:int) -> void:
     _h_names[id].text = name
     _v_data[id].get_child(0).text = name
+    _data_names.update_element(name, id)
 
 ## This method updates the check box toggle.
 func update_check_box(id_main:int, id_pos:int, toggle:bool) -> void:
