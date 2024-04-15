@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://c86oklgxhesux"]
+[gd_scene load_steps=4 format=3 uid="uid://c86oklgxhesux"]
 
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/duniya_skapare_setup.gd" id="1_3oh7k"]
 [ext_resource type="PackedScene" uid="uid://cphspo0fltqev" path="res://addons/kamran_wali/duniya_skapare/name_input.tscn" id="2_t3amt"]
+[ext_resource type="PackedScene" uid="uid://bjgtxq5gjlk5m" path="res://addons/kamran_wali/duniya_skapare/check_box_data.tscn" id="3_wve8n"]
 
 [node name="duniya_skapare_ui" type="Control"]
 layout_mode = 3
@@ -126,7 +127,7 @@ text = "Give Name"
 horizontal_alignment = 2
 autowrap_mode = 2
 
-[node name="Check1_1" type="CheckBox" parent="MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer/Data1"]
+[node name="check_box_data" parent="MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer/Data1" instance=ExtResource("3_wve8n")]
 layout_mode = 2
 
 [node name="Data2" type="HBoxContainer" parent="MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer"]
@@ -140,10 +141,10 @@ text = "Give Name"
 horizontal_alignment = 2
 autowrap_mode = 2
 
-[node name="Check2_1" type="CheckBox" parent="MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer/Data2"]
+[node name="check_box_data" parent="MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer/Data2" instance=ExtResource("3_wve8n")]
 layout_mode = 2
 
-[node name="Check2_2" type="CheckBox" parent="MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer/Data2"]
+[node name="check_box_data2" parent="MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer/Data2" instance=ExtResource("3_wve8n")]
 layout_mode = 2
 
 [node name="Data3" type="HBoxContainer" parent="MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer"]
@@ -157,13 +158,13 @@ text = "Give Name"
 horizontal_alignment = 2
 autowrap_mode = 2
 
-[node name="Check3_1" type="CheckBox" parent="MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer/Data3"]
+[node name="check_box_data" parent="MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_wve8n")]
 layout_mode = 2
 
-[node name="Check3_2" type="CheckBox" parent="MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer/Data3"]
+[node name="check_box_data2" parent="MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_wve8n")]
 layout_mode = 2
 
-[node name="Check3_3" type="CheckBox" parent="MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer/Data3"]
+[node name="check_box_data3" parent="MainScrollContainer/ScrollHolder/MainContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_wve8n")]
 layout_mode = 2
 
 [connection signal="item_selected" from="MainScrollContainer/ScrollHolder/MainContainer/NoOHolder/OB_NoO" to="." method="_on_ob_no_o_item_selected"]

@@ -17,6 +17,7 @@ var _name_inputs: Array[NAME_INPUT]
 var _h_names: Array[Label]
 var _v_data: Array[Control]
 var _counter:= -1
+var _counter2:= -1
 var _obj_size:= -1
 
 func _enter_tree() -> void:
@@ -27,6 +28,7 @@ func _enter_tree() -> void:
 
     _setup_obtn_noo()
     _setup_array_data()
+    _setup_check_boxes()
     _show_inputs() # Making sure at the start correct inputs are shown
 
 ## This method setups up the number of objects button option.
@@ -35,6 +37,18 @@ func _setup_obtn_noo() -> void:
     _obtn_noo.add_item("1")
     _obtn_noo.add_item("2")
     _obtn_noo.add_item("3")
+
+## This method sets up the check boxes.
+func _setup_check_boxes() -> void:
+    _counter = 1
+
+    # Loop for setting up the check boxes
+    while _counter < _list_verticals_container.get_child_count():
+        _counter2 = 1
+        while _counter2 < _list_verticals_container.get_child(_counter).get_child_count():
+            _list_verticals_container.get_child(_counter).get_child(_counter2).setup(self, _counter - 1, _counter2 - 1)
+            _counter2 += 1
+        _counter += 1
 
 ## This method gets all the name input data and stores it the array.
 func _setup_array_data() -> void:
@@ -78,3 +92,7 @@ func _show_inputs() -> void:
 func update_name(name:String , id:int) -> void:
     _h_names[id].text = name
     _v_data[id].get_child(0).text = name
+
+## This method updates the check box toggle.
+func update_check_box(id_main:int, id_pos:int, toggle:bool) -> void:
+    print("Updating Object: ", id_main, " ", id_pos, " -> ", toggle)
