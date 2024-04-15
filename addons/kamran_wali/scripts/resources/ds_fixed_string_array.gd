@@ -1,6 +1,6 @@
 @tool
 class_name DS_FixedStringArray
-extends Resource
+extends "res://addons/kamran_wali/scripts/resources/ds_base_resource.gd"
 
 @export var _data: Array[String]
 
@@ -11,7 +11,3 @@ func update_element(element:String, index:int) -> void:
 ## This method gets an element.
 func get_element(index:int) -> String:
     return _data[index]
-
-## This method saves the resource
-func save() -> void:
-    ResourceSaver.save(self, resource_path, 0)
