@@ -4,7 +4,7 @@ extends EditorPlugin
 var _dock
 
 func _enter_tree():
-	_dock = preload("res://addons/kamran_wali/duniya_skapare/duniya_skapare_ui.tscn").instantiate()
+	_dock = preload("res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/wave_function_collapse_ui.tscn").instantiate()
 	add_control_to_dock(DOCK_SLOT_RIGHT_BL, _dock)
 
 
