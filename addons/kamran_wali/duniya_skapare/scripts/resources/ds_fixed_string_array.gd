@@ -11,3 +11,7 @@ func update_element(element:String, index:int) -> void:
 ## This method gets an element.
 func get_element(index:int) -> String:
     return _data[index]
+
+## This method gets the number of elements in the data.
+func get_size() -> int:
+    return _data.size()

@@ -114,7 +114,7 @@ offset_top = 60.0
 offset_right = 256.0
 offset_bottom = 86.0
 rotation = -0.736529
-text = "0"
+text = "Ground"
 
 [node name="H_Name2" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
 layout_mode = 2
@@ -123,7 +123,7 @@ offset_top = 60.0
 offset_right = 288.0
 offset_bottom = 86.0
 rotation = -0.736529
-text = "1"
+text = "Beach"
 
 [node name="H_Name3" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
 layout_mode = 2
@@ -132,7 +132,7 @@ offset_top = 60.0
 offset_right = 318.0
 offset_bottom = 86.0
 rotation = -0.736529
-text = "2"
+text = "Water"
 
 [node name="Data1" type="HBoxContainer" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
 layout_mode = 2
@@ -140,7 +140,7 @@ layout_mode = 2
 [node name="V_Name1" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data1"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "0"
+text = "Ground"
 horizontal_alignment = 2
 autowrap_mode = 2
 
@@ -153,7 +153,7 @@ layout_mode = 2
 [node name="V_Name2" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "1"
+text = "Beach"
 horizontal_alignment = 2
 autowrap_mode = 2
 
@@ -169,7 +169,7 @@ layout_mode = 2
 [node name="V_Name3" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "2"
+text = "Water"
 horizontal_alignment = 2
 autowrap_mode = 2
 
