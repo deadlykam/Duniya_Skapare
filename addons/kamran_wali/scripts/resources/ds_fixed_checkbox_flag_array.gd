@@ -17,6 +17,10 @@ func _get_min_index(index:int) -> int:
 
     return _sum
 
+## This method finds the maximum index.
+func _get_max_index(index:int) -> int:
+    return _get_min_index(index) + index
+
 ## This method updates the element.
 func update_element(index_main:int, index_pos:int, toggle:bool) -> void:
     _data[_get_min_index(index_main) + index_pos] = toggle

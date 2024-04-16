@@ -15,6 +15,7 @@ var _obtn_noo: OptionButton
 var _name_input_container: Control
 var _name_horizontal_container: Control
 var _list_verticals_container: Control
+var _lbl_save_msg: Label
 
 # Properties for internal usage
 var _noo := 0
@@ -24,6 +25,7 @@ var _v_data: Array[Control]
 var _counter:= -1
 var _counter2:= -1
 var _obj_size:= -1
+var _is_setup_done:= false
 
 func _enter_tree() -> void:
     _data_names = load("res://addons/kamran_wali/settings/data_names.tres")
@@ -33,12 +35,26 @@ func _enter_tree() -> void:
     _obtn_noo = $MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder/OB_NoO
     _name_horizontal_container = $MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer
     _list_verticals_container = $MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer
+    _lbl_save_msg = $MainContainer/SaveButtonContainer/Lbl_Save_Msg
 
 func _ready() -> void:
     _setup_obtn_noo()
     _setup_array_data()
     _setup_check_boxes()
     _show_inputs() # Making sure at the start correct inputs are shown
+    _lbl_save_msg.text = "" # Making sure starting changes are NOT shown
+
+## This method updates the name of the objects.
+func update_name(name:String , id:int) -> void:
+    _h_names[id].text = name
+    _v_data[id].get_child(0).text = name
+    _data_names.update_element(name, id)
+    _set_lbl_save_msg("Unsaved Changes!")
+
+## This method updates the check box toggle.
+func update_check_box(id_main:int, id_pos:int, toggle:bool) -> void:
+    _data_checkboxes.update_element(id_main, id_pos, toggle)
+    _set_lbl_save_msg("Unsaved Changes!")
 
 ## This method setups up the number of objects button option.
 func _setup_obtn_noo() -> void:
@@ -88,11 +104,13 @@ func _on_ob_no_o_item_selected(index:int):
         _noo = index
         _data_noo.set_value(_noo) # Setting the number of objects value in the data
         _show_inputs() # Showing the correct inputs
+        _set_lbl_save_msg("Unsaved Changes!")
 
 func _on_btn_save_pressed():
     _data_names.save()
     _data_checkboxes.save()
     _data_noo.save()
+    _lbl_save_msg.text = ""
 
 ## This method shows the correct inputs.
 func _show_inputs() -> void:
@@ -112,13 +130,6 @@ func _show_inputs() -> void:
                 _v_data[_counter].hide()
         _counter += 1
 
-## This method updates the name of the objects.
-func update_name(name:String , id:int) -> void:
-    _h_names[id].text = name
-    _v_data[id].get_child(0).text = name
-    _data_names.update_element(name, id)
-
-## This method updates the check box toggle.
-func update_check_box(id_main:int, id_pos:int, toggle:bool) -> void:
-    # print("Updating Object: ", id_main, " ", id_pos, " -> ", toggle)
-    _data_checkboxes.update_element(id_main, id_pos, toggle)
+## This method sets the message for the save label.
+func _set_lbl_save_msg(msg:String) -> void:
+    _lbl_save_msg.text = msg
