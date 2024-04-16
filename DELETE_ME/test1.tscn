@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlkuphyewckv8"]
+
+[ext_resource type="Script" path="res://DELETE_ME/test_grid_wfc.gd" id="1_r2o8o"]
+
+[node name="test1" type="Node3D"]
+script = ExtResource("1_r2o8o")
