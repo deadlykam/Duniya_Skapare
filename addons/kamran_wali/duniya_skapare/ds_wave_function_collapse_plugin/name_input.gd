@@ -1,7 +1,7 @@
 @tool
 extends Control
 
-var _manager: DS_PluginSetup
+var _manager: DS_WFCSetup
 var _id:= -1
 var _lbl_id: Label
 var _txt_name: LineEdit
@@ -22,7 +22,7 @@ func set_label_id() -> void:
     _lbl_id.text = "Object" + str((_id + 1)) + ":"
 
 ## This method sets the manager
-func set_manager(manager:DS_PluginSetup) -> void:
+func set_manager(manager:DS_WFCSetup) -> void:
     _manager = manager
 
 ## This method sets the id of name input.

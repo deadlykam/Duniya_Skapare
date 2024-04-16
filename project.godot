@@ -20,4 +20,4 @@ project/assembly_name="Duniya_Skapare"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/kamran_wali/duniya_skapare/plugin.cfg")
+enabled=PackedStringArray("res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/plugin.cfg")

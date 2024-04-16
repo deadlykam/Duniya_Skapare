@@ -1,17 +1,17 @@
 [gd_scene load_steps=4 format=3 uid="uid://c86oklgxhesux"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/duniya_skapare_setup.gd" id="1_3oh7k"]
-[ext_resource type="PackedScene" uid="uid://cphspo0fltqev" path="res://addons/kamran_wali/duniya_skapare/name_input.tscn" id="2_t3amt"]
-[ext_resource type="PackedScene" uid="uid://bjgtxq5gjlk5m" path="res://addons/kamran_wali/duniya_skapare/check_box_data.tscn" id="3_wve8n"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/wave_function_collapse_setup.gd" id="1_afol5"]
+[ext_resource type="PackedScene" uid="uid://cphspo0fltqev" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/name_input.tscn" id="2_0hku7"]
+[ext_resource type="PackedScene" uid="uid://bjgtxq5gjlk5m" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/check_box_data.tscn" id="3_d5mrj"]
 
-[node name="duniya_skapare_ui" type="Control"]
+[node name="Wave Function Collapse Settings" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_3oh7k")
+script = ExtResource("1_afol5")
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -81,13 +81,13 @@ popup/item_2/id = 2
 [node name="NameInputContainer" type="VBoxContainer" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer"]
 layout_mode = 2
 
-[node name="name_input" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_t3amt")]
+[node name="name_input" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
 layout_mode = 2
 
-[node name="name_input2" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_t3amt")]
+[node name="name_input2" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
 layout_mode = 2
 
-[node name="name_input3" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_t3amt")]
+[node name="name_input3" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
 layout_mode = 2
 
 [node name="ConditionHolder" type="Control" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer"]
@@ -114,7 +114,7 @@ offset_top = 60.0
 offset_right = 256.0
 offset_bottom = 86.0
 rotation = -0.736529
-text = "1"
+text = "0"
 
 [node name="H_Name2" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
 layout_mode = 2
@@ -123,7 +123,7 @@ offset_top = 60.0
 offset_right = 288.0
 offset_bottom = 86.0
 rotation = -0.736529
-text = "2"
+text = "1"
 
 [node name="H_Name3" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
 layout_mode = 2
@@ -132,7 +132,7 @@ offset_top = 60.0
 offset_right = 318.0
 offset_bottom = 86.0
 rotation = -0.736529
-text = "3"
+text = "2"
 
 [node name="Data1" type="HBoxContainer" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
 layout_mode = 2
@@ -140,11 +140,11 @@ layout_mode = 2
 [node name="V_Name1" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data1"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "1"
+text = "0"
 horizontal_alignment = 2
 autowrap_mode = 2
 
-[node name="check_box_data" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data1" instance=ExtResource("3_wve8n")]
+[node name="check_box_data" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data1" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
 [node name="Data2" type="HBoxContainer" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
@@ -153,14 +153,14 @@ layout_mode = 2
 [node name="V_Name2" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "2"
+text = "1"
 horizontal_alignment = 2
 autowrap_mode = 2
 
-[node name="check_box_data" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2" instance=ExtResource("3_wve8n")]
+[node name="check_box_data" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
-[node name="check_box_data2" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2" instance=ExtResource("3_wve8n")]
+[node name="check_box_data2" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
 [node name="Data3" type="HBoxContainer" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
@@ -169,17 +169,17 @@ layout_mode = 2
 [node name="V_Name3" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "3"
+text = "2"
 horizontal_alignment = 2
 autowrap_mode = 2
 
-[node name="check_box_data" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_wve8n")]
+[node name="check_box_data" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
-[node name="check_box_data2" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_wve8n")]
+[node name="check_box_data2" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
-[node name="check_box_data3" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_wve8n")]
+[node name="check_box_data3" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
 [connection signal="pressed" from="MainContainer/SaveButtonContainer/Btn_Save" to="." method="_on_btn_save_pressed"]

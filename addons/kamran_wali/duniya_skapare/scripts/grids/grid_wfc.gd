@@ -11,9 +11,9 @@ var _counter1:= -1
 var _counter2:= -1
 
 func _init() -> void:
-    _data_names = load("res://addons/kamran_wali/settings/data_names.tres")
-    _data_checkboxes = load("res://addons/kamran_wali/settings/data_checkboxes.tres")
-    _data_noo = load("res://addons/kamran_wali/settings/data_noo.tres")
+    _data_names = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_names.tres")
+    _data_checkboxes = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_checkboxes.tres")
+    _data_noo = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_noo.tres")
 
 ## This method finds all the type of a block.
 func _get_all_block_types(index:int) -> Array[int]:
