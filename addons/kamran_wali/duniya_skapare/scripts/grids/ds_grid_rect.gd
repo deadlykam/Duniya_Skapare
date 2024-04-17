@@ -1,0 +1,72 @@
+@tool
+class_name DS_GridRect
+extends DS_Grid
+
+## This method prints the grid in the Output window.
+## Use this for debugging.
+func print_grid() -> void:
+	_index = 0
+	_counter1 = 0
+
+	# Loop for printing the grid
+	while _counter1 < _grid_y:
+		_debug_print = ""
+		_counter2 = 0
+
+		# Loop for storing all the x-axis values for printing
+		while _counter2 < _grid_x:
+			_debug_print = _debug_print + str(_tiles[_index].get_tile_type()) + " "
+			_index += 1
+			_counter2 += 1
+		
+		print(_debug_print)
+		_counter1 += 1
+
+## This method sets up the grid.
+func _setup() -> void:
+	_counter1 = 0
+
+	# Loop for initiating tiles
+	while _counter1 < (_grid_x * _grid_y):
+		_tiles.append(DS_Tile.new()) # Adding initiated tiles
+		_counter1 += 1
+	
+	_index = 0
+	_counter1 = 0 # Y-axis counter
+
+	while _counter1 < _grid_y: # Loop for going through y-axis tiles
+		_counter2 = 0 # X-axis counter
+
+		while _counter2 < _grid_x: # Loop for going through x-axis tiles
+
+			# Adding north tile refs
+			_tiles[_index].set_north(
+				_tiles[_index - _grid_y] if
+				_counter1 > 0 #&& (_counter1 <= _grid_y - 1)
+				else null
+			)
+			
+			# Adding sourth tile refs
+			_tiles[_index].set_south(
+				_tiles[_index + _grid_y] if
+				_counter1 < _grid_y - 1
+				else null
+			)
+			
+			# Adding west tile refs
+			_tiles[_index].set_west(
+				_tiles[_index - 1] if
+				_counter2 > 0 #&& (_counter2 <= _grid_x - 1)
+				else null
+			)
+			
+			# Adding east tile refs
+			_tiles[_index].set_east(
+				_tiles[_index + 1] if 
+				_counter2 < _grid_x - 1
+				else null
+			)
+			
+			_index += 1
+			_counter2 += 1
+		_counter1 += 1

@@ -3,7 +3,7 @@ class_name DS_WFCGen
 extends Node
 
 @export_category("Wave Function Collapse")
-@export var _grid: DS_Grid
+# @export var _grid: DS_Grid
 @export var _index_start_tile:= 0
 var _start_tile_type: int
 
@@ -12,6 +12,7 @@ var _data_names: DS_FixedStringArray = load("res://addons/kamran_wali/duniya_ska
 var _data_checkboxes: DS_FixedCheckBoxFlagArray = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_checkboxes.tres")
 var _data_noo: DS_NoO = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_noo.tres")
 
+var _grid: DS_Grid
 var _tiles_open: Array[DS_Tile]
 var _tiles_closed: Array[DS_Tile]
 var _tile_current: DS_Tile
@@ -26,12 +27,31 @@ var _counter1:= -1
 var _counter2:= -1
 var _counter3:= -1
 var _counter_method:= -1 # This counter is for methods ONLY
+var _counter_warning:= -1 # This counter is for warnings ONLY
 var _max_block_size:= -1 # For storing the size of max compare
 var _max_block_pos:= -1 # For storing the pos of max compare
 var _is_common:= false
 var _rng = RandomNumberGenerator.new()
 var _prob:= -1.0
 var _prob_total:= -1.0
+
+func _get_configuration_warnings():
+	var warnings: Array[String]
+	
+	if get_child_count() == 0:
+		warnings.append("WFC Gen: Please give a child grid.")
+	else:
+		_counter_warning = 0
+		while _counter_warning < get_child_count():
+			if get_child(_counter_warning).has_method("_is_grid"):
+				_grid = get_child(_counter_warning)
+				break
+			_counter_warning += 1
+		
+		if _grid == null:
+			warnings.append("WFC Gen: No Grid found in children. Please give a child grid.")
+	
+	return warnings
 
 func _get_property_list():
 	var properties = []
@@ -54,6 +74,7 @@ func _get_property_list():
 
 	return properties
 
+## This method applies wave function collapse to the given grid.
 func _ready() -> void:
 	_tiles_open.clear()
 	_tiles_closed.clear()
