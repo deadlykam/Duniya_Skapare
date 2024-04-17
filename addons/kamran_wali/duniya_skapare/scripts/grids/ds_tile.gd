@@ -1,19 +1,19 @@
 @tool
 class_name DS_Tile
 
-var _type:= -1
+var _tile_type:= -1
 var _data_cd: Array[DS_Tile] # Cardinal Directions
 
 func _init() -> void:
     _data_cd.resize(4)
 
 ## This method sets the type of the tile.
-func set_type(type:int) -> void:
-    _type = type
+func set_tile_type(tile_type:int) -> void:
+    _tile_type = tile_type
 
 ## This method gets the type of the tile.
-func get_type() -> int:
-    return _type
+func get_tile_type() -> int:
+    return _tile_type
 
 ## This method sets the type of tile for the linked tiles.
 ## 0 = North

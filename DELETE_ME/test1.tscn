@@ -1,11 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://dlkuphyewckv8"]
+[gd_scene load_steps=4 format=3 uid="uid://dlkuphyewckv8"]
 
 [ext_resource type="Script" path="res://DELETE_ME/test_grid_wfc.gd" id="1_r2o8o"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid.gd" id="2_3sisg"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/ds_wfc_gen.gd" id="3_gbrf2"]
 
-[node name="test1" type="Node3D"]
+[node name="test1" type="Node3D" node_paths=PackedStringArray("_grid")]
 script = ExtResource("1_r2o8o")
+_grid = NodePath("Grid")
 
-[node name="Node3D" type="Node3D" parent="."]
+[node name="Grid" type="Node3D" parent="."]
 script = ExtResource("2_3sisg")
+_grid_x = 4
+_grid_y = 4
+
+[node name="WFC" type="Node3D" parent="." node_paths=PackedStringArray("_grid")]
+script = ExtResource("3_gbrf2")
+_grid = NodePath("../Grid")
+_index_start_tile = 8
 _start_tile_type = 0
