@@ -1,6 +1,8 @@
 extends Node
 
 @export var _grid: DS_Grid
+@export var _wcf: DS_WFCGen
 
 func _ready():
-	_grid.print_grid()
+	print(_grid)
+	print(_wcf)

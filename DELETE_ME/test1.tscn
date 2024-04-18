@@ -4,14 +4,15 @@
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/ds_wfc_gen.gd" id="3_gbrf2"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="3_hc0lu"]
 
-[node name="test1" type="Node3D" node_paths=PackedStringArray("_grid")]
+[node name="test1" type="Node3D" node_paths=PackedStringArray("_grid", "_wcf")]
 script = ExtResource("1_r2o8o")
 _grid = NodePath("WFC/Grid")
+_wcf = NodePath("WFC")
 
 [node name="WFC" type="Node3D" parent="."]
 script = ExtResource("3_gbrf2")
-_index_start_tile = 8
 _start_tile_type = 0
+_index_start_tile = 8
 
 [node name="Grid" type="Node3D" parent="WFC"]
 script = ExtResource("3_hc0lu")

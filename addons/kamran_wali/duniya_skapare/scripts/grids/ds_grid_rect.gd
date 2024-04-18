@@ -2,25 +2,31 @@
 class_name DS_GridRect
 extends DS_Grid
 
-## This method prints the grid in the Output window.
-## Use this for debugging.
-func print_grid() -> void:
+func show_grid() -> String:
+	return show_grid_index(-1)
+
+func show_grid_index(index:int) -> String:
 	_index = 0
 	_counter1 = 0
+	_debug_print = ""
 
 	# Loop for printing the grid
 	while _counter1 < _grid_y:
-		_debug_print = ""
 		_counter2 = 0
 
 		# Loop for storing all the x-axis values for printing
 		while _counter2 < _grid_x:
-			_debug_print = _debug_print + str(_tiles[_index].get_tile_type()) + " "
+			_debug_print += (("[color=green]" if _index == index else "") + 
+								str(_tiles[_index].get_tile_type()) +
+								("[/color]" if _index == index else "") 
+								+ " ")
 			_index += 1
 			_counter2 += 1
 		
-		print(_debug_print)
+		_debug_print += "\n"
 		_counter1 += 1
+	
+	return _debug_print
 
 ## This method sets up the grid.
 func _setup() -> void:
@@ -70,3 +76,7 @@ func _setup() -> void:
 			_index += 1
 			_counter2 += 1
 		_counter1 += 1
+
+func _to_string() -> String:
+	print_rich(show_grid())
+	return ""

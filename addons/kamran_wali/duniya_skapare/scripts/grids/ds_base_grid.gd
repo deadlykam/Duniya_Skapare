@@ -31,10 +31,16 @@ func get_size() -> int:
 func get_tile(index:int) -> DS_Tile:
     return _tiles[index]
 
-## This method prints the grid in the Output window.
+## This method returns the grid in string format.
 ## Use this for debugging.
-func print_grid() -> void:
-    pass
+func show_grid() -> String:
+    return "Not implemented!"
+
+## This method returns the grid in string format.
+## It also highlights the indexth tile.
+## Use this for debugging.
+func show_grid_index(index:int) -> String:
+    return "Not implemented!"
 
 ## This method sets up the grid.
 func _setup() -> void:

@@ -3,7 +3,7 @@ class_name DS_WFCGen
 extends Node
 
 @export_category("Wave Function Collapse")
-@export var _index_start_tile:= 0
+var _index_start_tile: int
 var _start_tile_type: int
 
 # Data Properties
@@ -22,6 +22,7 @@ var _all_pos: Array[int] # For containing all cardinal pos
 var _blocks: Array[int]
 var _temp_blocks: Array[int]
 var _type_names: String
+var _grid_pos_names: String
 var _counter1:= -1
 var _counter2:= -1
 var _counter3:= -1
@@ -63,6 +64,24 @@ func _get_property_list():
 		"hint" : PROPERTY_HINT_ENUM,
 		"hint_string" : _type_names
 	})
+
+	_grid = _search_grid_child()
+
+	if _grid != null:
+		_grid_pos_names = ""
+		_counter1 = 0
+
+		while _counter1 < _grid.get_size():
+			_grid_pos_names += (str(_counter1) + ("," if _counter1 < _grid.get_size() - 1 else ""))
+			_counter1 += 1
+
+		# Showing the names as enums
+		properties.append({
+			"name" : "_index_start_tile",
+			"type" : TYPE_INT,
+			"hint" : PROPERTY_HINT_ENUM,
+			"hint_string" : _grid_pos_names
+		})
 
 	return properties
 
@@ -218,3 +237,7 @@ func _search_grid_child() -> DS_Grid:
 				return get_child(_counter_warning)
 		_counter_warning += 1
 	return null
+
+func _to_string() -> String:
+	print_rich(_grid.show_grid_index(_index_start_tile))
+	return ""
