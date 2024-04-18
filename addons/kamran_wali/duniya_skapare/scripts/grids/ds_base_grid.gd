@@ -1,5 +1,5 @@
 @tool
-class_name DS_Grid
+class_name DS_BaseGrid
 extends Node
 
 @export_category("Grid")

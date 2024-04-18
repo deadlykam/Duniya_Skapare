@@ -1,6 +1,6 @@
 @tool
 class_name DS_GridRect
-extends DS_Grid
+extends DS_BaseGrid
 
 func show_grid() -> String:
 	return show_grid_index(-1)
