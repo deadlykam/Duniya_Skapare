@@ -1,13 +1,11 @@
 @tool
 class_name DS_GridRect
-extends DS_Grid
+extends DS_BaseGrid
 
-func show_grid() -> String:
-	return show_grid_index(-1)
-
-func show_grid_index(index:int) -> String:
+func show_grid_tile_index(index:int) -> String:
 	_index = 0
 	_counter1 = 0
+	print("Showing Grid with tile information:")
 	_debug_print = ""
 
 	# Loop for printing the grid
@@ -19,14 +17,48 @@ func show_grid_index(index:int) -> String:
 			_debug_print += (("[color=green]" if _index == index else "") + 
 								str(_tiles[_index].get_tile_type()) +
 								("[/color]" if _index == index else "") 
-								+ " ")
+								+ "   ")
 			_index += 1
 			_counter2 += 1
 		
 		_debug_print += "\n"
 		_counter1 += 1
 	
+	_debug_print += "===xxx==="
 	return _debug_print
+
+func show_grid_tile() -> String:
+	return show_grid_tile_index(-1)
+
+func show_grid_index_index(index: int) -> String:
+	_index = 0
+	_counter1 = 0
+	print("Showing Grid with index:")
+	_debug_print = ""
+
+	# Loop for printing the grid
+	while _counter1 < _grid_y:
+		_counter2 = 0
+
+		# Loop for storing all the x-axis values for printing
+		while _counter2 < _grid_x:
+			_debug_print += (#("   " if _index < 10 else " " if _index < 100 else "") +
+								("[color=green]" if _index == index else "") + 
+								str(_index) +
+								("[/color]" if _index == index else "") +
+								# " "
+								("   " if _index < 10 else "  " if _index < 100 else " ") )
+			_index += 1
+			_counter2 += 1
+		
+		_debug_print += "\n"
+		_counter1 += 1
+	
+	_debug_print += "===xxx==="
+	return _debug_print
+
+func show_grid_index() -> String:
+	return show_grid_index_index(-1)
 
 ## This method sets up the grid.
 func _setup() -> void:
@@ -78,5 +110,5 @@ func _setup() -> void:
 		_counter1 += 1
 
 func _to_string() -> String:
-	print_rich(show_grid())
+	print_rich(show_grid_index())
 	return ""

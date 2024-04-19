@@ -1,6 +1,6 @@
 @tool
 class_name DS_WFCGen
-extends Node
+extends DS_BaseGen
 
 @export_category("Wave Function Collapse")
 var _index_start_tile: int
@@ -11,7 +11,6 @@ var _data_names: DS_FixedStringArray = load("res://addons/kamran_wali/duniya_ska
 var _data_checkboxes: DS_FixedCheckBoxFlagArray = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_checkboxes.tres")
 var _data_noo: DS_NoO = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_noo.tres")
 
-var _grid: DS_Grid
 var _tiles_open: Array[DS_Tile]
 var _tiles_closed: Array[DS_Tile]
 var _tile_current: DS_Tile
@@ -27,24 +26,12 @@ var _counter1:= -1
 var _counter2:= -1
 var _counter3:= -1
 var _counter_method:= -1 # This counter is for methods ONLY
-var _counter_warning:= -1 # This counter is for warnings ONLY
 var _max_block_size:= -1 # For storing the size of max compare
 var _max_block_pos:= -1 # For storing the pos of max compare
 var _is_common:= false
 var _rng = RandomNumberGenerator.new()
 var _prob:= -1.0
 var _prob_total:= -1.0
-
-func _get_configuration_warnings():
-	var warnings: Array[String]
-	
-	if get_child_count() == 0:
-		warnings.append("WFC Gen: Please give a child containing the grid.")
-	else:
-		if _search_grid_child() == null:
-			warnings.append("WFC Gen: No Grid found in children. Please give a child containing the grid.")
-	
-	return warnings
 
 func _get_property_list():
 	var properties = []
@@ -85,41 +72,29 @@ func _get_property_list():
 
 	return properties
 
-## This method applies wave function collapse to the given grid.
-func _ready() -> void:
-	if !Engine.is_editor_hint(): # Condition for Play mode script ONLY
-		_grid = _search_grid_child() # Setting the grid child
-		_tiles_open.clear()
-		_tiles_closed.clear()
+func _setup() -> void:
+	# Setting the starting and first tile
+	_grid.get_tile(_index_start_tile).set_tile_type(_start_tile_type)
 
-		# Setting the starting tile
-		_tile_current = _grid.get_tile(_index_start_tile)
-		_tile_current.set_tile_type(_start_tile_type)
-
-		_counter1 = 0
-
-		# Loop for adding all the cardinal directions for process
-		while _counter1 < _tile_current.get_cardinal_direction_size():
-			if _tile_current.get_cardinal_direction(_counter1) != null:
-				_tiles_open.append(
-					_tile_current.get_cardinal_direction(_counter1)
-					)
-			_counter1 += 1
+	_tiles_open.clear()
+	_tiles_closed.clear()
+	_tiles_open.append(_grid.get_tile(_index_start_tile))
+	_counter1 = 0
+	
+	# Loop for processing all the tiles
+	while !_tiles_open.is_empty():
+		_tile_current = _tiles_open.pop_front() # Getting next tile
+		_common_blocks.clear() # Clearing previous data
+		_all_blocks.clear() # Clearing previous data
+		_all_sizes.clear() # Clearing previous data
+		_all_pos.clear() # Clearing previous data
+		_blocks.clear() # Clearing previous data
+		_max_block_size = 0 # Clearing previous data
+		_max_block_pos = -1 # Clearing previous data
+		_counter1 = 0 # Cardinal Direction counter
 		
-		_tiles_closed.append(_tile_current) # Closing the first processed tile
-		
-		# Loop for processing all the tiles
-		while !_tiles_open.is_empty():
-			_tile_current = _tiles_open.pop_front() # Getting next tile
-			_counter1 = 0 # Cardinal Direction counter
-			_common_blocks.clear() # Clearing previous data
-			_all_blocks.clear() # Clearing previous data
-			_all_sizes.clear() # Clearing previous data
-			_all_pos.clear() # Clearing previous data
-			_blocks.clear() # Clearing previous data
-			_max_block_size = 0 # Clearing previous data
-			_max_block_pos = -1 # Clearing previous data
-			
+		# Condition to check if tile has NOT been processed
+		if _tile_current.get_tile_type() == -1:
 			# Loop for going through all the cardinal directions
 			while _counter1 < _tile_current.get_cardinal_direction_size():
 				# Condition for finding a cardinal direction
@@ -190,19 +165,19 @@ func _ready() -> void:
 
 			_tile_current.set_tile_type(_common_blocks[_counter1]) # Setting the tile type for current tile
 
-			_counter1 = 0
+		_counter1 = 0
 
-			# Loop for adding more tiles for processing
-			while _counter1 < _tile_current.get_cardinal_direction_size():
-				if _tile_current.get_cardinal_direction(_counter1) != null:
-					# Checking if tile has NOT been processed
-					if (!_tiles_closed.has(_tile_current.get_cardinal_direction(_counter1)) 
-						&& !_tiles_open.has(_tile_current.get_cardinal_direction(_counter1))):
-							_tiles_open.append(_tile_current.get_cardinal_direction(_counter1))
-				
-				_counter1 += 1
+		# Loop for adding more tiles for processing
+		while _counter1 < _tile_current.get_cardinal_direction_size():
+			if _tile_current.get_cardinal_direction(_counter1) != null:
+				# Checking if tile has NOT been processed
+				if (!_tiles_closed.has(_tile_current.get_cardinal_direction(_counter1)) 
+					&& !_tiles_open.has(_tile_current.get_cardinal_direction(_counter1))):
+						_tiles_open.append(_tile_current.get_cardinal_direction(_counter1))
 			
-			_tiles_closed.append(_tile_current) # Tile done with processing
+			_counter1 += 1
+		
+		_tiles_closed.append(_tile_current) # Tile done with processing
 
 ## This method gets all the type of a given block.
 func get_types_array(index:int) -> Array[int]:
@@ -229,15 +204,8 @@ func get_types_array(index:int) -> Array[int]:
 	
 	return _temp_blocks
 
-## This method searches for the grid child.
-func _search_grid_child() -> DS_Grid:
-	_counter_warning = 0
-	while _counter_warning < get_child_count():
-		if get_child(_counter_warning).has_method("_is_grid"):
-				return get_child(_counter_warning)
-		_counter_warning += 1
-	return null
-
 func _to_string() -> String:
-	print_rich(_grid.show_grid_index(_index_start_tile))
+	print_rich(_grid.show_grid_index_index(_index_start_tile))
+	print("") # Next line
+	print_rich(_grid.show_grid_tile_index(_index_start_tile))
 	return ""
