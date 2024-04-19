@@ -13,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_afol5")
 
-[node name="MainContainer" type="VBoxContainer" parent="."]
+[node name="MainTabContainer" type="TabContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,10 +21,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SaveButtonContainer" type="HBoxContainer" parent="MainContainer"]
+[node name="MainSettings" type="VBoxContainer" parent="MainTabContainer"]
+visible = false
 layout_mode = 2
 
-[node name="Btn_Save" type="Button" parent="MainContainer/SaveButtonContainer"]
+[node name="SaveButtonContainer" type="HBoxContainer" parent="MainTabContainer/MainSettings"]
+layout_mode = 2
+
+[node name="Btn_Save" type="Button" parent="MainTabContainer/MainSettings/SaveButtonContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -32,20 +36,20 @@ size_flags_vertical = 0
 theme_override_font_sizes/font_size = 20
 text = "SAVE"
 
-[node name="Lbl_Save_Msg" type="Label" parent="MainContainer/SaveButtonContainer"]
+[node name="Lbl_Save_Msg" type="Label" parent="MainTabContainer/MainSettings/SaveButtonContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.415686, 0.423529, 1)
 theme_override_font_sizes/font_size = 10
 
-[node name="MainScrollContainer" type="ScrollContainer" parent="MainContainer"]
+[node name="MainScrollContainer" type="ScrollContainer" parent="MainTabContainer/MainSettings"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollHolder" type="Control" parent="MainContainer/MainScrollContainer"]
+[node name="ScrollHolder" type="Control" parent="MainTabContainer/MainSettings/MainScrollContainer"]
 custom_minimum_size = Vector2(1152, 648)
 layout_mode = 2
 
-[node name="MainScrollContainer" type="VBoxContainer" parent="MainContainer/MainScrollContainer/ScrollHolder"]
+[node name="MainScrollContainer" type="VBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -54,17 +58,17 @@ offset_bottom = -48.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NoOHolder" type="Control" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer"]
+[node name="NoOHolder" type="Control" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer"]
 custom_minimum_size = Vector2(1152, 25)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder"]
+[node name="Label" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder"]
 layout_mode = 1
 offset_right = 151.0
 offset_bottom = 26.0
 text = "Number of Objects:"
 
-[node name="OB_NoO" type="OptionButton" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder"]
+[node name="OB_NoO" type="OptionButton" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder"]
 layout_mode = 1
 offset_left = 152.0
 offset_right = 210.0
@@ -78,23 +82,23 @@ popup/item_1/id = 1
 popup/item_2/text = "3"
 popup/item_2/id = 2
 
-[node name="NameInputContainer" type="VBoxContainer" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer"]
+[node name="NameInputContainer" type="VBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer"]
 layout_mode = 2
 
-[node name="name_input" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
+[node name="name_input" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
 layout_mode = 2
 
-[node name="name_input2" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
+[node name="name_input2" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
 layout_mode = 2
 
-[node name="name_input3" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
+[node name="name_input3" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
 layout_mode = 2
 
-[node name="ConditionHolder" type="Control" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer"]
+[node name="ConditionHolder" type="Control" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ListVerticalsContainer" type="VBoxContainer" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder"]
+[node name="ListVerticalsContainer" type="VBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -102,12 +106,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NameHorizontalContainer" type="Control" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
+[node name="NameHorizontalContainer" type="Control" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
 clip_contents = true
 custom_minimum_size = Vector2(1152, 75)
 layout_mode = 2
 
-[node name="H_Name1" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
+[node name="H_Name1" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
 layout_mode = 2
 offset_left = 200.0
 offset_top = 60.0
@@ -116,7 +120,7 @@ offset_bottom = 86.0
 rotation = -0.736529
 text = "0"
 
-[node name="H_Name2" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
+[node name="H_Name2" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
 layout_mode = 2
 offset_left = 230.0
 offset_top = 60.0
@@ -125,7 +129,7 @@ offset_bottom = 86.0
 rotation = -0.736529
 text = "1"
 
-[node name="H_Name3" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
+[node name="H_Name3" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
 layout_mode = 2
 offset_left = 260.0
 offset_top = 60.0
@@ -134,53 +138,56 @@ offset_bottom = 86.0
 rotation = -0.736529
 text = "2"
 
-[node name="Data1" type="HBoxContainer" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
+[node name="Data1" type="HBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
 layout_mode = 2
 
-[node name="V_Name1" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data1"]
+[node name="V_Name1" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data1"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "0"
 horizontal_alignment = 2
 autowrap_mode = 2
 
-[node name="check_box_data" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data1" instance=ExtResource("3_d5mrj")]
+[node name="check_box_data" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data1" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
-[node name="Data2" type="HBoxContainer" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
+[node name="Data2" type="HBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
 layout_mode = 2
 
-[node name="V_Name2" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2"]
+[node name="V_Name2" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "1"
 horizontal_alignment = 2
 autowrap_mode = 2
 
-[node name="check_box_data" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2" instance=ExtResource("3_d5mrj")]
+[node name="check_box_data" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
-[node name="check_box_data2" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2" instance=ExtResource("3_d5mrj")]
+[node name="check_box_data2" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
-[node name="Data3" type="HBoxContainer" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
+[node name="Data3" type="HBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
 layout_mode = 2
 
-[node name="V_Name3" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3"]
+[node name="V_Name3" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "2"
 horizontal_alignment = 2
 autowrap_mode = 2
 
-[node name="check_box_data" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_d5mrj")]
+[node name="check_box_data" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
-[node name="check_box_data2" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_d5mrj")]
+[node name="check_box_data2" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
-[node name="check_box_data3" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_d5mrj")]
+[node name="check_box_data3" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
-[connection signal="pressed" from="MainContainer/SaveButtonContainer/Btn_Save" to="." method="_on_btn_save_pressed"]
-[connection signal="item_selected" from="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder/OB_NoO" to="." method="_on_ob_no_o_item_selected"]
+[node name="Tile Rules" type="VBoxContainer" parent="MainTabContainer"]
+layout_mode = 2
+
+[connection signal="pressed" from="MainTabContainer/MainSettings/SaveButtonContainer/Btn_Save" to="." method="_on_btn_save_pressed"]
+[connection signal="item_selected" from="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder/OB_NoO" to="." method="_on_ob_no_o_item_selected"]

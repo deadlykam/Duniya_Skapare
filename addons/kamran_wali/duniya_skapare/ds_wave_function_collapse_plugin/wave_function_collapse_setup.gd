@@ -31,11 +31,11 @@ func _enter_tree() -> void:
     _data_names = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_names.tres")
     _data_checkboxes = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_checkboxes.tres")
     _data_noo = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_noo.tres")
-    _name_input_container = $MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer
-    _obtn_noo = $MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder/OB_NoO
-    _name_horizontal_container = $MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer
-    _list_verticals_container = $MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer
-    _lbl_save_msg = $MainContainer/SaveButtonContainer/Lbl_Save_Msg
+    _name_input_container = $MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer
+    _obtn_noo = $MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder/OB_NoO
+    _name_horizontal_container = $MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer
+    _list_verticals_container = $MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer
+    _lbl_save_msg = $MainTabContainer/MainSettings/SaveButtonContainer/Lbl_Save_Msg
 
 func _ready() -> void:
     _setup_obtn_noo()
