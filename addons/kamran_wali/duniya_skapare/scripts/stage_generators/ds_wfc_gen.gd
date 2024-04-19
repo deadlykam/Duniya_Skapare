@@ -205,11 +205,7 @@ func get_types_array(index:int) -> Array[int]:
 	return _temp_blocks
 
 func _to_string() -> String:
-	print("Showing Grid with index:")
 	print_rich(_grid.show_grid_index_index(_index_start_tile))
-	print("===xxx===")
 	print("") # Next line
-	print("Showing Grid with tile information:")
 	print_rich(_grid.show_grid_tile_index(_index_start_tile))
-	print("===xxx===")
 	return ""

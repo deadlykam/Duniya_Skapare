@@ -5,6 +5,7 @@ extends DS_BaseGrid
 func show_grid_tile_index(index:int) -> String:
 	_index = 0
 	_counter1 = 0
+	print("Showing Grid with tile information:")
 	_debug_print = ""
 
 	# Loop for printing the grid
@@ -20,9 +21,10 @@ func show_grid_tile_index(index:int) -> String:
 			_index += 1
 			_counter2 += 1
 		
-		_debug_print += "\n" if _counter1 < _grid_y - 1 else ""
+		_debug_print += "\n"
 		_counter1 += 1
 	
+	_debug_print += "===xxx==="
 	return _debug_print
 
 func show_grid_tile() -> String:
@@ -31,6 +33,7 @@ func show_grid_tile() -> String:
 func show_grid_index_index(index: int) -> String:
 	_index = 0
 	_counter1 = 0
+	print("Showing Grid with index:")
 	_debug_print = ""
 
 	# Loop for printing the grid
@@ -48,9 +51,10 @@ func show_grid_index_index(index: int) -> String:
 			_index += 1
 			_counter2 += 1
 		
-		_debug_print += "\n" if _counter1 < _grid_y - 1 else ""
+		_debug_print += "\n"
 		_counter1 += 1
 	
+	_debug_print += "===xxx==="
 	return _debug_print
 
 func show_grid_index() -> String:
@@ -106,7 +110,5 @@ func _setup() -> void:
 		_counter1 += 1
 
 func _to_string() -> String:
-	print("Showing Grid with index:")
 	print_rich(show_grid_index())
-	print("===xxx===")
 	return ""
