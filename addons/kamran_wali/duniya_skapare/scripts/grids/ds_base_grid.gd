@@ -32,14 +32,29 @@ func get_tile(index:int) -> DS_Tile:
     return _tiles[index]
 
 ## This method returns the grid in string format.
+## The tile information are shown in the grid.
 ## Use this for debugging.
-func show_grid() -> String:
+func show_grid_tile() -> String:
     return "Not implemented!"
 
 ## This method returns the grid in string format.
+## The tile information are shown in the grid.
 ## It also highlights the indexth tile.
 ## Use this for debugging.
-func show_grid_index(index:int) -> String:
+func show_grid_tile_index(index:int) -> String:
+    return "Not implemented!"
+
+## This method returns the grid in string format.
+## The index of the tile are shown in the grid.
+## Use this for debugging.
+func show_grid_index() -> String:
+    return "Not implemented!"
+
+## This method returns the grid in string format.
+## The index of the tile are shown in the grid.
+## It also highlights the indexth tile.
+## Use this for debugging.
+func show_grid_index_index(index: int) -> String:
     return "Not implemented!"
 
 ## This method sets up the grid.

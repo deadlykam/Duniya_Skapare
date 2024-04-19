@@ -3,7 +3,7 @@ class_name DS_BaseGen
 extends Node
 
 # Constants
-const TILE_INFO: GDScript = preload("res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/ds_wfc_tile_info.gd")
+const TILE_INFO: GDScript = preload("res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_tile_info.gd")
 
 var _grid: DS_BaseGrid
 var _counter_warning:= -1 # This counter is for warnings ONLY
@@ -24,7 +24,6 @@ func _get_configuration_warnings():
 func _ready() -> void:
 	if !Engine.is_editor_hint():
 		_grid = _search_grid_child()
-
 		_counter = 0
 		
 		# Loop for updating tiles at start

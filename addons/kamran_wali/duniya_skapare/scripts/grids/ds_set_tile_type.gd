@@ -5,6 +5,9 @@ extends Node
 var _tile_type: int
 @export var _grid_index: Array[int]
 
+# Constants
+const TILE_INFO: GDScript = preload("res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_tile_info.gd")
+
 # Data Properties
 var _data_names: DS_FixedStringArray = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_names.tres")
 
@@ -33,5 +36,22 @@ func _get_property_list():
 
 	return properties
 
-# TODO: Give warning for parent NOT found
-# TODO: Send the tile info in _ready and make sure that code is in play mode
+func _get_configuration_warnings():
+	var warnings: Array[String]
+
+	if get_parent() == null:
+		warnings.append("Set Tile Type: Please make sure object has a parent. Please give a parent containing the generator script")
+	elif !get_parent().has_method("_is_gen"):
+		warnings.append("Please give a parent containing the generator script.")
+	
+	return warnings
+
+func _ready() -> void:
+	if !Engine.is_editor_hint():
+		_generator = get_parent()
+		_counter = 0
+
+		# Loop for sending all the tiles to be updated.
+		while _counter < _grid_index.size():
+			_generator.add_update_tile_info(TILE_INFO.new(_grid_index[_counter], _tile_type))
+			_counter += 1

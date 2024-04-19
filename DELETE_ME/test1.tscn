@@ -22,5 +22,5 @@ _grid_y = 4
 
 [node name="SetTile" type="Node3D" parent="WFC"]
 script = ExtResource("4_tlncm")
-_grid_index = Array[int]([9, 15, 14])
+_grid_index = Array[int]([0, 1, 2])
 _tile_type = 0

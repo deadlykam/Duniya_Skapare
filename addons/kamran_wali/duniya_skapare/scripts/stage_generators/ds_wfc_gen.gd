@@ -74,27 +74,16 @@ func _get_property_list():
 
 func _setup() -> void:
 	# Setting the starting and first tile
-	_tile_current = _grid.get_tile(_index_start_tile)
-	_tile_current.set_tile_type(_start_tile_type)
+	_grid.get_tile(_index_start_tile).set_tile_type(_start_tile_type)
 
 	_tiles_open.clear()
 	_tiles_closed.clear()
+	_tiles_open.append(_grid.get_tile(_index_start_tile))
 	_counter1 = 0
-
-	# Loop for adding all the cardinal directions for process
-	while _counter1 < _tile_current.get_cardinal_direction_size():
-		if _tile_current.get_cardinal_direction(_counter1) != null:
-			_tiles_open.append(
-				_tile_current.get_cardinal_direction(_counter1)
-				)
-		_counter1 += 1
-	
-	_tiles_closed.append(_tile_current) # Closing the first processed tile
 	
 	# Loop for processing all the tiles
 	while !_tiles_open.is_empty():
 		_tile_current = _tiles_open.pop_front() # Getting next tile
-		_counter1 = 0 # Cardinal Direction counter
 		_common_blocks.clear() # Clearing previous data
 		_all_blocks.clear() # Clearing previous data
 		_all_sizes.clear() # Clearing previous data
@@ -102,76 +91,79 @@ func _setup() -> void:
 		_blocks.clear() # Clearing previous data
 		_max_block_size = 0 # Clearing previous data
 		_max_block_pos = -1 # Clearing previous data
+		_counter1 = 0 # Cardinal Direction counter
 		
-		# Loop for going through all the cardinal directions
-		while _counter1 < _tile_current.get_cardinal_direction_size():
-			# Condition for finding a cardinal direction
-			if _tile_current.get_cardinal_direction(_counter1) != null:
-				if _tile_current.get_cardinal_direction(_counter1).get_tile_type() != -1:
-					_blocks = get_types_array(
-						_tile_current.get_cardinal_direction(_counter1).get_tile_type())
-					_all_pos.append(_all_blocks.size())
-					_all_sizes.append(_blocks.size())
-					
-					# Condition for setting the max element holder
-					if _blocks.size() > _max_block_size:
-						_max_block_size = _blocks.size() # Updating max size
-						_max_block_pos = _all_blocks.size() # Updating element holder position
+		# Condition to check if tile has NOT been processed
+		if _tile_current.get_tile_type() == -1:
+			# Loop for going through all the cardinal directions
+			while _counter1 < _tile_current.get_cardinal_direction_size():
+				# Condition for finding a cardinal direction
+				if _tile_current.get_cardinal_direction(_counter1) != null:
+					if _tile_current.get_cardinal_direction(_counter1).get_tile_type() != -1:
+						_blocks = get_types_array(
+							_tile_current.get_cardinal_direction(_counter1).get_tile_type())
+						_all_pos.append(_all_blocks.size())
+						_all_sizes.append(_blocks.size())
+						
+						# Condition for setting the max element holder
+						if _blocks.size() > _max_block_size:
+							_max_block_size = _blocks.size() # Updating max size
+							_max_block_pos = _all_blocks.size() # Updating element holder position
 
+						_counter2 = 0
+						# Loop for adding all the blocks in all block array
+						while _counter2 < _blocks.size():
+							_all_blocks.append(_blocks[_counter2])
+							_counter2 += 1
+				_counter1 += 1
+			
+			# Condition for ONLY one tile present
+			if _all_pos.size() == 1:
+				_common_blocks = _all_blocks.duplicate(true)
+			else:
+				_counter1 = 0
+
+				# Loop for getting all the common types
+				while _counter1 < _max_block_size:
+					_is_common = true # Resetting to check if next block is common
 					_counter2 = 0
-					# Loop for adding all the blocks in all block array
-					while _counter2 < _blocks.size():
-						_all_blocks.append(_blocks[_counter2])
+
+					# Loop for going through all the types
+					while _counter2 < _all_pos.size():
+						if _all_pos[_counter2] != _max_block_pos: # Making sure NOT comparing with self
+							_counter3 = 0
+
+							# Loop for finding common type
+							while _counter3 < _all_sizes[_counter2]:
+								# Checking if common type found
+								if _all_blocks[_max_block_pos + _counter1] == _all_blocks[_all_pos[_counter2] + _counter3]:
+									break
+								_counter3 += 1
+							
+							# Condition for NOT finding common type
+							if _counter3 == _all_sizes[_counter2]:
+								_is_common = false
+								break # No further searching required
 						_counter2 += 1
-			_counter1 += 1
-		
-		# Condition for ONLY one tile present
-		if _all_pos.size() == 1:
-			_common_blocks = _all_blocks.duplicate(true)
-		else:
+					
+					if _is_common: # Condition for adding the common type
+						_common_blocks.append(_all_blocks[_max_block_pos + _counter1])
+					_counter1 += 1
+
+			_prob = _rng.randf() # Getting probability value
+			_prob_total = (1.0 / _common_blocks.size()) # Resetting to find the tile type
+
 			_counter1 = 0
 
-			# Loop for getting all the common types
-			while _counter1 < _max_block_size:
-				_is_common = true # Resetting to check if next block is common
-				_counter2 = 0
-
-				# Loop for going through all the types
-				while _counter2 < _all_pos.size():
-					if _all_pos[_counter2] != _max_block_pos: # Making sure NOT comparing with self
-						_counter3 = 0
-
-						# Loop for finding common type
-						while _counter3 < _all_sizes[_counter2]:
-							# Checking if common type found
-							if _all_blocks[_max_block_pos + _counter1] == _all_blocks[_all_pos[_counter2] + _counter3]:
-								break
-							_counter3 += 1
-						
-						# Condition for NOT finding common type
-						if _counter3 == _all_sizes[_counter2]:
-							_is_common = false
-							break # No further searching required
-					_counter2 += 1
-				
-				if _is_common: # Condition for adding the common type
-					_common_blocks.append(_all_blocks[_max_block_pos + _counter1])
+			# Loop for finding the correct tile type
+			while _counter1 < _common_blocks.size():
+				if _prob <= _prob_total: # Tile type found 
+					break
+				else: # Setting next tile type to be checked
+					_prob_total += (1.0 / _common_blocks.size())
 				_counter1 += 1
 
-		_prob = _rng.randf() # Getting probability value
-		_prob_total = (1.0 / _common_blocks.size()) # Resetting to find the tile type
-
-		_counter1 = 0
-
-		# Loop for finding the correct tile type
-		while _counter1 < _common_blocks.size():
-			if _prob <= _prob_total: # Tile type found 
-				break
-			else: # Setting next tile type to be checked
-				_prob_total += (1.0 / _common_blocks.size())
-			_counter1 += 1
-
-		_tile_current.set_tile_type(_common_blocks[_counter1]) # Setting the tile type for current tile
+			_tile_current.set_tile_type(_common_blocks[_counter1]) # Setting the tile type for current tile
 
 		_counter1 = 0
 
@@ -213,5 +205,11 @@ func get_types_array(index:int) -> Array[int]:
 	return _temp_blocks
 
 func _to_string() -> String:
-	print_rich(_grid.show_grid_index(_index_start_tile))
+	print("Showing Grid with index:")
+	print_rich(_grid.show_grid_index_index(_index_start_tile))
+	print("===xxx===")
+	print("") # Next line
+	print("Showing Grid with tile information:")
+	print_rich(_grid.show_grid_tile_index(_index_start_tile))
+	print("===xxx===")
 	return ""

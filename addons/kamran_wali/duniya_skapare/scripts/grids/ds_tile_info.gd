@@ -3,6 +3,10 @@
 var _index:= -1
 var _type:= -1
 
+func _init(index:int, type:int) -> void:
+    _index = index
+    _type = type
+
 ## This method sets the index value.
 func set_index(index:int) -> void:
     _index = index
