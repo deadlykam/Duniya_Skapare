@@ -6,11 +6,6 @@ extends DS_BaseGen
 var _index_start_tile: int
 var _start_tile_type: int
 
-# Data Properties
-var _data_names: DS_FixedStringArray = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_names.tres")
-var _data_checkboxes: DS_FixedCheckBoxFlagArray = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_checkboxes.tres")
-var _data_noo: DS_NoO = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_noo.tres")
-
 var _tiles_open: Array[DS_Tile]
 var _tiles_closed: Array[DS_Tile]
 var _tile_current: DS_Tile
@@ -38,10 +33,11 @@ func _get_property_list():
 
 	_type_names = ""
 	_counter1 = 0
-	# Loop for loading up all the type names
-	while _counter1 < _data_names.get_size():
-		_type_names += (_data_names.get_element(_counter1) + 
-			("," if _counter1 < _data_names.get_size() - 1 else ""))
+	# Loop for loading up all the tile type names
+	while _counter1 <= DS_Data.get_instance().get_wfc_number_of_tiles():
+		_type_names += (DS_Data.get_instance().get_wfc_tile_names()[_counter1] +
+			("," if _counter1 < DS_Data.get_instance().get_wfc_number_of_tiles()
+			else ""))
 		_counter1 += 1
 
 	# Showing the names as enums
@@ -100,7 +96,7 @@ func _setup() -> void:
 				# Condition for finding a cardinal direction
 				if _tile_current.get_cardinal_direction(_counter1) != null:
 					if _tile_current.get_cardinal_direction(_counter1).get_tile_type() != -1:
-						_blocks = get_types_array(
+						_blocks = DS_Data.get_instance().get_tile_rules(
 							_tile_current.get_cardinal_direction(_counter1).get_tile_type())
 						_all_pos.append(_all_blocks.size())
 						_all_sizes.append(_blocks.size())
@@ -178,31 +174,6 @@ func _setup() -> void:
 			_counter1 += 1
 		
 		_tiles_closed.append(_tile_current) # Tile done with processing
-
-## This method gets all the type of a given block.
-func get_types_array(index:int) -> Array[int]:
-	_temp_blocks.clear()
-	_counter_method = 0 # The counter is the pos index
-
-	# Loop for finding types
-	while _counter_method <= index:
-		# Condition for type found
-		if _data_checkboxes.get_element(index, _counter_method):
-			_temp_blocks.append(_counter_method) # Adding type
-		_counter_method += 1
-	
-	# Setting the next main block for check.
-	# Alos _counter_method is now the main index
-	_counter_method = index + 1
-
-	# Loop for finding types
-	while _counter_method <= _data_noo.get_value():
-		# Condition for type found
-		if _data_checkboxes.get_element(_counter_method, index):
-			_temp_blocks.append(_counter_method)
-		_counter_method += 1
-	
-	return _temp_blocks
 
 func _to_string() -> String:
 	print_rich(_grid.show_grid_index_index(_index_start_tile))

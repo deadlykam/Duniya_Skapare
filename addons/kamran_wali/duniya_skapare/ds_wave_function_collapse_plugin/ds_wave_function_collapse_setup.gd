@@ -3,12 +3,7 @@ class_name DS_WFCSetup
 extends Control
 
 # Constants
-const NAME_INPUT: GDScript = preload("res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/name_input.gd")
-
-# Global Properties
-var _data_names: DS_FixedStringArray
-var _data_checkboxes: DS_FixedCheckBoxFlagArray
-var _data_noo: DS_NoO
+const NAME_INPUT: GDScript = preload("res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/ds_name_input.gd")
 
 # Properties from the scene
 var _obtn_noo: OptionButton
@@ -28,9 +23,7 @@ var _obj_size:= -1
 var _is_setup_done:= false
 
 func _enter_tree() -> void:
-    _data_names = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_names.tres")
-    _data_checkboxes = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_checkboxes.tres")
-    _data_noo = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_noo.tres")
+    DS_Data.get_instance()._data_wfc_rules_individual.check_data()
     _name_input_container = $MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer
     _obtn_noo = $MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder/OB_NoO
     _name_horizontal_container = $MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer
@@ -48,12 +41,12 @@ func _ready() -> void:
 func update_name(name:String , id:int) -> void:
     _h_names[id].text = name
     _v_data[id].get_child(0).text = name
-    _data_names.update_element(name, id)
+    DS_Data.get_instance()._data_wfc_names.update_element(name, id)
     _set_lbl_save_msg("Unsaved Changes!")
 
 ## This method updates the check box toggle.
 func update_check_box(id_main:int, id_pos:int, toggle:bool) -> void:
-    _data_checkboxes.update_element(id_main, id_pos, toggle)
+    DS_Data.get_instance()._data_wfc_rules.update_element(id_main, id_pos, toggle)
     _set_lbl_save_msg("Unsaved Changes!")
 
 ## This method setups up the number of objects button option.
@@ -62,7 +55,7 @@ func _setup_obtn_noo() -> void:
     _obtn_noo.add_item("1")
     _obtn_noo.add_item("2")
     _obtn_noo.add_item("3")
-    _noo = _data_noo.get_value()
+    _noo = DS_Data.get_instance()._data_wfc_noo.get_value()
     _obtn_noo.select(_noo)
 
 ## This method sets up the check boxes.
@@ -73,8 +66,8 @@ func _setup_check_boxes() -> void:
     while _counter < _list_verticals_container.get_child_count():
         _counter2 = 1
         while _counter2 < _list_verticals_container.get_child(_counter).get_child_count():
-            _list_verticals_container.get_child(_counter).get_child(_counter2).setup(self, 
-                _counter - 1, _counter2 - 1, _data_checkboxes.get_element(_counter - 1, _counter2 - 1))
+            _list_verticals_container.get_child(_counter).get_child(_counter2).setup(self,
+                _counter - 1, _counter2 - 1, DS_Data.get_instance()._data_wfc_rules.get_element(_counter - 1, _counter2 - 1))
             _counter2 += 1
         _counter += 1
 
@@ -92,25 +85,28 @@ func _setup_array_data() -> void:
         _h_names.append(_name_horizontal_container.get_child(_counter))
         _v_data.append(_list_verticals_container.get_child(_counter + 1))
         
-        # Updating the names from the save file
-        _name_inputs[_counter].set_txt_name(_data_names.get_element(_counter))
-        _h_names[_counter].text = _data_names.get_element(_counter)
-        _v_data[_counter].get_child(0).text = _data_names.get_element(_counter)
-
+        _name_inputs[_counter].set_txt_name(DS_Data.get_instance()._data_wfc_names.get_element(_counter))
+        _h_names[_counter].text = DS_Data.get_instance()._data_wfc_names.get_element(_counter)
+        _v_data[_counter].get_child(0).text = DS_Data.get_instance()._data_wfc_names.get_element(_counter)
+        
         _counter += 1
 
 func _on_ob_no_o_item_selected(index:int):
     if _noo != index: # Checking if a new selection is made
+        #TODO: Make the individual tile rules to default after one
         _noo = index
-        _data_noo.set_value(_noo) # Setting the number of objects value in the data
+        DS_Data.get_instance()._data_wfc_noo.set_value(_noo) # Setting the number of objects value in the data
         _show_inputs() # Showing the correct inputs
         _set_lbl_save_msg("Unsaved Changes!")
 
 func _on_btn_save_pressed():
-    _data_names.save()
-    _data_checkboxes.save()
-    _data_noo.save()
+    DS_Data.get_instance()._data_wfc_names.save()
+    DS_Data.get_instance()._data_wfc_rules.save()
+    DS_Data.get_instance()._data_wfc_noo.save()
     _lbl_save_msg.text = ""
+
+func _set_default_individual_rules() -> void:
+    pass
 
 ## This method shows the correct inputs.
 func _show_inputs() -> void:

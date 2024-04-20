@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c86oklgxhesux"]
+[gd_scene load_steps=5 format=3 uid="uid://c86oklgxhesux"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/wave_function_collapse_setup.gd" id="1_afol5"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/ds_wave_function_collapse_setup.gd" id="1_ss0s7"]
 [ext_resource type="PackedScene" uid="uid://cphspo0fltqev" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/name_input.tscn" id="2_0hku7"]
 [ext_resource type="PackedScene" uid="uid://bjgtxq5gjlk5m" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/check_box_data.tscn" id="3_d5mrj"]
+[ext_resource type="PackedScene" uid="uid://bn2yl6luygcom" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/cardinal.tscn" id="4_ned7q"]
 
 [node name="Wave Function Collapse Settings" type="Control"]
 layout_mode = 3
@@ -11,7 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_afol5")
+script = ExtResource("1_ss0s7")
 
 [node name="MainTabContainer" type="TabContainer" parent="."]
 layout_mode = 1
@@ -22,7 +23,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MainSettings" type="VBoxContainer" parent="MainTabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="SaveButtonContainer" type="HBoxContainer" parent="MainTabContainer/MainSettings"]
@@ -187,6 +187,26 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Tile Rules" type="VBoxContainer" parent="MainTabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainTabContainer/Tile Rules"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="MainTabContainer/Tile Rules/ScrollContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="Control" type="Control" parent="MainTabContainer/Tile Rules/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(384, 216)
+layout_mode = 2
+
+[node name="Cardinal" parent="MainTabContainer/Tile Rules/ScrollContainer/GridContainer" instance=ExtResource("4_ned7q")]
+layout_mode = 2
+
+[node name="Control3" type="Control" parent="MainTabContainer/Tile Rules/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(384, 216)
 layout_mode = 2
 
 [connection signal="pressed" from="MainTabContainer/MainSettings/SaveButtonContainer/Btn_Save" to="." method="_on_btn_save_pressed"]

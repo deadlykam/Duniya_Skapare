@@ -15,3 +15,8 @@ func get_element(index:int) -> String:
 ## This method gets the number of elements in the data.
 func get_size() -> int:
     return _data.size()
+
+## This method gets all the data by duplicating
+## all the data.
+func get_data() -> Array[String]:
+    return _data.duplicate()

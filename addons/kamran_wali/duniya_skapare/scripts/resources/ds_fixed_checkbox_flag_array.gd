@@ -28,3 +28,8 @@ func update_element(index_main:int, index_pos:int, toggle:bool) -> void:
 ## This method gets the element.
 func get_element(index_main:int, index_pos:int) -> bool:
     return _data[_get_min_index(index_main) + index_pos]
+
+## This method gets all the data by duplicating
+## the data array.
+func get_data() -> Array[bool]:
+    return _data.duplicate()

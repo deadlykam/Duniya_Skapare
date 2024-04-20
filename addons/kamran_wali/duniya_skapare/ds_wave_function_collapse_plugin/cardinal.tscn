@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://bn2yl6luygcom"]
+
+[node name="Cardinal" type="Control"]
+custom_minimum_size = Vector2(384, 216)
+layout_mode = 3
+anchors_preset = 0
+
+[node name="CardinalContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Lbl_CardinalName" type="Label" parent="CardinalContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "North (+z)"
+horizontal_alignment = 1
+
+[node name="ItemContainer" type="HBoxContainer" parent="CardinalContainer"]
+layout_mode = 2
+
+[node name="Items_Names" type="ItemList" parent="CardinalContainer/ItemContainer"]
+custom_minimum_size = Vector2(384, 110)
+layout_mode = 2
+item_count = 5
+item_0/text = "item1"
+item_1/text = "item2"
+item_2/text = "Item3"
+item_3/text = "Item4"
+item_4/text = "Item5"
+
+[node name="ButtonContainer" type="HBoxContainer" parent="CardinalContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Btn_Restore" type="Button" parent="CardinalContainer/ButtonContainer"]
+custom_minimum_size = Vector2(126, 49)
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Restore"
+
+[node name="Btn_Remove" type="Button" parent="CardinalContainer/ButtonContainer"]
+custom_minimum_size = Vector2(126, 49)
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Remove"
+
+[node name="Btn_Save" type="Button" parent="CardinalContainer/ButtonContainer"]
+custom_minimum_size = Vector2(126, 49)
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Save"
