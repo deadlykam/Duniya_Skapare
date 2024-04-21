@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/ds_wave_function_collapse_setup.gd" id="1_ss0s7"]
 [ext_resource type="PackedScene" uid="uid://cphspo0fltqev" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/name_input.tscn" id="2_0hku7"]
 [ext_resource type="PackedScene" uid="uid://bjgtxq5gjlk5m" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/check_box_data.tscn" id="3_d5mrj"]
-[ext_resource type="PackedScene" uid="uid://bn2yl6luygcom" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/cardinal.tscn" id="4_ned7q"]
+[ext_resource type="PackedScene" uid="uid://bn2yl6luygcom" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/cardinal_rule_UI.tscn" id="4_ned7q"]
 
 [node name="Wave Function Collapse Settings" type="Control"]
 layout_mode = 3
@@ -118,7 +118,7 @@ offset_top = 60.0
 offset_right = 256.0
 offset_bottom = 86.0
 rotation = -0.736529
-text = "0"
+text = "Ground"
 
 [node name="H_Name2" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
 layout_mode = 2
@@ -127,7 +127,7 @@ offset_top = 60.0
 offset_right = 288.0
 offset_bottom = 86.0
 rotation = -0.736529
-text = "1"
+text = "Beach"
 
 [node name="H_Name3" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
 layout_mode = 2
@@ -136,7 +136,7 @@ offset_top = 60.0
 offset_right = 318.0
 offset_bottom = 86.0
 rotation = -0.736529
-text = "2"
+text = "Water"
 
 [node name="Data1" type="HBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
 layout_mode = 2
@@ -144,7 +144,7 @@ layout_mode = 2
 [node name="V_Name1" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data1"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "0"
+text = "Ground"
 horizontal_alignment = 2
 autowrap_mode = 2
 
@@ -157,7 +157,7 @@ layout_mode = 2
 [node name="V_Name2" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "1"
+text = "Beach"
 horizontal_alignment = 2
 autowrap_mode = 2
 
@@ -173,7 +173,7 @@ layout_mode = 2
 [node name="V_Name3" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "2"
+text = "Water"
 horizontal_alignment = 2
 autowrap_mode = 2
 
@@ -186,28 +186,73 @@ layout_mode = 2
 [node name="check_box_data3" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
-[node name="Tile Rules" type="VBoxContainer" parent="MainTabContainer"]
+[node name="TileRules" type="VBoxContainer" parent="MainTabContainer"]
 visible = false
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MainTabContainer/Tile Rules"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MainTabContainer/TileRules"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="GridContainer" type="GridContainer" parent="MainTabContainer/Tile Rules/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="MainTabContainer/TileRules/ScrollContainer"]
 layout_mode = 2
 columns = 3
 
-[node name="Control" type="Control" parent="MainTabContainer/Tile Rules/ScrollContainer/GridContainer"]
+[node name="TileSelectionHolder" type="HBoxContainer" parent="MainTabContainer/TileRules/ScrollContainer/GridContainer"]
 custom_minimum_size = Vector2(384, 216)
 layout_mode = 2
 
-[node name="Cardinal" parent="MainTabContainer/Tile Rules/ScrollContainer/GridContainer" instance=ExtResource("4_ned7q")]
+[node name="Lbl_SelectedTile" type="Label" parent="MainTabContainer/TileRules/ScrollContainer/GridContainer/TileSelectionHolder"]
 layout_mode = 2
+size_flags_vertical = 0
+text = "Selected Tile:"
 
-[node name="Control3" type="Control" parent="MainTabContainer/Tile Rules/ScrollContainer/GridContainer"]
+[node name="OB_SelectedTile" type="OptionButton" parent="MainTabContainer/TileRules/ScrollContainer/GridContainer/TileSelectionHolder"]
+layout_mode = 2
+size_flags_vertical = 0
+item_count = 4
+selected = 0
+popup/item_0/text = "item1"
+popup/item_0/id = 0
+popup/item_1/text = "item2"
+popup/item_1/id = 1
+popup/item_2/text = "item3"
+popup/item_2/id = 2
+popup/item_3/text = "item4"
+popup/item_3/id = 3
+
+[node name="cardinal_rule_ui_north" parent="MainTabContainer/TileRules/ScrollContainer/GridContainer" instance=ExtResource("4_ned7q")]
+layout_mode = 2
+_cardinal_name = "North (+z)"
+
+[node name="Control3" type="Control" parent="MainTabContainer/TileRules/ScrollContainer/GridContainer"]
 custom_minimum_size = Vector2(384, 216)
 layout_mode = 2
 
+[node name="cardinal_rule_ui_west" parent="MainTabContainer/TileRules/ScrollContainer/GridContainer" instance=ExtResource("4_ned7q")]
+layout_mode = 2
+_cardinal_name = "West (+x)"
+_cardinal_index = 3
+
+[node name="Control4" type="Control" parent="MainTabContainer/TileRules/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(384, 216)
+layout_mode = 2
+
+[node name="cardinal_rule_ui_east" parent="MainTabContainer/TileRules/ScrollContainer/GridContainer" instance=ExtResource("4_ned7q")]
+layout_mode = 2
+_cardinal_name = "East (-x)"
+_cardinal_index = 1
+
+[node name="Control5" type="Control" parent="MainTabContainer/TileRules/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(384, 216)
+layout_mode = 2
+
+[node name="cardinal_rule_ui_south" parent="MainTabContainer/TileRules/ScrollContainer/GridContainer" instance=ExtResource("4_ned7q")]
+layout_mode = 2
+_cardinal_name = "South (-z)"
+_cardinal_index = 2
+
+[connection signal="tab_changed" from="MainTabContainer" to="." method="_on_main_tab_container_tab_changed"]
 [connection signal="pressed" from="MainTabContainer/MainSettings/SaveButtonContainer/Btn_Save" to="." method="_on_btn_save_pressed"]
 [connection signal="item_selected" from="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder/OB_NoO" to="." method="_on_ob_no_o_item_selected"]
+[connection signal="item_selected" from="MainTabContainer/TileRules/ScrollContainer/GridContainer/TileSelectionHolder/OB_SelectedTile" to="." method="_on_ob_selected_tile_item_selected"]

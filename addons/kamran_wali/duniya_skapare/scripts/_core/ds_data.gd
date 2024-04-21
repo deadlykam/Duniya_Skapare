@@ -47,7 +47,9 @@ func get_wfc_number_of_tiles() -> int:
     return _data_wfc_noo.get_value()
 
 ## This method gets an array of rules for the given individual tile.
-func get_tile_rules(tile:int) -> Array[int]:
+## This is recommended to store the array in a variable as calling
+## this over and over will become very expensive for performance.
+func get_wfc_tile_rules(tile:int) -> Array[int]:
     _temp_tile_rules.clear()
     _counter1 = 0 # The counter is the position index
     while _counter1 <= tile: # Loop for finding rules
@@ -64,6 +66,10 @@ func get_tile_rules(tile:int) -> Array[int]:
         _counter1 += 1
 
     return _temp_tile_rules
+
+## This method gets the name of the wfc tile.
+func get_wfc_tile_name(tile:int) -> String:
+    return _data_wfc_names.get_element(tile)
 
 ## This method converts the data to user readable data.
 func _convert_data() -> void:

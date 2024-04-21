@@ -96,7 +96,7 @@ func _setup() -> void:
 				# Condition for finding a cardinal direction
 				if _tile_current.get_cardinal_direction(_counter1) != null:
 					if _tile_current.get_cardinal_direction(_counter1).get_tile_type() != -1:
-						_blocks = DS_Data.get_instance().get_tile_rules(
+						_blocks = DS_Data.get_instance().get_wfc_tile_rules(
 							_tile_current.get_cardinal_direction(_counter1).get_tile_type())
 						_all_pos.append(_all_blocks.size())
 						_all_sizes.append(_blocks.size())
