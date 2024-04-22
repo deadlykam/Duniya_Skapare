@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dlkuphyewckv8"]
+[gd_scene load_steps=6 format=3 uid="uid://dlkuphyewckv8"]
 
 [ext_resource type="Script" path="res://DELETE_ME/test_grid_wfc.gd" id="1_r2o8o"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/ds_wfc_gen.gd" id="3_gbrf2"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="3_hc0lu"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_set_tile_type.gd" id="4_tlncm"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_xj2u8"]
 
 [node name="test1" type="Node3D" node_paths=PackedStringArray("_grid", "_wcf")]
 script = ExtResource("1_r2o8o")
@@ -24,3 +26,9 @@ _grid_y = 4
 script = ExtResource("4_tlncm")
 _grid_index = Array[int]([0, 1, 2])
 _tile_type = 0
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+mesh = SubResource("PlaneMesh_xj2u8")

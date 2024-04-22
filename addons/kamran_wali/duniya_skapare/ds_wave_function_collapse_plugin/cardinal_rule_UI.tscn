@@ -3,9 +3,12 @@
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/ds_cardinal_rule_ui_setup.gd" id="1_eeo0l"]
 
 [node name="Cardinal_Rule_UI" type="Control"]
-custom_minimum_size = Vector2(384, 216)
+custom_minimum_size = Vector2(100, 216)
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_horizontal = 3
 script = ExtResource("1_eeo0l")
 
 [node name="CardinalContainer" type="VBoxContainer" parent="."]
@@ -28,6 +31,7 @@ layout_mode = 2
 [node name="Items_Names" type="ItemList" parent="CardinalContainer/ItemContainer"]
 custom_minimum_size = Vector2(384, 110)
 layout_mode = 2
+size_flags_horizontal = 3
 select_mode = 1
 item_count = 5
 item_0/text = "item1"
@@ -51,12 +55,6 @@ custom_minimum_size = Vector2(126, 49)
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
 text = "Remove"
-
-[node name="Btn_Save" type="Button" parent="CardinalContainer/ButtonContainer"]
-custom_minimum_size = Vector2(126, 49)
-layout_mode = 2
-theme_override_font_sizes/font_size = 25
-text = "Save"
 
 [connection signal="pressed" from="CardinalContainer/ButtonContainer/Btn_Add" to="." method="_on_btn_add_pressed"]
 [connection signal="pressed" from="CardinalContainer/ButtonContainer/Btn_Remove" to="." method="_on_btn_remove_pressed"]

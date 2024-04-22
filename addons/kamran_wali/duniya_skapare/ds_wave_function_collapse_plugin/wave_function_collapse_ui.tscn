@@ -23,6 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MainSettings" type="VBoxContainer" parent="MainTabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="SaveButtonContainer" type="HBoxContainer" parent="MainTabContainer/MainSettings"]
@@ -187,15 +188,27 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="TileRules" type="VBoxContainer" parent="MainTabContainer"]
-visible = false
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MainTabContainer/TileRules"]
+[node name="ScrollContainer" type="Control" parent="MainTabContainer/TileRules"]
+visible = false
+clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="GridContainer" type="GridContainer" parent="MainTabContainer/TileRules/ScrollContainer"]
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -19.0
+offset_right = 4.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 columns = 3
 
 [node name="TileSelectionHolder" type="HBoxContainer" parent="MainTabContainer/TileRules/ScrollContainer/GridContainer"]
@@ -210,16 +223,14 @@ text = "Selected Tile:"
 [node name="OB_SelectedTile" type="OptionButton" parent="MainTabContainer/TileRules/ScrollContainer/GridContainer/TileSelectionHolder"]
 layout_mode = 2
 size_flags_vertical = 0
-item_count = 4
+item_count = 3
 selected = 0
-popup/item_0/text = "item1"
+popup/item_0/text = "Ground"
 popup/item_0/id = 0
-popup/item_1/text = "item2"
+popup/item_1/text = "Beach"
 popup/item_1/id = 1
-popup/item_2/text = "item3"
+popup/item_2/text = "Water"
 popup/item_2/id = 2
-popup/item_3/text = "item4"
-popup/item_3/id = 3
 
 [node name="cardinal_rule_ui_north" parent="MainTabContainer/TileRules/ScrollContainer/GridContainer" instance=ExtResource("4_ned7q")]
 layout_mode = 2
@@ -252,7 +263,80 @@ layout_mode = 2
 _cardinal_name = "South (-z)"
 _cardinal_index = 2
 
+[node name="RulesScrollContainer" type="ScrollContainer" parent="MainTabContainer/TileRules"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ObjectContainer" type="VBoxContainer" parent="MainTabContainer/TileRules/RulesScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SelectTileContainer" type="HBoxContainer" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/SelectTileContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="Lbl_SelectedTile" type="Label" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/SelectTileContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Selected Tile:"
+
+[node name="OB_SelectedTile" type="OptionButton" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/SelectTileContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+item_count = 3
+selected = 0
+popup/item_0/text = "Ground"
+popup/item_0/id = 0
+popup/item_1/text = "Beach"
+popup/item_1/id = 1
+popup/item_2/text = "Water"
+popup/item_2/id = 2
+
+[node name="GridContainer" type="GridContainer" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 3
+
+[node name="Control" type="Control" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/GridContainer"]
+custom_minimum_size = Vector2(175, 175)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/GridContainer"]
+custom_minimum_size = Vector2(175, 175)
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/GridContainer"]
+custom_minimum_size = Vector2(175, 175)
+layout_mode = 2
+
+[node name="Panel2" type="Panel" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/GridContainer"]
+custom_minimum_size = Vector2(175, 175)
+layout_mode = 2
+
+[node name="Control3" type="Control" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/GridContainer"]
+custom_minimum_size = Vector2(175, 175)
+layout_mode = 2
+
+[node name="Panel3" type="Panel" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/GridContainer"]
+custom_minimum_size = Vector2(175, 175)
+layout_mode = 2
+
+[node name="Control4" type="Control" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/GridContainer"]
+custom_minimum_size = Vector2(175, 175)
+layout_mode = 2
+
+[node name="Panel4" type="Panel" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/GridContainer"]
+custom_minimum_size = Vector2(175, 175)
+layout_mode = 2
+
 [connection signal="tab_changed" from="MainTabContainer" to="." method="_on_main_tab_container_tab_changed"]
 [connection signal="pressed" from="MainTabContainer/MainSettings/SaveButtonContainer/Btn_Save" to="." method="_on_btn_save_pressed"]
 [connection signal="item_selected" from="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder/OB_NoO" to="." method="_on_ob_no_o_item_selected"]
 [connection signal="item_selected" from="MainTabContainer/TileRules/ScrollContainer/GridContainer/TileSelectionHolder/OB_SelectedTile" to="." method="_on_ob_selected_tile_item_selected"]
+[connection signal="item_selected" from="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/SelectTileContainer/OB_SelectedTile" to="." method="_on_ob_selected_tile_item_selected"]
