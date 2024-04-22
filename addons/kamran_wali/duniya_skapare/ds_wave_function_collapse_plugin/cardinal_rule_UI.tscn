@@ -20,7 +20,6 @@ alignment = 1
 [node name="Lbl_CardinalName" type="Label" parent="CardinalContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "Cardinal Name (+/-)"
 horizontal_alignment = 1
 
 [node name="ItemContainer" type="HBoxContainer" parent="CardinalContainer"]

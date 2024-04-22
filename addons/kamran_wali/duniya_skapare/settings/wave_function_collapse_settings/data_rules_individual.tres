@@ -4,15 +4,15 @@
 
 [resource]
 script = ExtResource("1_vyfog")
-_north = Array[int]([])
+_north = Array[int]([2, 0])
 _east = Array[int]([])
 _south = Array[int]([])
 _west = Array[int]([])
-_north_pos = Array[int]([0, 3, 3])
+_north_pos = Array[int]([0, 2, 2])
 _east_pos = Array[int]([0, 0, 0])
 _south_pos = Array[int]([0, 0, 0])
 _west_pos = Array[int]([0, 0, 0])
-_north_size = Array[int]([-1, -1, -1])
+_north_size = Array[int]([2, -1, -1])
 _east_size = Array[int]([-1, -1, -1])
 _south_size = Array[int]([-1, -1, -1])
 _west_size = Array[int]([-1, -1, -1])

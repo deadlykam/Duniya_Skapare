@@ -27,7 +27,7 @@ var _obj_size:= -1
 var _is_setup_done:= false
 
 func _enter_tree() -> void:
-    DS_Data.get_instance()._data_wfc_rules_individual.check_data()
+    get_data()._data_wfc_rules_individual.check_data()
     _name_input_container = $MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer
     _obtn_noo = $MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder/OB_NoO
     _name_horizontal_container = $MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer
@@ -121,6 +121,7 @@ func _on_btn_save_pressed():
     get_data()._data_wfc_names.save()
     get_data()._data_wfc_rules.save()
     get_data()._data_wfc_noo.save()
+    get_data()._data_wfc_rules_individual.save()
     _lbl_save_msg.text = ""
 
 func _on_main_tab_container_tab_changed(tab:int):

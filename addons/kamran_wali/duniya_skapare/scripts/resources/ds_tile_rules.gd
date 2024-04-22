@@ -16,7 +16,7 @@ extends "res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_base_resou
 
 var _temp_data: Array[int]
 var _counter1:= -1
-var _counter2:= -1
+var _counter_pos:= -1
 
 ## This method checks if the data are correct. If not then it will correc them
 func check_data() -> void:
@@ -32,47 +32,211 @@ func check_data() -> void:
         _south_size.resize(DS_Data.get_instance()._data_wfc_names.get_size())
         _west_size.resize(DS_Data.get_instance()._data_wfc_names.get_size())
 
-## This method adds a north tile.
+## This method adds a rule to the north tile.
 func add_north_rule(index:int, tile:int) -> void:
-    if _north.size() == 0:
-        _north.append(tile)
-        _north_pos[index] = 0
-        _north_size[index] = 1
-    else:
-        _north.insert(_north_pos[index], tile)
-        _north_size[index] += 1
-        _counter1 = index + 1
-        while _counter1 < _north_pos.size():
-            _north_pos[_counter1] += 1
-            _counter1 += 1
+    _add_rule(index, tile, 0)
 
+## This method removes a rule from the north tile.
 func remove_north_rule(index:int, tile:int) -> void:
-    if _north.size() > 0: # Checking if north has at least 1 element
-        _counter1 = 0
-        while _counter1 < _north_size[index]: # Loop for finding the element to remove
-            if tile == _north[_north_pos[index] + _counter1]: # Element found to remove
-                _north.remove_at(_north_pos[index] + _counter1)
-                _north_size[index] -= 1 # Decreasing the size
-                _counter2 = index + 1
-                while _counter2 < _north_pos.size(): # Loop for shifting all the pos
-                    _north_pos[_counter2] -= 1
-                    _counter2 += 1
-                break
-            _counter1 += 1
+    _remove_rule(index, tile, 0)
 
 ## This method gets all the north indexth's data. It is recommended to store
 ## the return value and then use it. Calling this method multiple times
 ## will result in negative performance.
 func get_north_rules(index:int) -> Array[int]:
-    _temp_data.clear()
-    _counter1 = 0
-    while _counter1 < _north_size[index]: # Loop for adding all the elements
-        _temp_data.append(_north[_north_pos[index] + _counter1])
-        _counter1 += 1
-    return _temp_data
+    return _get_rules(index, 0)
 
 ## This method gets the indexth north size.
 func get_north_size(index:int) -> int:
     return _north_size[index]
 
-# TODO: Make the size change and pos shifts into a method. <- !
+## This method adds a rule to the east tile.
+func add_east_rule(index:int, tile:int) -> void:
+    _add_rule(index, tile, 1)
+
+## This method removes a rule from the east tile.
+func remove_east_rule(index:int, tile:int) -> void:
+    _remove_rule(index, tile, 1)
+
+## This method gets all the east indexth's data. It is recommended to store
+## the return value and then use it. Calling this method multiple times
+## will result in negative performance.
+func get_east_rules(index:int) -> Array[int]:
+    return _get_rules(index, 1)
+
+## This method gets the indexth east size.
+func get_east_size(index:int) -> int:
+    return _east_size[index]
+
+## This method adds a rule to the south tile.
+func add_south_rule(index:int, tile:int) -> void:
+    _add_rule(index, tile, 2)
+
+## This method removes a rule from the south tile.
+func remove_south_rule(index:int, tile:int) -> void:
+    _remove_rule(index, tile, 2)
+
+## This method gets all the south indexth's data. It is recommended to store
+## the return value and then use it. Calling this method multiple times
+## will result in negative performance.
+func get_south_rules(index:int) -> Array[int]:
+    return _get_rules(index, 2)
+
+## This method gets the indexth south size.
+func get_south_size(index:int) -> int:
+    return _south_size[index]
+
+## This method adds a rule to the west tile.
+func add_west_rule(index:int, tile:int) -> void:
+    _add_rule(index, tile, 3)
+
+## This method removes a rule from the west tile.
+func remove_west_rule(index:int, tile:int) -> void:
+    _remove_rule(index, tile, 3)
+
+## This method gets all the west indexth's data. It is recommended to store
+## the return value and then use it. Calling this method multiple times
+## will result in negative performance.
+func get_west_rules(index:int) -> Array[int]:
+    return _get_rules(index, 3)
+
+## This method gets the indexth west size.
+func get_west_size(index:int) -> int:
+    return _west_size[index]
+
+## This method adds rules to the given cardinals.
+## North = 0
+## East = 1
+## South = 2
+## West = 3
+func _add_rule(index:int, tile:int, cardinal:int) -> void:
+    if cardinal == 0: # North
+        if _north_size[index] == -1: # Checking if first insertion of index
+            _north_size[index] = 0 # Making size 0 for first insertion for correct calculations
+        
+        _north.insert(_north_pos[index], tile)
+        _update_size_pos(0, index, 1)
+    elif cardinal == 1: # East
+        if _east_size[index] == -1: # Checking if first insertion of index
+            _east_size[index] = 0 # Making size 0 for first insertion for correct calculations
+        
+        _east.insert(_east_pos[index], tile)
+        _update_size_pos(0, index, 1)
+    elif cardinal == 2: # South
+        if _south_size[index] == -1: # Checking if first insertion of index
+            _south_size[index] = 0 # Making size 0 for first insertion for correct calculations
+        
+        _south.insert(_south_pos[index], tile)
+        _update_size_pos(0, index, 1)
+    elif cardinal == 3: # West
+        if _west_size[index] == -1: # Checking if first insertion of index
+            _west_size[index] = 0 # Making size 0 for first insertion for correct calculations
+        
+        _west.insert(_west_pos[index], tile)
+        _update_size_pos(0, index, 1)
+
+## This method removes a rules from the given cardianl.
+## North = 0
+## East = 1
+## South = 2
+## West = 3
+func _remove_rule(index:int, tile:int, cardinal:int) -> void:
+    if cardinal == 0: # North
+        if _north_size[index] > 0: # Checking if north has at least 1 element
+            _counter1 = 0
+            while _counter1 < _north_size[index]: # Loop for finding the element to remove
+                if tile == _north[_north_pos[index] + _counter1]: # Element found to remove
+                    _north.remove_at(_north_pos[index] + _counter1)
+                    _update_size_pos(0, index, -1)
+                    break
+                _counter1 += 1
+    elif cardinal == 1: # East
+        if _east_size[index] > 0: # Checking if north has at least 1 element
+            _counter1 = 0
+            while _counter1 < _east_size[index]: # Loop for finding the element to remove
+                if tile == _east[_east_pos[index] + _counter1]: # Element found to remove
+                    _east.remove_at(_east_pos[index] + _counter1)
+                    _update_size_pos(1, index, -1)
+                    break
+                _counter1 += 1
+    elif cardinal == 2: # South
+        if _south_size[index] > 0: # Checking if north has at least 1 element
+            _counter1 = 0
+            while _counter1 < _south_size[index]: # Loop for finding the element to remove
+                if tile == _south[_south_pos[index] + _counter1]: # Element found to remove
+                    _south.remove_at(_south_pos[index] + _counter1)
+                    _update_size_pos(2, index, -1)
+                    break
+                _counter1 += 1
+    elif cardinal == 3: # West
+        if _west_size[index] > 0: # Checking if north has at least 1 element
+            _counter1 = 0
+            while _counter1 < _west_size[index]: # Loop for finding the element to remove
+                if tile == _west[_west_pos[index] + _counter1]: # Element found to remove
+                    _west.remove_at(_west_pos[index] + _counter1)
+                    _update_size_pos(3, index, -1)
+                    break
+                _counter1 += 1
+
+## This method gets all rules for the indexth cardinal.
+## North = 0
+## East = 1
+## South = 2
+## West = 3
+func _get_rules(index:int, cardinal:int) -> Array[int]:
+    _temp_data.clear()
+    _counter1 = 0
+
+    if cardinal == 0: # North
+        while _counter1 < _north_size[index]: # Loop for adding all the elements
+            _temp_data.append(_north[_north_pos[index] + _counter1])
+            _counter1 += 1
+    elif cardinal == 0: # East
+        while _counter1 < _east_size[index]: # Loop for adding all the elements
+            _temp_data.append(_east[_east_pos[index] + _counter1])
+            _counter1 += 1
+    elif cardinal == 0: # South
+        while _counter1 < _south_size[index]: # Loop for adding all the elements
+            _temp_data.append(_south[_south_pos[index] + _counter1])
+            _counter1 += 1
+    elif cardinal == 0: # West
+        while _counter1 < _west_size[index]: # Loop for adding all the elements
+            _temp_data.append(_west[_west_pos[index] + _counter1])
+            _counter1 += 1
+
+    return _temp_data
+
+## This method updates the size and pos of a cardinal.
+## North = 0
+## East = 1
+## South = 2
+## West = 3
+func _update_size_pos(cardinal:int, index:int, dir:int) -> void:
+    if cardinal == 0: # North
+        _north_size[index] += dir # Updating size
+        _counter_pos = index + 1
+        while _counter_pos < _north_pos.size(): # Loop for updating pos
+            _north_pos[_counter_pos] = 0 if (_north_pos[_counter_pos] + dir) <= 0 else _north_pos[_counter_pos] + dir
+            #_north_pos[_counter_size_pos] += dir
+            _counter_pos += 1
+    elif cardinal == 1: # East
+        _east_size[index] += dir # Updating size
+        _counter_pos = index + 1
+        while _counter_pos < _east_pos.size(): # Loop for updating pos
+            _east_pos[_counter_pos] = 0 if (_east_pos[_counter_pos] + dir) <= 0 else _east_pos[_counter_pos] + dir
+            # _east_pos[_counter_pos] += dir
+            _counter_pos += 1
+    elif cardinal == 2: # South
+        _south_size[index] += dir # Updating size
+        _counter_pos = index + 1
+        while _counter_pos < _south_pos.size(): # Loop for updating pos
+            _south_pos[_counter_pos] = 0 if (_south_pos[_counter_pos] + dir) <= 0 else _south_pos[_counter_pos] + dir
+            # _south_pos[_counter_pos] += dir
+            _counter_pos += 1
+    elif cardinal == 3: # West
+        _west_size[index] += dir # Updating size
+        _counter_pos = index + 1
+        while _counter_pos < _west_pos.size(): # Loop for updating pos
+            _west_pos[_counter_pos] = 0 if (_west_pos[_counter_pos] + dir) <= 0 else _west_pos[_counter_pos] + dir
+            # _west_pos[_counter_pos] += dir
+            _counter_pos += 1
