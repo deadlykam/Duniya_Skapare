@@ -8,6 +8,8 @@ extends "res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugi
 # Properties from the scene
 var _lbl_cardinal_name: Label
 var _item_names: ItemList
+var _btn_add: Control
+var _btn_remove: Control
 
 var _tile:= -1
 var _rules: Array[int]
@@ -23,6 +25,8 @@ var _is_found_data:= false
 func _enter_tree() -> void:
     _lbl_cardinal_name = $CardinalContainer/Lbl_CardinalName
     _item_names = $CardinalContainer/ItemContainer/Items_Names
+    _btn_add = $CardinalContainer/ButtonContainer/Btn_Add
+    _btn_remove = $CardinalContainer/ButtonContainer/Btn_Remove
 
     _lbl_cardinal_name.text = _cardinal_name
     _green = Color.GREEN
@@ -36,10 +40,9 @@ func setup(tile:int) -> void:
     _tile = tile
     _item_names.clear()
     _rules = get_data().get_wfc_tile_rules(_tile)
-    # TODO: If no rules found then hide the buttons.
     _validate_data()
+    _validate_buttons()
     _setup_items()
-
 
 func _on_btn_add_pressed():
     _selected_items = _item_names.get_selected_items()
@@ -47,9 +50,12 @@ func _on_btn_add_pressed():
     
     # Loop for adding individual rules
     while _counter1 < _selected_items.size():
-        get_data()._data_wfc_rules_individual.add_north_rule(_tile, _rules[_selected_items[_counter1]])
+        get_data()._data_wfc_rules_individual.add_cardinal_rule(_tile, _rules[_selected_items[_counter1]], _cardinal_index)
         _set_item_colour(_selected_items[_counter1], _green)
         _counter1 += 1
+
+    get_data()._data_wfc_rules_individual.save()
+    _validate_buttons() # Validating the buttons visibility
 
 func _on_btn_remove_pressed():
     _selected_items = _item_names.get_selected_items()
@@ -57,32 +63,46 @@ func _on_btn_remove_pressed():
     
     # Loop for removing individual rules
     while _counter1 < _selected_items.size():
-        get_data()._data_wfc_rules_individual.remove_north_rule(_tile, _rules[_selected_items[_counter1]])
+        get_data()._data_wfc_rules_individual.remove_cardinal_rule(_tile, _rules[_selected_items[_counter1]], _cardinal_index)
         _set_item_colour(_selected_items[_counter1], _red)
         _counter1 += 1
 
+    get_data()._data_wfc_rules_individual.save()
+    _validate_buttons() # Validating the buttons visibility
+
+## This method validates if to show the buttons or NOT.
+func _validate_buttons() -> void:
+    # Condition to hide all buttons if NO rules found
+    if _rules.size() == 0:
+        _show_btn_add_remove(false, false)
+    elif _rules.size() == get_data()._data_wfc_rules_individual.get_cardinal_size(_tile, _cardinal_index): # Hide Add Btn
+            _show_btn_add_remove(false, true)
+    elif get_data()._data_wfc_rules_individual.get_cardinal_size(_tile, _cardinal_index) == 0: # Hide Remove Btn
+        _show_btn_add_remove(true, false)
+    else:
+        _show_btn_add_remove(true, true) # Showing all the buttons
+
 ## This method validates and corrects the data.
 func _validate_data() -> void:
-    if _cardinal_index == 0: # North
-        _counter1 = 0
-        _rules_indv = get_data()._data_wfc_rules_individual.get_north_rules(_tile)
+    _counter1 = 0
+    _rules_indv = get_data()._data_wfc_rules_individual.get_cardinal_rules(_tile, _cardinal_index)
 
-        while _counter1 < _rules_indv.size(): # Loop for finding any extra element
-            _is_found_data = false
-            _counter2 = 0
-            while _counter2 < _rules.size(): # Loop for checking extra element
-                if _rules_indv[_counter1] == _rules[_counter2]: # Condition for extra element found
-                    _is_found_data = true
-                    break
-                _counter2 += 1
-            
-            if !_is_found_data: # Condition for removing the extra element
-                get_data()._data_wfc_rules_individual.remove_north_rule(_tile, _rules_indv[_counter1])
-
-            _counter1 += 1
+    while _counter1 < _rules_indv.size(): # Loop for finding any extra element
+        _is_found_data = false
+        _counter2 = 0
+        while _counter2 < _rules.size(): # Loop for checking extra element
+            if _rules_indv[_counter1] == _rules[_counter2]: # Condition for extra element found
+                _is_found_data = true
+                break
+            _counter2 += 1
         
-        _rules_indv.clear()
-        get_data()._data_wfc_rules_individual.save()
+        if !_is_found_data: # Condition for removing the extra element
+            get_data()._data_wfc_rules_individual.remove_cardinal_rule(_tile, _rules_indv[_counter1], _cardinal_index)
+
+        _counter1 += 1
+
+    _rules_indv.clear()
+    get_data()._data_wfc_rules_individual.save()
 
 ## This method sets up the items.
 func _setup_items() -> void:
@@ -91,31 +111,35 @@ func _setup_items() -> void:
         _item_names.add_item(get_data().get_wfc_tile_name(_rules[_counter1]))
         _counter1 += 1
 
-    if _cardinal_index == 0: # Checking if North
-        # Condition for adding all the rules
-        if (get_data()._data_wfc_rules_individual.get_north_size(_tile) == -1 &&
-            _rules.size() > 0): 
-            _counter1 = 0
-            while _counter1 < _rules.size(): # Loop for adding all the rules
-                get_data()._data_wfc_rules_individual.add_north_rule(_tile, _rules[_counter1])
-                _counter1 += 1
-            get_data()._data_wfc_rules_individual.save() # Saving when data are set here
-        
-        _rules_indv = get_data()._data_wfc_rules_individual.get_north_rules(_tile)
+    # Condition for adding all the rules
+    if (get_data()._data_wfc_rules_individual.get_cardinal_size(_tile, _cardinal_index) == -1 &&
+        _rules.size() > 0):
         _counter1 = 0
-        while _counter1 < _rules.size(): # Loop for applying correct item colour
-            _set_item_colour(_counter1, _red) # Making item red at first
-            _counter2 = 0
-            while _counter2 < _rules_indv.size(): # Loop for finding rules
-                if _rules[_counter1] == _rules_indv[_counter2]:# Checking if rule found
-                    _set_item_colour(_counter1, _green) # Making item green
-                    break
-                _counter2 += 1
+        while _counter1 < _rules.size(): # Loop for adding all the rules
+            get_data()._data_wfc_rules_individual.add_cardinal_rule(_tile, _rules[_counter1], _cardinal_index)
             _counter1 += 1
+        get_data()._data_wfc_rules_individual.save() # Saving when data are set here
+    
+    _rules_indv = get_data()._data_wfc_rules_individual.get_cardinal_rules(_tile, _cardinal_index)
+    _counter1 = 0
+    while _counter1 < _rules.size(): # Loop for applying correct item colour
+        _set_item_colour(_counter1, _red) # Making item red at first
+        _counter2 = 0
+        while _counter2 < _rules_indv.size(): # Loop for finding rules
+            if _rules[_counter1] == _rules_indv[_counter2]:# Checking if rule found
+                _set_item_colour(_counter1, _green) # Making item green
+                break
+            _counter2 += 1
+        _counter1 += 1
 
 ## This method sets the colour of the indexth item.
 func _set_item_colour(index:int, colour:Color) -> void:
     _item_names.set_item_custom_bg_color(index, colour)
+
+## This method hides/shows the add and remove buttons.
+func _show_btn_add_remove(is_add:bool, is_remove:bool) -> void:
+    _btn_add.visible = is_add
+    _btn_remove.visible = is_remove
 
 ## Duck typing checking only.
 func _is_cardinal_rule_ui_setup() -> bool:

@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_0xi2m")
-_data = Array[bool]([true, false, true, true, true, true])
+_data = Array[bool]([true, false, true, false, false, false])

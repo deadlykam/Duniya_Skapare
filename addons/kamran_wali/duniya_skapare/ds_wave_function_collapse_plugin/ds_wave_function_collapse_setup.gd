@@ -12,7 +12,7 @@ var _name_input_container: Control
 var _name_horizontal_container: Control
 var _list_verticals_container: Control
 var _lbl_save_msg: Label
-var _tile_rules_grid: Control
+var _tile_rule_cardinal_container: Control
 var _ob_selected_tile: OptionButton
 
 # Properties for internal usage
@@ -33,8 +33,8 @@ func _enter_tree() -> void:
     _name_horizontal_container = $MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer
     _list_verticals_container = $MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer
     _lbl_save_msg = $MainTabContainer/MainSettings/SaveButtonContainer/Lbl_Save_Msg
-    _tile_rules_grid = $MainTabContainer/TileRules/ScrollContainer/GridContainer
-    _ob_selected_tile = $MainTabContainer/TileRules/ScrollContainer/GridContainer/TileSelectionHolder/OB_SelectedTile
+    _tile_rule_cardinal_container = $MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/CardinalContainer
+    _ob_selected_tile = $MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/SelectTileContainer/OB_SelectedTile
 
     
 func _ready() -> void:
@@ -61,10 +61,10 @@ func update_check_box(id_main:int, id_pos:int, toggle:bool) -> void:
 func _setup_cardinal_uis() -> void:
     _counter = 0
     # Loop for finding all the cardinal uis
-    while _counter < _tile_rules_grid.get_child_count():
+    while _counter < _tile_rule_cardinal_container.get_child_count():
         # Condition to check if the child is a cardinal ui
-        if _tile_rules_grid.get_child(_counter).has_method("_is_cardinal_rule_ui_setup"):
-            _cardinal_uis.append(_tile_rules_grid.get_child(_counter))
+        if _tile_rule_cardinal_container.get_child(_counter).has_method("_is_cardinal_rule_ui_setup"):
+            _cardinal_uis.append(_tile_rule_cardinal_container.get_child(_counter))
         _counter += 1
 
 ## This method setups up the number of objects button option.
@@ -123,6 +123,40 @@ func _on_btn_save_pressed():
     get_data()._data_wfc_noo.save()
     get_data()._data_wfc_rules_individual.save()
     _lbl_save_msg.text = ""
+
+func _on_btn_reset_pressed():
+    _counter = 0
+    while _counter < get_data()._data_wfc_names.get_size(): # Loop for resetting the names
+        get_data()._data_wfc_names._data[_counter] = str(_counter)
+        _counter += 1
+    
+    get_data()._data_wfc_noo.set_value(0) # Resetting number of objects
+    
+    _counter = 0
+    while _counter < get_data()._data_wfc_rules._data.size(): # Loop for resetting the rules
+        get_data()._data_wfc_rules._data[_counter] = false
+        _counter += 1
+    
+    # Resetting all the cardinal individual rules
+    get_data()._data_wfc_rules_individual._north.clear()
+    get_data()._data_wfc_rules_individual._east.clear()
+    get_data()._data_wfc_rules_individual._south.clear()
+    get_data()._data_wfc_rules_individual._west.clear()
+
+    _counter = 0
+    while _counter < get_data()._data_wfc_rules_individual._north_size.size(): # Loop for resetting the size and pos
+        get_data()._data_wfc_rules_individual._north_size[_counter] = -1
+        get_data()._data_wfc_rules_individual._east_size[_counter] = -1
+        get_data()._data_wfc_rules_individual._south_size[_counter] = -1
+        get_data()._data_wfc_rules_individual._west_size[_counter] = -1
+        get_data()._data_wfc_rules_individual._north_pos[_counter] = 0
+        get_data()._data_wfc_rules_individual._east_pos[_counter] = 0
+        get_data()._data_wfc_rules_individual._south_pos[_counter] = 0
+        get_data()._data_wfc_rules_individual._west_pos[_counter] = 0
+        _counter += 1
+    
+    _show_inputs()
+    _setup_check_boxes()
 
 func _on_main_tab_container_tab_changed(tab:int):
     if tab == 1: # Condition for updating the Tile Rules tab

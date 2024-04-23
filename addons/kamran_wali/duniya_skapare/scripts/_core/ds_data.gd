@@ -6,13 +6,16 @@ class_name DS_Data
 static var _instance: DS_Data # Singleton holder
 
 # Constants
-const DATA_RULES: GDScript = preload("res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_tile_rules.gd")
+const DS_FIXEDSTRINGARRAY: GDScript = preload("res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_fixed_string_array.gd")
+const DS_FIXEDCHECKBOXFLAGARRAY: GDScript = preload("res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_fixed_checkbox_flag_array.gd")
+const DATA_NOO: GDScript = preload("res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_noo.gd")
+const DATA_TILE_RULE: GDScript = preload("res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_tile_rules.gd")
 
 # Data Properties
-var _data_wfc_names: DS_FixedStringArray = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_names.tres")
-var _data_wfc_rules: DS_FixedCheckBoxFlagArray = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_rules.tres")
-var _data_wfc_noo: DS_NoO = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_noo.tres")
-var _data_wfc_rules_individual: DATA_RULES = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_rules_individual.tres")
+var _data_wfc_names: DS_FIXEDSTRINGARRAY = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_names.tres")
+var _data_wfc_rules: DS_FIXEDCHECKBOXFLAGARRAY = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_rules.tres")
+var _data_wfc_noo: DATA_NOO = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_noo.tres")
+var _data_wfc_rules_individual: DATA_TILE_RULE = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_rules_individual.tres")
 
 var _wfc_names: Array[String]
 var _wfc_rules: Array[bool]

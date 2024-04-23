@@ -1,15 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://bn2yl6luygcom"]
+[gd_scene load_steps=2 format=3 uid="uid://c3fbfcynx86j7"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/ds_cardinal_rule_ui_setup.gd" id="1_eeo0l"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/ds_cardinal_rule_ui_setup.gd" id="1_m4kxi"]
 
-[node name="Cardinal_Rule_UI" type="Control"]
-custom_minimum_size = Vector2(100, 216)
+[node name="cardinal_rule_ui_2" type="Control"]
+clip_contents = true
+custom_minimum_size = Vector2(175, 175)
 layout_mode = 3
-anchors_preset = 10
+anchors_preset = 15
 anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -977.0
+offset_bottom = -473.0
 grow_horizontal = 2
-size_flags_horizontal = 3
-script = ExtResource("1_eeo0l")
+grow_vertical = 2
+script = ExtResource("1_m4kxi")
 
 [node name="CardinalContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -18,42 +22,37 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-alignment = 1
 
 [node name="Lbl_CardinalName" type="Label" parent="CardinalContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 horizontal_alignment = 1
 
 [node name="ItemContainer" type="HBoxContainer" parent="CardinalContainer"]
 layout_mode = 2
 
 [node name="Items_Names" type="ItemList" parent="CardinalContainer/ItemContainer"]
-custom_minimum_size = Vector2(384, 110)
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 select_mode = 1
-item_count = 5
+item_count = 3
 item_0/text = "item1"
 item_1/text = "item2"
-item_2/text = "Item3"
-item_3/text = "Item4"
-item_4/text = "Item5"
+item_2/text = "item3"
 
 [node name="ButtonContainer" type="HBoxContainer" parent="CardinalContainer"]
 layout_mode = 2
 alignment = 1
 
 [node name="Btn_Add" type="Button" parent="CardinalContainer/ButtonContainer"]
-custom_minimum_size = Vector2(126, 49)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
 text = "Add"
 
 [node name="Btn_Remove" type="Button" parent="CardinalContainer/ButtonContainer"]
-custom_minimum_size = Vector2(126, 49)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 25
 text = "Remove"
 
 [connection signal="pressed" from="CardinalContainer/ButtonContainer/Btn_Add" to="." method="_on_btn_add_pressed"]
