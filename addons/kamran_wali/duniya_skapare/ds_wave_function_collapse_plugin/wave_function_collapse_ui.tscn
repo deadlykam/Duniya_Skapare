@@ -24,7 +24,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MainSettings" type="VBoxContainer" parent="MainTabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="SaveButtonContainer" type="HBoxContainer" parent="MainTabContainer/MainSettings"]
@@ -85,7 +84,7 @@ offset_left = 152.0
 offset_right = 210.0
 offset_bottom = 20.0
 item_count = 3
-selected = 2
+selected = 1
 popup/item_0/text = "1"
 popup/item_0/id = 0
 popup/item_1/text = "2"
@@ -103,6 +102,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="name_input3" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
+visible = false
 layout_mode = 2
 
 [node name="ConditionHolder" type="Control" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer"]
@@ -138,16 +138,17 @@ offset_top = 60.0
 offset_right = 288.0
 offset_bottom = 86.0
 rotation = -0.736529
-text = "Beach"
+text = "Coast"
 
 [node name="H_Name3" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
+visible = false
 layout_mode = 2
 offset_left = 260.0
 offset_top = 60.0
 offset_right = 318.0
 offset_bottom = 86.0
 rotation = -0.736529
-text = "Water"
+text = "2"
 
 [node name="Data1" type="HBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
 layout_mode = 2
@@ -168,7 +169,7 @@ layout_mode = 2
 [node name="V_Name2" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "Beach"
+text = "Coast"
 horizontal_alignment = 2
 autowrap_mode = 2
 
@@ -179,12 +180,13 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Data3" type="HBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
+visible = false
 layout_mode = 2
 
 [node name="V_Name3" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "Water"
+text = "2"
 horizontal_alignment = 2
 autowrap_mode = 2
 
@@ -198,6 +200,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="TileRules" type="VBoxContainer" parent="MainTabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="RulesScrollContainer" type="ScrollContainer" parent="MainTabContainer/TileRules"]
