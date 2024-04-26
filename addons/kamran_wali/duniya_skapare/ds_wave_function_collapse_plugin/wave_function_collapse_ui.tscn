@@ -83,14 +83,18 @@ layout_mode = 1
 offset_left = 152.0
 offset_right = 210.0
 offset_bottom = 20.0
-item_count = 3
-selected = 2
+item_count = 5
+selected = 4
 popup/item_0/text = "1"
 popup/item_0/id = 0
 popup/item_1/text = "2"
 popup/item_1/id = 1
 popup/item_2/text = "3"
 popup/item_2/id = 2
+popup/item_3/text = "4"
+popup/item_3/id = 3
+popup/item_4/text = "5"
+popup/item_4/id = 4
 
 [node name="NameInputContainer" type="VBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer"]
 layout_mode = 2
@@ -161,7 +165,7 @@ offset_top = 60.0
 offset_right = 348.0
 offset_bottom = 86.0
 rotation = -0.736529
-text = "Water"
+text = "Corner1"
 
 [node name="H_Name5" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
 layout_mode = 2
@@ -170,7 +174,7 @@ offset_top = 60.0
 offset_right = 378.0
 offset_bottom = 86.0
 rotation = -0.736529
-text = "Water"
+text = "Corner2"
 
 [node name="Data1" type="HBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
 layout_mode = 2
@@ -226,7 +230,7 @@ layout_mode = 2
 [node name="V_Name3" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data4"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "Water"
+text = "Corner1"
 horizontal_alignment = 2
 autowrap_mode = 2
 
@@ -248,7 +252,7 @@ layout_mode = 2
 [node name="V_Name3" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data5"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "Water"
+text = "Corner2"
 horizontal_alignment = 2
 autowrap_mode = 2
 
