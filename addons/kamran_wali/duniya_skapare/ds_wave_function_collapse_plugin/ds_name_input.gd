@@ -19,7 +19,7 @@ func set_txt_name(name:String) -> void:
 
 ## This method sets the id of the label.
 func set_label_id() -> void:
-    _lbl_id.text = "Object" + str((_id + 1)) + ":"
+    _lbl_id.text = "Object" + str(_id) + ":"
 
 ## This method sets the manager
 func set_manager(manager:DS_WFCSetup) -> void:

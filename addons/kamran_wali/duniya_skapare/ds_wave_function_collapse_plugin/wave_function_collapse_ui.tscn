@@ -104,6 +104,12 @@ layout_mode = 2
 [node name="name_input3" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
 layout_mode = 2
 
+[node name="name_input4" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
+layout_mode = 2
+
+[node name="name_input5" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
+layout_mode = 2
+
 [node name="ConditionHolder" type="Control" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -133,9 +139,9 @@ text = "Ground"
 [node name="H_Name2" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
 layout_mode = 2
 offset_left = 230.0
-offset_top = 60.0
+offset_top = 59.0
 offset_right = 288.0
-offset_bottom = 86.0
+offset_bottom = 85.0
 rotation = -0.736529
 text = "Coast"
 
@@ -144,6 +150,24 @@ layout_mode = 2
 offset_left = 260.0
 offset_top = 60.0
 offset_right = 318.0
+offset_bottom = 86.0
+rotation = -0.736529
+text = "Water"
+
+[node name="H_Name4" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
+layout_mode = 2
+offset_left = 290.0
+offset_top = 60.0
+offset_right = 348.0
+offset_bottom = 86.0
+rotation = -0.736529
+text = "Water"
+
+[node name="H_Name5" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
+layout_mode = 2
+offset_left = 320.0
+offset_top = 60.0
+offset_right = 378.0
 offset_bottom = 86.0
 rotation = -0.736529
 text = "Water"
@@ -194,6 +218,53 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="check_box_data3" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="Data4" type="HBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
+layout_mode = 2
+
+[node name="V_Name3" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data4"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Water"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="check_box_data" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data4" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="check_box_data2" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data4" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="check_box_data3" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data4" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="check_box_data4" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data4" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="Data5" type="HBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
+layout_mode = 2
+
+[node name="V_Name3" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data5"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Water"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="check_box_data" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data5" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="check_box_data2" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data5" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="check_box_data3" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data5" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="check_box_data4" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data5" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="check_box_data5" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data5" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
 [node name="TileRules" type="VBoxContainer" parent="MainTabContainer"]
