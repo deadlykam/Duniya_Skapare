@@ -5,6 +5,7 @@ extends DS_BaseGen
 @export_category("Wave Function Collapse")
 var _index_start_tile: int
 var _start_tile_type: int
+@export var _is_nuke:= false
 
 var _tiles_open: Array[DS_Tile]
 var _tiles_closed: Array[DS_Tile]
@@ -116,8 +117,12 @@ func _setup() -> void:
 						_tiles_open.append(_tile_current.get_cardinal_direction(_counter1))
 			
 			_counter1 += 1
-		
-		_tiles_closed.append(_tile_current) # Tile done with processing
+
+		if _is_nuke: # Condition to check if nuke is available
+			if _tile_current.get_tile_type() != -1: # Condition to check if processing is done
+				_tiles_closed.append(_tile_current) # Tile done with processing
+		else:
+			_tiles_closed.append(_tile_current) # Tile done with processing
 
 ## This method finds all the neighbouring tile rules.
 func _find_all_neighbour_tile_rules() -> void:
@@ -255,6 +260,36 @@ func _set_tile() -> void:
 			_common_blocks.remove_at(_counter1)
 		
 		print("===XXX===")
+	
+	if _is_nuke: # Checking if nuke option is available
+		if _common_blocks.is_empty(): # Checking if nuking required
+			print("~~~~~~~~~~~~~~~~NUKED~~~~~~~~~~~~~~~~")
+			# Nuking South
+			if _tile_current.get_south() != null:
+				if _tile_current.get_south().get_tile_type() != -1 && _tile_current.get_south() != _tiles_closed[0]:
+					_tile_current.get_south().set_tile_type(-1)
+					_tiles_open.push_front(_tile_current.get_south())
+			
+			# Nuking East
+			if _tile_current.get_east() != null:
+				if _tile_current.get_east().get_tile_type() != -1 && _tile_current.get_east() != _tiles_closed[0]:
+					_tile_current.get_east().set_tile_type(-1)
+					_tiles_open.push_front(_tile_current.get_east())
+			
+			_tiles_open.push_front(_tile_current) # Nuking Current Tile
+
+			# Nuking North
+			if _tile_current.get_north() != null:
+				if _tile_current.get_north().get_tile_type() != -1 && _tile_current.get_north() != _tiles_closed[0]:
+					_tile_current.get_north().set_tile_type(-1)
+					_tiles_open.push_front(_tile_current.get_north())
+			
+			# Nuking West
+			if _tile_current.get_west() != null:
+				if _tile_current.get_west().get_tile_type() != -1 && _tile_current.get_west() != _tiles_closed[0]:
+					_tile_current.get_west().set_tile_type(-1)
+					_tiles_open.push_front(_tile_current.get_west())
+	
 	_DELETE_ME += 1
 
 func _to_string() -> String:
