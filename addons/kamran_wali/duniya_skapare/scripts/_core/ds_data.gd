@@ -49,8 +49,8 @@ func get_wfc_rules() -> Array[bool]:
 func get_wfc_number_of_tiles() -> int:
     return _data_wfc_noo.get_value()
 
-## This method gets an array of rules for the given individual tile.
-## This is recommended to store the array in a variable as calling
+## This method gets an array of rules for the given tile.
+## It is recommended to store the array in a variable as calling
 ## this over and over will become very expensive for performance.
 func get_wfc_tile_rules(tile:int) -> Array[int]:
     _temp_tile_rules.clear()
@@ -69,6 +69,17 @@ func get_wfc_tile_rules(tile:int) -> Array[int]:
         _counter1 += 1
 
     return _temp_tile_rules
+
+## This method gets an array of rules for one cardinal side of the given tile.
+## It is recommended to store the array in a variable as calling this over and over
+## will become very expensive for performance
+## Cardinal Values:
+##                  North = 0
+##                  East = 1
+##                  South = 2
+##                  West = 3
+func get_wfc_tile_rules_individual(tile:int, cardinal:int) -> Array[int]:
+    return _data_wfc_rules_individual.get_cardinal_rules(tile, cardinal)
 
 ## This method gets the name of the wfc tile.
 func get_wfc_tile_name(tile:int) -> String:
