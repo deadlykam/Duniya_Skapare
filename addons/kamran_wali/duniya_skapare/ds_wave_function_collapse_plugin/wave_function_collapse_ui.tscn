@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://c86oklgxhesux"]
+[gd_scene load_steps=6 format=3 uid="uid://c86oklgxhesux"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/wave_function_collapse_setup.gd" id="1_afol5"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/ds_wave_function_collapse_setup.gd" id="1_ss0s7"]
 [ext_resource type="PackedScene" uid="uid://cphspo0fltqev" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/name_input.tscn" id="2_0hku7"]
 [ext_resource type="PackedScene" uid="uid://bjgtxq5gjlk5m" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/check_box_data.tscn" id="3_d5mrj"]
+[ext_resource type="Texture2D" uid="uid://ce5n8nbt7vcci" path="res://addons/kamran_wali/duniya_skapare/textures/uis/tile_illustration.png" id="5_2dw2c"]
+[ext_resource type="PackedScene" uid="uid://c3fbfcynx86j7" path="res://addons/kamran_wali/duniya_skapare/ds_wave_function_collapse_plugin/cardinal_rule_ui_2.tscn" id="5_jiool"]
 
 [node name="Wave Function Collapse Settings" type="Control"]
 layout_mode = 3
@@ -11,9 +13,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_afol5")
+script = ExtResource("1_ss0s7")
 
-[node name="MainContainer" type="VBoxContainer" parent="."]
+[node name="MainTabContainer" type="TabContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,10 +23,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SaveButtonContainer" type="HBoxContainer" parent="MainContainer"]
+[node name="MainSettings" type="VBoxContainer" parent="MainTabContainer"]
 layout_mode = 2
 
-[node name="Btn_Save" type="Button" parent="MainContainer/SaveButtonContainer"]
+[node name="SaveButtonContainer" type="HBoxContainer" parent="MainTabContainer/MainSettings"]
+layout_mode = 2
+
+[node name="Btn_Save" type="Button" parent="MainTabContainer/MainSettings/SaveButtonContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -32,20 +37,29 @@ size_flags_vertical = 0
 theme_override_font_sizes/font_size = 20
 text = "SAVE"
 
-[node name="Lbl_Save_Msg" type="Label" parent="MainContainer/SaveButtonContainer"]
+[node name="Lbl_Save_Msg" type="Label" parent="MainTabContainer/MainSettings/SaveButtonContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.415686, 0.423529, 1)
 theme_override_font_sizes/font_size = 10
 
-[node name="MainScrollContainer" type="ScrollContainer" parent="MainContainer"]
+[node name="Btn_Reset" type="Button" parent="MainTabContainer/MainSettings/SaveButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "RESET"
+
+[node name="MainScrollContainer" type="ScrollContainer" parent="MainTabContainer/MainSettings"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollHolder" type="Control" parent="MainContainer/MainScrollContainer"]
+[node name="ScrollHolder" type="Control" parent="MainTabContainer/MainSettings/MainScrollContainer"]
 custom_minimum_size = Vector2(1152, 648)
 layout_mode = 2
 
-[node name="MainScrollContainer" type="VBoxContainer" parent="MainContainer/MainScrollContainer/ScrollHolder"]
+[node name="MainScrollContainer" type="VBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -54,47 +68,57 @@ offset_bottom = -48.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NoOHolder" type="Control" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer"]
+[node name="NoOHolder" type="Control" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer"]
 custom_minimum_size = Vector2(1152, 25)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder"]
+[node name="Label" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder"]
 layout_mode = 1
 offset_right = 151.0
 offset_bottom = 26.0
 text = "Number of Objects:"
 
-[node name="OB_NoO" type="OptionButton" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder"]
+[node name="OB_NoO" type="OptionButton" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder"]
 layout_mode = 1
 offset_left = 152.0
 offset_right = 210.0
 offset_bottom = 20.0
-item_count = 3
-selected = 2
+item_count = 5
+selected = 4
 popup/item_0/text = "1"
 popup/item_0/id = 0
 popup/item_1/text = "2"
 popup/item_1/id = 1
 popup/item_2/text = "3"
 popup/item_2/id = 2
+popup/item_3/text = "4"
+popup/item_3/id = 3
+popup/item_4/text = "5"
+popup/item_4/id = 4
 
-[node name="NameInputContainer" type="VBoxContainer" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer"]
+[node name="NameInputContainer" type="VBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer"]
 layout_mode = 2
 
-[node name="name_input" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
+[node name="name_input" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
 layout_mode = 2
 
-[node name="name_input2" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
+[node name="name_input2" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
 layout_mode = 2
 
-[node name="name_input3" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
+[node name="name_input3" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
 layout_mode = 2
 
-[node name="ConditionHolder" type="Control" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer"]
+[node name="name_input4" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
+layout_mode = 2
+
+[node name="name_input5" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer" instance=ExtResource("2_0hku7")]
+layout_mode = 2
+
+[node name="ConditionHolder" type="Control" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ListVerticalsContainer" type="VBoxContainer" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder"]
+[node name="ListVerticalsContainer" type="VBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -102,85 +126,232 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NameHorizontalContainer" type="Control" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
+[node name="NameHorizontalContainer" type="Control" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
 clip_contents = true
 custom_minimum_size = Vector2(1152, 75)
 layout_mode = 2
 
-[node name="H_Name1" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
+[node name="H_Name1" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
 layout_mode = 2
 offset_left = 200.0
 offset_top = 60.0
 offset_right = 256.0
 offset_bottom = 86.0
 rotation = -0.736529
-text = "0"
+text = "Ground"
 
-[node name="H_Name2" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
+[node name="H_Name2" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
 layout_mode = 2
 offset_left = 230.0
-offset_top = 60.0
+offset_top = 59.0
 offset_right = 288.0
-offset_bottom = 86.0
+offset_bottom = 85.0
 rotation = -0.736529
-text = "1"
+text = "Coast"
 
-[node name="H_Name3" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
+[node name="H_Name3" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
 layout_mode = 2
 offset_left = 260.0
 offset_top = 60.0
 offset_right = 318.0
 offset_bottom = 86.0
 rotation = -0.736529
-text = "2"
+text = "Water"
 
-[node name="Data1" type="HBoxContainer" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
+[node name="H_Name4" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
+layout_mode = 2
+offset_left = 290.0
+offset_top = 60.0
+offset_right = 348.0
+offset_bottom = 86.0
+rotation = -0.736529
+text = "Corner1"
+
+[node name="H_Name5" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer"]
+layout_mode = 2
+offset_left = 320.0
+offset_top = 60.0
+offset_right = 378.0
+offset_bottom = 86.0
+rotation = -0.736529
+text = "Corner2"
+
+[node name="Data1" type="HBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
 layout_mode = 2
 
-[node name="V_Name1" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data1"]
+[node name="V_Name1" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data1"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "0"
+text = "Ground"
 horizontal_alignment = 2
 autowrap_mode = 2
 
-[node name="check_box_data" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data1" instance=ExtResource("3_d5mrj")]
+[node name="check_box_data" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data1" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
-[node name="Data2" type="HBoxContainer" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
+[node name="Data2" type="HBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
 layout_mode = 2
 
-[node name="V_Name2" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2"]
+[node name="V_Name2" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "1"
+text = "Coast"
 horizontal_alignment = 2
 autowrap_mode = 2
 
-[node name="check_box_data" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2" instance=ExtResource("3_d5mrj")]
+[node name="check_box_data" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
-[node name="check_box_data2" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2" instance=ExtResource("3_d5mrj")]
+[node name="check_box_data2" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data2" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
-[node name="Data3" type="HBoxContainer" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
+[node name="Data3" type="HBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
 layout_mode = 2
 
-[node name="V_Name3" type="Label" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3"]
+[node name="V_Name3" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "2"
+text = "Water"
 horizontal_alignment = 2
 autowrap_mode = 2
 
-[node name="check_box_data" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_d5mrj")]
+[node name="check_box_data" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
-[node name="check_box_data2" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_d5mrj")]
+[node name="check_box_data2" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
-[node name="check_box_data3" parent="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_d5mrj")]
+[node name="check_box_data3" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data3" instance=ExtResource("3_d5mrj")]
 layout_mode = 2
 
-[connection signal="pressed" from="MainContainer/SaveButtonContainer/Btn_Save" to="." method="_on_btn_save_pressed"]
-[connection signal="item_selected" from="MainContainer/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder/OB_NoO" to="." method="_on_ob_no_o_item_selected"]
+[node name="Data4" type="HBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
+layout_mode = 2
+
+[node name="V_Name3" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data4"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Corner1"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="check_box_data" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data4" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="check_box_data2" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data4" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="check_box_data3" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data4" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="check_box_data4" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data4" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="Data5" type="HBoxContainer" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer"]
+layout_mode = 2
+
+[node name="V_Name3" type="Label" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data5"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Corner2"
+horizontal_alignment = 2
+autowrap_mode = 2
+
+[node name="check_box_data" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data5" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="check_box_data2" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data5" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="check_box_data3" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data5" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="check_box_data4" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data5" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="check_box_data5" parent="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/Data5" instance=ExtResource("3_d5mrj")]
+layout_mode = 2
+
+[node name="TileRules" type="VBoxContainer" parent="MainTabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="RulesScrollContainer" type="ScrollContainer" parent="MainTabContainer/TileRules"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ObjectContainer" type="VBoxContainer" parent="MainTabContainer/TileRules/RulesScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SelectTileContainer" type="HBoxContainer" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/SelectTileContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="Lbl_SelectedTile" type="Label" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/SelectTileContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Selected Tile:"
+
+[node name="OB_SelectedTile" type="OptionButton" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/SelectTileContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 20
+item_count = 2
+selected = 0
+popup/item_0/text = "Ground"
+popup/item_0/id = 0
+popup/item_1/text = "Coast"
+popup/item_1/id = 1
+
+[node name="CardinalContainer" type="GridContainer" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 3
+
+[node name="Control" type="Control" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/CardinalContainer"]
+custom_minimum_size = Vector2(175, 175)
+layout_mode = 2
+
+[node name="cardinal_rule_ui_north" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/CardinalContainer" instance=ExtResource("5_jiool")]
+layout_mode = 2
+_cardinal_name = "North (-z)"
+
+[node name="Control2" type="Control" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/CardinalContainer"]
+custom_minimum_size = Vector2(175, 175)
+layout_mode = 2
+
+[node name="cardinal_rule_ui_west" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/CardinalContainer" instance=ExtResource("5_jiool")]
+layout_mode = 2
+_cardinal_name = "West (-x)"
+_cardinal_index = 3
+
+[node name="TileIllustrator" type="TextureRect" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/CardinalContainer"]
+custom_minimum_size = Vector2(175, 175)
+layout_mode = 2
+texture = ExtResource("5_2dw2c")
+stretch_mode = 5
+
+[node name="cardinal_rule_ui_east" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/CardinalContainer" instance=ExtResource("5_jiool")]
+layout_mode = 2
+_cardinal_name = "East (+x)"
+_cardinal_index = 1
+
+[node name="Control4" type="Control" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/CardinalContainer"]
+custom_minimum_size = Vector2(175, 175)
+layout_mode = 2
+
+[node name="cardinal_rule_ui_south" parent="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/CardinalContainer" instance=ExtResource("5_jiool")]
+layout_mode = 2
+_cardinal_name = "South (+z)"
+_cardinal_index = 2
+
+[connection signal="tab_changed" from="MainTabContainer" to="." method="_on_main_tab_container_tab_changed"]
+[connection signal="pressed" from="MainTabContainer/MainSettings/SaveButtonContainer/Btn_Save" to="." method="_on_btn_save_pressed"]
+[connection signal="pressed" from="MainTabContainer/MainSettings/SaveButtonContainer/Btn_Reset" to="." method="_on_btn_reset_pressed"]
+[connection signal="item_selected" from="MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder/OB_NoO" to="." method="_on_ob_no_o_item_selected"]
+[connection signal="item_selected" from="MainTabContainer/TileRules/RulesScrollContainer/ObjectContainer/SelectTileContainer/OB_SelectedTile" to="." method="_on_ob_selected_tile_item_selected"]

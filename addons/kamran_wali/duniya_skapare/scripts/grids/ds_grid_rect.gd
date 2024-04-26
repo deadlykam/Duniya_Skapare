@@ -30,6 +30,37 @@ func show_grid_tile_index(index:int) -> String:
 func show_grid_tile() -> String:
 	return show_grid_tile_index(-1)
 
+func show_grid_tile_rot_index(index:int) -> String:
+	_index = 0
+	_counter1 = 0
+	print("Showing Grid with tile information:")
+	_debug_print = ""
+
+	# Loop for printing the grid
+	while _counter1 < _grid_y:
+		_counter2 = 0
+
+		# Loop for storing all the x-axis values for printing
+		while _counter2 < _grid_x:
+			_debug_print += (("[color=green]" if _index == index else "") + 
+								str(_tiles[_index].get_tile_rotation()) +
+								("[/color]" if _index == index else "") 
+								+ "   ")
+			_index += 1
+			_counter2 += 1
+		
+		_debug_print += "\n"
+		_counter1 += 1
+	
+	_debug_print += "===xxx==="
+	return _debug_print
+
+## This method returns the grid in string format.
+## The tile rotation information are shown in the grid.
+## Use this for debugging.
+func show_grid_tile_rot() -> String:
+	return show_grid_tile_rot_index(-1)
+
 func show_grid_index_index(index: int) -> String:
 	_index = 0
 	_counter1 = 0
@@ -80,7 +111,7 @@ func _setup() -> void:
 			# Adding north tile refs
 			_tiles[_index].set_north(
 				_tiles[_index - _grid_y] if
-				_counter1 > 0 #&& (_counter1 <= _grid_y - 1)
+				_counter1 > 0
 				else null
 			)
 			
@@ -94,7 +125,7 @@ func _setup() -> void:
 			# Adding west tile refs
 			_tiles[_index].set_west(
 				_tiles[_index - 1] if
-				_counter2 > 0 #&& (_counter2 <= _grid_x - 1)
+				_counter2 > 0
 				else null
 			)
 			

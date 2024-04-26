@@ -45,6 +45,19 @@ func show_grid_tile_index(index:int) -> String:
     return "Not implemented!"
 
 ## This method returns the grid in string format.
+## The tile rotation information are shown in the grid.
+## Use this for debugging.
+func show_grid_tile_rot() -> String:
+    return "Not implemented!"
+
+## This method returns the grid in string format.
+## The tile rotation information are shown in the grid.
+## It also highlights the indexth tile.
+## Use this for debugging.
+func show_grid_tile_rot_index(index:int) -> String:
+    return "Not implemented!"
+
+## This method returns the grid in string format.
 ## The index of the tile are shown in the grid.
 ## Use this for debugging.
 func show_grid_index() -> String:

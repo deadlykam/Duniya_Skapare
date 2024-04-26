@@ -1,5 +1,4 @@
 @tool
-class_name DS_FixedStringArray
 extends "res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_base_resource.gd"
 
 @export var _data: Array[String]
@@ -15,3 +14,8 @@ func get_element(index:int) -> String:
 ## This method gets the number of elements in the data.
 func get_size() -> int:
     return _data.size()
+
+## This method gets all the data by duplicating
+## all the data.
+func get_data() -> Array[String]:
+    return _data.duplicate()

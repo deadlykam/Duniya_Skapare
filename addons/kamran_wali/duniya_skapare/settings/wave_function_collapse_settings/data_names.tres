@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="DS_FixedStringArray" load_steps=2 format=3 uid="uid://bo22ln4xyxeal"]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bo22ln4xyxeal"]
 
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_fixed_string_array.gd" id="1_l4wc3"]
 
 [resource]
 script = ExtResource("1_l4wc3")
-_data = Array[String](["0", "1", "2"])
+_data = Array[String](["Ground", "Coast", "Water", "Corner1", "Corner2"])

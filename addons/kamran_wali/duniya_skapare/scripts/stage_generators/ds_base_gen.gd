@@ -37,6 +37,10 @@ func _ready() -> void:
 func add_update_tile_info(tile: TILE_INFO) -> void:
 	_update_tile_info.append(tile)
 
+## This method gets the DS_Data.
+func get_data() -> DS_Data:
+	return DS_Data.get_instance()
+
 ## This method sets up the grid and MUST be overridden.
 func _setup() -> void:
 	pass

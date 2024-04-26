@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bvhmjt5e2nqnk"]
+
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_tile_rules.gd" id="1_vyfog"]
+
+[resource]
+script = ExtResource("1_vyfog")
+_north = Array[int]([3, 1, 0, 4, 3, 1, 4, 2, 1, 4, 1, 3, 1])
+_east = Array[int]([3, 1, 0, 2, 4, 2, 1, 4, 1, 3, 1])
+_south = Array[int]([3, 1, 0, 4, 3, 1, 4, 2, 1, 0, 2])
+_west = Array[int]([3, 1, 0, 0, 4, 2, 1, 0, 2])
+_north_pos = Array[int]([0, 3, 6, 9, 11])
+_east_pos = Array[int]([0, 3, 4, 7, 9])
+_south_pos = Array[int]([0, 3, 6, 9, 10])
+_west_pos = Array[int]([0, 3, 4, 7, 8])
+_north_size = Array[int]([3, 3, 3, 2, 2])
+_east_size = Array[int]([3, 1, 3, 2, 2])
+_south_size = Array[int]([3, 3, 3, 1, 1])
+_west_size = Array[int]([3, 1, 3, 1, 1])
