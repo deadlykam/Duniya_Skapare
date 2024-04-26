@@ -36,6 +36,8 @@ func _get_property_list():
 
 	_type_names = ""
 	_counter1 = 0
+	get_data().instansiate()
+	
 	# Loop for loading up all the tile type names
 	while _counter1 <= get_data().get_wfc_number_of_tiles():
 		_type_names += (get_data().get_wfc_tile_names()[_counter1] +
@@ -179,7 +181,7 @@ var _DELETE_ME:= 1 # REMOVE THIS VARIABLE AS IT IS FOR DEBUGGING ONLY!!! <-- !**
 func _set_tile() -> void:
 	print("Setting ", _DELETE_ME," Tile:")
 	while(_common_blocks.size() != 0):
-		print("- Tile Type Available: [", _common_blocks,"]")
+		print("- Tile Type Available: ", _common_blocks)
 		_prob = _rng.randf() # Getting probability value
 		_prob_total = (1.0 / _common_blocks.size()) # Resetting to find the tile type
 
@@ -218,49 +220,22 @@ func _set_tile() -> void:
 							print("- No Matches found!")
 							break
 						else: # Condition to check if neighbour allows to set tile
-							_rules_indv = get_data().get_wfc_tile_rules_individual(_tile_current.get_cardinal_direction(_counter3).get_tile_type(), 
-							(_counter3 + 2 if (_counter3 + 2) < _tile_current.get_cardinal_direction_size() else _counter3 - 2))
+
+							_rules_indv = get_data().get_wfc_tile_rules_individual(_tile_current.get_cardinal_direction(_counter3).get_tile_type(),
+							_tile_current.get_cardinal_direction(_counter3) # The neighbour's rotational cardinal index
+							.get_rotational_cardinal_index(
+								(_counter3 + 2 if (_counter3 + 2) < _tile_current.get_cardinal_direction_size() else _counter3 - 2)))
+
+							# _tile_current.get_rotational_cardinal_index((_counter3 + 2 if (_counter3 + 2) < _tile_current.get_cardinal_direction_size() else _counter3 - 2)))
+							
+							print("- N's Rules[", _tile_current.get_rotational_cardinal_index((_counter3 + 2 if (_counter3 + 2) < _tile_current.get_cardinal_direction_size() else _counter3 - 2)),"]: ", 
+								_rules_indv, ", selected rules: ", _common_blocks[_counter1])
 
 							# Condition for NOT finding any matches from the neighbour's side
 							if !_rules_indv.has(_common_blocks[_counter1]):
 								print("- No Matches found in neighbour's check!")
 								break
-							
-						# _rules_indv_cardinals.clear()
-						# _rules_indv_current.clear()
-						
-						# # TODO: Check from here why the individual rules are not working especially the east side of coast
-						# #		should be water or other coast and NOT ground.
-						
-						# # Calculating the opposite cardinal index
-						# _opposite_cardinal = (_counter3 + 2 if (_counter3 + 2) < _tile_current.get_cardinal_direction_size()
-						# 	else _counter3 - 2)
-						# # Getting the opposite cardinal individual rules
-						# _rules_indv_cardinals = get_data().get_wfc_tile_rules_individual(
-						# 	_tile_current.get_cardinal_direction(_counter3).get_tile_type(), _opposite_cardinal)
-						# print("- Opposite Rules: ", _rules_indv_cardinals)
-						
-						# if _rules_indv_cardinals.size() > 0: # Checking if individual rules found
-						# 	# Getting the correct individual rules by shifting cardinals by 1 which is taken as rotation
-						# 	_rules_indv_current = get_data().get_wfc_tile_rules_individual(_common_blocks[_counter1], 
-						# 		((_counter3 - _counter2) if (_counter3 - _counter2) >= 0 
-						# 		else _tile_current.get_cardinal_direction_size() + (_counter3 - _counter2)))
-						# 	print("- Shift Rules: ", _rules_indv_current)
-							
-						# 	_counter4 = 0
-						# 	while _counter4 < _rules_indv_cardinals.size(): # Loop for finding matching rules
-						# 		# Match found breaking the loop
-						# 		if _rules_indv_current.has(_rules_indv_cardinals[_counter4]):
-						# 			break
-						# 		_counter4 += 1
-							
-						# 	# No matches found, stopping the loop and going for next shift check
-						# 	if _counter4 == _rules_indv_cardinals.size():
-						# 		print("- No Matches found!")
-						# 		break
-						# else: # No rules found, stopping the loop and going for next shift check
-						# 	break
-						
+
 				_counter3 += 1
 			
 			# Found a tile to set for the current tile

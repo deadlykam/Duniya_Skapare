@@ -22,15 +22,15 @@ var _counter_pos:= -1
 func check_data() -> void:
     #TODO: New size element must have a value of -1 that will be used by other scripts <-- !***
     # Condition to check if the data are NOT correct and to correct them
-    if _north_pos.size() != DS_Data.get_instance()._data_wfc_names.get_size():
-        _north_pos.resize(DS_Data.get_instance()._data_wfc_names.get_size())
-        _east_pos.resize(DS_Data.get_instance()._data_wfc_names.get_size())
-        _south_pos.resize(DS_Data.get_instance()._data_wfc_names.get_size())
-        _west_pos.resize(DS_Data.get_instance()._data_wfc_names.get_size())
-        _north_size.resize(DS_Data.get_instance()._data_wfc_names.get_size())
-        _east_size.resize(DS_Data.get_instance()._data_wfc_names.get_size())
-        _south_size.resize(DS_Data.get_instance()._data_wfc_names.get_size())
-        _west_size.resize(DS_Data.get_instance()._data_wfc_names.get_size())
+    if _north_pos.size() != DS_Data.get_instance().get_wfc_max_tiles():
+        _north_pos.resize(DS_Data.get_instance().get_wfc_max_tiles())
+        _east_pos.resize(DS_Data.get_instance().get_wfc_max_tiles())
+        _south_pos.resize(DS_Data.get_instance().get_wfc_max_tiles())
+        _west_pos.resize(DS_Data.get_instance().get_wfc_max_tiles())
+        _north_size.resize(DS_Data.get_instance().get_wfc_max_tiles())
+        _east_size.resize(DS_Data.get_instance().get_wfc_max_tiles())
+        _south_size.resize(DS_Data.get_instance().get_wfc_max_tiles())
+        _west_size.resize(DS_Data.get_instance().get_wfc_max_tiles())
 
 ## This method adds a rule to the north tile.
 func add_north_rule(index:int, tile:int) -> void:

@@ -27,7 +27,7 @@ var _obj_size:= -1
 var _is_setup_done:= false
 
 func _enter_tree() -> void:
-    get_data()._data_wfc_rules_individual.check_data()
+    _check_data()
     _name_input_container = $MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NameInputContainer
     _obtn_noo = $MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/NoOHolder/OB_NoO
     _name_horizontal_container = $MainTabContainer/MainSettings/MainScrollContainer/ScrollHolder/MainScrollContainer/ConditionHolder/ListVerticalsContainer/NameHorizontalContainer
@@ -67,12 +67,41 @@ func _setup_cardinal_uis() -> void:
             _cardinal_uis.append(_tile_rule_cardinal_container.get_child(_counter))
         _counter += 1
 
+## This method checks if the data start up state is correct
+func _check_data() -> void:
+    get_data()._data_wfc_rules_individual.check_data()
+
+    # Condition to resize the name data
+    if get_data()._data_wfc_names.get_size() != get_data().get_wfc_max_tiles():
+        get_data()._data_wfc_names._data.resize(get_data().get_wfc_max_tiles())
+    
+    _counter = 0 # Acts as counter
+    _counter2 = 0 # Acts as sumation
+
+    # Loop for finding the new checkbox data size
+    while _counter <= get_data().get_wfc_max_tiles():
+        _counter2 += _counter
+        _counter += 1
+    
+    # Condition to resize the check box data which are the main rules
+    if _counter2 != get_data()._data_wfc_rules._data.size():
+        get_data()._data_wfc_rules._data.resize(_counter2)
+    
+    _save_all_data() # Saving all data
+    
 ## This method setups up the number of objects button option.
 func _setup_obtn_noo() -> void:
     _obtn_noo.clear()
-    _obtn_noo.add_item("1")
-    _obtn_noo.add_item("2")
-    _obtn_noo.add_item("3")
+    _counter = 1
+
+    # Loop for adding the number of item labels
+    while _counter <= get_data().get_wfc_max_tiles():
+        _obtn_noo.add_item(str(_counter))
+        _counter += 1
+
+    # _obtn_noo.add_item("1")
+    # _obtn_noo.add_item("2")
+    # _obtn_noo.add_item("3")
     _noo = get_data()._data_wfc_noo.get_value()
     _obtn_noo.select(_noo)
 
@@ -118,10 +147,7 @@ func _on_ob_no_o_item_selected(index:int):
         _set_lbl_save_msg("Unsaved Changes!")
 
 func _on_btn_save_pressed():
-    get_data()._data_wfc_names.save()
-    get_data()._data_wfc_rules.save()
-    get_data()._data_wfc_noo.save()
-    get_data()._data_wfc_rules_individual.save()
+    _save_all_data()
     _lbl_save_msg.text = ""
 
 func _on_btn_reset_pressed():
@@ -130,7 +156,14 @@ func _on_btn_reset_pressed():
         get_data()._data_wfc_names._data[_counter] = str(_counter)
         _counter += 1
     
-    get_data()._data_wfc_noo.set_value(0) # Resetting number of objects
+    _on_ob_no_o_item_selected(0) # Resetting number of objects
+    _obtn_noo.select(0) # Selecting the default number of objects
+    
+    _counter = 0
+    while _counter < _name_inputs.size(): # Loop for resetting the tile names
+        _name_inputs[_counter].set_txt_name(str(_counter))
+        update_name(str(_counter), _counter) # Resetting the names
+        _counter += 1
     
     _counter = 0
     while _counter < get_data()._data_wfc_rules._data.size(): # Loop for resetting the rules
@@ -145,6 +178,7 @@ func _on_btn_reset_pressed():
 
     _counter = 0
     while _counter < get_data()._data_wfc_rules_individual._north_size.size(): # Loop for resetting the size and pos
+        # TODO: Make the sizes to 0 as default AFTER -1 check has been removed
         get_data()._data_wfc_rules_individual._north_size[_counter] = -1
         get_data()._data_wfc_rules_individual._east_size[_counter] = -1
         get_data()._data_wfc_rules_individual._south_size[_counter] = -1
@@ -155,7 +189,7 @@ func _on_btn_reset_pressed():
         get_data()._data_wfc_rules_individual._west_pos[_counter] = 0
         _counter += 1
     
-    _show_inputs()
+    # TODO: Remove the names from the name input?
     _setup_check_boxes()
 
 func _on_main_tab_container_tab_changed(tab:int):
@@ -201,6 +235,13 @@ func _show_inputs() -> void:
                 _h_names[_counter].hide()
                 _v_data[_counter].hide()
         _counter += 1
+
+## This method saves all data.
+func _save_all_data() -> void:
+    get_data()._data_wfc_names.save()
+    get_data()._data_wfc_rules.save()
+    get_data()._data_wfc_noo.save()
+    get_data()._data_wfc_rules_individual.save()
 
 ## This method sets the message for the save label.
 func _set_lbl_save_msg(msg:String) -> void:

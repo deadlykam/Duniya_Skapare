@@ -16,6 +16,7 @@ var _data_wfc_names: DS_FIXEDSTRINGARRAY = load("res://addons/kamran_wali/duniya
 var _data_wfc_rules: DS_FIXEDCHECKBOXFLAGARRAY = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_rules.tres")
 var _data_wfc_noo: DATA_NOO = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_noo.tres")
 var _data_wfc_rules_individual: DATA_TILE_RULE = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_rules_individual.tres")
+var _data_wfc_max_tiles: DATA_NOO = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse_settings/data_max_tiles.tres")
 
 var _wfc_names: Array[String]
 var _wfc_rules: Array[bool]
@@ -84,6 +85,10 @@ func get_wfc_tile_rules_individual(tile:int, cardinal:int) -> Array[int]:
 ## This method gets the name of the wfc tile.
 func get_wfc_tile_name(tile:int) -> String:
     return _data_wfc_names.get_element(tile)
+
+## This method gets the maximum number of tiles available.
+func get_wfc_max_tiles() -> int:
+    return _data_wfc_max_tiles.get_value()
 
 ## This method converts the data to user readable data.
 func _convert_data() -> void:
