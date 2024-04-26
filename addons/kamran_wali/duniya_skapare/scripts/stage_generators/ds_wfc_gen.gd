@@ -21,7 +21,6 @@ var _grid_pos_names: String
 var _counter1:= -1
 var _counter2:= -1
 var _counter3:= -1
-var _counter4:= -1
 var _opposite_cardinal:= -1 # Needed to find the opposite cardinal index to the current tile
 var _counter_method:= -1 # This counter is for methods ONLY
 var _max_block_size:= -1 # For storing the size of max compare
@@ -218,9 +217,15 @@ func _set_tile() -> void:
 						if !_rules_indv.has(_tile_current.get_cardinal_direction(_counter3).get_tile_type()):
 							print("- No Matches found!")
 							break
-						
-						# TODO: Another condition that asks the current neighbour if the current selected tile can be placed there. <-- !***
-						
+						else: # Condition to check if neighbour allows to set tile
+							_rules_indv = get_data().get_wfc_tile_rules_individual(_tile_current.get_cardinal_direction(_counter3).get_tile_type(), 
+							(_counter3 + 2 if (_counter3 + 2) < _tile_current.get_cardinal_direction_size() else _counter3 - 2))
+
+							# Condition for NOT finding any matches from the neighbour's side
+							if !_rules_indv.has(_common_blocks[_counter1]):
+								print("- No Matches found in neighbour's check!")
+								break
+							
 						# _rules_indv_cardinals.clear()
 						# _rules_indv_current.clear()
 						
