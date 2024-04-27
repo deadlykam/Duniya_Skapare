@@ -6,16 +6,17 @@ extends DS_BaseGen
 var _index_start_tile: int
 var _start_tile_type: int
 @export var _is_nuke:= false
+@export var _nuke_radius:= 1 # TODO: DO NOT ALLOW BELOW 1 VALUES
 
 var _tiles_open: Array[DS_Tile]
 var _tiles_closed: Array[DS_Tile]
+var _tiles_nuked: Array[DS_Tile]
 var _tile_current: DS_Tile
 var _common_blocks: Array[int] # For containing all the common blocks
 var _all_blocks: Array[int] # For containing all cardinal blocks
 var _all_sizes: Array[int] # For containing all cardinal sizes
 var _all_pos: Array[int] # For containing all cardinal pos
 var _blocks: Array[int]
-# var _rules_indv_cardinals: Array[int] # For containing the cardinals' individual rules
 var _rules_indv: Array[int] # For containing current individual rules
 var _type_names: String
 var _grid_pos_names: String
@@ -31,6 +32,11 @@ var _rng = RandomNumberGenerator.new()
 var _prob:= -1.0
 var _prob_total:= -1.0
 var _is_found_tile = false # Checking to see if the right tile has been found
+var _temp_tile_h: DS_Tile
+var _temp_tile_v: DS_Tile
+
+var _DELETE_ME:= 1.0
+var _nuke_counter:= 0
 
 func _get_property_list():
 	var properties = []
@@ -75,12 +81,13 @@ func _get_property_list():
 	return properties
 
 func _setup() -> void:
+	_DELETE_ME = Time.get_unix_time_from_system()
 	# Setting the starting and first tile
-	_grid.get_tile(_index_start_tile).set_tile_type(_start_tile_type)
+	get_grid_tile(_index_start_tile).set_tile_type(_start_tile_type)
 
 	_tiles_open.clear()
 	_tiles_closed.clear()
-	_tiles_open.append(_grid.get_tile(_index_start_tile))
+	_tiles_open.append(get_grid_tile(_index_start_tile))
 	_counter1 = 0
 	
 	# Loop for processing all the tiles
@@ -112,17 +119,31 @@ func _setup() -> void:
 		while _counter1 < _tile_current.get_cardinal_direction_size():
 			if _tile_current.get_cardinal_direction(_counter1) != null:
 				# Checking if tile has NOT been processed
-				if (!_tiles_closed.has(_tile_current.get_cardinal_direction(_counter1)) 
+				if (_tile_current.get_cardinal_direction(_counter1).get_tile_type() == -1
 					&& !_tiles_open.has(_tile_current.get_cardinal_direction(_counter1))):
 						_tiles_open.append(_tile_current.get_cardinal_direction(_counter1))
-			
-			_counter1 += 1
 
-		if _is_nuke: # Condition to check if nuke is available
-			if _tile_current.get_tile_type() != -1: # Condition to check if processing is done
-				_tiles_closed.append(_tile_current) # Tile done with processing
-		else:
-			_tiles_closed.append(_tile_current) # Tile done with processing
+			_counter1 += 1
+		
+		print("Open Size: ", _tiles_open.size())
+		
+		# # Loop for adding more tiles for processing
+		# while _counter1 < _tile_current.get_cardinal_direction_size():
+		# 	if _tile_current.get_cardinal_direction(_counter1) != null:
+		# 		# Checking if tile has NOT been processed
+		# 		if (!_tiles_closed.has(_tile_current.get_cardinal_direction(_counter1)) 
+		# 			&& !_tiles_open.has(_tile_current.get_cardinal_direction(_counter1))):
+		# 				_tiles_open.append(_tile_current.get_cardinal_direction(_counter1))
+			
+		# 	_counter1 += 1
+
+		# # TODO: See if this works with and without Nuke mode
+		# if _is_nuke && _tile_current.get_tile_type() != -1: # Checking if to allow to close the tile during nuke mode
+		# 	_tiles_closed.append(_tile_current) # Tile done with processing
+		# elif !_is_nuke: # Normal mode
+		# 	_tiles_closed.append(_tile_current) # Tile done with processing
+	
+	print("Finished Making Grid in : ", ((Time.get_unix_time_from_system() - _DELETE_ME)) * 1000, "ms, Nukes: ", _nuke_counter)
 
 ## This method finds all the neighbouring tile rules.
 func _find_all_neighbour_tile_rules() -> void:
@@ -179,14 +200,17 @@ func _find_common_rules() -> void:
 		if _is_common: # Condition for adding the common type
 			_common_blocks.append(_all_blocks[_max_block_pos + _counter1])
 		_counter1 += 1
-
-var _DELETE_ME:= 1 # REMOVE THIS VARIABLE AS IT IS FOR DEBUGGING ONLY!!! <-- !***
+	
+	if _common_blocks.is_empty(): # No common found, adding all tile types
+		_counter1 = 0
+		
+		while _counter1 <= get_data().get_wfc_number_of_tiles(): # Loop for adding all the tile types
+			_common_blocks.append(_counter1)
+			_counter1 += 1
 
 ## This method sets the current tile with a tile type.
 func _set_tile() -> void:
-	print("Setting ", _DELETE_ME," Tile:")
 	while(_common_blocks.size() != 0):
-		print("- Tile Type Available: ", _common_blocks)
 		_prob = _rng.randf() # Getting probability value
 		_prob_total = (1.0 / _common_blocks.size()) # Resetting to find the tile type
 
@@ -199,8 +223,6 @@ func _set_tile() -> void:
 			else: # Setting next tile type to be checked
 				_prob_total += (1.0 / _common_blocks.size())
 			_counter1 += 1
-
-		print("- Tile Type Randomly Selected: ", _common_blocks[_counter1])
 
 		_counter2 = 0 # This counter acts as number of rotation
 		_is_found_tile = false # Resetting found tile
@@ -217,12 +239,8 @@ func _set_tile() -> void:
 						_rules_indv = get_data().get_wfc_tile_rules_individual(_common_blocks[_counter1], 
 							_tile_current.get_rotational_cardinal_index(_counter3))
 
-						print("- Shift Rules[", _tile_current.get_rotational_cardinal_index(_counter3), "]: ", _rules_indv, ", N. Rule: ", 
-						_tile_current.get_cardinal_direction(_counter3).get_tile_type(), ", C2: ", _counter2, ", C3: ", _counter3)
-
 						# Condition for NOT finding any matches so breaking the loop for the next shift
 						if !_rules_indv.has(_tile_current.get_cardinal_direction(_counter3).get_tile_type()):
-							print("- No Matches found!")
 							break
 						else: # Condition to check if neighbour allows to set tile
 
@@ -231,14 +249,8 @@ func _set_tile() -> void:
 							.get_rotational_cardinal_index(
 								(_counter3 + 2 if (_counter3 + 2) < _tile_current.get_cardinal_direction_size() else _counter3 - 2)))
 
-							# _tile_current.get_rotational_cardinal_index((_counter3 + 2 if (_counter3 + 2) < _tile_current.get_cardinal_direction_size() else _counter3 - 2)))
-							
-							print("- N's Rules[", _tile_current.get_rotational_cardinal_index((_counter3 + 2 if (_counter3 + 2) < _tile_current.get_cardinal_direction_size() else _counter3 - 2)),"]: ", 
-								_rules_indv, ", selected rules: ", _common_blocks[_counter1])
-
 							# Condition for NOT finding any matches from the neighbour's side
 							if !_rules_indv.has(_common_blocks[_counter1]):
-								print("- No Matches found in neighbour's check!")
 								break
 
 				_counter3 += 1
@@ -246,51 +258,115 @@ func _set_tile() -> void:
 			# Found a tile to set for the current tile
 			if _counter3 == _tile_current.get_cardinal_direction_size():
 				_is_found_tile = true
-				print("- Found Match at C2: ", _counter2)
 				break
 
 			_counter2 += 1
 
 		if _is_found_tile: # Found a tile to set for the current tile
-			print("- Found Tile Type: ", _common_blocks[_counter1])
 			_tile_current.set_tile_type(_common_blocks[_counter1]) # Setting the tile type for current tile
-			print("===XXX===")
 			break
 		else: # Found no tile, removing the currently processed tile
 			_common_blocks.remove_at(_counter1)
-		
-		print("===XXX===")
 	
 	if _is_nuke: # Checking if nuke option is available
 		if _common_blocks.is_empty(): # Checking if nuking required
-			print("~~~~~~~~~~~~~~~~NUKED~~~~~~~~~~~~~~~~")
-			# Nuking South
-			if _tile_current.get_south() != null:
-				if _tile_current.get_south().get_tile_type() != -1 && _tile_current.get_south() != _tiles_closed[0]:
-					_tile_current.get_south().set_tile_type(-1)
-					_tiles_open.push_front(_tile_current.get_south())
-			
-			# Nuking East
-			if _tile_current.get_east() != null:
-				if _tile_current.get_east().get_tile_type() != -1 && _tile_current.get_east() != _tiles_closed[0]:
-					_tile_current.get_east().set_tile_type(-1)
-					_tiles_open.push_front(_tile_current.get_east())
-			
-			_tiles_open.push_front(_tile_current) # Nuking Current Tile
+			# TODO: Store the failed tile in the failed tiled array and once the whole grid has been set only then
+			#		process each failed tile one at a time
+			_nuke_process(_tile_current)
+			_nuke_counter += 1
 
-			# Nuking North
-			if _tile_current.get_north() != null:
-				if _tile_current.get_north().get_tile_type() != -1 && _tile_current.get_north() != _tiles_closed[0]:
-					_tile_current.get_north().set_tile_type(-1)
-					_tiles_open.push_front(_tile_current.get_north())
-			
-			# Nuking West
-			if _tile_current.get_west() != null:
-				if _tile_current.get_west().get_tile_type() != -1 && _tile_current.get_west() != _tiles_closed[0]:
-					_tile_current.get_west().set_tile_type(-1)
-					_tiles_open.push_front(_tile_current.get_west())
+## This method handles the nuking process of the correct tiles
+func _nuke_process(tile:DS_Tile) -> void:
+	_tiles_nuked.clear()
+	_counter1 = _nuke_radius * 2 # Getting the correct counter
+
+	while _counter1 >= 0: # Loop for finding East and West tiles to nuke
+		if _counter1 > _nuke_radius: # East
+			_temp_tile_h = _get_adj_neighbour_counter(tile, 1, _counter1 - _nuke_radius)
+		elif _counter1 == _nuke_radius: # Mid
+			_temp_tile_h = tile
+		elif _counter1 < _nuke_radius: # West
+			_temp_tile_h = _get_adj_neighbour_counter(tile, 3, _nuke_radius - _counter1)
+		
+		if _temp_tile_h != null:
+			_counter2 = _nuke_radius * 2
+			while _counter2 >= 0: # Loop for finding South an North tiles to nuke
+				if _counter2 > _nuke_radius: # South
+					_temp_tile_v = _get_adj_neighbour_counter(_temp_tile_h, 2, _counter2 - _nuke_radius)
+				elif _counter2 == _nuke_radius: # Mid
+					_temp_tile_v = _temp_tile_h
+				elif _counter2 < _nuke_radius: # North
+					_temp_tile_v = _get_adj_neighbour_counter(_temp_tile_h, 0, _nuke_radius - _counter)
+				
+				if _temp_tile_v != null: # Condition for nuking the tile
+					_nuke_tile(_temp_tile_v)
+				
+				if _counter1 == _nuke_radius && _counter2 == _nuke_radius: # Condition to add the tile being nuked to be processed
+					if !_tiles_open.has(_temp_tile_v): # Checking if it is NOT added already
+						_temp_tile_v.reset_tile()
+						# _tiles_open.push_front(_temp_tile_v)
+						_tiles_nuked.append(tile)
+				_counter2 -= 1
+		_counter1 -= 1
 	
-	_DELETE_ME += 1
+	_counter1 = 0
+	while _counter1 < _tiles_nuked.size(): # Loop for finding first tile with a neighbour typed tile
+		_counter2 = 0
+		while _counter2 < _tiles_nuked[_counter1].get_cardinal_direction_size(): # Loop for checking all directions
+			if _tiles_nuked[_counter1].get_cardinal_direction(_counter2) != null:
+				if _tiles_nuked[_counter1].get_cardinal_direction(_counter2).get_tile_type() != -1: # Condition for finding a typed neighbour
+					if !_tiles_open.has(_tiles_nuked[_counter1]): # Is already NOT added to open list
+						_tiles_open.append(_tiles_nuked[_counter1])
+					break # Breaking when added or already added
+			_counter2 += 1
+
+			if _counter2 != _tiles_nuked[_counter1].get_cardinal_direction_size(): # Found a typed neighbour NO more search required
+				break
+		_counter1 += 1
+	
+	# _counter1 = 0
+	# while _counter1 < _tiles_nuked.size(): # Loop for finding first tile with a neighbour typed tile
+	# 	_counter2 = 0
+	# 	while _counter2 < _tiles_nuked[_counter1].get_cardinal_direction_size(): # Loop for checking all directions
+	# 		if _tiles_nuked[_counter1].get_cardinal_direction(_counter2) != null:
+	# 			if _tiles_nuked[_counter1].get_cardinal_direction(_counter2).get_tile_type() != -1: # Condition for finding a typed neighbour
+	# 				_tiles_open.append(_tiles_nuked[_counter1])
+	# 				break
+	# 		_counter2 += 1
+
+	# 		if _counter2 != _tiles_nuked[_counter1].get_cardinal_direction_size(): # Found a typed neighbour NO more search required
+	# 			break
+	# 	_counter1 += 1
+
+## This method nukes the given tile.
+func _nuke_tile(tile:DS_Tile) -> void:
+	if tile != null: # Checking if tile is NOT null
+		if tile.get_tile_type() != -1 && tile != get_grid_tile(_index_start_tile): # Checking tile has been set and NOT starting tile
+			_counter_method = 0
+			while _counter_method < get_update_tile_info().size(): # Loop for checking if tile is NOT any of the set tiles
+				# Condition to check if tile is a set tile
+				if tile == get_grid_tile(get_update_tile_info()[_counter_method].get_index()):
+					break
+				_counter_method += 1
+			
+			# Condition to nuke the tile
+			if _counter_method == get_update_tile_info().size():
+				tile.reset_tile()
+				# _tiles_open.push_front(tile)
+				# _tiles_closed.erase(tile)
+				_tiles_nuked.append(tile)
+
+## This method gets the adjacent neighbour by using the counter.
+func _get_adj_neighbour_counter(tile:DS_Tile, dir:int, counter:int) -> DS_Tile:
+	_counter_method = 0
+	while _counter_method < counter: # Loop for finding adj neighbour
+		if tile.get_cardinal_direction(dir) != null: # Check if has neighbour
+			tile = tile.get_cardinal_direction(dir) # Getting neighbour
+		else: # Neighbour NOT found
+			tile = null
+			break
+		_counter_method += 1
+	return tile
 
 func _to_string() -> String:
 	print_rich(_grid.show_grid_index_index(_index_start_tile))

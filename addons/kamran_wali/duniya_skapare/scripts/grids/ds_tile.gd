@@ -8,6 +8,11 @@ var _rot_value:= 0
 func _init() -> void:
     _data_cd.resize(4)
 
+## This method resets the tile.
+func reset_tile() -> void:
+    _tile_type = -1
+    _rot_value = 0
+
 ## This method sets the type of the tile.
 func set_tile_type(tile_type:int) -> void:
     _tile_type = tile_type

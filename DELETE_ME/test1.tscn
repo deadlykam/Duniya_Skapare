@@ -20,17 +20,17 @@ _index_start_tile = 8
 
 [node name="Grid" type="Node3D" parent="WFC"]
 script = ExtResource("3_hc0lu")
-_grid_x = 4
-_grid_y = 4
+_grid_x = 20
+_grid_y = 20
 
 [node name="Node3D" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
-mesh = SubResource("PlaneMesh_xj2u8")
 
 [node name="SetTile" type="Node3D" parent="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
 script = ExtResource("4_tlncm")
 _grid_index = Array[int]([0, 1, 2])
 _tile_type = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+mesh = SubResource("PlaneMesh_xj2u8")

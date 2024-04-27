@@ -73,8 +73,7 @@ func show_grid_index_index(index: int) -> String:
 
 		# Loop for storing all the x-axis values for printing
 		while _counter2 < _grid_x:
-			_debug_print += (#("   " if _index < 10 else " " if _index < 100 else "") +
-								("[color=green]" if _index == index else "") + 
+			_debug_print += (("[color=green]" if _index == index else "") + 
 								str(_index) +
 								("[/color]" if _index == index else "") +
 								# " "
