@@ -5,6 +5,7 @@ extends DS_BaseGen
 @export_category("Wave Function Collapse")
 var _index_start_tile: int
 var _start_tile_type: int
+@export var _is_future_check:= false
 @export var _is_nuke:= false
 @export var _nuke_radius:= 1 # TODO: DO NOT ALLOW BELOW 1 VALUES
 
@@ -18,11 +19,13 @@ var _all_sizes: Array[int] # For containing all cardinal sizes
 var _all_pos: Array[int] # For containing all cardinal pos
 var _blocks: Array[int]
 var _rules_indv: Array[int] # For containing current individual rules
+var _rules_indv_fc: Array[int] # For containing future check individual rules
 var _type_names: String
 var _grid_pos_names: String
 var _counter1:= -1
 var _counter2:= -1
 var _counter3:= -1
+var _counter4:= -1
 var _opposite_cardinal:= -1 # Needed to find the opposite cardinal index to the current tile
 var _counter_method:= -1 # This counter is for methods ONLY
 var _max_block_size:= -1 # For storing the size of max compare
@@ -37,6 +40,7 @@ var _temp_tile_v: DS_Tile
 
 var _DELETE_ME:= 1.0
 var _nuke_counter:= 0
+var _DELETE_ME2:= 0
 
 func _get_property_list():
 	var properties = []
@@ -92,6 +96,7 @@ func _setup() -> void:
 	
 	# Loop for processing all the tiles
 	while !_tiles_open.is_empty():
+		print("Tile ", _DELETE_ME2, ": ")
 		_tile_current = _tiles_open.pop_front() # Getting next tile
 		_common_blocks.clear() # Clearing previous data
 		_all_blocks.clear() # Clearing previous data
@@ -125,7 +130,7 @@ func _setup() -> void:
 
 			_counter1 += 1
 		
-		print("Open Size: ", _tiles_open.size())
+		_DELETE_ME2 += 1
 		
 		# # Loop for adding more tiles for processing
 		# while _counter1 < _tile_current.get_cardinal_direction_size():
@@ -263,8 +268,21 @@ func _set_tile() -> void:
 			_counter2 += 1
 
 		if _is_found_tile: # Found a tile to set for the current tile
+			# TODO: Do the future tile check here. If tile found after that then it is ok. If NO tile found then I guess
+			#		that should be considered as weak rules. But also use nuke with future tile check to see what happens
 			_tile_current.set_tile_type(_common_blocks[_counter1]) # Setting the tile type for current tile
-			break
+			
+			if _is_future_check: # Checking if future check is enabled
+				_future_check() # Doing future check process
+				if _tile_current.get_tile_type() != -1: # Future check approved for tile set
+					print("- Future Check Approved!")
+					break
+				else: # Future check denied for tile set
+					print("- Future Check Denied!")
+					_common_blocks.remove_at(_counter1)
+			else:
+				break # Stopping search as tile has been found
+
 		else: # Found no tile, removing the currently processed tile
 			_common_blocks.remove_at(_counter1)
 	
@@ -356,6 +374,56 @@ func _nuke_tile(tile:DS_Tile) -> void:
 				# _tiles_closed.erase(tile)
 				_tiles_nuked.append(tile)
 
+func _future_check() -> void:
+	print("- Started future check")
+	_counter2 = 0 # Current tiles cardinal counter
+	while _counter2 < _tile_current.get_cardinal_direction_size():
+		if _tile_current.get_cardinal_direction(_counter2) != null: # Checking if has cardinal direction
+			print("- NOT null, dir[",_counter2,"]: ", _tile_current.get_cardinal_direction(_counter2).get_tile_type())
+			if _tile_current.get_cardinal_direction(_counter2).get_tile_type() == -1: # Checking if cardinal direction NOT placed yet
+				print("- Is -1")
+				_rules_indv = get_data().get_wfc_tile_rules_individual(_tile_current.get_tile_type(), # Storing current tile rules
+					_tile_current.get_rotational_cardinal_index(_counter2))
+				print("-Future Rules To Check:")
+				print("-- Current Tile Rules[", _counter2,"]: ", _rules_indv)
+				
+				_counter3 = 0 # Future tile cardinal counter
+				while _counter3 < _tile_current.get_cardinal_direction(_counter2).get_cardinal_direction_size(): # Loop for getting the future tiles individual rules
+					if _tile_current.get_cardinal_direction(_counter2).get_cardinal_direction(_counter3) != null:
+						if _tile_current.get_cardinal_direction(_counter2).get_cardinal_direction(_counter3).get_tile_type() != -1:
+							_rules_indv_fc = get_data().get_wfc_tile_rules_individual(
+								_tile_current.get_cardinal_direction(_counter2).get_cardinal_direction(_counter3).get_tile_type(),
+									_tile_current.get_cardinal_direction(_counter2).get_cardinal_direction(_counter3).get_rotational_cardinal_index(
+										_get_cardinal_opposite_index(_counter3, 
+										_tile_current.get_cardinal_direction(_counter2).get_cardinal_direction(_counter3)
+											.get_cardinal_direction_size()) # Getting the future check individual rules
+									))
+							print("-- Future Tile Rules[", _counter3,"]: ", _rules_indv_fc)
+
+							_counter4 = 0
+							while _counter4 < _rules_indv_fc.size(): # Loop for finding common rules
+								if _rules_indv.has(_rules_indv_fc[_counter4]): # Condition for common rules found
+									print("-- Indiv matching rules found")
+									break
+								_counter4 += 1
+							
+							if _counter4 == _rules_indv_fc.size(): # Condition for NOT finding matching rules
+								print("-- No indiv matching rules found")
+								break
+					_counter3 += 1
+
+				# No matching rules found from previous process
+				if _counter3 != _tile_current.get_cardinal_direction(_counter2).get_cardinal_direction_size():
+					print("-- No matching rules found")
+					break
+		_counter2 += 1
+	
+	if _counter2 != _tile_current.get_cardinal_direction_size(): # Current tile will NOT fit
+		print("-- Tile type not fit for placement.")
+		_tile_current.reset_tile() # Resetting tile
+	
+	print("- Ended future check")
+
 ## This method gets the adjacent neighbour by using the counter.
 func _get_adj_neighbour_counter(tile:DS_Tile, dir:int, counter:int) -> DS_Tile:
 	_counter_method = 0
@@ -367,6 +435,10 @@ func _get_adj_neighbour_counter(tile:DS_Tile, dir:int, counter:int) -> DS_Tile:
 			break
 		_counter_method += 1
 	return tile
+
+## This method gets the opposite index of the given cardinal index.
+func _get_cardinal_opposite_index(index:int, size:int) -> int:
+	return index + 2 if (index + 2) < size else index - 2
 
 func _to_string() -> String:
 	print_rich(_grid.show_grid_index_index(_index_start_tile))

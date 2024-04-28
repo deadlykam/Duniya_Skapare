@@ -139,6 +139,18 @@ func _setup() -> void:
 			_counter2 += 1
 		_counter1 += 1
 
+	# TODO: REMOVE THE BELOW CODE. IT IS FOR TESTING ONLY!
+	print("**************************************************************")
+	_counter1 = 0
+	while _counter1 < _tiles.size():
+		_counter2 = 0
+		print("Tile[", _counter1, "]:")
+		while _counter2 < _tiles[_counter1].get_cardinal_direction_size():
+			print("- ", ("north: " if _counter2 == 0 else "east: " if _counter2 == 1 else "south: " if _counter2 == 2 else "west: "), ("null" if _tiles[_counter1].get_cardinal_direction(_counter2) == null else "NOT null"))
+			_counter2 += 1
+		_counter1 += 1
+	print("**************************************************************")
+	
 func _to_string() -> String:
 	print_rich(show_grid_index())
 	return ""

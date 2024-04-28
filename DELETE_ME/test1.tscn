@@ -14,14 +14,14 @@ _wcf = NodePath("WFC")
 
 [node name="WFC" type="Node3D" parent="."]
 script = ExtResource("3_gbrf2")
-_is_nuke = true
+_is_future_check = true
 _start_tile_type = 0
 _index_start_tile = 8
 
 [node name="Grid" type="Node3D" parent="WFC"]
 script = ExtResource("3_hc0lu")
-_grid_x = 20
-_grid_y = 20
+_grid_x = 4
+_grid_y = 4
 
 [node name="Node3D" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
