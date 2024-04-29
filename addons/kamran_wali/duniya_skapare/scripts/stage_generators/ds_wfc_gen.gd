@@ -20,6 +20,8 @@ var _all_pos: Array[int] # For containing all cardinal pos
 var _blocks: Array[int]
 var _rules_indv: Array[int] # For containing current individual rules
 var _rules_indv_fc: Array[int] # For containing future check individual rules
+var _ignore_rule: Array[int] # Tile types that has been reprocessed
+var _tile_reprocess: DS_Tile
 var _type_names: String
 var _grid_pos_names: String
 var _counter1:= -1
@@ -96,41 +98,141 @@ func _setup() -> void:
 	
 	# Loop for processing all the tiles
 	while !_tiles_open.is_empty():
-		print("Tile ", _DELETE_ME2, ": ")
-		_tile_current = _tiles_open.pop_front() # Getting next tile
-		_common_blocks.clear() # Clearing previous data
-		_all_blocks.clear() # Clearing previous data
-		_all_sizes.clear() # Clearing previous data
-		_all_pos.clear() # Clearing previous data
-		_blocks.clear() # Clearing previous data
-		_max_block_size = 0 # Clearing previous data
-		_max_block_pos = -1 # Clearing previous data
-		
-		# Condition to check if tile has NOT been processed
-		if _tile_current.get_tile_type() == -1:
-			_find_all_neighbour_tile_rules() # Finding all the main tile rules
+		if !_is_future_check: # Normal Mode
+			print("Tile ", _DELETE_ME2, ": ")
+			_tile_current = _tiles_open.pop_front() # Getting next tile
 			
+			# Condition to check if tile has NOT been processed
+			if _tile_current.get_tile_type() == -1:
+				_find_all_neighbour_tile_rules(_tile_current) # Finding all the main tile rules
+				
+				# Condition for ONLY one tile present
+				if _all_pos.size() == 1:
+					_common_blocks = _all_blocks.duplicate(true)
+				else:
+					_find_common_rules() # Finding all the common rules
+
+				_set_tile() # Adding a new tile to the grid
+
+			_counter1 = 0
+
+			# Loop for adding more tiles for processing
+			while _counter1 < _tile_current.get_cardinal_direction_size():
+				if _tile_current.get_cardinal_direction(_counter1) != null:
+					# Checking if tile has NOT been processed
+					if (_tile_current.get_cardinal_direction(_counter1).get_tile_type() == -1
+						&& !_tiles_open.has(_tile_current.get_cardinal_direction(_counter1))):
+							_tiles_open.append(_tile_current.get_cardinal_direction(_counter1))
+
+				_counter1 += 1
+			
+			_DELETE_ME2 += 1
+		else: # Future check mode
+			if _tile_reprocess == null: # Condition for getting the next tile for processing
+				print("Tile ", _DELETE_ME2, ": ")
+				_tile_current = _tiles_open.pop_front() # Getting next tile
+			
+			# Condition to check for processing the current tile
+			if _tile_current.get_tile_type() == -1 && _tile_reprocess == null:
+				_find_all_neighbour_tile_rules(_tile_current) # Finding all the main tile rules
+			else: # Condition for processing the reprocess tile
+				_find_all_neighbour_tile_rules(_tile_reprocess)
+
 			# Condition for ONLY one tile present
 			if _all_pos.size() == 1:
 				_common_blocks = _all_blocks.duplicate(true)
 			else:
 				_find_common_rules() # Finding all the common rules
 
-			_set_tile() # Adding a new tile to the grid
+			# Condition for removing reprocessed rules for future check
+			if _ignore_rule.size() != 0: 
+				_remove_reprocessed_rules()
+			
+			if _common_blocks.size() == 0: # Condition for going back to normal check as reprocess did NOT work
+				_tile_reprocess = null
+				_ignore_rule.clear()
+			
+			if _tile_reprocess == null: # Condition for normal mode tile set
+				_set_tile() # Adding a new tile to the grid
+			else: # Condition for future mode tile set
+				# Condition for finding a match after rotating the reprocess tile
+				if _is_set_tile(_tile_reprocess, _tile_reprocess.get_tile_type(), _tile_reprocess.get_tile_rotation_value() + 1):
+					_find_all_neighbour_tile_rules(_tile_current) # Finding current tile's neighbours' rules again
 
-		_counter1 = 0
+					# Condition for ONLY one tile present
+					if _all_pos.size() == 1:
+						_common_blocks = _all_blocks.duplicate(true)
+					else:
+						_find_common_rules() # Finding all the common rules
+					
+					_set_tile()
+				else: # Condition for NOT finding a match after rotating the reprocess tile
+					_find_all_neighbour_tile_rules(_tile_reprocess) # Finding reprocess' neighbours' rules
 
-		# Loop for adding more tiles for processing
-		while _counter1 < _tile_current.get_cardinal_direction_size():
-			if _tile_current.get_cardinal_direction(_counter1) != null:
-				# Checking if tile has NOT been processed
-				if (_tile_current.get_cardinal_direction(_counter1).get_tile_type() == -1
-					&& !_tiles_open.has(_tile_current.get_cardinal_direction(_counter1))):
-						_tiles_open.append(_tile_current.get_cardinal_direction(_counter1))
+					# Condition for ONLY one tile present
+					if _all_pos.size() == 1:
+						_common_blocks = _all_blocks.duplicate(true)
+					else:
+						_find_common_rules() # Finding all the common rules
+					
+					# TODO: Make the _set_method take in a tile and process that tile and NOT current.
+			
+			# if _tile_reprocess == null: # Condition for getting the next tile for processing
+			# 	print("Tile ", _DELETE_ME2, ": ")
+			# 	_tile_current = _tiles_open.pop_front() # Getting next tile
+			
+			# # Condition to check for processing the current tile
+			# if _tile_current.get_tile_type() == -1 && _tile_reprocess == null:
+			# 	_find_all_neighbour_tile_rules(_tile_current) # Finding all the main tile rules
+			# else: # Condition for processing the reprocess tile
+			# 	_find_all_neighbour_tile_rules(_tile_reprocess)
+				
+			# 	# Condition for ONLY one tile present
+			# 	if _all_pos.size() == 1:
+			# 		_common_blocks = _all_blocks.duplicate(true)
+			# 	else:
+			# 		_find_common_rules() # Finding all the common rules
 
-			_counter1 += 1
-		
-		_DELETE_ME2 += 1
+			# 	# Condition for removing reprocessed rules for future check
+			# 	if _tile_reprocessed.size() != 0: 
+			# 		_remove_reprocessed_rules()
+
+			# 		if _common_blocks.size() == 0: # Condition for going back to normal check as reprocess did NOT work
+			# 			_tile_reprocess = null
+			# 			_tile_reprocessed.clear()
+				
+			# 	if _tile_reprocessed.size() == 0: # Condition for normal tile set
+			# 		_set_tile() # Adding a new tile to the grid
+			# 	else:
+			# 		# Condition for fixing the rotation of the previous weak tile and checking if current tile can be placed now 
+			# 		if _is_set_tile(_tile_reprocess, _tile_reprocess.get_tile_type(), _tile_reprocess.get_tile_rotation_value() + 1):
+			# 			_find_all_neighbour_tile_rules(_tile_current) # Finding all the main tile rules
+				
+			# 			# Condition for ONLY one tile present
+			# 			if _all_pos.size() == 1:
+			# 				_common_blocks = _all_blocks.duplicate(true)
+			# 			else:
+			# 				_find_common_rules() # Finding all the common rules
+
+			# 			_set_tile() # Adding a new tile to the grid
+			# 		else:
+			# 			# TODO: Do normal check up or continue from the rest of common check up?
+			# 			pass
+
+
+			_counter1 = 0
+
+			# Loop for adding more tiles for processing
+			while _counter1 < _tile_current.get_cardinal_direction_size():
+				if _tile_current.get_cardinal_direction(_counter1) != null:
+					# Checking if tile has NOT been processed
+					if (_tile_current.get_cardinal_direction(_counter1).get_tile_type() == -1
+						&& !_tiles_open.has(_tile_current.get_cardinal_direction(_counter1))):
+							_tiles_open.append(_tile_current.get_cardinal_direction(_counter1))
+
+				_counter1 += 1
+			
+			_DELETE_ME2 += 1
 		
 		# # Loop for adding more tiles for processing
 		# while _counter1 < _tile_current.get_cardinal_direction_size():
@@ -150,16 +252,23 @@ func _setup() -> void:
 	
 	print("Finished Making Grid in : ", ((Time.get_unix_time_from_system() - _DELETE_ME)) * 1000, "ms, Nukes: ", _nuke_counter)
 
-## This method finds all the neighbouring tile rules.
-func _find_all_neighbour_tile_rules() -> void:
+## This method finds all the neighbouring tile rules for the given tile.
+func _find_all_neighbour_tile_rules(tile: DS_Tile) -> void:
+	_all_blocks.clear() # Clearing previous data
+	_blocks.clear() # Clearing previous data
+	_all_sizes.clear() # Clearing previous data
+	_all_pos.clear() # Clearing previous data
+	_max_block_size = 0 # Clearing previous data
+	_max_block_pos = -1 # Clearing previous data
+	
 	_counter1 = 0 # Cardinal Direction counter
 	# Loop for going through all the cardinal directions
-	while _counter1 < _tile_current.get_cardinal_direction_size():
+	while _counter1 < tile.get_cardinal_direction_size():
 		# Condition for finding a cardinal direction
-		if _tile_current.get_cardinal_direction(_counter1) != null:
-			if _tile_current.get_cardinal_direction(_counter1).get_tile_type() != -1: # Condition for finding all neighbouring rules
+		if tile.get_cardinal_direction(_counter1) != null:
+			if tile.get_cardinal_direction(_counter1).get_tile_type() != -1: # Condition for finding all neighbouring rules
 				_blocks = get_data().get_wfc_tile_rules(
-					_tile_current.get_cardinal_direction(_counter1).get_tile_type())
+					tile.get_cardinal_direction(_counter1).get_tile_type())
 				_all_pos.append(_all_blocks.size())
 				_all_sizes.append(_blocks.size())
 				
@@ -177,6 +286,8 @@ func _find_all_neighbour_tile_rules() -> void:
 
 ## This method finds all the common rules.
 func _find_common_rules() -> void:
+	_common_blocks.clear() # Clearing previous data
+
 	_counter1 = 0
 
 	# Loop for getting all the common types
@@ -232,45 +343,7 @@ func _set_tile() -> void:
 
 		print("Selected Block: ", _common_blocks[_counter1])
 		
-		_counter2 = 0 # This counter acts as number of rotation
-		_is_found_tile = false # Resetting found tile
-
-		while _counter2 < _tile_current.get_cardinal_direction_size(): # Loop for rotating the tile
-			_tile_current.set_tile_rotation_value(_counter2) # Setting the rotation of the tile
-			_counter3 = 0 # This counter acts as cardinal/neighbour index
-
-			while _counter3 < _tile_current.get_cardinal_direction_size(): # Loop for finding individual rule matches
-				if _tile_current.get_cardinal_direction(_counter3) != null:
-					if _tile_current.get_cardinal_direction(_counter3).get_tile_type() != -1:
-						
-						# Storing the correct individual rules after tile rotation
-						_rules_indv = get_data().get_wfc_tile_rules_individual(_common_blocks[_counter1], 
-							_tile_current.get_rotational_cardinal_index(_counter3))
-
-						# Condition for NOT finding any matches so breaking the loop for the next shift
-						if !_rules_indv.has(_tile_current.get_cardinal_direction(_counter3).get_tile_type()):
-							break
-						else: # Condition to check if neighbour allows to set tile
-
-							_rules_indv = get_data().get_wfc_tile_rules_individual(_tile_current.get_cardinal_direction(_counter3).get_tile_type(),
-							_tile_current.get_cardinal_direction(_counter3) # The neighbour's rotational cardinal index
-							.get_rotational_cardinal_index(
-								(_counter3 + 2 if (_counter3 + 2) < _tile_current.get_cardinal_direction_size() else _counter3 - 2)))
-
-							# Condition for NOT finding any matches from the neighbour's side
-							if !_rules_indv.has(_common_blocks[_counter1]):
-								break
-
-				_counter3 += 1
-			
-			# Found a tile to set for the current tile
-			if _counter3 == _tile_current.get_cardinal_direction_size():
-				_is_found_tile = true
-				break
-
-			_counter2 += 1
-
-		if _is_found_tile: # Found a tile to set for the current tile
+		if _is_set_tile(_tile_current, _common_blocks[_counter1], 0): # Found a tile to set for the current tile
 			# TODO: Do the future tile check here. If tile found after that then it is ok. If NO tile found then I guess
 			#		that should be considered as weak rules. But also use nuke with future tile check to see what happens
 			_tile_current.set_tile_type(_common_blocks[_counter1]) # Setting the tile type for current tile
@@ -279,10 +352,11 @@ func _set_tile() -> void:
 				_future_check() # Doing future check process
 				if _tile_current.get_tile_type() != -1: # Future check approved for tile set
 					print("- Future Check Approved!")
+					_tile_reprocess = null
+					_ignore_rule.clear()
 					break
 				else: # Future check denied for tile set
 					print("- Future Check Denied!")
-					# TODO: Reprocess the previous tile to find a better fit or a better tile
 					_common_blocks.remove_at(_counter1)
 			else:
 				break # Stopping search as tile has been found
@@ -290,12 +364,149 @@ func _set_tile() -> void:
 		else: # Found no tile, removing the currently processed tile
 			_common_blocks.remove_at(_counter1)
 	
+	# if _is_future_check:
+	# 	if _common_blocks.is_empty():
+	# 		# TODO: 1. Push the current tile to the front again so that normal route can be taken
+	# 		#		2. Reprocess the stored tile that did NOT allow a fit
+	# 		_tiles_open.push_front(_tile_current)
+	# 		_tile_current = _tile_reprocess # Making the current tile to reprocess tile
+	
 	if _is_nuke: # Checking if nuke option is available
 		if _common_blocks.is_empty(): # Checking if nuking required
 			# TODO: Store the failed tile in the failed tiled array and once the whole grid has been set only then
-			#		process each failed tile one at a time
+			#		process each failed tile one at a time.
 			_nuke_process(_tile_current)
 			_nuke_counter += 1
+	
+	# while(_common_blocks.size() != 0):
+	# 	print("Common Blocks: ", _common_blocks)
+	# 	_prob = _rng.randf() # Getting probability value
+	# 	_prob_total = (1.0 / _common_blocks.size()) # Resetting to find the tile type
+
+	# 	_counter1 = 0 # This counter acts as common block index
+
+	# 	# Loop for randomly selecting a tile type
+	# 	while _counter1 < _common_blocks.size():
+	# 		if _prob <= _prob_total: # Tile type found 
+	# 			break
+	# 		else: # Setting next tile type to be checked
+	# 			_prob_total += (1.0 / _common_blocks.size())
+	# 		_counter1 += 1
+
+	# 	print("Selected Block: ", _common_blocks[_counter1])
+		
+	# 	_counter2 = 0 # This counter acts as number of rotation
+	# 	_is_found_tile = false # Resetting found tile
+
+	# 	while _counter2 < _tile_current.get_cardinal_direction_size(): # Loop for rotating the tile
+	# 		_tile_current.set_tile_rotation_value(_counter2) # Setting the rotation of the tile
+	# 		_counter3 = 0 # This counter acts as cardinal/neighbour index
+
+	# 		while _counter3 < _tile_current.get_cardinal_direction_size(): # Loop for finding individual rule matches
+	# 			if _tile_current.get_cardinal_direction(_counter3) != null:
+	# 				if _tile_current.get_cardinal_direction(_counter3).get_tile_type() != -1:
+						
+	# 					# Storing the correct individual rules after tile rotation
+	# 					_rules_indv = get_data().get_wfc_tile_rules_individual(_common_blocks[_counter1], 
+	# 						_tile_current.get_rotational_cardinal_index(_counter3))
+
+	# 					# Condition for NOT finding any matches so breaking the loop for the next shift
+	# 					if !_rules_indv.has(_tile_current.get_cardinal_direction(_counter3).get_tile_type()):
+	# 						break
+	# 					else: # Condition to check if neighbour allows to set tile
+
+	# 						_rules_indv = get_data().get_wfc_tile_rules_individual(_tile_current.get_cardinal_direction(_counter3).get_tile_type(),
+	# 						_tile_current.get_cardinal_direction(_counter3) # The neighbour's rotational cardinal index
+	# 						.get_rotational_cardinal_index(
+	# 							(_counter3 + 2 if (_counter3 + 2) < _tile_current.get_cardinal_direction_size() else _counter3 - 2)))
+
+	# 						# Condition for NOT finding any matches from the neighbour's side
+	# 						if !_rules_indv.has(_common_blocks[_counter1]):
+	# 							break
+
+	# 			_counter3 += 1
+			
+	# 		# Found a tile to set for the current tile
+	# 		if _counter3 == _tile_current.get_cardinal_direction_size():
+	# 			_is_found_tile = true
+	# 			break
+
+	# 		_counter2 += 1
+
+	# 	if _is_found_tile: # Found a tile to set for the current tile
+	# 		# TODO: Do the future tile check here. If tile found after that then it is ok. If NO tile found then I guess
+	# 		#		that should be considered as weak rules. But also use nuke with future tile check to see what happens
+	# 		_tile_current.set_tile_type(_common_blocks[_counter1]) # Setting the tile type for current tile
+			
+	# 		if _is_future_check: # Checking if future check is enabled
+	# 			_future_check() # Doing future check process
+	# 			if _tile_current.get_tile_type() != -1: # Future check approved for tile set
+	# 				print("- Future Check Approved!")
+	# 				_tile_reprocess = null
+	# 				_tile_reprocessed.clear()
+	# 				break
+	# 			else: # Future check denied for tile set
+	# 				print("- Future Check Denied!")
+	# 				_common_blocks.remove_at(_counter1)
+	# 		else:
+	# 			break # Stopping search as tile has been found
+
+	# 	else: # Found no tile, removing the currently processed tile
+	# 		_common_blocks.remove_at(_counter1)
+	
+	# if _is_future_check:
+	# 	if _common_blocks.is_empty():
+	# 		# TODO: 1. Push the current tile to the front again so that normal route can be taken
+	# 		#		2. Reprocess the stored tile that did NOT allow a fit
+	# 		_tiles_open.push_front(_tile_current)
+	# 		_tile_current = _tile_reprocess # Making the current tile to reprocess tile
+	
+	# if _is_nuke: # Checking if nuke option is available
+	# 	if _common_blocks.is_empty(): # Checking if nuking required
+	# 		# TODO: Store the failed tile in the failed tiled array and once the whole grid has been set only then
+	# 		#		process each failed tile one at a time.
+	# 		_nuke_process(_tile_current)
+	# 		_nuke_counter += 1
+
+## This method handles the process of setting a tile
+func _is_set_tile(tile:DS_Tile, selected_tile:int, rot_value:int) -> bool:
+	_counter2 = rot_value # This counter acts as number of rotation
+	
+	while _counter2 < tile.get_cardinal_direction_size(): # Loop for rotating the tile
+		tile.set_tile_rotation_value(_counter2) # Setting the rotation of the tile
+		_counter3 = 0 # This counter acts as cardinal/neighbour index
+
+		while _counter3 < tile.get_cardinal_direction_size(): # Loop for finding individual rule matches
+			if tile.get_cardinal_direction(_counter3) != null:
+				if tile.get_cardinal_direction(_counter3).get_tile_type() != -1:
+					
+					# Storing the correct individual rules after tile rotation
+					_rules_indv = get_data().get_wfc_tile_rules_individual(selected_tile, 
+						tile.get_rotational_cardinal_index(_counter3))
+
+					# Condition for NOT finding any matches so breaking the loop for the next shift
+					if !_rules_indv.has(tile.get_cardinal_direction(_counter3).get_tile_type()):
+						break
+					else: # Condition to check if neighbour allows to set tile
+
+						_rules_indv = get_data().get_wfc_tile_rules_individual(tile.get_cardinal_direction(_counter3).get_tile_type(),
+						tile.get_cardinal_direction(_counter3) # The neighbour's rotational cardinal index
+						.get_rotational_cardinal_index(
+							(_counter3 + 2 if (_counter3 + 2) < tile.get_cardinal_direction_size() else _counter3 - 2)))
+
+						# Condition for NOT finding any matches from the neighbour's side
+						if !_rules_indv.has(selected_tile):
+							break
+
+			_counter3 += 1
+		
+		# Found a tile to set for the current tile
+		if _counter3 == tile.get_cardinal_direction_size():
+			return true
+
+		_counter2 += 1
+	
+	return false
 
 ## This method handles the nuking process of the correct tiles
 func _nuke_process(tile:DS_Tile) -> void:
@@ -424,6 +635,14 @@ func _future_check() -> void:
 	
 	if _counter2 != _tile_current.get_cardinal_direction_size(): # Current tile will NOT fit
 		print("-- Tile type not fit for placement.")
+		if _tile_reprocess != _tile_current.get_cardinal_direction(_counter2).get_cardinal_direction(_counter3): # New tile to reprocess
+			_tile_reprocess = _tile_current.get_cardinal_direction(_counter2).get_cardinal_direction(_counter3) # Storing tile for re-processing
+			_ignore_rule.clear()
+			_ignore_rule.append(_tile_reprocess.get_tile_type()) # Adding the first tile type to be ignored
+		else: # Same tile to reprocess again
+			if !_ignore_rule.has(_tile_reprocess.get_tile_type()): # Condition for adding a new rule
+				_ignore_rule.append(_tile_reprocess.get_tile_type())
+		
 		_tile_current.reset_tile() # Resetting tile
 	
 	print("- Ended future check")
@@ -439,6 +658,13 @@ func _get_adj_neighbour_counter(tile:DS_Tile, dir:int, counter:int) -> DS_Tile:
 			break
 		_counter_method += 1
 	return tile
+
+## This method removes the reprocesed rules from the common rules
+func _remove_reprocessed_rules() -> void:
+	_counter_method = 0
+	while _counter_method < _ignore_rule.size(): # Loop for removing reprocessed rules
+		_common_blocks.erase(_ignore_rule[_counter_method])
+		_counter_method += 1
 
 ## This method gets the opposite index of the given cardinal index.
 func _get_cardinal_opposite_index(index:int, size:int) -> int:

@@ -14,7 +14,6 @@ _wcf = NodePath("WFC")
 
 [node name="WFC" type="Node3D" parent="."]
 script = ExtResource("3_gbrf2")
-_is_future_check = true
 _start_tile_type = 0
 _index_start_tile = 8
 
