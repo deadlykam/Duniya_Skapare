@@ -216,6 +216,7 @@ func _find_common_rules() -> void:
 ## This method sets the current tile with a tile type.
 func _set_tile() -> void:
 	while(_common_blocks.size() != 0):
+		print("Common Blocks: ", _common_blocks)
 		_prob = _rng.randf() # Getting probability value
 		_prob_total = (1.0 / _common_blocks.size()) # Resetting to find the tile type
 
@@ -229,6 +230,8 @@ func _set_tile() -> void:
 				_prob_total += (1.0 / _common_blocks.size())
 			_counter1 += 1
 
+		print("Selected Block: ", _common_blocks[_counter1])
+		
 		_counter2 = 0 # This counter acts as number of rotation
 		_is_found_tile = false # Resetting found tile
 
@@ -279,6 +282,7 @@ func _set_tile() -> void:
 					break
 				else: # Future check denied for tile set
 					print("- Future Check Denied!")
+					# TODO: Reprocess the previous tile to find a better fit or a better tile
 					_common_blocks.remove_at(_counter1)
 			else:
 				break # Stopping search as tile has been found
@@ -385,7 +389,6 @@ func _future_check() -> void:
 				_rules_indv = get_data().get_wfc_tile_rules_individual(_tile_current.get_tile_type(), # Storing current tile rules
 					_tile_current.get_rotational_cardinal_index(_counter2))
 				print("-Future Rules To Check:")
-				print("-- Current Tile Rules[", _counter2,"]: ", _rules_indv)
 				
 				_counter3 = 0 # Future tile cardinal counter
 				while _counter3 < _tile_current.get_cardinal_direction(_counter2).get_cardinal_direction_size(): # Loop for getting the future tiles individual rules
@@ -398,6 +401,7 @@ func _future_check() -> void:
 										_tile_current.get_cardinal_direction(_counter2).get_cardinal_direction(_counter3)
 											.get_cardinal_direction_size()) # Getting the future check individual rules
 									))
+							print("-- Current Tile Rules[", _counter2,"]: ", _rules_indv)
 							print("-- Future Tile Rules[", _counter3,"]: ", _rules_indv_fc)
 
 							_counter4 = 0

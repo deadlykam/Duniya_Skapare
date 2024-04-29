@@ -204,7 +204,7 @@ func get_cardinal_rules(index:int, cardinal:int) -> Array[int]:
             _temp_data.append(_west[_west_pos[index] + _counter1])
             _counter1 += 1
 
-    return _temp_data
+    return _temp_data.duplicate()
 
 ## This method gets the size for the indexth cardinal.
 ## North = 0
