@@ -86,12 +86,14 @@ func _setup() -> void:
 	# Setting the starting and first tile
 	get_grid_tile(_index_start_tile).set_tile_type(_start_tile_type)
 
+	if _is_reprocess: _tiles_failed.clear() # Clearing previous failed data
 	_tiles_open.clear()
 	_tiles_open.append(get_grid_tile(_index_start_tile))
 	_counter1 = 0
 	
 	# Loop for processing all the tiles, Normal mode
 	while !_tiles_open.is_empty():
+		print("Tile ", _DELETE_ME2, ":")
 		_tile_current = _tiles_open.pop_front() # Getting next tile
 		
 		# Condition to check if tile has NOT been processed
@@ -101,6 +103,7 @@ func _setup() -> void:
 
 			if _is_reprocess: # Checking if reprocess is active
 				if _tile_current.get_tile_type() == -1: # Checking if the tile have been failed to be set
+					print("Tile Failed!")
 					_tiles_failed.append(_tile_current) # Storing failed tile to be reprocessed later
 			
 		_counter1 = 0
@@ -117,6 +120,7 @@ func _setup() -> void:
 		
 		_DELETE_ME2 += 1
 	
+	print("Before reprocess")
 	print(self)
 	
 	print("Number of fails found: ", _tiles_failed.size())
