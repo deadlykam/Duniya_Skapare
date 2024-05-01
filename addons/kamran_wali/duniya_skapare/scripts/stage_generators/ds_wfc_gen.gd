@@ -8,6 +8,7 @@ var _start_tile_type: int
 @export var _is_reprocess:= false
 
 var _tiles_open: Array[DS_Tile]
+var _tiles_closed: Array[DS_Tile]
 var _tile_current: DS_Tile
 var _common_blocks: Array[int] # For containing all the common blocks
 var _all_blocks: Array[int] # For containing all cardinal blocks
@@ -17,6 +18,7 @@ var _blocks: Array[int]
 var _rules_indv: Array[int] # For containing current individual rules
 var _tiles_failed: Array[DS_Tile] # For containing tiles that have failed, tile.type = -1
 var _tile_type_stored: int # For storing the reprocessed's adj's tile type
+var _tile_rot_stored: int # For storing the reprocessed's adj's tile rot
 var _type_names: String
 var _grid_pos_names: String
 var _counter1:= -1
@@ -38,6 +40,7 @@ var _temp_tile_v: DS_Tile
 var _DELETE_ME:= 1.0
 var _nuke_counter:= 0
 var _DELETE_ME2:= 0
+var _DELETE_ME3:= 0
 
 func _get_property_list():
 	var properties = []
@@ -103,7 +106,6 @@ func _setup() -> void:
 
 			if _is_reprocess: # Checking if reprocess is active
 				if _tile_current.get_tile_type() == -1: # Checking if the tile have been failed to be set
-					print("Tile Failed!")
 					_tiles_failed.append(_tile_current) # Storing failed tile to be reprocessed later
 			
 		_counter1 = 0
@@ -113,11 +115,13 @@ func _setup() -> void:
 			if _tile_current.get_cardinal_direction(_counter1) != null:
 				# Checking if tile has NOT been processed
 				if (_tile_current.get_cardinal_direction(_counter1).get_tile_type() == -1
-					&& !_tiles_open.has(_tile_current.get_cardinal_direction(_counter1))):
+					&& !_tiles_open.has(_tile_current.get_cardinal_direction(_counter1))
+					&& !_tiles_closed.has(_tile_current.get_cardinal_direction(_counter1))):
 						_tiles_open.append(_tile_current.get_cardinal_direction(_counter1))
 
 			_counter1 += 1
 		
+		_tiles_closed.append(_tile_current) # The current tile has been process
 		_DELETE_ME2 += 1
 	
 	print("Before reprocess")
@@ -133,8 +137,10 @@ func _setup() -> void:
 		while _counter_adj < _tile_current.get_cardinal_direction_size(): # Loop for finding a tile type for the failed tile
 			if _tile_current.get_cardinal_direction(_counter_adj) != null: # Checking if the adj is NOT null
 				_process_for_finding_rules(_tile_current.get_cardinal_direction(_counter_adj)) # Getting common rules for the adj tile
-				_tile_type_stored = _tile_current.get_cardinal_direction(_counter_adj).get_tile_type() # Storing the adj's current tile type
+				_tile_type_stored = _tile_current.get_cardinal_direction(_counter_adj).get_tile_type() # Storing the adj's tile type
+				_tile_rot_stored = _tile_current.get_cardinal_direction(_counter_adj).get_tile_rotation_value() # Storing the adj's tile type
 				_common_blocks.erase(_tile_type_stored) # Removing the stored tile type rule
+				_tile_current.get_cardinal_direction(_counter_adj).reset_tile() # Resetting the adj tile for reprocessing
 				_set_tile(_tile_current.get_cardinal_direction(_counter_adj)) # Setting the adj tile type
 				
 				# Checking if found a tile type for adj and if to start reprocessing the failed tile
@@ -143,14 +149,15 @@ func _setup() -> void:
 					_set_tile(_tile_current) # Setting the failed current's tile type
 				else: # Condition for NOT found a tile type for adj
 					_tile_current.get_cardinal_direction(_counter_adj).set_tile_type(_tile_type_stored) # Resetting the adj's tile type to the stored tile type
+					_tile_current.get_cardinal_direction(_counter_adj).set_tile_rotation_value(_tile_rot_stored) # Resetting the adj's tile rot value to the stored tile rot value
 				
 				if _tile_current.get_tile_type() != -1: # Condition to check if a tile type is found
-					print("Tile FIXED!")
+					_DELETE_ME3 += 1
 					break # Tile type found, NO further search required
 			
 			_counter_adj += 1
 
-	
+	print("Number of tiles fixed: ", _DELETE_ME3)	
 	print("Finished Making Grid in : ", ((Time.get_unix_time_from_system() - _DELETE_ME)) * 1000, "ms, Nukes: ", _nuke_counter)
 
 ## This method finds all the neighbouring tile rules for the given tile.
