@@ -4,12 +4,14 @@ class_name DS_Tile
 var _tile_type:= -1
 var _data_cd: Array[DS_Tile] # Cardinal Directions
 var _rot_value:= 0
-# TODO: Store rotation value and use the rotation values to get the cardinal direction.
-#       The cardinal direction calculation has already been done in ds_wfc_gen. Just
-#       check out the opposite index calculation and see how to apply that here.
 
 func _init() -> void:
     _data_cd.resize(4)
+
+## This method resets the tile.
+func reset_tile() -> void:
+    _tile_type = -1
+    _rot_value = 0
 
 ## This method sets the type of the tile.
 func set_tile_type(tile_type:int) -> void:

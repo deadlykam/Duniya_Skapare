@@ -37,6 +37,14 @@ func _ready() -> void:
 func add_update_tile_info(tile: TILE_INFO) -> void:
 	_update_tile_info.append(tile)
 
+## This method gets a tile from the grid.
+func get_grid_tile(index:int) -> DS_Tile:
+	return _grid.get_tile(index)
+
+## This method gets all the updated tile info
+func get_update_tile_info() -> Array[TILE_INFO]:
+	return _update_tile_info
+
 ## This method gets the DS_Data.
 func get_data() -> DS_Data:
 	return DS_Data.get_instance()

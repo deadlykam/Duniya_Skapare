@@ -69,7 +69,7 @@ func get_wfc_tile_rules(tile:int) -> Array[int]:
             _temp_tile_rules.append(_counter1) # Adding the rule
         _counter1 += 1
 
-    return _temp_tile_rules
+    return _temp_tile_rules.duplicate()
 
 ## This method gets an array of rules for one cardinal side of the given tile.
 ## It is recommended to store the array in a variable as calling this over and over
