@@ -45,6 +45,7 @@ var _prob_total:= -1.0
 var _is_found_tile = false # Checking to see if the right tile has been found
 var _temp_tile_h: DS_Tile
 var _temp_tile_v: DS_Tile
+var _entropy:= -1
 
 var _DELETE_ME:= 1.0
 var _nuke_counter:= 0
@@ -101,12 +102,25 @@ func _setup() -> void:
 	if _is_reprocess: _tiles_failed.clear() # Clearing previous failed data
 	_tiles_open.clear()
 	_tiles_open.append(get_grid_tile(_index_start_tile))
-	_counter1 = 0
+	# _counter1 = 0
 	
 	# Loop for processing all the tiles, Normal mode
 	while !_tiles_open.is_empty():
 		print("Tile ", _DELETE_ME2, ":")
-		_tile_current = _tiles_open.pop_front() # Getting next tile
+		# _tile_current = _tiles_open.pop_front() # Getting next tile
+		_counter1 = 1 # Counter 
+		_counter2 = 0 # For storing lowest entropy index
+		_entropy = _process_for_getting_rules(_tiles_open[0]).size() # Storing the first open tile's entropy value
+
+		while _counter1 < _tiles_open.size(): # Loop for finding the lowest entropy tile
+			_counter3 = _process_for_getting_rules(_tiles_open[_counter1]).size() # Storing the entropy of the tile
+			if _counter3 < _entropy: # Condition for finding the lowest entropy
+				_counter2 = _counter1 # Storing the lowest entropy index
+				_entropy = _counter3 # Storing the lowest entropy value
+			_counter1 += 1
+		
+		_tile_current = _tiles_open.pop_at(_counter2) # Getting the lowest entropy tile
+
 		
 		# Condition to check if tile has NOT been processed
 		if _tile_current.get_tile_type() == -1: # TODO: Check if this condition is necessary as the popped tile will ALWAYS be -1 because adjs added are all -1s
