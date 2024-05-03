@@ -14,6 +14,8 @@ var _tiles_open: Array[DS_Tile]
 var _tiles_closed: Array[DS_Tile]
 var _tile_current: DS_Tile
 var _temp_rules: Array[int]
+var _temp_rules2: Array[int]
+# vat _temp_rules3: Array[int]
 var _common_rules: Array[int] # For containing all the common blocks
 var _influence_rules: Array[int] # For containing all the influence rules
 var _all_blocks: Array[int] # For containing all cardinal blocks
@@ -108,19 +110,65 @@ func _setup() -> void:
 	while !_tiles_open.is_empty():
 		print("Tile ", _DELETE_ME2, ":")
 		# _tile_current = _tiles_open.pop_front() # Getting next tile
-		_counter1 = 1 # Counter 
-		_counter2 = 0 # For storing lowest entropy index
-		_entropy = _process_for_getting_rules(_tiles_open[0]).size() # Storing the first open tile's entropy value
+		# _counter1 = 1 # Counter 
+		# _counter2 = 0 # For storing lowest entropy index
+		# _entropy = _process_for_getting_rules(_tiles_open[0]).size() # Storing the first open tile's entropy value
+
+		# while _counter1 < _tiles_open.size(): # Loop for finding the lowest entropy tile
+		# 	_common_rules = _process_for_getting_rules(_tiles_open[_counter1]) # REMOVE THIS LINE. IT IS FOR DEBUGGING ONLY!
+		# 	_counter3 = _process_for_getting_rules(_tiles_open[_counter1]).size() # Storing the entropy of the tile
+		# 	print("- Loop - Entropy: ", _counter3, " Rules: ", _common_rules, "Index: ", _counter1)
+		# 	if _counter3 < _entropy: # Condition for finding the lowest entropy
+		# 		_counter2 = _counter1 # Storing the lowest entropy index
+		# 		_entropy = _counter3 # Storing the lowest entropy value
+		# 	_counter1 += 1
+		# print("- Lowest Entropy: Index -> ", _counter2, ", value -> ", _entropy)
+		# _tile_current = _tiles_open.pop_at(_counter2) # Getting the lowest entropy tile
+
+		_counter1 = 0
+		_counter4 = 0 # Acting as storing the lowest entropy index
+		_entropy = -1
 
 		while _counter1 < _tiles_open.size(): # Loop for finding the lowest entropy tile
-			_counter3 = _process_for_getting_rules(_tiles_open[_counter1]).size() # Storing the entropy of the tile
-			if _counter3 < _entropy: # Condition for finding the lowest entropy
-				_counter2 = _counter1 # Storing the lowest entropy index
-				_entropy = _counter3 # Storing the lowest entropy value
-			_counter1 += 1
-		
-		_tile_current = _tiles_open.pop_at(_counter2) # Getting the lowest entropy tile
+			# _counter2 = 0
+			# _common_rules.clear() # Resetting the common rules
+			# while _counter2 < _tiles_open[_counter1].get_cardinal_direction_size(): # Loop for finding the common rules
+			# 	if !_temp_rules.is_empty(): _temp_rules.clear() # Resetting the temp rules
+			# 	if _tiles_open[_counter1].get_cardinal_direction(_counter2) != null:
+			# 		if _tiles_open[_counter1].get_cardinal_direction(_counter2).get_tile_type() != -1:
+			# 			print("- Tile Open Index: ", _counter2)
+			# 			# Storing the individual rules
+			# 			_temp_rules = get_data().get_wfc_tile_rules_individual(
+			# 				_tiles_open[_counter1].get_cardinal_direction(_counter2).get_tile_type(),
+			# 				_get_cardinal_opposite_index(_counter2, 
+			# 					_tiles_open[_counter1].get_cardinal_direction(_counter2).get_cardinal_direction_size()))
+						
+			# 			if _common_rules.is_empty(): # Condition to set all the temp rules if common rules is empty
+			# 				_common_rules = _temp_rules.duplicate()
+			# 			else: # Condition for finding ONLY the common rules
+			# 				_counter3 = 0
+			# 				while _counter3 < _common_rules.size(): # Loop for finding the common rules
+			# 					if !_temp_rules.has(_common_rules[_counter3]): # Condition for removing rules that are NOT equal
+			# 						_common_rules.remove_at(_counter3) 
+			# 						_counter3 -= 1
+			# 					_counter3 += 1
+			# 				print("- Temp Rules: ", _temp_rules)
+			# 			print("- Common Rules: ", _common_rules)
+			# 			print("- XXX -")
+			# 	_counter2 += 1
+			
+			_common_rules = _find_common_indiv_rules(_tiles_open[_counter1])
+			print("Current common rule: ", _common_rules)
 
+			if _entropy == -1 || _common_rules.size() < _entropy: # Condition for storing the lowest entropy values
+				_counter4 = _counter1
+				_entropy = _common_rules.size()
+				print("Entropy: ", _entropy, ", index: ", _counter4)
+
+			_counter1 += 1
+
+		print("-- Lowest Entropy: Index -> ", _counter4, ", value -> ", _entropy)
+		_tile_current = _tiles_open.pop_at(_counter4) # Getting the lowest entropy tile
 		
 		# Condition to check if tile has NOT been processed
 		if _tile_current.get_tile_type() == -1: # TODO: Check if this condition is necessary as the popped tile will ALWAYS be -1 because adjs added are all -1s
@@ -271,6 +319,36 @@ func _find_common_rules() -> void:
 	
 	return _temp_rules.duplicate()
 
+## This method gets the common individual rules.
+func _find_common_indiv_rules(tile:DS_Tile) -> Array[int]:
+	_temp_rules.clear()
+	_counter_rule_1 = 0
+	while _counter_rule_1 < tile.get_cardinal_direction_size(): # Loop for finding the common individual rules
+		if !_temp_rules2.is_empty(): _temp_rules2.clear()
+		if tile.get_cardinal_direction(_counter_rule_1) != null:
+			if tile.get_cardinal_direction(_counter_rule_1).get_tile_type() != -1:
+				# Storing the individual rules
+				_temp_rules2 = get_data().get_wfc_tile_rules_individual(
+					tile.get_cardinal_direction(_counter_rule_1).get_tile_type(),
+					#tile.get_cardinal_direction(_counter_rule_1).get_rotational_cardinal_index( # Getting the rotation index of the adj tile
+						_get_cardinal_opposite_index(_counter_rule_1, 
+						tile.get_cardinal_direction(_counter_rule_1).get_cardinal_direction_size())
+						)
+
+				if _temp_rules.is_empty(): # Condition to set the common rules to all of the individual rules
+					_temp_rules = _temp_rules2.duplicate()
+				else: # Condition for processing the individual rules
+					_counter_rule_2 = 0
+					while _counter_rule_2 < _temp_rules.size(): # Loop for finding the common individual rules ONLY
+						if !_temp_rules2.has(_temp_rules[_counter_rule_2]): # Rule NOT found, removing from common rules
+							_temp_rules.remove_at(_counter_rule_2)
+							_counter_rule_2 -= 1
+						_counter_rule_2 += 1
+				
+		_counter_rule_1 += 1
+
+	return _temp_rules.duplicate()
+
 ## This method sets the current tile with a tile type.
 func _set_tile(tile: DS_Tile, rules: Array[int]) -> void:
 	while(rules.size() != 0):
@@ -322,6 +400,12 @@ func _is_set_tile(tile:DS_Tile, selected_tile:int, rot_value:int) -> bool:
 						if !_rules_indv.has(selected_tile):
 							break
 				else: # Neighbour tile has NOT been set
+					_rules_indv = _find_common_indiv_rules(tile)
+					print("- Rules Indiv: ", _rules_indv, ", selected tile: ", selected_tile, ", index: ", _counter3)
+					if !_rules_indv.has(selected_tile):
+						print("- NOT FOUND!")
+						break
+				
 					if _is_influence: # Checking if influence has been enabled
 						_influence_rules = _process_for_getting_rules(tile.get_cardinal_direction(_counter3))
 						if !_influence_rules.is_empty():

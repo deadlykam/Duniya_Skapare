@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_l4wc3")
-_data = Array[String](["Ground", "Coast", "Water", "Corner1", "Corner2"])
+_data = Array[String](["Land", "Coast", "LC_T_1", "3", "4"])
