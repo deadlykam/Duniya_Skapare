@@ -1,0 +1,79 @@
+[gd_scene load_steps=3 format=3 uid="uid://bc2joqlpfqxui"]
+
+[ext_resource type="PackedScene" uid="uid://c0wnd8p2eqr3d" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/tile_name_ui.tscn" id="1_5fe1h"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wfc_settings.gd" id="1_s6hkl"]
+
+[node name="wave_function_collapse_ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Main_Container" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Save_Container" type="HBoxContainer" parent="Main_Container"]
+layout_mode = 2
+
+[node name="Btn_Save" type="Button" parent="Main_Container/Save_Container"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "SAVE"
+
+[node name="Msg_Save" type="Label" parent="Main_Container/Save_Container"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "Unsaved Changes!"
+
+[node name="TabContainer" type="TabContainer" parent="Main_Container"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="WFC_Settings" type="ScrollContainer" parent="Main_Container/TabContainer"]
+layout_mode = 2
+script = ExtResource("1_s6hkl")
+
+[node name="Holder" type="VBoxContainer" parent="Main_Container/TabContainer/WFC_Settings"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="NOT_Container" type="HBoxContainer" parent="Main_Container/TabContainer/WFC_Settings/Holder"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Number of Tiles:"
+
+[node name="Txt_NoT" type="LineEdit" parent="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "1"
+
+[node name="Btn_NOT_OK" type="Button" parent="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "OK"
+
+[node name="Tile_Container" type="GridContainer" parent="Main_Container/TabContainer/WFC_Settings/Holder"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 3
+
+[node name="tile_name_ui" parent="Main_Container/TabContainer/WFC_Settings/Holder/Tile_Container" instance=ExtResource("1_5fe1h")]
+layout_mode = 2
+
+[connection signal="text_changed" from="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container/Txt_NoT" to="Main_Container/TabContainer/WFC_Settings" method="_on_txt_no_t_text_changed"]
+[connection signal="pressed" from="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container/Btn_NOT_OK" to="Main_Container/TabContainer/WFC_Settings" method="_on_btn_not_ok_pressed"]
