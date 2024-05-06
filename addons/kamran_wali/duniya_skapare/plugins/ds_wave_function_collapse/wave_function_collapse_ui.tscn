@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=3 uid="uid://bc2joqlpfqxui"]
+[gd_scene load_steps=2 format=3 uid="uid://bc2joqlpfqxui"]
 
-[ext_resource type="PackedScene" uid="uid://c0wnd8p2eqr3d" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/tile_name_ui.tscn" id="1_5fe1h"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wfc_settings.gd" id="1_s6hkl"]
 
 [node name="wave_function_collapse_ui" type="Control"]
@@ -71,9 +70,6 @@ text = "OK"
 layout_mode = 2
 size_flags_vertical = 3
 columns = 3
-
-[node name="tile_name_ui" parent="Main_Container/TabContainer/WFC_Settings/Holder/Tile_Container" instance=ExtResource("1_5fe1h")]
-layout_mode = 2
 
 [connection signal="text_changed" from="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container/Txt_NoT" to="Main_Container/TabContainer/WFC_Settings" method="_on_txt_no_t_text_changed"]
 [connection signal="pressed" from="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container/Btn_NOT_OK" to="Main_Container/TabContainer/WFC_Settings" method="_on_btn_not_ok_pressed"]
