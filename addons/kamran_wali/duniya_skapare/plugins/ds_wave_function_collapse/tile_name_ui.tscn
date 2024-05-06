@@ -22,8 +22,10 @@ grow_horizontal = 2
 
 [node name="Lbl_ID" type="Label" parent="Holder"]
 layout_mode = 2
-text = "Tile X:"
+text = "Tile -1:"
 
 [node name="Txt_Name" type="LineEdit" parent="Holder"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[connection signal="text_changed" from="Holder/Txt_Name" to="." method="_on_txt_name_text_changed"]
