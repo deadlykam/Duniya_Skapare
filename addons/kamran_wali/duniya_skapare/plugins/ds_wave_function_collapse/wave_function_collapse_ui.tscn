@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bc2joqlpfqxui"]
+[gd_scene load_steps=6 format=3 uid="uid://bc2joqlpfqxui"]
 
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wave_function_collapse_ui.gd" id="1_4n6l4"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wfc_save.gd" id="1_emm2d"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wfc_settings.gd" id="1_s6hkl"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_tile_rules.gd" id="4_0a3y5"]
+[ext_resource type="PackedScene" uid="uid://cxvsmixrg237s" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/edge_rule_ui.tscn" id="5_xeytb"]
 
 [node name="wave_function_collapse_ui" type="Control"]
 layout_mode = 3
@@ -12,6 +15,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("1_4n6l4")
 
 [node name="Main_Container" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -42,6 +46,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="WFC_Settings" type="ScrollContainer" parent="Main_Container/TabContainer" node_paths=PackedStringArray("_ds_save")]
+visible = false
 layout_mode = 2
 script = ExtResource("1_s6hkl")
 _ds_save = NodePath("../../Save_Container")
@@ -62,7 +67,7 @@ text = "Number of Tiles:"
 [node name="Txt_NoT" type="LineEdit" parent="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "1"
+text = "3"
 
 [node name="Btn_NOT_OK" type="Button" parent="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container"]
 custom_minimum_size = Vector2(50, 0)
@@ -75,6 +80,70 @@ layout_mode = 2
 size_flags_vertical = 3
 columns = 3
 
+[node name="Tile_Rules" type="ScrollContainer" parent="Main_Container/TabContainer"]
+layout_mode = 2
+script = ExtResource("4_0a3y5")
+
+[node name="Holder" type="VBoxContainer" parent="Main_Container/TabContainer/Tile_Rules"]
+layout_mode = 2
+
+[node name="Tile_Selection_Container" type="HBoxContainer" parent="Main_Container/TabContainer/Tile_Rules/Holder"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Selection_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Tile"
+
+[node name="OB_Tile_List" type="OptionButton" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Selection_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+item_count = 3
+selected = 0
+popup/item_0/text = "ground"
+popup/item_0/id = 0
+popup/item_1/text = "water"
+popup/item_1/id = 1
+popup/item_2/text = "coast"
+popup/item_2/id = 2
+
+[node name="Tile_Edges" type="GridContainer" parent="Main_Container/TabContainer/Tile_Rules/Holder"]
+custom_minimum_size = Vector2(1152, 512)
+layout_mode = 2
+size_flags_vertical = 3
+columns = 3
+
+[node name="edge_rule_ui" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="edge_rule_ui2" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="edge_rule_ui3" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="edge_rule_ui4" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="edge_rule_ui5" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="edge_rule_ui6" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
 [connection signal="pressed" from="Main_Container/Save_Container/Btn_Save" to="Main_Container/Save_Container" method="_on_btn_save_pressed"]
+[connection signal="tab_changed" from="Main_Container/TabContainer" to="." method="_on_tab_container_tab_changed"]
 [connection signal="text_changed" from="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container/Txt_NoT" to="Main_Container/TabContainer/WFC_Settings" method="_on_txt_no_t_text_changed"]
 [connection signal="pressed" from="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container/Btn_NOT_OK" to="Main_Container/TabContainer/WFC_Settings" method="_on_btn_not_ok_pressed"]
