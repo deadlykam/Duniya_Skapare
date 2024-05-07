@@ -3,6 +3,7 @@ extends "res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collap
 
 @export_category("DS Edge Rule UI")
 @export var _edge_name:= ""
+@export_range(0, 5) var _index_edge:= 0
 
 # Properties from the scene
 var _lbl_edge: Label
@@ -13,8 +14,10 @@ var _btn_remove: Button
 # Properties for interal usage
 var _tile:= -1
 var _tile_names: Array[String]
+var _rules: Array[int]
 var _selected_items: PackedInt32Array
 var _counter1:= -1
+var _counter2:= -1
 var _green: Color
 var _red: Color
 var _alpha:= 0.125
@@ -47,4 +50,18 @@ func _setup_tile_list() -> void:
         _tile_list.add_item(_tile_names[_counter1])
         _counter1 += 1
     
-    # TODO: Show the correct tile type added or removed by setting the colour
+    _rules = get_data()._data_wfc_rules.get_edge_rules(_tile, _index_edge) # Getting all the rules
+    _counter1 = 0 # Acting as the tile index
+    while _counter1 < _tile_names.size(): # Loop for finding all the rules item
+        _set_item_colour(_counter1, _red) # Making item red at first
+        _counter2 = 0
+        while _counter2 < _rules.size(): # Loop to check if the item is a rule
+            if _counter1 == _rules[_counter2]: # Condition for finding a rule
+                _set_item_colour(_counter1, _green) # Making item green
+                break
+            _counter2 += 1
+        _counter1 += 1
+
+## This method sets the colour of the indexth item.
+func _set_item_colour(index:int, colour:Color) -> void:
+    _tile_list.set_item_custom_bg_color(index, colour)

@@ -118,36 +118,42 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 _edge_name = "UP (+y)"
+_index_edge = null
 
 [node name="NORTH" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 _edge_name = "NORTH (-z)"
+_index_edge = null
 
 [node name="EAST" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 _edge_name = "EAST (+x)"
+_index_edge = null
 
 [node name="BOTTOM" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 _edge_name = "BOTTOM (-y)"
+_index_edge = null
 
 [node name="SOUTH" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 _edge_name = "SOUTH (+z)"
+_index_edge = null
 
 [node name="WEST" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 _edge_name = "WEST (-x)"
+_index_edge = null
 
 [connection signal="pressed" from="Main_Container/Save_Container/Btn_Save" to="Main_Container/Save_Container" method="_on_btn_save_pressed"]
 [connection signal="tab_changed" from="Main_Container/TabContainer" to="." method="_on_tab_container_tab_changed"]
