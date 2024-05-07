@@ -29,6 +29,6 @@ func get_wfc_number_of_tiles() -> int:
     return _data_wfc_not.get_value()
 
 ## This method gets an array of all the tiles names for the
-## wave function collapse.
+## wave function collapse by duplicating them.
 func get_wfc_tile_names() -> Array[String]:
     return _data_wfc_names.get_data()

@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://cxvsmixrg237s"]
+[gd_scene load_steps=2 format=3 uid="uid://cxvsmixrg237s"]
+
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_edge_rule_ui.gd" id="1_qmaok"]
 
 [node name="edge_rule_ui" type="Control"]
 layout_mode = 3
@@ -7,14 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Holder" type="PanelContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+script = ExtResource("1_qmaok")
 
 [node name="Lbl_Edge" type="Label" parent="."]
 layout_mode = 1
@@ -41,7 +36,7 @@ item_0/text = "Tile1"
 item_1/text = "Tile2"
 item_2/text = "Tile3"
 
-[node name="Button" type="Button" parent="."]
+[node name="Btn_Add" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -52,7 +47,7 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 20
 text = "ADD"
 
-[node name="Button2" type="Button" parent="."]
+[node name="Btn_Remove" type="Button" parent="."]
 custom_minimum_size = Vector2(125, 0)
 layout_mode = 1
 anchors_preset = 3
