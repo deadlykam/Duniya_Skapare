@@ -9,6 +9,7 @@ func _enter_tree() -> void:
 func _on_btn_save_pressed():
     get_data()._data_wfc_not.save()
     get_data()._data_wfc_names.save()
+    get_data()._data_wfc_rules.save()
     _msg_save.visible = false
 
 ## This method shows the unsaved message.

@@ -5,6 +5,9 @@ extends "res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collap
 @export var _edge_name:= ""
 @export_range(0, 5) var _index_edge:= 0
 
+# Constants
+const DS_WFC_SAVE: GDScript = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wfc_save.gd")
+
 # Properties from the scene
 var _lbl_edge: Label
 var _tile_list: ItemList
@@ -12,6 +15,7 @@ var _btn_add: Button
 var _btn_remove: Button
 
 # Properties for interal usage
+var _ds_wfc_save: DS_WFC_SAVE
 var _tile:= -1
 var _tile_names: Array[String]
 var _rules: Array[int]
@@ -34,14 +38,12 @@ func _enter_tree() -> void:
     _green.a = _alpha
     _red.a = _alpha
 
-## This method sets up the UI with the given tile
-func setup(tile:int) -> void:
-    # TODO: Load the tile's rules as well and highlight the correct ones.
-    _tile = tile
-    _setup_tile_list() # Showing tile lists
+## This method initializes the edge rule ui.
+func init(ds_wfc_save:DS_WFC_SAVE) -> void:
+    _ds_wfc_save = ds_wfc_save
 
-## This method shows the edge's tile lists.
-func _setup_tile_list() -> void:
+## This method sets up the UIs name list
+func setup() -> void:
     _tile_list.clear()
     _tile_names = get_data().get_wfc_tile_names()
 
@@ -49,7 +51,11 @@ func _setup_tile_list() -> void:
     while _counter1 < _tile_names.size(): # Loop for adding all the items
         _tile_list.add_item(_tile_names[_counter1])
         _counter1 += 1
-    
+
+## This method shows the edge's tile lists.
+func setup_tile_list(tile:int) -> void:
+    _tile_list.deselect_all()
+    _tile = tile
     _rules = get_data()._data_wfc_rules.get_edge_rules(_tile, _index_edge) # Getting all the rules
     _counter1 = 0 # Acting as the tile index
     while _counter1 < _tile_names.size(): # Loop for finding all the rules item
@@ -61,6 +67,29 @@ func _setup_tile_list() -> void:
                 break
             _counter2 += 1
         _counter1 += 1
+
+func _on_btn_add_pressed():
+    _selected_items = _tile_list.get_selected_items()
+    _counter1 = 0
+
+    while _counter1 < _selected_items.size(): # Loop for adding edge rules
+        if !get_data()._data_wfc_rules.has_element(_tile, _selected_items[_counter1], _index_edge): # Checking if rule NOT added
+            get_data()._data_wfc_rules.add_edge_rule(_tile, _selected_items[_counter1], _index_edge) # Adding the rule
+            _set_item_colour(_selected_items[_counter1], _green)
+        _counter1 += 1
+    
+    _ds_wfc_save.show_unsaved_message("Unsaved Changes!")
+
+func _on_btn_remove_pressed():
+    _selected_items = _tile_list.get_selected_items()
+    _counter1 = 0
+
+    while _counter1 < _selected_items.size(): # Loop for removing edge rules
+        get_data()._data_wfc_rules.remove_edge_rule_element(_tile, _selected_items[_counter1], _index_edge) # Removing the rule
+        _set_item_colour(_selected_items[_counter1], _red)
+        _counter1 += 1
+    
+    _ds_wfc_save.show_unsaved_message("Unsaved Changes!")
 
 ## This method sets the colour of the indexth item.
 func _set_item_colour(index:int, colour:Color) -> void:

@@ -19,7 +19,6 @@ offset_bottom = 38.0
 grow_horizontal = 2
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 25
-text = "Edge (n ve)"
 horizontal_alignment = 1
 
 [node name="Tile_List" type="ItemList" parent="."]
@@ -61,3 +60,6 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 20
 text = "REMOVE"
+
+[connection signal="pressed" from="Btn_Add" to="." method="_on_btn_add_pressed"]
+[connection signal="pressed" from="Btn_Remove" to="." method="_on_btn_remove_pressed"]

@@ -31,11 +31,22 @@ func setup() -> void:
         _ob_tile_list.add_item(get_data()._data_wfc_names.get_element(_counter))
         _counter += 1
     
+    _update_tile_edges_tile_list() # Updating tile edges tile names
     _update_tile_edges_info(0) # Updating tile edges' info to the first tile
+
+func _on_ob_tile_list_item_selected(index:int):
+    _update_tile_edges_info(index)
+
+## This method updates the tile list names for the edges'
+func _update_tile_edges_tile_list() -> void:
+    _counter_method1 = 0
+    while _counter_method1 < _edges.size(): # Loop to update the edges' tile list
+        _edges[_counter_method1].setup() # Updating the list
+        _counter_method1 += 1
 
 ## This method updates the tile edges info to reflect the selected tile's edges.
 func _update_tile_edges_info(tile:int) -> void:
     _counter_method1 = 0
     while _counter_method1 < _edges.size(): # Loop to update the edges' tile list
-        _edges[_counter_method1].setup(tile)
+        _edges[_counter_method1].setup_tile_list(tile)
         _counter_method1 += 1

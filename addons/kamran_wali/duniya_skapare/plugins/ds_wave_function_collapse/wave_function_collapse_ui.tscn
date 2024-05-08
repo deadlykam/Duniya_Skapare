@@ -46,7 +46,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="WFC_Settings" type="ScrollContainer" parent="Main_Container/TabContainer" node_paths=PackedStringArray("_ds_save")]
-visible = false
 layout_mode = 2
 script = ExtResource("1_s6hkl")
 _ds_save = NodePath("../../Save_Container")
@@ -67,7 +66,7 @@ text = "Number of Tiles:"
 [node name="Txt_NoT" type="LineEdit" parent="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "3"
+text = "2"
 
 [node name="Btn_NOT_OK" type="Button" parent="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container"]
 custom_minimum_size = Vector2(50, 0)
@@ -81,6 +80,7 @@ size_flags_vertical = 3
 columns = 3
 
 [node name="Tile_Rules" type="ScrollContainer" parent="Main_Container/TabContainer"]
+visible = false
 layout_mode = 2
 script = ExtResource("4_0a3y5")
 
@@ -118,44 +118,44 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 _edge_name = "UP (+y)"
-_index_edge = null
 
 [node name="NORTH" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 _edge_name = "NORTH (-z)"
-_index_edge = null
+_index_edge = 1
 
 [node name="EAST" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 _edge_name = "EAST (+x)"
-_index_edge = null
+_index_edge = 2
 
 [node name="BOTTOM" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 _edge_name = "BOTTOM (-y)"
-_index_edge = null
+_index_edge = 3
 
 [node name="SOUTH" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 _edge_name = "SOUTH (+z)"
-_index_edge = null
+_index_edge = 4
 
 [node name="WEST" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 _edge_name = "WEST (-x)"
-_index_edge = null
+_index_edge = 5
 
 [connection signal="pressed" from="Main_Container/Save_Container/Btn_Save" to="Main_Container/Save_Container" method="_on_btn_save_pressed"]
 [connection signal="tab_changed" from="Main_Container/TabContainer" to="." method="_on_tab_container_tab_changed"]
 [connection signal="text_changed" from="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container/Txt_NoT" to="Main_Container/TabContainer/WFC_Settings" method="_on_txt_no_t_text_changed"]
 [connection signal="pressed" from="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container/Btn_NOT_OK" to="Main_Container/TabContainer/WFC_Settings" method="_on_btn_not_ok_pressed"]
+[connection signal="item_selected" from="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Selection_Container/OB_Tile_List" to="Main_Container/TabContainer/Tile_Rules" method="_on_ob_tile_list_item_selected"]
