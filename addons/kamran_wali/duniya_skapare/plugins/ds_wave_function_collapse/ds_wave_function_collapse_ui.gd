@@ -2,23 +2,38 @@
 extends "res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_base.gd"
 
 # Constants
+const DS_WFC_SETTINGS: GDScript = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wfc_settings.gd")
 const DS_TILE_RULES: GDScript = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_tile_rules.gd")
-const DS_WFC_SAVE: GDScript = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wfc_save.gd")
 
-var _ds_wfc_save: DS_WFC_SAVE
+# Properties from the scene
+var _msg_save: Label
+
+# Properties for internal usage
 var _ds_tile_rules: DS_TILE_RULES
 var _tile_edges: Control
 var _counter1:= -1
 
 func _enter_tree() -> void:
-    _ds_wfc_save = $Main_Container/Save_Container
+    $Main_Container/TabContainer/WFC_Settings.init(self)
     _ds_tile_rules = $Main_Container/TabContainer/Tile_Rules
     _tile_edges = $Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges
+    _msg_save = $Main_Container/ButtonContainer/Msg_Save
 
     _counter1 = 0
     while _counter1 < _tile_edges.get_child_count(): # Loop for initializing the edge rule UIs
-        _tile_edges.get_child(_counter1).init(_ds_wfc_save)
+        _tile_edges.get_child(_counter1).init(self)
         _counter1 += 1
+
+## This method shows the unsaved message.
+func show_unsaved_message(msg:String) -> void:
+    _msg_save.text = msg
+    _msg_save.visible = true
+
+func _on_btn_save_pressed():
+    get_data()._data_wfc_not.save()
+    get_data()._data_wfc_names.save()
+    get_data()._data_wfc_rules.save()
+    _msg_save.visible = false
 
 func _on_tab_container_tab_changed(tab:int):
     if tab == 1: # Condition to show the tile rules tab

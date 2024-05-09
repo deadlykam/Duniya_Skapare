@@ -1,11 +1,11 @@
 @tool
 extends "res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_base.gd"
 
+# Constants
+const DS_WAVE_FUNCTION_COLLAPSE_UI = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wave_function_collapse_ui.gd")
+
 # Templates
 var _template_tile_name_ui = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/tile_name_ui.tscn")
-
-@export_category("DS WFC Settings")
-@export var _ds_save: Node
 
 # Properties from the scene
 var _tile_container: Control
@@ -13,6 +13,7 @@ var _txt_not: LineEdit
 var _btn_not_ok: Button
 
 # Properties for internal usage ONLY
+var _ds_wave_function_collapse_ui: DS_WAVE_FUNCTION_COLLAPSE_UI
 var _number_of_tiles:= -1
 var _tiles_current:= 0
 var _counter1:= -1
@@ -23,6 +24,10 @@ func _enter_tree() -> void:
     _tile_container = $Holder/Tile_Container
     _txt_not = $Holder/NOT_Container/Txt_NoT
     _btn_not_ok = $Holder/NOT_Container/Btn_NOT_OK
+
+## This method initializes the edge rule ui.
+func init(ds_wave_function_collapse_ui:DS_WAVE_FUNCTION_COLLAPSE_UI) -> void:
+    _ds_wave_function_collapse_ui = ds_wave_function_collapse_ui
 
 func _ready() -> void:
     _setup() # Setting up the UI at start up
@@ -100,4 +105,4 @@ func _set_font_colour(control:Control, colour:Color) -> void:
 
 ## This method shows the unsaved messages.
 func _show_save_msg() -> void:
-    _ds_save.show_unsaved_message("Unsaved Changes!")
+    _ds_wave_function_collapse_ui.show_unsaved_message("Unsaved Chagnes!")
