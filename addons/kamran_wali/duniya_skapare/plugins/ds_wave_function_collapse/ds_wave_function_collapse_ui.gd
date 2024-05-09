@@ -4,6 +4,7 @@ extends "res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collap
 # Constants
 const DS_WFC_SETTINGS: GDScript = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wfc_settings.gd")
 const DS_TILE_RULES: GDScript = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_tile_rules.gd")
+const DS_SAVE_LOAD: GDScript = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_save_load.gd")
 
 # Properties from the scene
 var _msg_save: Label
@@ -11,12 +12,14 @@ var _msg_save: Label
 # Properties for internal usage
 var _ds_wfc_settings: DS_WFC_SETTINGS
 var _ds_tile_rules: DS_TILE_RULES
+var _ds_save_load: DS_SAVE_LOAD
 var _tile_edges: Control
 var _counter1:= -1
 
 func _enter_tree() -> void:
     _ds_wfc_settings = $Main_Container/TabContainer/WFC_Settings
     _ds_tile_rules = $Main_Container/TabContainer/Tile_Rules
+    _ds_save_load = $Save_Load_Container
     _tile_edges = $Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges
     _msg_save = $Main_Container/ButtonContainer/Msg_Save
 
@@ -44,6 +47,12 @@ func _on_btn_reset_pressed():
     get_data()._data_wfc_rules.data_reset()
     _ds_wfc_settings.reset() # Resetting wfc setting
     _ds_tile_rules.setup() # Resetting the edges
+
+func _on_btn_save_as_pressed():
+    _ds_save_load.show_menu(true)
+
+func _on_btn_load_pressed():
+    _ds_save_load.show_menu(false)
 
 func _on_tab_container_tab_changed(tab:int):
     if tab == 1: # Condition to show the tile rules tab
