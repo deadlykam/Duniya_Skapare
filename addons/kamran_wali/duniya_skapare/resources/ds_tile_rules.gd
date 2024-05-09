@@ -27,6 +27,45 @@ var _counter2:= -1
 var _counter3:= -1
 var _counter_pos:= -1
 
+## This method resets the data to default state.
+func data_reset() -> void:
+    # Removing all the rules
+    _up_rules.resize(0)
+    _north_rules.resize(0)
+    _east_rules.resize(0)
+    _bottom_rules.resize(0)
+    _south_rules.resize(0)
+    _west_rules.resize(0)
+
+    # Resetting the pos size and value
+    _up_pos.resize(1)
+    _up_pos[0] = 0
+    _north_pos.resize(1)
+    _north_pos[0] = 0
+    _east_pos.resize(1)
+    _east_pos[0] = 0
+    _bottom_pos.resize(1)
+    _bottom_pos[0] = 0
+    _south_pos.resize(1)
+    _south_pos[0] = 0
+    _west_pos.resize(1)
+    _west_pos[0] = 0
+
+    # Resetting the size size and value
+    _up_size.resize(1)
+    _up_size[0] = 0
+    _north_size.resize(1)
+    _north_size[0] = 0
+    _east_size.resize(1)
+    _east_size[0] = 0
+    _bottom_size.resize(1)
+    _bottom_size[0] = 0
+    _south_size.resize(1)
+    _south_size[0] = 0
+    _west_size.resize(1)
+    _west_size[0] = 0
+
+## This method resizes the data to the given value.
 func data_resize(resize:int) -> void:
     if resize < _up_size.size(): # Condition to check if the resize requires to remove data
         while _up_size.size() > resize: # Loop to resize the arrays

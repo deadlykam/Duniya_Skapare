@@ -39,6 +39,13 @@ layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 text = "Unsaved Changes!"
 
+[node name="Btn_Reset" type="Button" parent="Main_Container/ButtonContainer"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 24
+text = "RESET"
+
 [node name="TabContainer" type="TabContainer" parent="Main_Container"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -152,6 +159,7 @@ _edge_name = "WEST (-x)"
 _index_edge = 5
 
 [connection signal="pressed" from="Main_Container/ButtonContainer/Btn_Save" to="." method="_on_btn_save_pressed"]
+[connection signal="pressed" from="Main_Container/ButtonContainer/Btn_Reset" to="." method="_on_btn_reset_pressed"]
 [connection signal="tab_changed" from="Main_Container/TabContainer" to="." method="_on_tab_container_tab_changed"]
 [connection signal="text_changed" from="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container/Txt_NoT" to="Main_Container/TabContainer/WFC_Settings" method="_on_txt_no_t_text_changed"]
 [connection signal="pressed" from="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container/Btn_NOT_OK" to="Main_Container/TabContainer/WFC_Settings" method="_on_btn_not_ok_pressed"]

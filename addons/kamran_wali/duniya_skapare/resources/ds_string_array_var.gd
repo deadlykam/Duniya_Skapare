@@ -3,6 +3,11 @@ extends "res://addons/kamran_wali/duniya_skapare/resources/ds_base_resource.gd"
 
 @export var _data: Array[String]
 
+## This method resets the data to the default state.
+func data_reset() -> void:
+    _data.resize(1)
+    _data[0] = "Tile"
+
 ## This method updates the given element in the data.
 func update_element(element:String, index:int) -> void:
     _data[index] = element

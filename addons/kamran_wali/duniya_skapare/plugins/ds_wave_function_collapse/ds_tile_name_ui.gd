@@ -13,7 +13,7 @@ func _enter_tree() -> void:
     _lbl_id = $Holder/Lbl_ID
     _txt_name = $Holder/Txt_Name
     _set_label_id()
-    _set_txt_name()
+    set_txt_name(_name)
 
 ## This method sets up the tile name UI.
 func setup(manager:DS_WFC_SETTINGS, id:int) -> void:
@@ -24,12 +24,12 @@ func setup(manager:DS_WFC_SETTINGS, id:int) -> void:
 func setup_name(name:String) -> void:
     _name = name
 
+## This method sets the name of the text name.
+func set_txt_name(name: String) -> void:
+    _txt_name.text = name
+
 func _on_txt_name_text_changed(new_text:String):
     _manager.update_tile_name_data(new_text, _id)
-
-## This method sets the name of the text name.
-func _set_txt_name() -> void:
-    _txt_name.text = _name
 
 ## This method sets the lable id name.
 func _set_label_id() -> void:
