@@ -13,7 +13,7 @@ var _txt_not: LineEdit
 var _btn_not_ok: Button
 
 # Properties for internal usage ONLY
-var _ds_wave_function_collapse_ui: DS_WAVE_FUNCTION_COLLAPSE_UI
+var _wave_function_collapse_ui: DS_WAVE_FUNCTION_COLLAPSE_UI
 var _number_of_tiles:= -1
 var _tiles_current:= 0
 var _counter1:= -1
@@ -26,11 +26,18 @@ func _enter_tree() -> void:
     _btn_not_ok = $Holder/NOT_Container/Btn_NOT_OK
 
 ## This method initializes the edge rule ui.
-func init(ds_wave_function_collapse_ui:DS_WAVE_FUNCTION_COLLAPSE_UI) -> void:
-    _ds_wave_function_collapse_ui = ds_wave_function_collapse_ui
+func init(wave_function_collapse_ui:DS_WAVE_FUNCTION_COLLAPSE_UI) -> void:
+    _wave_function_collapse_ui = wave_function_collapse_ui
 
 func _ready() -> void:
-    _setup() # Setting up the UI at start up
+    setup() # Setting up the UI at start up
+
+## This method sets up the UI.
+func setup() -> void:
+    _remove_all_inputs() # Making sure all inputs are removed at the start
+    _txt_not.text = str(get_data().get_wfc_data().get_number_of_tiles()) # Setting the txt_not value to number of tiles
+    _number_of_tiles = get_data().get_wfc_data().get_number_of_tiles()
+    _update_tile_name_inputs(_number_of_tiles, true)
 
 ## This method updates the name of the data.
 func update_tile_name_data(name:String, index:int) -> void:
@@ -46,6 +53,7 @@ func reset() -> void:
 func _on_btn_not_ok_pressed() -> void:
     if _number_of_tiles != int(_txt_not.text): # Condition to check if to update the data
         _update_tile_name_inputs(int(_txt_not.text), false) # Updating the number of tile name inputs to show
+        get_data().get_wfc_data().data_resize(_number_of_tiles) # Resizing the entire data
 
 func _on_txt_no_t_text_changed(new_text:String) -> void:
     if (new_text.is_valid_int() && new_text != "0" && !new_text.contains("-")
@@ -56,20 +64,18 @@ func _on_txt_no_t_text_changed(new_text:String) -> void:
         _set_font_colour(_txt_not, Color.RED)
         _btn_not_ok.visible = false
 
-## This method sets up the UI.
-func _setup() -> void:
-    _txt_not.text = str(get_data().get_wfc_data().get_number_of_tiles()) # Setting the txt_not value to number of tiles
-    _number_of_tiles = get_data().get_wfc_data().get_number_of_tiles()
-    _update_tile_name_inputs(_number_of_tiles, true)
-
 ## This method updates the number of tile name inputs to show.
 func _update_tile_name_inputs(number_of_tiles:int, is_set_name:bool) -> void:
     _number_of_tiles = number_of_tiles # Setting the number of tiles value
-    _tiles_current = _tile_container.get_child_count() # Storing the number of tiles present atm
-    get_data().get_wfc_data().data_resize(_number_of_tiles) # Resizing the entire data
+
+    # Storing the number of tiles present atm.
+    # Counter id acts as number of tiles because
+    # remove update happens in next frame so child
+    # count is inaccurate
+    _tiles_current = _counter_id 
     
     if _number_of_tiles < _tiles_current: # Condition for removing children
-        _counter1 = _tile_container.get_child_count() - 1 # Starting from the farthest child
+        _counter1 = _tiles_current - 1 # Starting from the farthest child
         while _counter1 >= _number_of_tiles: # Loop for removing children
             _remove_tile_input(_counter1)
             _counter1 -= 1
@@ -80,6 +86,14 @@ func _update_tile_name_inputs(number_of_tiles:int, is_set_name:bool) -> void:
             _counter1 += 1
         
     if !is_set_name: _show_save_msg() # Showing unsaved messageks
+
+## This method removes all the inputs.
+func _remove_all_inputs() -> void:
+    _counter1 = 0
+    while _counter1 < _tile_container.get_child_count(): # Loop for removing all inputs
+        _remove_tile_input(_counter1)
+        _counter1 += 1
+    _counter_id = 0 # Making sure id is resetted to 0
 
 ## This method creates a new tile input.
 func _add_new_tile_input(is_set_name:bool) -> void:
@@ -101,4 +115,4 @@ func _set_font_colour(control:Control, colour:Color) -> void:
 
 ## This method shows the unsaved messages.
 func _show_save_msg() -> void:
-    _ds_wave_function_collapse_ui.show_unsaved_message("Unsaved Chagnes!")
+    _wave_function_collapse_ui.show_unsaved_message("Unsaved Chagnes!")

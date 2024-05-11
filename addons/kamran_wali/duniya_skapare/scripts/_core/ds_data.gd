@@ -24,3 +24,7 @@ static func get_instance() -> DS_Data:
 ## This method gets the wave function collapse data.
 func get_wfc_data() -> DS_WFC_DATA:
     return _wfc_data
+
+## This method sets the new wfc data to be used.
+func set_wfc_data(wfc_data:DS_WFC_DATA) -> void:
+    _wfc_data = wfc_data

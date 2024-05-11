@@ -89,7 +89,7 @@ text = "Number of Tiles:"
 [node name="Txt_NoT" type="LineEdit" parent="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "1"
+text = "2"
 
 [node name="Btn_NOT_OK" type="Button" parent="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container"]
 custom_minimum_size = Vector2(50, 0)

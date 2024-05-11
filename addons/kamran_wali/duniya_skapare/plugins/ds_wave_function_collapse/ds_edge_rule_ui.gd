@@ -56,7 +56,8 @@ func setup() -> void:
 func setup_tile_list(tile:int) -> void:
     _tile_list.deselect_all()
     _tile = tile
-    _rules = get_data().get_wfc_tile_edge_rules(_tile, _index_edge) # Getting all the rules
+    # _rules = get_data().get_wfc_tile_edge_rules(_tile, _index_edge) # Getting all the rules
+    _rules = get_data().get_wfc_data().get_edge_rules(_tile, _index_edge) # Getting all the rules
     _counter1 = 0 # Acting as the tile index
     while _counter1 < _tile_names.size(): # Loop for finding all the rules item
         _set_item_colour(_counter1, _red) # Making item red at first
