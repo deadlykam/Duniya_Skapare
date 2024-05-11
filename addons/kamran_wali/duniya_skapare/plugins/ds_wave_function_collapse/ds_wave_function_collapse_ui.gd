@@ -36,15 +36,11 @@ func show_unsaved_message(msg:String) -> void:
     _msg_save.visible = true
 
 func _on_btn_save_pressed():
-    get_data()._data_wfc_not.save()
-    get_data()._data_wfc_names.save()
-    get_data()._data_wfc_rules.save()
+    get_data().get_wfc_data().save()
     _msg_save.visible = false
 
 func _on_btn_reset_pressed():
-    get_data()._data_wfc_not.set_value(1)
-    get_data()._data_wfc_names.data_reset()
-    get_data()._data_wfc_rules.data_reset()
+    get_data().get_wfc_data().data_reset()
     _ds_wfc_settings.reset() # Resetting wfc setting
     _ds_tile_rules.setup() # Resetting the edges
 

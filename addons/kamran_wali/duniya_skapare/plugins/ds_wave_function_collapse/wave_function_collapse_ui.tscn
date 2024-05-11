@@ -271,5 +271,6 @@ text = "CANCEL"
 [connection signal="text_changed" from="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container/Txt_NoT" to="Main_Container/TabContainer/WFC_Settings" method="_on_txt_no_t_text_changed"]
 [connection signal="pressed" from="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container/Btn_NOT_OK" to="Main_Container/TabContainer/WFC_Settings" method="_on_btn_not_ok_pressed"]
 [connection signal="item_selected" from="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Selection_Container/OB_Tile_List" to="Main_Container/TabContainer/Tile_Rules" method="_on_ob_tile_list_item_selected"]
+[connection signal="text_changed" from="Save_Load_Container/PathContainer/Txt_Path" to="Save_Load_Container" method="_on_txt_path_text_changed"]
 [connection signal="pressed" from="Save_Load_Container/ButtonContainer/Btn_Action" to="Save_Load_Container" method="_on_btn_action_pressed"]
 [connection signal="pressed" from="Save_Load_Container/ButtonContainer/Btn_Cancel" to="Save_Load_Container" method="_on_btn_cancel_pressed"]

@@ -1,7 +1,14 @@
 @tool
-class_name DS_WFC_Tile_Rules
 extends "res://addons/kamran_wali/duniya_skapare/resources/ds_base_resource.gd"
 
+@export_category("DS WFC Data Properties")
+@export_group("Number Of Tiles Properties")
+@export var _number_of_tiles:= 1
+
+@export_group("Tile Names Properties")
+@export var _tile_names: Array[String]
+
+@export_group("Tile Rules Properties")
 @export var _up_rules: Array[int]
 @export var _north_rules: Array[int]
 @export var _east_rules: Array[int]
@@ -28,95 +35,25 @@ var _counter2:= -1
 var _counter3:= -1
 var _counter_pos:= -1
 
-## This method resets the data to default state.
-func data_reset() -> void:
-    # Removing all the rules
-    _up_rules.resize(0)
-    _north_rules.resize(0)
-    _east_rules.resize(0)
-    _bottom_rules.resize(0)
-    _south_rules.resize(0)
-    _west_rules.resize(0)
+## This method sets the number of tile value.
+func set_number_of_tiles(value:int) -> void:
+    _number_of_tiles = value
 
-    # Resetting the pos size and value
-    _up_pos.resize(1)
-    _up_pos[0] = 0
-    _north_pos.resize(1)
-    _north_pos[0] = 0
-    _east_pos.resize(1)
-    _east_pos[0] = 0
-    _bottom_pos.resize(1)
-    _bottom_pos[0] = 0
-    _south_pos.resize(1)
-    _south_pos[0] = 0
-    _west_pos.resize(1)
-    _west_pos[0] = 0
+## This method gets the number of tile value.
+func get_number_of_tiles() -> int:
+    return _number_of_tiles
 
-    # Resetting the size size and value
-    _up_size.resize(1)
-    _up_size[0] = 0
-    _north_size.resize(1)
-    _north_size[0] = 0
-    _east_size.resize(1)
-    _east_size[0] = 0
-    _bottom_size.resize(1)
-    _bottom_size[0] = 0
-    _south_size.resize(1)
-    _south_size[0] = 0
-    _west_size.resize(1)
-    _west_size[0] = 0
+## This method updates the name of the indexth tile.
+func update_tile_name(name:String, index:int) -> void:
+    _tile_names[index] = name
 
-## This method resizes the data to the given value.
-func data_resize(resize:int) -> void:
-    if resize < _up_size.size(): # Condition to check if the resize requires to remove data
-        while _up_size.size() > resize: # Loop to resize the arrays
-            _tile = _up_size.size() - 1 # Tile to remove
-            _counter2 = 0 # Acts as index for edges
-            while _counter2 < 6: # Loop for going through all the edges
-                while get_edge_size(_tile, _counter2) != 0: # Loop for removing all the edge rules
-                    remove_edge_rule_at(_tile, 0, _counter2) # Removing the edge rules
-                _counter2 += 1
-            
-            _counter2 = 0 # Acts as tiles
-            while _counter2 < _up_size.size(): # Loop for going through all the tiles
-                if _counter2 != _tile: # Condition to NOT remove from self
-                    _counter3 = 0 # Acts as index of edges for the tiles
-                    while _counter3 < 6: # Loop for removing the tile from all other tiles
-                        remove_edge_rule_element(_counter2, _tile, _counter3) # Removing the tile
-                        _counter3 += 1
-                _counter2 += 1
+## This method gets the indexth tile name.
+func get_tile_name(index:int) -> String:
+    return _tile_names[index]
 
-            # Resizing sizes
-            _up_size.remove_at(_up_size.size() - 1)
-            _north_size.remove_at(_north_size.size() - 1)
-            _east_size.remove_at(_east_size.size() - 1)
-            _bottom_size.remove_at(_bottom_size.size() - 1)
-            _south_size.remove_at(_south_size.size() - 1)
-            _west_size.remove_at(_west_size.size() - 1)
-            
-            # Resizing positions
-            _up_pos.remove_at(_up_pos.size() - 1)
-            _north_pos.remove_at(_north_pos.size() - 1)
-            _east_pos.remove_at(_east_pos.size() - 1)
-            _bottom_pos.remove_at(_bottom_pos.size() - 1)
-            _south_pos.remove_at(_south_pos.size() - 1)
-            _west_pos.remove_at(_west_pos.size() - 1)
-    elif resize > _up_size.size(): # Condition to increase the size
-        # Resizing sizes
-            _up_size.resize(resize)
-            _north_size.resize(resize)
-            _east_size.resize(resize)
-            _bottom_size.resize(resize)
-            _south_size.resize(resize)
-            _west_size.resize(resize)
-            
-            # Resizing positions
-            _up_pos.resize(resize)
-            _north_pos.resize(resize)
-            _east_pos.resize(resize)
-            _bottom_pos.resize(resize)
-            _south_pos.resize(resize)
-            _west_pos.resize(resize)
+## This method gets all the tile name array by duplicating it.
+func get_tile_names() -> Array[String]:
+    return _tile_names.duplicate()
 
 ## This method adds a rule to the up tile.
 func add_up_rule(tile:int, element:int) -> void:
@@ -374,7 +311,7 @@ func remove_edge_rule_at(tile:int, index:int, edge:int) -> void:
                 _update_size_pos(tile, -1, 5)
 
 ## This method checks if the given element exists in the given tile.
-func has_element(tile:int, element:int, edge:int) -> bool:
+func has_rule_element(tile:int, element:int, edge:int) -> bool:
     if edge == 0: # UP
         if _up_size[tile] > 0: # Checking if at least 1 element exists
             _counter1 = 0
@@ -469,6 +406,109 @@ func get_edge_size(tile:int, edge:int) -> int:
     return (_up_size[tile] if edge == 0 else _north_size[tile] if edge == 1 else 
             _east_size[tile] if edge == 2 else _bottom_size[tile] if edge == 3 else
             _south_size[tile] if edge == 4 else _west_size[tile] if edge == 5 else -1)
+
+## This method resizes the data.
+func data_resize(resize:int) -> void:
+    _number_of_tiles = resize # Updating number of tiles to resize value
+    _tile_names.resize(resize) # Resizing tile names
+
+    if resize < _up_size.size(): # Condition to check if the resize requires to remove data
+        while _up_size.size() > resize: # Loop to resize the arrays
+            _tile = _up_size.size() - 1 # Tile to remove
+            _counter2 = 0 # Acts as index for edges
+            while _counter2 < 6: # Loop for going through all the edges
+                while get_edge_size(_tile, _counter2) != 0: # Loop for removing all the edge rules
+                    remove_edge_rule_at(_tile, 0, _counter2) # Removing the edge rules
+                _counter2 += 1
+            
+            _counter2 = 0 # Acts as tiles
+            while _counter2 < _up_size.size(): # Loop for going through all the tiles
+                if _counter2 != _tile: # Condition to NOT remove from self
+                    _counter3 = 0 # Acts as index of edges for the tiles
+                    while _counter3 < 6: # Loop for removing the tile from all other tiles
+                        remove_edge_rule_element(_counter2, _tile, _counter3) # Removing the tile
+                        _counter3 += 1
+                _counter2 += 1
+
+            # Resizing sizes
+            _up_size.remove_at(_up_size.size() - 1)
+            _north_size.remove_at(_north_size.size() - 1)
+            _east_size.remove_at(_east_size.size() - 1)
+            _bottom_size.remove_at(_bottom_size.size() - 1)
+            _south_size.remove_at(_south_size.size() - 1)
+            _west_size.remove_at(_west_size.size() - 1)
+            
+            # Resizing positions
+            _up_pos.remove_at(_up_pos.size() - 1)
+            _north_pos.remove_at(_north_pos.size() - 1)
+            _east_pos.remove_at(_east_pos.size() - 1)
+            _bottom_pos.remove_at(_bottom_pos.size() - 1)
+            _south_pos.remove_at(_south_pos.size() - 1)
+            _west_pos.remove_at(_west_pos.size() - 1)
+    elif resize > _up_size.size(): # Condition to increase the size
+        # Resizing sizes
+        _up_size.resize(resize)
+        _north_size.resize(resize)
+        _east_size.resize(resize)
+        _bottom_size.resize(resize)
+        _south_size.resize(resize)
+        _west_size.resize(resize)
+        
+        # Resizing positions
+        _up_pos.resize(resize)
+        _north_pos.resize(resize)
+        _east_pos.resize(resize)
+        _bottom_pos.resize(resize)
+        _south_pos.resize(resize)
+        _west_pos.resize(resize)
+
+## This method resets the data.
+func data_reset() -> void:
+    _number_of_tiles = 1 # Resetting number of tiles
+
+    # Resetting tile names
+    _tile_names.resize(1)
+    _tile_names[0] = "Tile"
+
+    # Removing all the rules
+    _up_rules.resize(0)
+    _north_rules.resize(0)
+    _east_rules.resize(0)
+    _bottom_rules.resize(0)
+    _south_rules.resize(0)
+    _west_rules.resize(0)
+
+    # Resetting the pos size and value
+    _up_pos.resize(1)
+    _up_pos[0] = 0
+    _north_pos.resize(1)
+    _north_pos[0] = 0
+    _east_pos.resize(1)
+    _east_pos[0] = 0
+    _bottom_pos.resize(1)
+    _bottom_pos[0] = 0
+    _south_pos.resize(1)
+    _south_pos[0] = 0
+    _west_pos.resize(1)
+    _west_pos[0] = 0
+
+    # Resetting the size size and value
+    _up_size.resize(1)
+    _up_size[0] = 0
+    _north_size.resize(1)
+    _north_size[0] = 0
+    _east_size.resize(1)
+    _east_size[0] = 0
+    _bottom_size.resize(1)
+    _bottom_size[0] = 0
+    _south_size.resize(1)
+    _south_size[0] = 0
+    _west_size.resize(1)
+    _west_size[0] = 0
+
+# ## This method gets the number of elements in the data.
+# func get_size() -> int:
+#     return _tile_names.size()
 
 ## This method updates the size and pos of an edge.
 ## UP = 0

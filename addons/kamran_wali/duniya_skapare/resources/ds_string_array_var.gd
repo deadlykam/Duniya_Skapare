@@ -1,4 +1,5 @@
 @tool
+class_name DS_String_Array_Var
 extends "res://addons/kamran_wali/duniya_skapare/resources/ds_base_resource.gd"
 
 @export var _data: Array[String]
