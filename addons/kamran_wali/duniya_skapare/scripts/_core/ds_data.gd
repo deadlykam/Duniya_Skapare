@@ -6,7 +6,7 @@ class_name DS_Data
 static  var _instance: DS_Data # Singleton holder
 
 # Constants
-const DS_WFC_DATA: GDScript = preload("res://addons/kamran_wali/duniya_skapare/resources/ds_wfc_data.gd")
+const DS_WFC_DATA: GDScript = preload("res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_wfc_data.gd")
 
 # Data Properties
 var _wfc_data: DS_WFC_DATA = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse/data.tres")

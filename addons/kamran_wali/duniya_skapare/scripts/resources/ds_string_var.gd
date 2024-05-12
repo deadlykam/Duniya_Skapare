@@ -1,5 +1,5 @@
 @tool
-extends "res://addons/kamran_wali/duniya_skapare/resources/ds_base_resource.gd"
+extends "res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_base_resource.gd"
 
 @export var _value: String
 

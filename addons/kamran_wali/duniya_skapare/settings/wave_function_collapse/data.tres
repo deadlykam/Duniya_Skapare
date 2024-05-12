@@ -1,9 +1,9 @@
 [gd_resource type="Resource" load_steps=2 format=3 uid="uid://uqomi1evvyby"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/resources/ds_wfc_data.gd" id="1_5tuj3"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_wfc_data.gd" id="1_vl38s"]
 
 [resource]
-script = ExtResource("1_5tuj3")
+script = ExtResource("1_vl38s")
 _number_of_tiles = 2
 _tile_names = Array[String](["Ground", "Water"])
 _up_rules = Array[int]([])
