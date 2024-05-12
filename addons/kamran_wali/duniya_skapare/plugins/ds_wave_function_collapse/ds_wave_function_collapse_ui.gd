@@ -49,7 +49,7 @@ func _on_btn_reset_pressed():
     _wfc_settings.reset() # Resetting wfc setting
     _tile_rules.setup() # Resetting the edges
 
-func _on_btn_save_as_pressed():
+func _on_btn_new_pressed():
     _save_load.show_menu(true)
 
 func _on_btn_load_pressed():

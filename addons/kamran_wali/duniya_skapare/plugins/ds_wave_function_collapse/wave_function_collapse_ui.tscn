@@ -40,11 +40,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "SAVE"
 
-[node name="Btn_SaveAs" type="Button" parent="Main_Container/ButtonContainer"]
+[node name="Btn_New" type="Button" parent="Main_Container/ButtonContainer"]
 custom_minimum_size = Vector2(125, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-text = "SAVE AS"
+text = "NEW"
 
 [node name="Btn_Load" type="Button" parent="Main_Container/ButtonContainer"]
 custom_minimum_size = Vector2(125, 0)
@@ -264,7 +264,7 @@ theme_override_font_sizes/font_size = 24
 text = "CANCEL"
 
 [connection signal="pressed" from="Main_Container/ButtonContainer/Btn_Save" to="." method="_on_btn_save_pressed"]
-[connection signal="pressed" from="Main_Container/ButtonContainer/Btn_SaveAs" to="." method="_on_btn_save_as_pressed"]
+[connection signal="pressed" from="Main_Container/ButtonContainer/Btn_New" to="." method="_on_btn_new_pressed"]
 [connection signal="pressed" from="Main_Container/ButtonContainer/Btn_Load" to="." method="_on_btn_load_pressed"]
 [connection signal="pressed" from="Main_Container/ButtonContainer/Btn_Reset" to="." method="_on_btn_reset_pressed"]
 [connection signal="tab_changed" from="Main_Container/TabContainer" to="." method="_on_tab_container_tab_changed"]
