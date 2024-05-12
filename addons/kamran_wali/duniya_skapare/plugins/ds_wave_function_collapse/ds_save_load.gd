@@ -2,8 +2,8 @@
 extends "res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_base.gd"
 
 # Constants
-const DS_WFC_DATA: GDScript = preload("res://addons/kamran_wali/duniya_skapare/resources/ds_wfc_data.gd")
-const DS_STRING_VAR: GDScript = preload("res://addons/kamran_wali/duniya_skapare/resources/ds_string_var.gd")
+const DS_WFC_DATA: GDScript = preload("res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_wfc_data.gd")
+const DS_STRING_VAR: GDScript = preload("res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_string_var.gd")
 const DS_WAVE_FUNCTION_COLLAPSE_UI = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wave_function_collapse_ui.gd")
 
 # Properties from the scene
