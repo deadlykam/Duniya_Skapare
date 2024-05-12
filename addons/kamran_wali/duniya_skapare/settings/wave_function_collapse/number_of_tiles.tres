@@ -1,7 +1,0 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://g8ue2e7ir7rw"]
-
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/resources/ds_int_var.gd" id="1_hp36m"]
-
-[resource]
-script = ExtResource("1_hp36m")
-_value = 1

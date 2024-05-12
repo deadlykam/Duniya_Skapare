@@ -45,7 +45,7 @@ func init(ds_wave_function_collapse_ui:DS_WAVE_FUNCTION_COLLAPSE_UI) -> void:
 ## This method sets up the UIs name list
 func setup() -> void:
     _tile_list.clear()
-    _tile_names = get_data().get_wfc_tile_names()
+    _tile_names = get_data().get_wfc_data().get_tile_names()
 
     _counter1 = 0
     while _counter1 < _tile_names.size(): # Loop for adding all the items
@@ -56,7 +56,8 @@ func setup() -> void:
 func setup_tile_list(tile:int) -> void:
     _tile_list.deselect_all()
     _tile = tile
-    _rules = get_data()._data_wfc_rules.get_edge_rules(_tile, _index_edge) # Getting all the rules
+    # _rules = get_data().get_wfc_tile_edge_rules(_tile, _index_edge) # Getting all the rules
+    _rules = get_data().get_wfc_data().get_edge_rules(_tile, _index_edge) # Getting all the rules
     _counter1 = 0 # Acting as the tile index
     while _counter1 < _tile_names.size(): # Loop for finding all the rules item
         _set_item_colour(_counter1, _red) # Making item red at first
@@ -73,8 +74,8 @@ func _on_btn_add_pressed():
     _counter1 = 0
 
     while _counter1 < _selected_items.size(): # Loop for adding edge rules
-        if !get_data()._data_wfc_rules.has_element(_tile, _selected_items[_counter1], _index_edge): # Checking if rule NOT added
-            get_data()._data_wfc_rules.add_edge_rule(_tile, _selected_items[_counter1], _index_edge) # Adding the rule
+        if !get_data().get_wfc_data().has_rule_element(_tile, _selected_items[_counter1], _index_edge): # Checking if rule NOT added
+            get_data().get_wfc_data().add_edge_rule(_tile, _selected_items[_counter1], _index_edge) # Adding the rule
             _set_item_colour(_selected_items[_counter1], _green)
         _counter1 += 1
     
@@ -85,7 +86,7 @@ func _on_btn_remove_pressed():
     _counter1 = 0
 
     while _counter1 < _selected_items.size(): # Loop for removing edge rules
-        get_data()._data_wfc_rules.remove_edge_rule_element(_tile, _selected_items[_counter1], _index_edge) # Removing the rule
+        get_data().get_wfc_data().remove_edge_rule_element(_tile, _selected_items[_counter1], _index_edge) # Removing the rule
         _set_item_colour(_selected_items[_counter1], _red)
         _counter1 += 1
     
