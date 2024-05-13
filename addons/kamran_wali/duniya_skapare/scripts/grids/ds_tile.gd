@@ -1,6 +1,8 @@
 @tool
 class_name DS_Tile
 
+const _rot_edge_size = 4
+
 var _tile_type:= -1
 var _data_edges: Array[DS_Tile] # Edges
 var _rot_value:= 0
@@ -102,21 +104,24 @@ func get_west() -> DS_Tile:
 
 ## This method gets the rotation of the tile.
 func get_tile_rotation() -> float:
-	return (360 / _data_edges.size()) * _rot_value
+	return 90 * _rot_value
 
 ## This sets the rotation value of the tile. 1 rot_value 
 ## is equivalent to (360/number of cardinals) degrees.
 func set_tile_rotation_value(rot_value:int) -> void:
-	_rot_value = (0 if rot_value < 0 
-		else _data_edges.size() - 1 if rot_value >= _data_edges.size() 
+	_rot_value = (0 if rot_value < 0
+		else _rot_edge_size - 1 if rot_value >= _rot_edge_size
 		else rot_value)
+	# _rot_value = (0 if rot_value < 0 
+	# 	else _data_edges.size() - 1 if rot_value >= _data_edges.size() 
+	# 	else rot_value)
 
 ## This method gets the rotation value of the tile.
 func get_tile_rotation_value() -> int:
 	return _rot_value
 
 ## This method gets the edge index after the tile 
-## has been rotated
+## has been rotated.
 func get_rotational_edge_index(index:int) -> int:
 	return (index - _rot_value if (index - _rot_value) >= 0 
 		else _data_edges.size() + (index - _rot_value))

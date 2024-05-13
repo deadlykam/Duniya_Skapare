@@ -1,26 +1,26 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://uqomi1evvyby"]
+[gd_resource type="Resource" script_class="DS_WFC_Data" load_steps=2 format=3 uid="uid://uqomi1evvyby"]
 
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_wfc_data.gd" id="1_vl38s"]
 
 [resource]
 script = ExtResource("1_vl38s")
-_number_of_tiles = 2
-_tile_names = Array[String](["Ground", "Water"])
+_number_of_tiles = 3
+_tile_names = Array[String](["Ground", "Water", "Coast"])
 _up_rules = Array[int]([])
-_north_rules = Array[int]([0, 1])
-_east_rules = Array[int]([0, 1])
+_north_rules = Array[int]([2, 0, 2, 2, 1])
+_east_rules = Array[int]([2, 0, 1, 2, 1])
 _bottom_rules = Array[int]([])
-_south_rules = Array[int]([0, 1])
-_west_rules = Array[int]([0, 1])
-_up_pos = Array[int]([0, 0])
-_north_pos = Array[int]([0, 1])
-_east_pos = Array[int]([0, 1])
-_bottom_pos = Array[int]([0, 0])
-_south_pos = Array[int]([0, 1])
-_west_pos = Array[int]([0, 1])
-_up_size = Array[int]([0, 0])
-_north_size = Array[int]([1, 1])
-_east_size = Array[int]([1, 1])
-_bottom_size = Array[int]([0, 0])
-_south_size = Array[int]([1, 1])
-_west_size = Array[int]([1, 1])
+_south_rules = Array[int]([2, 0, 2, 2, 1])
+_west_rules = Array[int]([2, 0, 0, 2, 1])
+_up_pos = Array[int]([0, 0, 0])
+_north_pos = Array[int]([0, 2, 2])
+_east_pos = Array[int]([0, 2, 2])
+_bottom_pos = Array[int]([0, 0, 0])
+_south_pos = Array[int]([0, 2, 2])
+_west_pos = Array[int]([0, 2, 2])
+_up_size = Array[int]([0, 0, 0])
+_north_size = Array[int]([2, 2, 1])
+_east_size = Array[int]([2, 2, 1])
+_bottom_size = Array[int]([0, 0, 0])
+_south_size = Array[int]([2, 2, 1])
+_west_size = Array[int]([2, 2, 1])

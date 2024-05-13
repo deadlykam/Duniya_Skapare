@@ -1,4 +1,5 @@
 @tool
+class_name DS_WFC_Data
 extends "res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_base_resource.gd"
 
 @export_category("DS WFC Data Properties")
@@ -357,6 +358,17 @@ func has_rule_element(tile:int, element:int, edge:int) -> bool:
 
     return false
 
+## This method gets all the rules available.
+func get_all_rules() -> Array[int]:
+    _temp_data.clear()
+    _counter1 = 0
+
+    while _counter1 < _tile_names.size():
+        _temp_data.append(_counter1)
+        _counter1 += 1
+    
+    return _temp_data.duplicate()
+
 ## This method gets all rules for the indexth edge.
 ## UP = 0
 ## North = 1
@@ -505,10 +517,6 @@ func data_reset() -> void:
     _south_size[0] = 0
     _west_size.resize(1)
     _west_size[0] = 0
-
-# ## This method gets the number of elements in the data.
-# func get_size() -> int:
-#     return _tile_names.size()
 
 ## This method updates the size and pos of an edge.
 ## UP = 0

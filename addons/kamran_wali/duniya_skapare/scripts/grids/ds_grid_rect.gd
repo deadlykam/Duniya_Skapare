@@ -43,7 +43,7 @@ func show_grid_tile() -> String:
 func show_grid_tile_rot_index(index:int) -> String:
     _index = 0
     _counter_z = 0
-    print("Showing Grid with tile information:")
+    print("Showing Grid with tile rotation information:")
     _debug_print = ""
 
     while _counter_z <= get_grid_size_z(): # Loop for going through grid z-axis, which is height
@@ -79,7 +79,7 @@ func show_grid_tile_rot() -> String:
 func show_grid_index_index(index: int) -> String:
     _index = 0
     _counter_z = 0
-    print("Showing Grid with tile information:")
+    print("Showing Grid with index:")
     _debug_print = ""
 
     while _counter_z <= get_grid_size_z(): # Loop for going through grid z-axis, which is height
