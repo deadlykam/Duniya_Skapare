@@ -123,5 +123,38 @@ func get_tile_rotation_value() -> int:
 ## This method gets the edge index after the tile 
 ## has been rotated.
 func get_rotational_edge_index(index:int) -> int:
-	return (index - _rot_value if (index - _rot_value) >= 0 
-		else _data_edges.size() + (index - _rot_value))
+	if index == 0 || index == 3:
+		return index
+	
+	if index == 1: # North rot values
+		return (
+			1 if _rot_value == 0 else 
+			5 if _rot_value == 1 else 
+			4 if _rot_value == 2 else 
+			2
+		)
+	elif index == 2: # East rot values
+		return (
+			2 if _rot_value == 0 else 
+			1 if _rot_value == 1 else 
+			5 if _rot_value == 2 else
+			4
+		)
+	elif index == 4: # South rot values
+		return (
+			4 if _rot_value == 0 else 
+			2 if _rot_value == 1 else 
+			1 if _rot_value == 2 else 
+			5
+		)
+	elif index == 5: # West rot values
+		return (
+			5 if _rot_value == 0 else 
+			4 if _rot_value == 1 else 
+			2 if _rot_value == 2 else
+			1
+		)
+	
+	return -1
+	# return (index - _rot_value if (index - _rot_value) >= 0 
+	# 	else _data_edges.size() + (index - _rot_value))

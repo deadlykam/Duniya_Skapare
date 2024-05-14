@@ -129,38 +129,40 @@ func _setup() -> void:
 	# Condition for showing the debug time
 	if _is_debug: print("Total Process Time: ", ((Time.get_unix_time_from_system() - _debug_time) * 1000), "ms")
 
-## This method gets all the available rules for a tile.
-func _get_rules(tile:DS_Tile) -> Array[int]:
+## This method gets the available rules for a tile but also using one edge of the tile
+## as a temp value.
+func _get_rules_temp_tile(tile:DS_Tile, edge:int, type:int) -> Array[int]:
 	_temp = _data.get_all_rules()
-	_c_rule1 = 0
+	_c_rule1 = 0 # Edge index
 	while _c_rule1 < tile.get_edge_size(): # Loop for going through all the edges
 		if tile.get_edge(_c_rule1) != null:
-			if tile.get_edge(_c_rule1).get_tile_type() != -1:
-				# Getting all the rules from the edge's opposite edge
+			# Condition for getting the available rules
+			if (tile.get_edge(_c_rule1).get_tile_type() != -1 || _c_rule1 == edge):
+				_temp2.clear() # Clearing previous data
+
+				# Getting all the rules from the edge's rotation and opposite edge
 				_temp2 = _data.get_edge_rules(
-					tile.get_edge(_c_rule1).get_tile_type(),
-					_get_edge_opposite_index(
-						_c_rule1,
-						tile.get_edge(_c_rule1).get_edge_size()
+					tile.get_edge(_c_rule1).get_tile_type() if _c_rule1 != edge else type,
+					tile.get_edge(_c_rule1).get_rotational_edge_index(
+						_get_edge_opposite_index(
+							_c_rule1,
+							tile.get_edge(_c_rule1).get_edge_size()
+						)
 					)
 				)
-
-				# _c_rule2 = 0
-				# while _c_rule2 < _temp.size(): # Loop for removing none common rules
-				#     if !_temp2.has(_temp[_c_rule2]): # Rule NOT found
-				#         _temp.remove_at(_c_rule2) # Removing rule
-				#         _c_rule2 -= 1
-				#     _c_rule2 += 1
 				
 				_c_rule2 = _temp.size() - 1
 				while _c_rule2 >= 0: # Loop for removing none common rules
 					if !_temp2.has(_temp[_c_rule2]): # Rule NOT found
 						_temp.remove_at(_c_rule2) # Removing rule
 					_c_rule2 -= 1
-
 		_c_rule1 += 1
 	
-	return _temp
+	return _temp.duplicate()
+
+## This method gets all the available rules for a tile.
+func _get_rules(tile:DS_Tile) -> Array[int]:
+	return _get_rules_temp_tile(tile, -1, -1)
 
 ## This method process the tile.
 func _process_tile(tile: DS_Tile, rules: Array[int]) -> void:
@@ -214,11 +216,19 @@ func _is_found_type(tile:DS_Tile, type:int, rot:int) -> bool:
 
 						if !_temp_rules.has(type): # NO matches found from the neighbour's edge
 							break
-				else: # Neighbour tile has NOT been set <------------------------------------- TODO: REMOVE THIS CONDITION AND SEE IF IT STILL WORKS !*
-					if !_rules.has(type): # NO matches found with all the available rules
+				else: # Neighbour tile has NOT been set
+					# Condition to check if current tile rotation does NOT allows neighbour tile to have
+					# at least 1 tile rule, which is entropy > 0
+					if (_get_rules_temp_tile(
+							tile.get_edge(_c_found1),
+							_get_edge_opposite_index(
+								_c_found1, 
+								tile.get_edge(_c_found1).get_edge_size()
+							),
+							type
+						).size() == 0):
 						break
-
-					
+						
 			_c_found1 += 1
 		
 		if _c_found1 == tile.get_edge_size(): # Found a match
