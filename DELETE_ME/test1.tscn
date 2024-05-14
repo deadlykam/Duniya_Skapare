@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://DELETE_ME/test.gd" id="1_0odpm"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="1_8ckdf"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/ds_wfc_gen.gd" id="2_iog3d"]
-[ext_resource type="Resource" uid="uid://uqomi1evvyby" path="res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse/data.tres" id="3_15wuk"]
+[ext_resource type="Resource" uid="uid://c0l88lwcimemk" path="res://addons/kamran_wali/duniya_skapare/settings/data2.tres" id="3_it87u"]
 
 [node name="test1" type="Node3D"]
 
@@ -13,12 +13,12 @@ _wfc = NodePath("WFC")
 
 [node name="WFC" type="Node3D" parent="Test"]
 script = ExtResource("2_iog3d")
-_data = ExtResource("3_15wuk")
+_data = ExtResource("3_it87u")
 _is_debug = true
 _start_tile_type = 0
-_index_start_tile = 9
+_index_start_tile = 0
 
 [node name="Grid" type="Node3D" parent="Test/WFC"]
 script = ExtResource("1_8ckdf")
-_grid_x = 4
-_grid_y = 4
+_grid_x = 7
+_grid_y = 7

@@ -16,8 +16,10 @@ var _start_tile_type: int
 # Properties for internal usage ONLY
 var _tiles_open: Array[DS_Tile]
 var _tiles_closed: Array[DS_Tile]
+var _tiles_failed: Array[DS_Tile]
 var _tile_current: DS_Tile
-var _rules: Array[int] # Final rule
+var _rules: Array[int] # Final rules
+var _rules_re: Array[int] # Reprocess rules
 var _rng = RandomNumberGenerator.new()
 var _prob:= -1.0
 var _prob_total:= -1.0
@@ -27,6 +29,8 @@ var _temp2: Array[int]
 var _entropy:= -1
 var _type_names: String
 var _grid_pos_names: String
+var _re_type:= -1
+var _re_rot:= -1
 var _c1:= -1
 var _c2:= -1
 var _c_entropy:= -1
@@ -111,6 +115,8 @@ func _setup() -> void:
 
 		if _tile_current.get_tile_type() == -1: # Checking if tile NOT processed
 			_process_tile(_tile_current, _rules.duplicate()) # Processing the current tile
+			if _tile_current.get_tile_type() == -1: # Condition for storing failed tiles
+				_tiles_failed.append(_tile_current) # Storing the failed tile
 		
 		_c1 = 0
 
@@ -126,6 +132,54 @@ func _setup() -> void:
 		
 		_tiles_closed.append(_tile_current) # The current tile has been processed
 		
+	# Condition for showing the debug number of failed tiles found
+	if _is_debug: print("Total Failed Tiles Found: ", _tiles_failed.size())
+	
+	while !_tiles_failed.is_empty(): # Loop for reprocessing failed tiles
+		_tile_current = _tiles_failed.pop_front() # Popping a failed tile to be reprocessed
+
+		_c1 = 0 # Edge index
+		while _c1 < _tile_current.get_edge_size(): # Loop for finding a tile type for the failed tile
+			if _tile_current.get_edge(_c1) != null: # None null tiles to process
+				_re_type = _tile_current.get_edge(_c1).get_tile_type() # Storing the edge's tile type
+				_re_rot = _tile_current.get_edge(_c1).get_tile_rotation_value() # Storing the edge's rot value
+
+				# Rotation fix Mode check
+				if _re_type != -1: # Checking if the tile has a type
+					if _is_found_type(_tile_current.get_edge(_c1), _re_type, _re_rot + 1): # Checking rotational fix
+						_rules = _get_rules(_tile_current) # Getting rules for the failed tile after rotational fix
+						_process_tile(_tile_current, _rules.duplicate()) # Setting the failed tile type
+
+						if _tile_current.get_tile_type() != -1: # Checking if tile type found for the failed tile
+							break # Tile type found, NO further search required for current tile
+				
+				# Other tile type Mode check
+				_rules = _get_rules(_tile_current.get_edge(_c1)) # Getting all the available rules for the adj tile
+				_rules.erase(_re_type) # Removing the already applied tile type
+
+				while !_rules.is_empty(): # Loop to go through all the available rules
+					_tile_current.get_edge(_c1).reset_tile() # Resetting the edge tile for reprocessing
+					_process_tile(_tile_current.get_edge(_c1), _rules.duplicate()) # Reprocessing the edge tile
+
+					if _tile_current.get_edge(_c1).get_tile_type() != -1: # Checking a new tile type found for the edge tile
+						_rules_re = _get_rules(_tile_current) # Getting the rules for the failed tile
+						_process_tile(_tile_current, _rules_re.duplicate()) # Reprocessing the failed tile
+					else:
+						break # No type found from the other tile types
+					
+					if _tile_current.get_tile_type() != -1: # Checking if a type found for the failed tile
+						break
+					else:
+						_rules.erase(_tile_current.get_edge(_c1).get_tile_type()) # Removing the edge's type that failed to fix the current tile
+
+				if _tile_current.get_tile_type() != -1: # Condition for finding a new type for the failed type
+					break # No further search needed, type found for the failed tile
+				else: # Condition for resetting the edge's type and rotation for failing to find a type for the current failed tile
+					_tile_current.get_edge(_c1).set_tile_type(_re_type) # Resetting the edge's type
+					_tile_current.get_edge(_c1).set_tile_rotation_value(_re_rot) # Resetting the edge's rot
+				
+			_c1 += 1
+	
 	# Condition for showing the debug time
 	if _is_debug: print("Total Process Time: ", ((Time.get_unix_time_from_system() - _debug_time) * 1000), "ms")
 
@@ -228,7 +282,7 @@ func _is_found_type(tile:DS_Tile, type:int, rot:int) -> bool:
 							type
 						).size() == 0):
 						break
-						
+
 			_c_found1 += 1
 		
 		if _c_found1 == tile.get_edge_size(): # Found a match
