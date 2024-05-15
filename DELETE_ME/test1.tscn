@@ -16,9 +16,9 @@ script = ExtResource("2_iog3d")
 _data = ExtResource("3_it87u")
 _is_debug = true
 _start_tile_type = 0
-_index_start_tile = 0
+_index_start_tile = 9
 
 [node name="Grid" type="Node3D" parent="Test/WFC"]
 script = ExtResource("1_8ckdf")
-_grid_x = 6
-_grid_y = 6
+_grid_x = 10
+_grid_y = 10
