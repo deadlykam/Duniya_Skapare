@@ -19,6 +19,7 @@ var _tiles_open: Array[DS_Tile]
 var _tiles_closed: Array[DS_Tile]
 var _tile_current: DS_Tile
 var _tile_error: DS_Tile
+var _tile_find: DS_Tile
 var _rules: Array[int] # Final rules
 var _rng = RandomNumberGenerator.new()
 var _prob:= -1.0
@@ -36,6 +37,7 @@ var _c_rule1:= -1
 var _c_rule2:= -1
 var _c_process1:= -1
 var _c_found1:= -1
+var _c_re1:= -1
 var _debug_time:= 1.0
 
 func _get_configuration_warnings():
@@ -110,11 +112,32 @@ func _setup() -> void:
 			_c1 += 1
 		
 		_tile_current = _tiles_open.pop_at(_c2) # Getting the lowest entropy tile
+
+		# _tile_current = _tiles_open.pop_front() # Getting first tile
+		# _rules = _get_rules(_tile_current)
 		
+		# print_rich("[color=green]Tile:, ", get_tile_index(_tile_current),"[/color]")
+		# print("- Rules: ", _rules)
+
 		if _tile_current.get_tile_type() == -1: # Checking if tile NOT processed
 			_process_tile(_tile_current, _rules.duplicate()) # Processing the current tile
 			if _tile_current.get_tile_type() == -1: # Condition for storing failed tiles
+				print_rich("[color=green]Tile:, ", get_tile_index(_tile_current),"[/color]")
+				print("- Rules: ", _rules)
+				print_rich("[color=red]- Tile Failed. Starting retrace process[/color]")
+
+				if _tile_error == null: # Chekcing if NO error tiles found
+					# TODO: If current way of finding error does NOT work then try using lowest entropy method
+					print_rich("[color=orange]No error tile found. Setting the first processed tile as error tile[/color]")
+					_c1 = 0
+					while _c1 < _tile_current.get_edge_size(): # Loop for finding an error tile
+						if _is_tile_processed(_tile_current.get_edge(_c1)): # Condition for finding the first processed tile as error tile
+							_tile_error = _tile_current.get_edge(_c1) # Setting the error tile
+							break
+						_c1 += 1
+				
 				_process_retrace(0) # Retracing the to fix the error
+				print_rich("[color=green]===XXX===[/color]")
 		
 		_c1 = 0
 
@@ -130,6 +153,7 @@ func _setup() -> void:
 		
 		_tiles_closed.append(_tile_current) # The current tile has been processed
 	
+	# print_rich("[color=green]===XXX===[/color]")
 	# Condition for showing the debug time
 	if _is_debug: print("Total Process Time: ", ((Time.get_unix_time_from_system() - _debug_time) * 1000), "ms")
 
@@ -138,13 +162,17 @@ func _process_retrace(current_retrace:int) -> void:
 	if current_retrace == _retrace_limit: # Condition for breaking the recurssion
 		if _is_debug: print("Maximum retrace reached! Stopping retrace process!")
 		return
-
+		
+	print("-- Tile Error Is Null: ", (_tile_error == null))
+	print("-- Tile Error Index: ", get_tile_index(_tile_error))
+	
 	# NOTE: After the loop _tile_current will become _tile_error as further call to _is_found_type method
 	#		has the potential to replace the _tile_error value again.
 	while _tile_current != _tile_error && !_tiles_closed.is_empty(): # Loop for finding the error tile
 		_tile_current.reset_tile() # Resetting the tile for reprocessing
-		# TODO: Add the current tile to the open list if NOT in the open list. Do this if some tiles gets left behind after retrace. <--!******
+		if !_tiles_open.has(_tile_current): _tiles_open.append(_tile_current) # Adding back the resetted tile back to the open tiles for re-processing
 		_tile_current = _tiles_closed.pop_back() # Popping from the closed tiles and thus making it available for processing
+		print("-- Searching Error Tile: ", get_tile_index(_tile_current), ", current type: ", _tile_current.get_tile_type())
 	
 	# Condition for NOT finding a match after rotational fix
 	if !_is_found_type(_tile_current, _tile_current.get_tile_type(), _tile_current.get_tile_rotation_value() + 1):
@@ -156,8 +184,27 @@ func _process_retrace(current_retrace:int) -> void:
 
 		if _tile_current.get_tile_type() == -1: # Checking if a new tile type is NOT found
 			current_retrace += 1
+			print("Retracing error tile, retrace value: ", current_retrace)
 			_process_retrace(current_retrace) # Calling retrace process again as tile error NOT fixed
+		else:
+			print_rich("[color=yellow]-- Tile Fixed. Reprocess. Type: ", _tile_current.get_tile_type(),"[/color]")
+	else:
+		print_rich("[color=yellow]-- Tile Fixed. Rotation. Type: ", _tile_current.get_tile_type(),"[/color]")
+	
+	# if !_is_found_type(_tile_error, _tile_error.get_tile_type(), _tile_error.get_tile_rotation_value() + 1):
+	# 	_c_re1 = 0
 
+	# 	while _c_re1 < _tile_current.get_edge_size(): # Loop for resetting all the neighbouring tiles
+	# 		if _tile_current.get_edge(_c_re1) != null: # Checking if the neighbour is NOT null
+	# 			_tile_current.get_edge(_c_re1).reset_tile() # Resetting a neighbour tile
+	# 		_c_re1 += 1
+		
+	# 	_tile_error = _find_processed_tile(_tile_current, 0) # Finding the first processed tile
+	# 	if !_tiles_open.has(_tile_error): _tiles_open.append(_tile_error)
+	# 	print("Removing neighbouring tile types.")
+	# else: # Condition for fixing rotation for the error tile
+	# 	print_rich("[color=yellow]-- Tile Fixed. Rotation. [/color]")
+	# 	if !_tiles_open.has(_tile_current): _tiles_open.append(_tile_current) # Re-adding current tile for processing
 
 ## This method gets the available rules for a tile but also using one edge of the tile
 ## as a temp value.
@@ -211,6 +258,7 @@ func _process_tile(tile: DS_Tile, rules: Array[int]) -> void:
 		
 		if _is_found_type(tile, rules[_c_process1], 0): # Found a type to set
 			tile.set_tile_type(rules[_c_process1])
+			# print("--- Selected Type: ", tile.get_tile_type())
 			break
 		else: # Found no type, removing currently processed type for checking others
 			rules.remove_at(_c_process1)
@@ -269,6 +317,26 @@ func _is_found_type(tile:DS_Tile, type:int, rot:int) -> bool:
 		rot += 1
 
 	return false
+
+# ## This method finds the first processed tile recursively.
+# func _find_processed_tile(tile:DS_Tile, counter:int) -> DS_Tile:
+# 	if tile == null: return null
+# 	if tile.get_tile_type() != -1: return tile
+
+# 	while counter < tile.get_edge_size(): # Loop for finding a processed tile
+# 		if tile.get_edge(counter) != null:
+# 			_tile_find = _find_processed_tile(tile.get_edge(counter), 0)
+# 			if _tile_find != null:
+# 				if _tile_find.get_tile_type() != -1: # Condition for finding a processed tile
+# 					return _tile_find # Sending back the tile adjacent to the processed tile
+# 		counter += 1
+	
+# 	return null
+
+## This method checks if the tile has been processed.
+func _is_tile_processed(tile:DS_Tile) -> bool:
+	if tile == null: return false # Null tiles are always false
+	return tile.get_tile_type() != -1
 
 ## This method gets the opposite index of the given edge index.
 func _get_edge_opposite_index(index:int, size:int) -> int:
