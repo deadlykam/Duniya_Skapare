@@ -112,11 +112,14 @@ func _setup() -> void:
 			_c1 += 1
 		
 		_tile_current = _tiles_open.pop_at(_c2) # Getting the lowest entropy tile
-
+		print_rich("[color=green] Tile: ", get_tile_index(_tile_current), "[/color]")
+		print("- Rules: ", _rules)
+		
 		if _tile_current.get_tile_type() == -1: # Checking if tile NOT processed
 			_process_tile(_tile_current, _rules.duplicate()) # Processing the current tile
 			if _tile_current.get_tile_type() == -1: # Condition for storing failed tiles
 				_tiles_failed.append(_tile_current) # Storing the failed tile
+				print_rich("[color=red]- Tile failed: ", get_tile_index(_tile_current), ", Previous closed Tile: ", get_tile_index(_tiles_closed[_tiles_closed.size() - 1]),"[/color]")
 		
 		_c1 = 0
 
@@ -131,6 +134,7 @@ func _setup() -> void:
 			_c1 += 1
 		
 		_tiles_closed.append(_tile_current) # The current tile has been processed
+		print_rich("[color=green]===XXX===[/color]")
 		
 	# Condition for showing the debug number of failed tiles found
 	if _is_debug: print("Total Failed Tiles Found: ", _tiles_failed.size())

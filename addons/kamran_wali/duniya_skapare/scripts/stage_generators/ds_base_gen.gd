@@ -48,6 +48,16 @@ func set_grid() -> void:
 			break
 		_counter_warning += 1
 
+## This method gets the index of the given tile.
+func get_tile_index(tile:DS_Tile) -> int:
+	_counter = 0
+	while _counter < _grid.get_size(): # Loop for finding the index of the tile
+		if tile == _grid.get_tile(_counter): # Index found for the tile
+			break
+		_counter += 1
+	
+	return _counter if _counter < _grid.get_size() else -1
+
 ## This method sets up the grid and MUST be overridden.
 func _setup() -> void:
 	pass

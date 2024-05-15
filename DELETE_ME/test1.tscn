@@ -20,5 +20,5 @@ _index_start_tile = 0
 
 [node name="Grid" type="Node3D" parent="Test/WFC"]
 script = ExtResource("1_8ckdf")
-_grid_x = 7
-_grid_y = 7
+_grid_x = 6
+_grid_y = 6
