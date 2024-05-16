@@ -10,7 +10,7 @@ extends Node
 var _tiles: Array[DS_Tile]
 
 func _ready() -> void:
-    _setup()
+    setup()
 
 ## This method gets the x-axis size of the grid.
 func get_grid_size_x() -> int:
@@ -35,6 +35,14 @@ func get_tile(index:int) -> DS_Tile:
 ## This method adds a tile to the tile array.
 func add_tile(tile:DS_Tile) -> void:
     _tiles.append(tile)
+
+## This method sets up the grid.
+func setup() -> void:
+    pass
+
+## This method resets the grid.
+func reset() -> void:
+    pass
 
 ## This method returns the grid in string format.
 ## The tile information are shown in the grid.
@@ -74,10 +82,6 @@ func show_grid_index() -> String:
 ## Use this for debugging.
 func show_grid_index_index(index: int) -> String:
     return "Not implemented!"
-
-## This method sets up the grid.
-func _setup() -> void:
-    pass
 
 ## This method always sends true as the script is 
 ## grid. This method is needed for duck

@@ -1,25 +1,28 @@
 [gd_scene load_steps=5 format=3 uid="uid://i1802nm42enj"]
 
-[ext_resource type="Script" path="res://DELETE_ME/test.gd" id="1_0odpm"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="1_8ckdf"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_m33c4"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/ds_wfc_gen.gd" id="2_iog3d"]
 [ext_resource type="Resource" uid="uid://c0l88lwcimemk" path="res://addons/kamran_wali/duniya_skapare/settings/data2.tres" id="3_it87u"]
 
 [node name="test1" type="Node3D"]
 
-[node name="Test" type="Node3D" parent="." node_paths=PackedStringArray("_wfc")]
-script = ExtResource("1_0odpm")
-_wfc = NodePath("WFC")
+[node name="Test" type="Node3D" parent="." node_paths=PackedStringArray("_generator")]
+script = ExtResource("1_m33c4")
+_generator = NodePath("WFC")
+_counter = 100
+_is_print_failed = true
 
 [node name="WFC" type="Node3D" parent="Test"]
 script = ExtResource("2_iog3d")
 _data = ExtResource("3_it87u")
-_nuke_range = 2
 _is_debug = true
+_nuke_range = 2
+_nuke_limit = 0
 _start_tile_type = 0
 _index_start_tile = 9
 
 [node name="Grid" type="Node3D" parent="Test/WFC"]
 script = ExtResource("1_8ckdf")
-_grid_x = 20
-_grid_y = 20
+_grid_x = 10
+_grid_y = 10

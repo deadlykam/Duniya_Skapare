@@ -29,7 +29,7 @@ func _ready() -> void:
 		# 	_grid.get_tile(_update_tile_info[_counter].get_index()).set_tile_type(_update_tile_info[_counter].get_tile_type())
 		# 	_counter += 1
 
-		_setup() # Setting up the grid
+		setup() # Setting up the grid
 
 ## This method gets the grid.
 func get_grid() -> DS_BaseGrid:
@@ -62,9 +62,17 @@ func get_tile_index(tile:DS_Tile) -> int:
 func is_gen_success() -> bool:
 	return false
 
-## This method sets up the grid and MUST be overridden.
-func _setup() -> void:
+## This method sets up the generator and MUST be overridden.
+func setup() -> void:
 	pass
+
+## This method resets the generator.
+func reset() -> void:
+	pass
+
+## This method checks if the generator is processing or NOT.
+func is_processing() -> bool:
+	return false
 
 func _to_string() -> String:
 	return _grid.show_grid()
