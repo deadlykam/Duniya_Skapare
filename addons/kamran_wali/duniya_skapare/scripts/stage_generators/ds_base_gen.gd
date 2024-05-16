@@ -58,6 +58,10 @@ func get_tile_index(tile:DS_Tile) -> int:
 	
 	return _counter if _counter < _grid.get_size() else -1
 
+## This method checks if the generator for successful or NOT.
+func is_gen_success() -> bool:
+	return false
+
 ## This method sets up the grid and MUST be overridden.
 func _setup() -> void:
 	pass

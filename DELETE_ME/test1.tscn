@@ -14,6 +14,7 @@ _wfc = NodePath("WFC")
 [node name="WFC" type="Node3D" parent="Test"]
 script = ExtResource("2_iog3d")
 _data = ExtResource("3_it87u")
+_nuke_range = 2
 _is_debug = true
 _start_tile_type = 0
 _index_start_tile = 9
