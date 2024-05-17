@@ -10,19 +10,17 @@
 [node name="Test" type="Node3D" parent="." node_paths=PackedStringArray("_generator")]
 script = ExtResource("1_m33c4")
 _generator = NodePath("WFC")
-_counter = 100
-_is_print_failed = true
+_number_of_simulations = 100
 
 [node name="WFC" type="Node3D" parent="Test"]
 script = ExtResource("2_iog3d")
 _data = ExtResource("3_it87u")
 _is_debug = true
-_nuke_range = 2
 _nuke_limit = 0
 _start_tile_type = 0
-_index_start_tile = 9
+_index_start_tile = 0
 
 [node name="Grid" type="Node3D" parent="Test/WFC"]
 script = ExtResource("1_8ckdf")
-_grid_x = 10
-_grid_y = 10
+_grid_x = 30
+_grid_y = 30

@@ -143,14 +143,14 @@ func setup() -> void:
 				
 				# Adding north tile refs
 				_tiles[_index].set_north(
-					_tiles[_index - get_grid_size_y()] if
+					_tiles[_index - get_grid_size_x()] if
 					_counter_y > 0
 					else null
 				)
 				
 				# Adding sourth tile refs
 				_tiles[_index].set_south(
-					_tiles[_index + get_grid_size_y()] if
+					_tiles[_index + get_grid_size_x()] if
 					_counter_y < get_grid_size_y() - 1
 					else null
 				)

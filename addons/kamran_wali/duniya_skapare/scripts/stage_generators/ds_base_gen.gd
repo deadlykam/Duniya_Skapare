@@ -70,6 +70,11 @@ func setup() -> void:
 func reset() -> void:
 	pass
 
+## This method gets the complete process time from start to finish
+## of the generator.
+func get_run_time() -> float:
+	return -1
+
 ## This method checks if the generator is processing or NOT.
 func is_processing() -> bool:
 	return false
