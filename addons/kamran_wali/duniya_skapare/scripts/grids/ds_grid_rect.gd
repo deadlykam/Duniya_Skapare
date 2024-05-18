@@ -179,7 +179,7 @@ func setup() -> void:
 func reset() -> void:
 	_counter_z = 0 # Acts as index for all the tiles in grid
 	while _counter_z < get_size(): # Loop for resetting all the tiles
-		get_tile(_counter_z).reset_tile() # Resetting tile
+		get_tile(_counter_z).reset_hard() # Hard resetting tile
 		_counter_z += 1
 
 func _to_string() -> String:

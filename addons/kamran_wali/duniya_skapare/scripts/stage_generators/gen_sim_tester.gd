@@ -15,6 +15,7 @@ extends Node
                 _number_of_simulations = p_number_of_simulations
                 update_configuration_warnings()
 
+@export var _is_print_success:= false
 @export var _is_print_failed:= false
 @export var _is_print_final:= false
 
@@ -38,7 +39,9 @@ func _process(delta) -> void:
     if !Engine.is_editor_hint(): # Play Mode
         if _counter > 0: # Counter to check how many simulation to run
             if !_generator.is_processing(): # Checking if generator processing is done
-                if _generator.is_gen_success(): _c_success += 1 # Generator successful
+                if _generator.is_gen_success():
+                    if _is_print_success: print(_generator) # Condition for printing successful generator
+                    _c_success += 1 # Generator successful
                 else: # Generator failed
                     if _is_print_failed: print(_generator) # Condition for printing failed generator
                     _c_fail += 1
