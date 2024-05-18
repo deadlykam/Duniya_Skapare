@@ -43,6 +43,7 @@ var _c_rule2:= -1
 var _c_process1:= -1
 var _c_found1:= -1
 var _c_success:= -1
+var _c_success2:= -1
 var _c_failed:= -1
 var _c_search:= -1
 var _type_stored:= -1
@@ -111,7 +112,7 @@ func setup() -> void:
 
 	while true: # Loop for running the process using wave function collapse
 		_process_grid() # Main process, using wave function collapse to process the grid
-		if is_gen_success() || _nuke_limit == 0: break # Condition for breaking processing loop
+		if is_gen_success() || (_debug_nuke_counter >= _nuke_limit && _nuke_limit != -1): break # Condition for breaking processing loop
 		else:
 			_DELETE_ME = 50
 			_add_failed_tiles() # Getting all the failed tiles to process again
@@ -176,6 +177,9 @@ func setup() -> void:
 		if _debug_nuke_counter != 0: print_rich("[color=orange]Total nukes fired: ", _debug_nuke_counter, "[/color]")
 		if is_gen_success(): print_rich("[color=green]Wave Function Collapse: Successful![/color]")
 		else: print_rich("[color=red]Wave Function Collapse: Failed![/color]")
+		_total_successful_tiles() # Finding all the successful tiles
+		print_rich("[color=green]Tiles Succeeded: ", _c_success,"[/color], [color=red]Tiles Failed: ", 
+			(get_grid().get_size() - _c_success), "[/color], Success Rate: ", ((float(_c_success) / float(get_grid().get_size())) * 100.0), "%")
 		print_rich("[color=purple]===XXX===[/color]")
 
 	_is_processing = false # Setting processing flag to false
@@ -184,8 +188,11 @@ func reset() -> void:
 	get_grid().reset()
 	_tiles_open.clear()
 	_tiles_closed.clear()
+	_tiles_search_open.clear()
+	_tiles_search_closed.clear()
 	_tile_current = null
 	_tile_error = null
+	_tile_search = null
 	_debug_nuke_counter = 0
 
 func get_run_time() -> float: 
@@ -518,6 +525,15 @@ func _is_tile_processed(tile:DS_Tile) -> bool:
 ## This method gets the opposite index of the given edge index.
 func _get_edge_opposite_index(index:int, size:int) -> int:
 	return index + 3 if (index + 3) < size else index - 3
+
+## This method gets the total successful tiles.
+func _total_successful_tiles() -> void:
+	_c_success = 0
+	_c_success2 = 0
+	while _c_success2 < get_grid().get_size(): # Loop for finding all the successful tiles
+		if get_grid().get_tile(_c_success2).get_tile_type() != -1:
+			_c_success += 1
+		_c_success2 += 1
 
 func _DELETE_ME_METHOD() -> String:
 	var msg = "["

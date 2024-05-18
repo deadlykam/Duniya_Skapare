@@ -50,9 +50,10 @@ func _process(delta) -> void:
                     _generator.setup() # Restarting the generation process for the generator
         else: # Simulation ended
             if !_is_show_result: # Condition for showing the results
-                print("===Result===")
-                print_rich("[color=green]Success: ", _c_success,"[/color], [color=red]Fail:: ", _c_fail, "[/color]")
+                print_rich("[rainbow sat=0.5]===Generator Simulation Result===[/rainbow]")
+                print_rich("[color=green]Success: ", _c_success,"[/color], [color=red]Fail: ", _c_fail, "[/color]", 
+                    ", Success Rate: ", ((float(_c_success) / float(_number_of_simulations)) * 100), "%")
                 if _number_of_simulations > 0: print_rich("[color=orange]Average Run Time: ", (_avg_process_time / _number_of_simulations), "ms[/color]")
                 if _is_print_final: print(_generator)
-                print("==XXX==")
+                print_rich("[rainbow sat=0.5]==XXX==[/rainbow]")
                 _is_show_result = true
