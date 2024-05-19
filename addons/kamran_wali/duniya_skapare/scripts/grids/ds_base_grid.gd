@@ -58,6 +58,14 @@ func show_grid_tile_index(index:int) -> String:
 	return "Not implemented!"
 
 ## This method returns the grid in string format.
+## The tile information are shown in the grid.
+## It also highlights an array of index tiles.
+## The first index is highlighted green and the
+## rest are blue. Use this for debuggin.
+func show_grid_tile_array(tiles: Array[int]) -> String:
+	return "Not implemented!"
+
+## This method returns the grid in string format.
 ## The tile rotation information are shown in the grid.
 ## Use this for debugging.
 func show_grid_tile_rot() -> String:
@@ -73,6 +81,14 @@ func show_grid_tile_rot_index(index:int) -> String:
 	return "Not implemented!"
 
 ## This method returns the grid in string format.
+## The tile rotation information are shown in the grid.
+## It also highlights an array of index tiles.
+## The first index is highlighted green and the rest
+## are blue. Use this for debuggin.
+func show_grid_tile_rot_array(tiles: Array[int]) -> String:
+	return "Not implemented!"
+
+## This method returns the grid in string format.
 ## The index of the tile are shown in the grid.
 ## Use this for debugging.
 func show_grid_index() -> String:
@@ -85,7 +101,13 @@ func show_grid_index() -> String:
 func show_grid_index_index(index: int) -> String:
 	return "Not implemented!"
 
-# TODO: Index array
+## This method returns the grid in string format.
+## The index of the tile are shown in the grid.
+## It also highlights an array of index tiles.
+## The first index is highlighted green and the rest
+## are blue. Use this for debuggin.
+func show_grid_index_array(tiles: Array[int]) -> String:
+	return "Not implemented!"
 
 ## This method always sends true as the script is 
 ## grid. This method is needed for duck

@@ -47,6 +47,7 @@ var _c_success:= -1
 var _c_success2:= -1
 var _c_failed:= -1
 var _c_search:= -1
+var _c_convert:= -1
 var _type_stored:= -1
 var _rot_stored:= -1
 var _debug_time:= 1.0
@@ -68,7 +69,6 @@ func setup() -> void:
 	if _is_debug: _debug_time = Time.get_unix_time_from_system() # Condition for starting debug time
 
 	if get_start_tiles().size() != 0: # Condition for setting the start tiles
-		_index_start_tile = get_start_tiles()[0].get_index() # Setting the first tile type which is needed by debug
 		_c1 = 0
 		
 		while _c1 < get_start_tiles().size(): # Loop for setting the starting tiles
@@ -509,19 +509,27 @@ func _total_successful_tiles() -> void:
 			_c_success += 1
 		_c_success2 += 1
 
-func _DELETE_ME_METHOD() -> String:
-	var msg = "["
-	var c = 0
-	while c < _tiles_open.size():
-		msg += str(get_tile_index(_tiles_open[c])) + ", "
-		c += 1
-	msg += "]"
-	return msg
+## This method converts the start array, Array[DS_TileInfo], to Array[int]
+func _convert_start_array() -> Array[int]:
+	_temp.clear() # Clearing previous data
+	_c_convert = 0
+
+	while _c_convert < get_start_tiles().size(): # Loop adding all the start index
+		_temp.append(get_start_tiles()[_c_convert].get_index()) # Adding start index
+		_c_convert += 1
+	
+	return _temp.duplicate()
 
 func _to_string() -> String:
+	# TODO: Update the logic below to reflect single tile and many tile print
 	print_rich(get_grid().show_grid_index_index(_index_start_tile))
 	print("") # Next line
-	print_rich(get_grid().show_grid_tile_index(_index_start_tile))
+	print_rich(get_grid().show_grid_tile_array(_convert_start_array()))
 	print("") # Next line
 	print_rich(get_grid().show_grid_tile_rot_index(_index_start_tile))
+	# print_rich(get_grid().show_grid_index_index(_index_start_tile))
+	# print("") # Next line
+	# print_rich(get_grid().show_grid_tile_index(_index_start_tile))
+	# print("") # Next line
+	# print_rich(get_grid().show_grid_tile_rot_index(_index_start_tile))
 	return ""

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://i1802nm42enj"]
+[gd_scene load_steps=10 format=3 uid="uid://i1802nm42enj"]
 
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="1_8ckdf"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_m33c4"]
@@ -21,12 +21,18 @@ _type = 0
 _index = 20
 _rot_value = 0
 
+[sub_resource type="Resource" id="Resource_qlp4i"]
+script = ExtResource("6_7o24x")
+_is_fixed = true
+_type = 0
+_index = 5
+_rot_value = 0
+
 [node name="test1" type="Node3D"]
 
 [node name="Test" type="Node3D" parent="." node_paths=PackedStringArray("_generator")]
 script = ExtResource("1_m33c4")
 _generator = NodePath("WFC")
-_number_of_simulations = 10
 _is_print_success = true
 _is_print_failed = true
 
@@ -42,4 +48,4 @@ _grid_y = 6
 
 [node name="Node3D" type="Node3D" parent="Test/WFC"]
 script = ExtResource("5_ds3v5")
-_tiles = Array[ExtResource("6_7o24x")]([SubResource("Resource_0wjkh"), SubResource("Resource_sgu3x")])
+_tiles = Array[ExtResource("6_7o24x")]([SubResource("Resource_0wjkh"), SubResource("Resource_sgu3x"), SubResource("Resource_qlp4i")])
