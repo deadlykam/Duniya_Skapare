@@ -9,13 +9,18 @@ extends DS_BaseGen
 			_data = p_data
 			update_configuration_warnings()
 
-var _index_start_tile: int
-@export var _is_debug: bool
 @export_group("Nuke Properties")
 @export var _nuke_range:= 3 # TODO: Make sure it is NOT below 1
+
+@export_group("Fail Safe Properties")
 @export var _nuke_limit:= -1 # TODO: Make sure it is NOT below -1
+@export var _loop_limit:= -1 # TODO: Make sure it is NOT below -1
+
+@export_group("Debug Properties")
+@export var _is_debug: bool
 
 # Properties for internal usage ONLY
+var _index_start_tile: int
 var _tiles_open: Array[DS_Tile]
 var _tiles_closed: Array[DS_Tile]
 var _tiles_search_open: Array[DS_Tile]
@@ -46,10 +51,8 @@ var _type_stored:= -1
 var _rot_stored:= -1
 var _debug_time:= 1.0
 var _debug_nuke_counter:= 0
+var _c_loop:= 0
 var _is_processing:= false
-var _DELETE_ME:= 50
-var _DELETE_ME2:= -1
-var _DELETE_ME3:= -1
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings: PackedStringArray
@@ -83,18 +86,9 @@ func setup() -> void:
 	while true: # Loop for running the process using wave function collapse
 		_process_grid() # Main process, using wave function collapse to process the grid
 		if is_gen_success() || (_debug_nuke_counter >= _nuke_limit && _nuke_limit != -1): break # Condition for breaking processing loop
-		else:
-			_DELETE_ME = 50
-			_add_failed_tiles() # Getting all the failed tiles to process again
-			# print_rich("[color=yellow]Number of failed tiles found: ", _tiles_open.size(),"[/color]")
-			# print_rich("[color=yellow]Number of failed tiles found: ", _tiles_open.size(),", ", _DELETE_ME_METHOD(),"[/color]")
-			if _DELETE_ME2 == _tiles_open.size():
-				_DELETE_ME3 += 1
-				if _DELETE_ME3 == 50:
-					print(self)
-			else:
-				_DELETE_ME2 = _tiles_open.size()
-				_DELETE_ME3 = 0
+		else: _add_failed_tiles() # Getting all the failed tiles to process again
+		_c_loop += 1 # Incrementing the fail safe loop counter
+		if _c_loop == _loop_limit: break # Fail safe loop break
 		
 		# TODO: Increment the loop counter here and check if the counter reached
 	
@@ -152,6 +146,8 @@ func setup() -> void:
 		_total_successful_tiles() # Finding all the successful tiles
 		print_rich("[color=green]Tiles Succeeded: ", _c_success,"[/color], [color=red]Tiles Failed: ", 
 			(get_grid().get_size() - _c_success), "[/color], Success Rate: ", ((float(_c_success) / float(get_grid().get_size())) * 100.0), "%")
+		if _c_loop == _loop_limit: print_rich("[color=red]Loop Fail Safe Activated! Maximum loop reached![/color]")
+		else: print_rich("[color=green]Number Of Process Loops: ", _c_loop, "[/color]")
 		print_rich("[color=purple]===XXX===[/color]")
 
 	_is_processing = false # Setting processing flag to false
@@ -167,6 +163,7 @@ func reset() -> void:
 	_tile_search = null
 	_debug_nuke_counter = 0
 	# TODO: Reset the loop counter here
+	_c_loop = 0
 
 func get_run_time() -> float: 
 	return _debug_time if !_is_processing else -1.0
@@ -179,6 +176,9 @@ func is_gen_success() -> bool:
 		_c_success += 1
 	
 	return _c_success == get_grid().get_size()
+
+func get_process_loop() -> int:
+	return _c_loop
 
 func is_processing() -> bool:
 	return _is_processing
@@ -291,18 +291,9 @@ func _reprocess_tile() -> void:
 		
 		if _tile_current.get_tile_type() == -1: # Condition for nuking the current tile
 			if _nuke_limit == -1 || _debug_nuke_counter < _nuke_limit:
-				_DELETE_ME -= 1
-				if _DELETE_ME == 0:
-					print("Nuking Tile: ", get_tile_index(_tile_current))
-					print("BEFORE:")
-					print(self)
 				_nuke(_tile_current, 0, 0, -1) # Condition for nuking tiles to get better results
-				# _tiles_open.append(_find_nearest_none_processed_tile(_tile_current, 0, -1)) # Adding the correct tile to start the process
 				_tiles_open.append(_find_nearest_none_processed_tile(_tile_current)) # Adding the correct tile to start the process
 				_debug_nuke_counter += 1 # For counting the number nukes being fired
-				if _DELETE_ME == 0:
-					print("AFTER:")
-					print(self)
 
 ## This method adds all the failed tiles back to be processed again.
 func _add_failed_tiles() -> void:

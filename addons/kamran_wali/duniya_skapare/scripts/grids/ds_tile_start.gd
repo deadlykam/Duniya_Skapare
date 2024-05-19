@@ -26,8 +26,10 @@ func _get_configuration_warnings() -> PackedStringArray:
         while _counter < _tiles.size(): # Loop for setting the data for the tiles
             if _tiles[_counter] != null: # Tile has been initialized
                 _tiles[_counter].set_data( # Setting the data
+                    _tiles,
                     _generator.get_tile_names() if _generator != null else _name_array_empty,
-                    _generator.get_grid().get_size() if _generator != null else -1
+                    _generator.get_grid().get_size() if _generator != null else -1,
+                    _counter
                 )
             _counter += 1
     

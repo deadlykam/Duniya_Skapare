@@ -72,6 +72,10 @@ func add_start_tile(tile:DS_TileInfo) -> void:
 func is_gen_success() -> bool:
 	return false
 
+## This method gets the number of process loop value.
+func get_process_loop() -> int:
+	return -1
+
 ## This method sets up the generator and MUST be overridden.
 func setup() -> void:
 	pass

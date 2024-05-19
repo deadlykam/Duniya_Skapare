@@ -63,6 +63,8 @@ func show_grid_tile_index(index:int) -> String:
 func show_grid_tile_rot() -> String:
 	return "Not implemented!"
 
+# TODO: Rot array
+
 ## This method returns the grid in string format.
 ## The tile rotation information are shown in the grid.
 ## It also highlights the indexth tile.
@@ -82,6 +84,8 @@ func show_grid_index() -> String:
 ## Use this for debugging.
 func show_grid_index_index(index: int) -> String:
 	return "Not implemented!"
+
+# TODO: Index array
 
 ## This method always sends true as the script is 
 ## grid. This method is needed for duck
