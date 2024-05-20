@@ -9,15 +9,28 @@ extends DS_BaseGen
 			_data = p_data
 			update_configuration_warnings()
 
-var _index_start_tile: int
-var _start_tile_type: int
-# @export var _retrace_limit:= 3 # TODO: Make sure it is NOT below 1
-@export var _is_debug: bool
 @export_group("Nuke Properties")
-@export var _nuke_range:= 3 # TODO: Make sure it is NOT below 1
-@export var _nuke_limit:= -1 # TODO: Make sure it is NOT below -1
+@export var _nuke_range:= 3:
+	set(nuke_range):
+		if _nuke_range != nuke_range:
+			_nuke_range = nuke_range if nuke_range >= 1 else 1
+
+@export_group("Fail Safe Properties")
+@export var _nuke_limit:= -1:
+	set(nuke_limit):
+		if _nuke_limit != nuke_limit:
+			_nuke_limit = nuke_limit if nuke_limit >= -1 else -1
+
+@export var _loop_limit:= -1:
+	set(loop_limit):
+		if _loop_limit != loop_limit:
+			_loop_limit = loop_limit if loop_limit >= -1 else -1
+
+@export_group("Debug Properties")
+@export var _is_debug: bool
 
 # Properties for internal usage ONLY
+var _index_start_tile: int
 var _tiles_open: Array[DS_Tile]
 var _tiles_closed: Array[DS_Tile]
 var _tiles_search_open: Array[DS_Tile]
@@ -33,8 +46,6 @@ var _temp_rules: Array[int]
 var _temp: Array[int]
 var _temp2: Array[int]
 var _entropy:= -1
-var _type_names: String
-var _grid_pos_names: String
 var _c1:= -1
 var _c2:= -1
 var _c_re1:= -1
@@ -46,140 +57,66 @@ var _c_success:= -1
 var _c_success2:= -1
 var _c_failed:= -1
 var _c_search:= -1
+var _c_convert:= -1
 var _type_stored:= -1
 var _rot_stored:= -1
 var _debug_time:= 1.0
 var _debug_nuke_counter:= 0
+var _c_loop:= 0
 var _is_processing:= false
-var _DELETE_ME:= 50
-var _DELETE_ME2:= -1
-var _DELETE_ME3:= -1
 
-func _get_configuration_warnings():
-	var warnings: Array[String]
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray
+	warnings = super._get_configuration_warnings()
 	
 	if _data == null:
 		warnings.append("Data: Please give a wave function collapse Data. it can NOT be null.")
 	
 	return warnings
 
-func _get_property_list():
-	var properties = []
-
-	if _data != null: # Checking if data is NOT null
-		_type_names = ""
-		_c1 = 0
-
-		# Loop for loading up all the tile type names
-		while _c1 < _data.get_number_of_tiles():
-			_type_names += (_data.get_tile_name(_c1) + 
-				("," if _c1 < _data.get_number_of_tiles() - 1 
-				else ""))
-			_c1 += 1
-
-		properties.append({
-			"name" : "_start_tile_type",
-			"type" : TYPE_INT,
-			"hint" : PROPERTY_HINT_ENUM,
-			"hint_string" : _type_names
-		})
-
-		set_grid()
-
-		if get_grid() != null:
-			_grid_pos_names = ""
-			_c1 = 0
-
-			while _c1 < get_grid().get_size():
-				_grid_pos_names += (str(_c1) + ("," if _c1 < _grid.get_size() - 1 else ""))
-				_c1 += 1
-			
-			# Showing the names as enums
-			properties.append({
-				"name" : "_index_start_tile",
-				"type" : TYPE_INT,
-				"hint" : PROPERTY_HINT_ENUM,
-				"hint_string" : _grid_pos_names
-			})
-	
-	return properties
-
 func setup() -> void:
 	_is_processing = true # Setting processing flag to true
 	if _is_debug: _debug_time = Time.get_unix_time_from_system() # Condition for starting debug time
-	get_grid().get_tile(_index_start_tile).set_tile_type(_start_tile_type)
-	_tiles_open.append(get_grid().get_tile(_index_start_tile))
+
+	if get_start_tiles().size() != 0: # Condition for setting the start tiles
+		_c1 = 0
+		
+		while _c1 < get_start_tiles().size(): # Loop for setting the starting tiles
+			get_grid().get_tile(get_start_tiles()[_c1].get_index()).set_tile_type(get_start_tiles()[_c1].get_type()) # Setting type
+			get_grid().get_tile(get_start_tiles()[_c1].get_index()).set_tile_rotation_value(get_start_tiles()[_c1].get_rot_value()) # Setting rot value
+			get_grid().get_tile(get_start_tiles()[_c1].get_index()).set_is_fixed(get_start_tiles()[_c1].is_fixed()) # Setting fixed tile
+			_tiles_open.append(get_grid().get_tile(get_start_tiles()[_c1].get_index())) # Adding the tile to be processed
+			_c1 += 1
+	else:
+		_index_start_tile = _rng.randi_range(0, get_grid().get_size() - 1) # Getting a random tile for start tile
+		_tiles_open.append(get_grid().get_tile(_index_start_tile)) # Adding the first tile to be processed
 
 	while true: # Loop for running the process using wave function collapse
 		_process_grid() # Main process, using wave function collapse to process the grid
 		if is_gen_success() || (_debug_nuke_counter >= _nuke_limit && _nuke_limit != -1): break # Condition for breaking processing loop
-		else:
-			_DELETE_ME = 50
-			_add_failed_tiles() # Getting all the failed tiles to process again
-			# print_rich("[color=yellow]Number of failed tiles found: ", _tiles_open.size(),"[/color]")
-			# print_rich("[color=yellow]Number of failed tiles found: ", _tiles_open.size(),", ", _DELETE_ME_METHOD(),"[/color]")
-			if _DELETE_ME2 == _tiles_open.size():
-				_DELETE_ME3 += 1
-				if _DELETE_ME3 == 50:
-					print(self)
-			else:
-				_DELETE_ME2 = _tiles_open.size()
-				_DELETE_ME3 = 0
-	
-	# while !_tiles_open.is_empty(): # Loop to process all the tiles using wave function collapse
-	# 	_c1 = 0 # Index of the open tiles
-	# 	_c2 = 0 # For storing the lowest entropy index
-	# 	_entropy = -1
-
-	# 	while _c1 < _tiles_open.size(): # Loop for finding the lowest entropy
-	# 		_temp_rules = _get_rules(_tiles_open[_c1])
-
-	# 		if _entropy == -1 || _temp_rules.size() < _entropy: # Condition for finding the lowest entropy
-	# 			_c2 = _c1 # Storing the index of the lowest entropy
-	# 			_entropy = _temp_rules.size() # Updating the entropy value
-	# 			_rules = _temp_rules.duplicate() # Storing the lowest entropy rules
-
-	# 		_c1 += 1
-		
-	# 	_tile_current = _tiles_open.pop_at(_c2) # Getting the lowest entropy tile
-
-	# 	if _tile_current.get_tile_type() == -1: # Checking if tile NOT processed
-	# 		_process_tile(_tile_current, _rules.duplicate()) # Processing the current tile
-	# 		if _tile_current.get_tile_type() == -1: # Condition for storing failed tiles
-	# 			if _tile_error == null: # Chekcing if NO error tiles found
-	# 				_c1 = 0
-	# 				while _c1 < _tile_current.get_edge_size(): # Loop for finding an error tile
-	# 					if _is_tile_processed(_tile_current.get_edge(_c1)): # Condition for finding the first processed tile as error tile
-	# 						_tile_error = _tile_current.get_edge(_c1) # Setting the error tile
-	# 						break
-	# 					_c1 += 1
-				
-	# 			_reprocess_tile() # Reprocessing to fix error
-		
-	# 	_c1 = 0
-
-	# 	# Loop for adding more tiles for processing
-	# 	while _c1 < _tile_current.get_edge_size():
-	# 		if _tile_current.get_edge(_c1) != null:
-	# 			# Checking if the tile has NOT been processed
-	# 			if (_tile_current.get_edge(_c1).get_tile_type() == -1
-	# 			&& !_tiles_open.has(_tile_current.get_edge(_c1))
-	# 			&& !_tiles_closed.has(_tile_current.get_edge(_c1))):
-	# 				_tiles_open.append(_tile_current.get_edge(_c1))
-	# 		_c1 += 1
-		
-	# 	_tiles_closed.append(_tile_current) # The current tile has been processed
+		else: _add_failed_tiles() # Getting all the failed tiles to process again
+		_c_loop += 1 # Incrementing the fail safe loop counter
+		if _c_loop == _loop_limit: break # Fail safe loop break
 	
 	if _is_debug: # Condition for showing the debug info
 		_debug_time = ((Time.get_unix_time_from_system() - _debug_time) * 1000)
 		print_rich("[color=purple]===WFC Result===[/color]")
+		print("Grid Size: ", get_grid().get_grid_size_x(), " X ", get_grid().get_grid_size_y(), " X ", get_grid().get_grid_size_z())
 		print("Run Time: ", _debug_time, "ms")
-		if _debug_nuke_counter != 0: print_rich("[color=orange]Total nukes fired: ", _debug_nuke_counter, "[/color]")
+		
 		if is_gen_success(): print_rich("[color=green]Wave Function Collapse: Successful![/color]")
 		else: print_rich("[color=red]Wave Function Collapse: Failed![/color]")
+
 		_total_successful_tiles() # Finding all the successful tiles
-		print_rich("[color=green]Tiles Succeeded: ", _c_success,"[/color], [color=red]Tiles Failed: ", 
+		print_rich("[color=#40ff70]Tiles Succeeded: ", _c_success,"[/color], [color=red]Tiles Failed: ", 
 			(get_grid().get_size() - _c_success), "[/color], Success Rate: ", ((float(_c_success) / float(get_grid().get_size())) * 100.0), "%")
+		
+		if _debug_nuke_counter == _nuke_limit: print_rich("[color=red]Fail Safe Activated: Maximum nuke fired![/color]")
+		else: print_rich("[color=orange]Number Of Nukes Fired: ", _debug_nuke_counter, "[/color]")
+		
+		if _c_loop == _loop_limit: print_rich("[color=red]Fail Safe Activated: Maximum loop reached![/color]")
+		else: print_rich("[color=orange]Number Of Process Loops: ", _c_loop, "[/color]")
+
 		print_rich("[color=purple]===XXX===[/color]")
 
 	_is_processing = false # Setting processing flag to false
@@ -194,6 +131,7 @@ func reset() -> void:
 	_tile_error = null
 	_tile_search = null
 	_debug_nuke_counter = 0
+	_c_loop = 0
 
 func get_run_time() -> float: 
 	return _debug_time if !_is_processing else -1.0
@@ -207,8 +145,17 @@ func is_gen_success() -> bool:
 	
 	return _c_success == get_grid().get_size()
 
+func get_process_loop() -> int:
+	return _c_loop
+
 func is_processing() -> bool:
 	return _is_processing
+
+func get_data() -> DS_WFC_Data:
+	return _data
+
+func get_tile_names() -> Array[String]:
+	return _data.get_tile_names()
 
 func _process_grid() -> void:
 	while !_tiles_open.is_empty(): # Loop to process all the tiles using wave function collapse
@@ -235,8 +182,9 @@ func _process_grid() -> void:
 					_c1 = 0
 					while _c1 < _tile_current.get_edge_size(): # Loop for finding an error tile
 						if _is_tile_processed(_tile_current.get_edge(_c1)): # Condition for finding the first processed tile as error tile
-							_tile_error = _tile_current.get_edge(_c1) # Setting the error tile
-							break
+							if !_tile_current.get_edge(_c1).is_fixed(): # Checking if the tile is NOT fixed
+								_tile_error = _tile_current.get_edge(_c1) # Setting the error tile
+								break
 						_c1 += 1
 				
 				_reprocess_tile() # Reprocessing to fix error
@@ -257,25 +205,6 @@ func _process_grid() -> void:
 
 ## This method reprocesses to fix the error.
 func _reprocess_tile() -> void:
-	# NOTE: After the loop _tile_current will become _tile_error as further call to _is_found_type method
-	#		has the potential to replace the _tile_error value again.
-	# while _tile_current != _tile_error && !_tiles_closed.is_empty(): # Loop for finding the error tile
-	# 	_tile_current.reset_tile() # Resetting the tile for reprocessing
-	# 	if !_tiles_open.has(_tile_current): _tiles_open.append(_tile_current) # Adding back the resetted tile back to the open tiles for re-processing
-	# 	_tile_current = _tiles_closed.pop_back() # Popping from the closed tiles and thus making it available for processing
-	
-	# # Condition for NOT finding a match after rotational fix
-	# if !_is_found_type(_tile_current, _tile_current.get_tile_type(), _tile_current.get_tile_rotation_value() + 1):
-	# 	_rules = _get_rules(_tile_current) # Getting rules for the error tile after failed rotational fix
-	# 	_rules.erase(_tile_current.get_tile_type()) # Removing the already applied tile type
-	# 	_tile_current.reset_tile() # Resetting the tile for reprocessing
-	# 	_process_tile(_tile_current, _rules.duplicate()) # Reprocessing to find a new tile type for the error tile
-
-	# 	if _tile_current.get_tile_type() == -1: # Checking if a new tile type is NOT found
-	# 		if _nuke_limit == -1 || _debug_nuke_counter < _nuke_limit: # Condition for nuking tiles 
-	# 			_nuke(_tile_current, 0, 0, -1) # Nuking tiles to get better results
-	# 			_debug_nuke_counter += 1 # For counting the number nukes being fired
-
 	# Condition for failed rotational fix of the error tile
 	if !_is_found_type(_tile_error, _tile_error.get_tile_type(), _tile_error.get_tile_rotation_value() + 1):
 		_c_re1 = 0
@@ -293,7 +222,7 @@ func _reprocess_tile() -> void:
 				_rules.erase(_type_stored) # Removing the current type of the edge from the rules
 
 				while !_rules.is_empty(): # Loop to check if new edge tile type will fix the issue
-					_tile_current.get_edge(_c_re1).reset_tile() # Resetting the edge tile
+					_tile_current.get_edge(_c_re1).reset() # Resetting the edge tile
 					_process_tile(_tile_current.get_edge(_c_re1), _rules.duplicate()) # Processing the edge tile
 
 					if _tile_current.get_edge(_c_re1).get_tile_type() != -1: # Checking if the edge tile has a new type
@@ -311,18 +240,9 @@ func _reprocess_tile() -> void:
 		
 		if _tile_current.get_tile_type() == -1: # Condition for nuking the current tile
 			if _nuke_limit == -1 || _debug_nuke_counter < _nuke_limit:
-				_DELETE_ME -= 1
-				if _DELETE_ME == 0:
-					print("Nuking Tile: ", get_tile_index(_tile_current))
-					print("BEFORE:")
-					print(self)
 				_nuke(_tile_current, 0, 0, -1) # Condition for nuking tiles to get better results
-				# _tiles_open.append(_find_nearest_none_processed_tile(_tile_current, 0, -1)) # Adding the correct tile to start the process
 				_tiles_open.append(_find_nearest_none_processed_tile(_tile_current)) # Adding the correct tile to start the process
 				_debug_nuke_counter += 1 # For counting the number nukes being fired
-				if _DELETE_ME == 0:
-					print("AFTER:")
-					print(self)
 
 ## This method adds all the failed tiles back to be processed again.
 func _add_failed_tiles() -> void:
@@ -370,7 +290,7 @@ func _get_rules(tile:DS_Tile) -> Array[int]:
 
 ## This method process the tile.
 func _process_tile(tile: DS_Tile, rules: Array[int]) -> void:
-	while rules.size() != 0:
+	while !rules.is_empty(): # Loop for processing the tile
 		_tile_error = null # Resetting the error tile at the new tile selection
 		_prob = _rng.randf() # Getting probability value
 		_prob_total = (1.0 / rules.size()) # Resetting to find the tile type
@@ -385,90 +305,74 @@ func _process_tile(tile: DS_Tile, rules: Array[int]) -> void:
 		
 		if _is_found_type(tile, rules[_c_process1], 0): # Found a type to set
 			tile.set_tile_type(rules[_c_process1])
-			# print("--- Selected Type: ", tile.get_tile_type())
 			break
 		else: # Found no type, removing currently processed type for checking others
 			rules.remove_at(_c_process1)
 
+## This method rotates the tiles and checks if the tile matches after rotation.
 func _is_found_type(tile:DS_Tile, type:int, rot:int) -> bool:
-	while rot < 4: # Loop for rotating the tile
-		tile.set_tile_rotation_value(rot) # Setting the rotation of the tile
-		_c_found1 = 0 # This counter acts as edge index
+	if !tile.is_fixed(): # Checking if the tile is NOT fixed
+		while rot < 4: # Loop for rotating the tile
+			tile.set_tile_rotation_value(rot) # Setting the rotation of the tile
+			_c_found1 = 0 # This counter acts as edge index
 
-		while _c_found1 < tile.get_edge_size(): # Loop for finding a match
-			if tile.get_edge(_c_found1) != null:
-				if tile.get_edge(_c_found1).get_tile_type() != -1: # Checking if neighbour tile has been set
-					
-					# Storing the selected tile's rotated rules
-					_temp_rules = _data.get_edge_rules(
-						type,
-						tile.get_rotational_edge_index(_c_found1)
-					)
-
-					# Condition for NOT finding any matches so breaking the loop for the next check
-					if !_temp_rules.has(tile.get_edge(_c_found1).get_tile_type()):
-						_tile_error = tile.get_edge(_c_found1) # Storing the tile that caused error
-						break
-					else: # Condtion to check if neighbour allows to set the tile
-						# Storing the neighbour's edge rules toward the current tile
+			while _c_found1 < tile.get_edge_size(): # Loop for finding a match
+				if tile.get_edge(_c_found1) != null:
+					if tile.get_edge(_c_found1).get_tile_type() != -1: # Checking if neighbour tile has been set
+						
+						# Storing the selected tile's rotated rules
 						_temp_rules = _data.get_edge_rules(
-							tile.get_edge(_c_found1).get_tile_type(),
-							tile.get_edge(_c_found1).get_rotational_edge_index(
-								_get_edge_opposite_index(
-									_c_found1,
-									tile.get_edge(_c_found1).get_edge_size()
-								)
-							)
+							type,
+							tile.get_rotational_edge_index(_c_found1)
 						)
 
-						if !_temp_rules.has(type): # NO matches found from the neighbour's edge
+						# Condition for NOT finding any matches so breaking the loop for the next check
+						if !_temp_rules.has(tile.get_edge(_c_found1).get_tile_type()):
 							_tile_error = tile.get_edge(_c_found1) # Storing the tile that caused error
 							break
-				else: # Neighbour tile has NOT been set
-					# Condition to check if current tile rotation does NOT allows neighbour tile to have
-					# at least 1 tile rule, which is entropy > 0
-					if (_get_rules_temp_tile(
-							tile.get_edge(_c_found1),
-							_get_edge_opposite_index(
-								_c_found1, 
-								tile.get_edge(_c_found1).get_edge_size()
-							),
-							type
-						).size() == 0):
-						break
+						else: # Condtion to check if neighbour allows to set the tile
+							# Storing the neighbour's edge rules toward the current tile
+							_temp_rules = _data.get_edge_rules(
+								tile.get_edge(_c_found1).get_tile_type(),
+								tile.get_edge(_c_found1).get_rotational_edge_index(
+									_get_edge_opposite_index(
+										_c_found1,
+										tile.get_edge(_c_found1).get_edge_size()
+									)
+								)
+							)
 
-			_c_found1 += 1
-		
-		if _c_found1 == tile.get_edge_size(): # Found a match
-			return true
-		rot += 1
+							if !_temp_rules.has(type): # NO matches found from the neighbour's edge
+								_tile_error = tile.get_edge(_c_found1) # Storing the tile that caused error
+								break
+					else: # Neighbour tile has NOT been set
+						# Condition to check if current tile rotation does NOT allows neighbour tile to have
+						# at least 1 tile rule, which is entropy > 0
+						if (_get_rules_temp_tile(
+								tile.get_edge(_c_found1),
+								_get_edge_opposite_index(
+									_c_found1, 
+									tile.get_edge(_c_found1).get_edge_size()
+								),
+								type
+							).size() == 0):
+							break
+
+				_c_found1 += 1
+			
+			if _c_found1 == tile.get_edge_size(): # Found a match
+				return true
+			rot += 1
 
 	return false
-
-# ## This method nukes the tiles.
-# func _nuke(tile:DS_Tile, cur:int, counter:int, ignore_edge:int) -> void:
-# 	if tile == null: return
-# 	tile.reset_tile()
-# 	_tiles_closed.erase(tile) # Re-opening tile for processing
-
-# 	if !_tiles_open.has(tile): _tiles_open.append(tile) # Condition for re-adding the nuked tile for reprocess
-	
-# 	if cur >= _nuke_range: # Condition for stopping the recurssion for limit reached
-# 		return
-
-# 	while counter < tile.get_edge_size(): # Loop for nuking the edges
-# 		if counter != ignore_edge: # Checking if edge is NOT ignore edge
-# 			_nuke(tile.get_edge(counter), cur + 1, 0, _get_edge_opposite_index(_counter, tile.get_edge_size())) # Nuking edge
-# 		counter += 1
 
 ## This method nukes the tiles.
 func _nuke(tile:DS_Tile, cur:int, counter:int, ignore_edge:int) -> void:
 	if tile == null: return
-	tile.reset_tile()
+	if tile.is_fixed(): return # Fixed tile found, must stop encroching here
+	tile.reset()
 	_tiles_open.erase(tile) # Removing from open so that the fanning process can happen
 	_tiles_closed.erase(tile) # Re-opening tile for processing
-
-	# if !_tiles_open.has(tile): _tiles_open.append(tile) # Condition for re-adding the nuked tile for reprocess
 	
 	if cur >= _nuke_range: # Condition for stopping the recurssion for limit reached
 		return
@@ -501,22 +405,6 @@ func _find_nearest_none_processed_tile(tile:DS_Tile) -> DS_Tile:
 	
 	return null
 
-
-# ## This method finds the nearest none processed tile to a processed tile from the given tile.
-# func _find_nearest_none_processed_tile(tile:DS_Tile, counter:int, sent_edge:int) -> DS_Tile:
-# 	_tile_search = null
-# 	if _is_tile_processed(tile): return tile.get_edge(sent_edge)
-# 	if tile == null: return null
-
-# 	while counter < tile.get_edge_size(): # Loop to go through all the tile edges
-# 		# Storing the search tile
-# 		_tile_search = _find_nearest_none_processed_tile(tile.get_edge(counter), 0, 
-# 			_get_edge_opposite_index(counter, tile.get_edge_size()))
-# 		if _tile_search != null: break # Tile found stopping any further searches
-# 		counter += 1
-	
-# 	return _tile_search
-
 ## This method checks if the tile has been processed.
 func _is_tile_processed(tile:DS_Tile) -> bool:
 	if tile == null: return false # Null tiles are always false
@@ -535,19 +423,21 @@ func _total_successful_tiles() -> void:
 			_c_success += 1
 		_c_success2 += 1
 
-func _DELETE_ME_METHOD() -> String:
-	var msg = "["
-	var c = 0
-	while c < _tiles_open.size():
-		msg += str(get_tile_index(_tiles_open[c])) + ", "
-		c += 1
-	msg += "]"
-	return msg
+## This method converts the start array, Array[DS_TileInfo], to Array[int]
+func _convert_start_array() -> Array[int]:
+	_temp.clear() # Clearing previous data
+	_c_convert = 0
+
+	while _c_convert < get_start_tiles().size(): # Loop adding all the start index
+		_temp.append(get_start_tiles()[_c_convert].get_index()) # Adding start index
+		_c_convert += 1
+	
+	return _temp.duplicate()
 
 func _to_string() -> String:
-	print_rich(get_grid().show_grid_index_index(_index_start_tile))
+	print_rich(get_grid().show_grid_index_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_index_index(_index_start_tile))
 	print("") # Next line
-	print_rich(get_grid().show_grid_tile_index(_index_start_tile))
+	print_rich(get_grid().show_grid_tile_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_tile_index(_index_start_tile))
 	print("") # Next line
-	print_rich(get_grid().show_grid_tile_rot_index(_index_start_tile))
+	print_rich(get_grid().show_grid_tile_rot_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_tile_rot_index(_index_start_tile))
 	return ""

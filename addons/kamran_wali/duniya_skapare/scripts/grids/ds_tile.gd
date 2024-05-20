@@ -6,14 +6,38 @@ const _rot_edge_size = 4
 var _tile_type:= -1
 var _data_edges: Array[DS_Tile] # Edges
 var _rot_value:= 0
+var _is_fixed:= false
 
 func _init() -> void:
 	_data_edges.resize(6)
 
-## This method resets the tile.
-func reset_tile() -> void:
+# ## This method resets the tile.
+# func reset_tile() -> void:
+# 	_tile_type = -1
+# 	_rot_value = 0
+
+## This method resets the necessary values required
+## for generator.
+func reset() -> void:
 	_tile_type = -1
 	_rot_value = 0
+
+## This method does hard reset which will reset all
+## the values. This method MUST NOT be called during
+## the generator processing otherwise will give
+## wrong results!
+func reset_hard() -> void:
+	reset()
+	_is_fixed = false
+
+## This method sets if the tile is fixed or NOT once
+## a tile type is given.
+func set_is_fixed(is_fix:bool) -> void:
+	_is_fixed = is_fix
+
+## This method checks if the tile is fixed.
+func is_fixed() -> bool:
+	return _is_fixed
 
 ## This method sets the type of the tile.
 func set_tile_type(tile_type:int) -> void:
@@ -156,5 +180,3 @@ func get_rotational_edge_index(index:int) -> int:
 		)
 	
 	return -1
-	# return (index - _rot_value if (index - _rot_value) >= 0 
-	# 	else _data_edges.size() + (index - _rot_value))

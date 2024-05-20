@@ -3,9 +3,20 @@ class_name DS_BaseGrid
 extends Node
 
 @export_category("Grid")
-@export var _grid_x:= 3
-@export var _grid_y:= 3
-@export var _grid_z:= 0
+@export var _grid_x:= 3:
+	set(grid_x):
+		if _grid_x != grid_x:
+			_grid_x = grid_x if grid_x >= 1 else 1
+
+@export var _grid_y:= 3:
+	set(grid_y):
+		if _grid_y != grid_y:
+			_grid_y = grid_y if grid_y >= 1 else 1
+
+@export var _grid_z:= 0:
+	set(grid_z):
+		if _grid_z != grid_z:
+			_grid_z = grid_z if grid_z >= 0 else 0
 
 var _tiles: Array[DS_Tile]
 
@@ -58,16 +69,34 @@ func show_grid_tile_index(index:int) -> String:
 	return "Not implemented!"
 
 ## This method returns the grid in string format.
+## The tile information are shown in the grid.
+## It also highlights an array of index tiles.
+## The first index is highlighted green and the
+## rest are blue. Use this for debuggin.
+func show_grid_tile_array(tiles: Array[int]) -> String:
+	return "Not implemented!"
+
+## This method returns the grid in string format.
 ## The tile rotation information are shown in the grid.
 ## Use this for debugging.
 func show_grid_tile_rot() -> String:
 	return "Not implemented!"
+
+# TODO: Rot array
 
 ## This method returns the grid in string format.
 ## The tile rotation information are shown in the grid.
 ## It also highlights the indexth tile.
 ## Use this for debugging.
 func show_grid_tile_rot_index(index:int) -> String:
+	return "Not implemented!"
+
+## This method returns the grid in string format.
+## The tile rotation information are shown in the grid.
+## It also highlights an array of index tiles.
+## The first index is highlighted green and the rest
+## are blue. Use this for debuggin.
+func show_grid_tile_rot_array(tiles: Array[int]) -> String:
 	return "Not implemented!"
 
 ## This method returns the grid in string format.
@@ -81,6 +110,14 @@ func show_grid_index() -> String:
 ## It also highlights the indexth tile.
 ## Use this for debugging.
 func show_grid_index_index(index: int) -> String:
+	return "Not implemented!"
+
+## This method returns the grid in string format.
+## The index of the tile are shown in the grid.
+## It also highlights an array of index tiles.
+## The first index is highlighted green and the rest
+## are blue. Use this for debuggin.
+func show_grid_index_array(tiles: Array[int]) -> String:
 	return "Not implemented!"
 
 ## This method always sends true as the script is 

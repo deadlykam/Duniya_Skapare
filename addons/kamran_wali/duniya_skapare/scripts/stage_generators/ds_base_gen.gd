@@ -3,11 +3,12 @@ class_name DS_BaseGen
 extends Node
 
 var _grid: DS_BaseGrid
+var _start_tiles: Array[DS_TileInfo]
 var _counter_warning:= -1 # This counter is for warnings ONLY
 var _counter:= -1
 
-func _get_configuration_warnings():
-	var warnings: Array[String]
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray
 	
 	if get_child_count() == 0:
 		warnings.append("Gen: Please give a child containing the grid.")
@@ -15,8 +16,8 @@ func _get_configuration_warnings():
 		set_grid()
 		if _grid == null:
 			warnings.append("Gen: No Grid found in children. Please give a child containing the grid.")
-		# if search_grid_child() == null:
-		# 	warnings.append("Gen: No Grid found in children. Please give a child containing the grid.")
+	
+	return warnings
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
@@ -36,8 +37,8 @@ func get_grid() -> DS_BaseGrid:
 	return _grid
 
 ## This method gets the DS_Data.
-func get_data() -> DS_Data:
-	return DS_Data.get_instance()
+# func get_data() -> DS_Data:
+# 	return DS_Data.get_instance()
 
 ## This method searches for the grid child.
 func set_grid() -> void:
@@ -58,9 +59,22 @@ func get_tile_index(tile:DS_Tile) -> int:
 	
 	return _counter if _counter < _grid.get_size() else -1
 
+## This method gets the start tile array.
+func get_start_tiles() -> Array[DS_TileInfo]:
+	return _start_tiles
+
+## This method adds a tile to be processed first when the 
+## setup starts.
+func add_start_tile(tile:DS_TileInfo) -> void:
+	_start_tiles.append(tile)
+
 ## This method checks if the generator for successful or NOT.
 func is_gen_success() -> bool:
 	return false
+
+## This method gets the number of process loop value.
+func get_process_loop() -> int:
+	return -1
 
 ## This method sets up the generator and MUST be overridden.
 func setup() -> void:
@@ -78,6 +92,14 @@ func get_run_time() -> float:
 ## This method checks if the generator is processing or NOT.
 func is_processing() -> bool:
 	return false
+
+## This method gets the data.
+func get_data():
+	return null
+
+## This method gets the name of the tiles.
+func get_tile_names():
+	return null
 
 func _to_string() -> String:
 	return _grid.show_grid()
