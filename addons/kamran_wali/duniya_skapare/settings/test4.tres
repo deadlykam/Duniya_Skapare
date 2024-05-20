@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="DS_WFC_Data" load_steps=2 format=3 uid="uid://bg1ekae1qjxaw"]
+
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_wfc_data.gd" id="1_v8jku"]
+
+[resource]
+script = ExtResource("1_v8jku")
+_number_of_tiles = 2
+_tile_names = Array[String](["number1", "number2"])
+_up_rules = Array[int]([])
+_north_rules = Array[int]([1, 0])
+_east_rules = Array[int]([1, 0])
+_bottom_rules = Array[int]([])
+_south_rules = Array[int]([1, 0])
+_west_rules = Array[int]([1, 0])
+_up_pos = Array[int]([0, 0])
+_north_pos = Array[int]([0, 1])
+_east_pos = Array[int]([0, 1])
+_bottom_pos = Array[int]([0, 0])
+_south_pos = Array[int]([0, 1])
+_west_pos = Array[int]([0, 1])
+_up_size = Array[int]([0, 0])
+_north_size = Array[int]([1, 1])
+_east_size = Array[int]([1, 1])
+_bottom_size = Array[int]([0, 0])
+_south_size = Array[int]([1, 1])
+_west_size = Array[int]([1, 1])
