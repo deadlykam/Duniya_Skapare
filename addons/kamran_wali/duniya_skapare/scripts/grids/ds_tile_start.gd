@@ -21,17 +21,18 @@ func _get_configuration_warnings() -> PackedStringArray:
     if _generator == null:
         warnings.append("Generator: Please give a parent containing the generator script")
 
-    if _tiles.size() != 0: # Checking if at least 1 tile is given
-        _counter = 0
-        while _counter < _tiles.size(): # Loop for setting the data for the tiles
-            if _tiles[_counter] != null: # Tile has been initialized
-                _tiles[_counter].set_data( # Setting the data
-                    _tiles,
-                    _generator.get_tile_names() if _generator != null else _name_array_empty,
-                    _generator.get_grid().get_size() if _generator != null else -1,
-                    _counter
-                )
-            _counter += 1
+    if _generator != null: # Checking if the generator is NOT null
+        if _tiles.size() != 0: # Checking if at least 1 tile is given
+            _counter = 0
+            while _counter < _tiles.size(): # Loop for setting the data for the tiles
+                if _tiles[_counter] != null: # Tile has been initialized
+                    _tiles[_counter].set_data( # Setting the data
+                        _tiles,
+                        _generator.get_tile_names() if _generator != null else _name_array_empty,
+                        _generator.get_grid().get_size() if _generator != null else -1,
+                        _counter
+                    )
+                _counter += 1
     
     return warnings
 

@@ -53,9 +53,9 @@ func _get_property_list():
         while _counter < _grid_size: # Loop for loading up all the tile index
             _c_data = 0
 
-            while _c_data < _data.size():
+            while _c_data < _data.size(): # Loop to check if an index has been selected
                 if _data[_c_data] != null: # Checking if the data is NOT null
-                    if _data[_c_data].get_index() == _counter && _counter != _id:
+                    if _data[_c_data].get_index() == _counter && _c_data != _id:
                         break
                 _c_data += 1
             
@@ -119,6 +119,5 @@ func _update_all_property_list() -> void:
 
     while _c_property < _data.size(): # Loop for updating all the property list of all tile infos
         if _data[_c_property] != null:
-            if _data[_c_property] != self: # NOT updating self
-                _data[_c_property].update_property_list() # Calling property update
+            _data[_c_property].update_property_list() # Calling property update
         _c_property += 1

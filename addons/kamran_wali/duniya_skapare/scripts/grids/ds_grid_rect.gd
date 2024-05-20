@@ -40,11 +40,6 @@ func show_grid_tile_array(tiles: Array[int]) -> String:
 					)
 				)
 
-				# (
-				# 	"   " if _tiles[_index].get_tile_rotation() < 10 else 
-				# 	"  " if _tiles[_index].get_tile_rotation() < 100 else " "
-				# 	)
-
 				if _has_element: # Condition for closing the colour
 					_debug_print += ("[/color]")
 					if _is_first_element: _is_first_element = false # First element has been set
@@ -62,34 +57,6 @@ func show_grid_tile_array(tiles: Array[int]) -> String:
 
 func show_grid_tile_index(index:int) -> String:
 	return show_grid_tile_array([index])
-	# _index = 0
-	# _counter_z = 0
-	# print("Showing Grid with tile information:")
-	# _debug_print = ""
-
-	# while _counter_z <= get_grid_size_z(): # Loop for going through grid z-axis, which is height
-	# 	_debug_print += "At height " + str(_counter_z) +": \n"
-	# 	_counter_y = 0
-
-	# 	while _counter_y < get_grid_size_y(): # Loop for going through y-axis
-	# 		_counter_x = 0
-
-	# 		while _counter_x < get_grid_size_x(): # Loop for going through x-axis
-	# 			_debug_print += (("[color=green]" if _index == index else "") + 
-	# 							str(_tiles[_index].get_tile_type()) +
-	# 							("[/color]" if _index == index else "") 
-	# 							+ "   ")
-				
-	# 			_index += 1
-	# 			_counter_x += 1
-			
-	# 		_debug_print += "\n"
-	# 		_counter_y += 1
-		
-	# 	_counter_z += 1
-	
-	# _debug_print += "===xxx==="
-	# return _debug_print
 
 func show_grid_tile() -> String:
 	return show_grid_tile_index(-1)
@@ -141,34 +108,6 @@ func show_grid_tile_rot_array(tiles: Array[int]) -> String:
 
 func show_grid_tile_rot_index(index:int) -> String:
 	return show_grid_tile_rot_array([index])
-	# _index = 0
-	# _counter_z = 0
-	# print("Showing Grid with tile rotation information:")
-	# _debug_print = ""
-
-	# while _counter_z <= get_grid_size_z(): # Loop for going through grid z-axis, which is height
-	# 	_debug_print += "At height " + str(_counter_z) +": \n"
-	# 	_counter_y = 0
-
-	# 	while _counter_y < get_grid_size_y(): # Loop for going through y-axis
-	# 		_counter_x = 0
-
-	# 		while _counter_x < get_grid_size_x(): # Loop for going through x-axis
-	# 			_debug_print += (("[color=green]" if _index == index else "") + 
-	# 							str(_tiles[_index].get_tile_rotation()) +
-	# 							("[/color]" if _index == index else "") 
-	# 							+ "   ")
-				
-	# 			_index += 1
-	# 			_counter_x += 1
-			
-	# 		_debug_print += "\n"
-	# 		_counter_y += 1
-		
-	# 	_counter_z += 1
-	
-	# _debug_print += "===xxx==="
-	# return _debug_print
 
 ## This method returns the grid in string format.
 ## The tile rotation information are shown in the grid.
@@ -221,34 +160,6 @@ func show_grid_index_array(tiles: Array[int]) -> String:
 
 func show_grid_index_index(index: int) -> String:
 	return show_grid_index_array([index])
-	# _index = 0
-	# _counter_z = 0
-	# print("Showing Grid with index:")
-	# _debug_print = ""
-
-	# while _counter_z <= get_grid_size_z(): # Loop for going through grid z-axis, which is height
-	# 	_debug_print += "At height " + str(_counter_z) +": \n"
-	# 	_counter_y = 0
-
-	# 	while _counter_y < get_grid_size_y(): # Loop for going through y-axis
-	# 		_counter_x = 0
-
-	# 		while _counter_x < get_grid_size_x(): # Loop for going through x-axis
-	# 			_debug_print += (("[color=green]" if _index == index else "") + 
-	# 							str(_index) +
-	# 							("[/color]" if _index == index else "") +
-	# 							("   " if _index < 10 else "  " if _index < 100 else " ") )
-				
-	# 			_index += 1
-	# 			_counter_x += 1
-			
-	# 		_debug_print += "\n"
-	# 		_counter_y += 1
-		
-	# 	_counter_z += 1
-	
-	# _debug_print += "===xxx==="
-	# return _debug_print
 
 func show_grid_index() -> String:
 	return show_grid_index_index(-1)

@@ -3,9 +3,20 @@ class_name DS_BaseGrid
 extends Node
 
 @export_category("Grid")
-@export var _grid_x:= 3
-@export var _grid_y:= 3
-@export var _grid_z:= 0
+@export var _grid_x:= 3:
+	set(grid_x):
+		if _grid_x != grid_x:
+			_grid_x = grid_x if grid_x >= 1 else 1
+
+@export var _grid_y:= 3:
+	set(grid_y):
+		if _grid_y != grid_y:
+			_grid_y = grid_y if grid_y >= 1 else 1
+
+@export var _grid_z:= 0:
+	set(grid_z):
+		if _grid_z != grid_z:
+			_grid_z = grid_z if grid_z >= 0 else 0
 
 var _tiles: Array[DS_Tile]
 

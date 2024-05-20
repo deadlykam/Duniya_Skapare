@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://i1802nm42enj"]
+[gd_scene load_steps=11 format=3 uid="uid://i1802nm42enj"]
 
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="1_8ckdf"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_m33c4"]
@@ -7,40 +7,44 @@
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_tile_start.gd" id="5_ds3v5"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_tile_info.gd" id="6_7o24x"]
 
-[sub_resource type="Resource" id="Resource_0wjkh"]
+[sub_resource type="Resource" id="Resource_b6kr8"]
 script = ExtResource("6_7o24x")
 _is_fixed = true
 _type = 0
 _index = 0
 _rot_value = 0
 
-[sub_resource type="Resource" id="Resource_sgu3x"]
+[sub_resource type="Resource" id="Resource_vp1uc"]
 script = ExtResource("6_7o24x")
 _is_fixed = false
-_type = 0
-_index = 20
-_rot_value = 0
+_type = 1
+_index = 5
+_rot_value = 3
 
-[sub_resource type="Resource" id="Resource_qlp4i"]
+[sub_resource type="Resource" id="Resource_g074d"]
 script = ExtResource("6_7o24x")
 _is_fixed = true
-_type = 0
-_index = 5
-_rot_value = 0
+_type = 2
+_index = 6
+_rot_value = 1
+
+[sub_resource type="Resource" id="Resource_w1mif"]
+script = ExtResource("6_7o24x")
+_is_fixed = false
+_type = 2
+_index = 35
+_rot_value = 1
 
 [node name="test1" type="Node3D"]
 
 [node name="Test" type="Node3D" parent="." node_paths=PackedStringArray("_generator")]
 script = ExtResource("1_m33c4")
 _generator = NodePath("WFC")
-_number_of_simulations = 25
-_is_print_failed = true
+_is_print_final = true
 
 [node name="WFC" type="Node3D" parent="Test"]
 script = ExtResource("2_iog3d")
 _data = ExtResource("3_it87u")
-_nuke_limit = 1
-_loop_limit = 1
 _is_debug = true
 
 [node name="Grid" type="Node3D" parent="Test/WFC"]
@@ -50,4 +54,4 @@ _grid_y = 6
 
 [node name="Node3D" type="Node3D" parent="Test/WFC"]
 script = ExtResource("5_ds3v5")
-_tiles = Array[ExtResource("6_7o24x")]([SubResource("Resource_0wjkh"), SubResource("Resource_sgu3x"), SubResource("Resource_qlp4i")])
+_tiles = Array[ExtResource("6_7o24x")]([SubResource("Resource_b6kr8"), SubResource("Resource_vp1uc"), SubResource("Resource_g074d"), SubResource("Resource_w1mif")])
