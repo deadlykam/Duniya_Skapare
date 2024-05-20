@@ -139,15 +139,22 @@ func setup() -> void:
 	if _is_debug: # Condition for showing the debug info
 		_debug_time = ((Time.get_unix_time_from_system() - _debug_time) * 1000)
 		print_rich("[color=purple]===WFC Result===[/color]")
+		print("Grid Size: ", get_grid().get_grid_size_x(), " X ", get_grid().get_grid_size_y(), " X ", get_grid().get_grid_size_z())
 		print("Run Time: ", _debug_time, "ms")
-		if _debug_nuke_counter != 0: print_rich("[color=orange]Total nukes fired: ", _debug_nuke_counter, "[/color]")
+		
 		if is_gen_success(): print_rich("[color=green]Wave Function Collapse: Successful![/color]")
 		else: print_rich("[color=red]Wave Function Collapse: Failed![/color]")
+
 		_total_successful_tiles() # Finding all the successful tiles
-		print_rich("[color=green]Tiles Succeeded: ", _c_success,"[/color], [color=red]Tiles Failed: ", 
+		print_rich("[color=#40ff70]Tiles Succeeded: ", _c_success,"[/color], [color=red]Tiles Failed: ", 
 			(get_grid().get_size() - _c_success), "[/color], Success Rate: ", ((float(_c_success) / float(get_grid().get_size())) * 100.0), "%")
-		if _c_loop == _loop_limit: print_rich("[color=red]Loop Fail Safe Activated! Maximum loop reached![/color]")
-		else: print_rich("[color=green]Number Of Process Loops: ", _c_loop, "[/color]")
+		
+		if _debug_nuke_counter == _nuke_limit: print_rich("[color=red]Fail Safe Activated: Maximum nuke fired![/color]")
+		else: print_rich("[color=orange]Number Of Nukes Fired: ", _debug_nuke_counter, "[/color]")
+		
+		if _c_loop == _loop_limit: print_rich("[color=red]Fail Safe Activated: Maximum loop reached![/color]")
+		else: print_rich("[color=orange]Number Of Process Loops: ", _c_loop, "[/color]")
+		
 		print_rich("[color=purple]===XXX===[/color]")
 
 	_is_processing = false # Setting processing flag to false
@@ -522,11 +529,13 @@ func _convert_start_array() -> Array[int]:
 
 func _to_string() -> String:
 	# TODO: Update the logic below to reflect single tile and many tile print
-	print_rich(get_grid().show_grid_index_index(_index_start_tile))
+	print_rich(get_grid().show_grid_index_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_index_index(_index_start_tile))
+	# print_rich(get_grid().show_grid_index_index(_index_start_tile))
 	print("") # Next line
-	print_rich(get_grid().show_grid_tile_array(_convert_start_array()))
+	print_rich(get_grid().show_grid_tile_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_tile_index(_index_start_tile))
 	print("") # Next line
-	print_rich(get_grid().show_grid_tile_rot_index(_index_start_tile))
+	print_rich(get_grid().show_grid_tile_rot_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_tile_rot_index(_index_start_tile))
+
 	# print_rich(get_grid().show_grid_index_index(_index_start_tile))
 	# print("") # Next line
 	# print_rich(get_grid().show_grid_tile_index(_index_start_tile))

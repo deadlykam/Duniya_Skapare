@@ -33,12 +33,14 @@ _rot_value = 0
 [node name="Test" type="Node3D" parent="." node_paths=PackedStringArray("_generator")]
 script = ExtResource("1_m33c4")
 _generator = NodePath("WFC")
-_is_print_success = true
+_number_of_simulations = 25
 _is_print_failed = true
 
 [node name="WFC" type="Node3D" parent="Test"]
 script = ExtResource("2_iog3d")
 _data = ExtResource("3_it87u")
+_nuke_limit = 1
+_loop_limit = 1
 _is_debug = true
 
 [node name="Grid" type="Node3D" parent="Test/WFC"]
