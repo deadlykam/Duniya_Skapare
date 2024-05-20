@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bc2joqlpfqxui"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wave_function_collapse_ui.gd" id="1_4n6l4"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wave_function_collapse_ui.gd" id="1_2jk17"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wfc_settings.gd" id="1_s6hkl"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_tile_rules.gd" id="4_0a3y5"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_save_load.gd" id="5_fudd3"]
@@ -12,7 +12,7 @@ bg_color = Color(0.113725, 0.133333, 0.160784, 0.898039)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h5i1a"]
 bg_color = Color(0.113725, 0.133333, 0.160784, 1)
 
-[node name="wave_function_collapse_ui" type="Control"]
+[node name="Wave Function Collapse" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,7 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_4n6l4")
+script = ExtResource("1_2jk17")
 
 [node name="Main_Container" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -30,6 +30,23 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="FileNameContainer" type="HBoxContainer" parent="Main_Container"]
+layout_mode = 2
+
+[node name="Lbl_File_Name" type="Label" parent="Main_Container/FileNameContainer"]
+layout_mode = 2
+text = "default"
+
+[node name="Control" type="Control" parent="Main_Container/FileNameContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="Msg_Save" type="Label" parent="Main_Container/FileNameContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "Unsaved Changes!"
 
 [node name="ButtonContainer" type="HBoxContainer" parent="Main_Container"]
 layout_mode = 2
@@ -51,12 +68,6 @@ custom_minimum_size = Vector2(125, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "LOAD"
-
-[node name="Msg_Save" type="Label" parent="Main_Container/ButtonContainer"]
-visible = false
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-text = "Unsaved Changes!"
 
 [node name="Btn_Reset" type="Button" parent="Main_Container/ButtonContainer"]
 custom_minimum_size = Vector2(125, 0)

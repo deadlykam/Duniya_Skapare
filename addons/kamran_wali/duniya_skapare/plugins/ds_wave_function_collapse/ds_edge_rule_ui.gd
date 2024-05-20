@@ -5,9 +5,6 @@ extends "res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collap
 @export var _edge_name:= ""
 @export_range(0, 5) var _index_edge:= 0
 
-# Constants
-const DS_WAVE_FUNCTION_COLLAPSE_UI = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wave_function_collapse_ui.gd")
-
 # Properties from the scene
 var _lbl_edge: Label
 var _tile_list: ItemList
@@ -15,7 +12,6 @@ var _btn_add: Button
 var _btn_remove: Button
 
 # Properties for interal usage
-var _ds_wave_function_collapse_ui: DS_WAVE_FUNCTION_COLLAPSE_UI
 var _tile:= -1
 var _tile_names: Array[String]
 var _rules: Array[int]
@@ -39,13 +35,13 @@ func _enter_tree() -> void:
     _red.a = _alpha
 
 ## This method initializes the edge rule ui.
-func init(ds_wave_function_collapse_ui:DS_WAVE_FUNCTION_COLLAPSE_UI) -> void:
-    _ds_wave_function_collapse_ui = ds_wave_function_collapse_ui
+# func init(ds_wave_function_collapse_ui:DS_WAVE_FUNCTION_COLLAPSE_UI) -> void:
+#     _ds_wave_function_collapse_ui = ds_wave_function_collapse_ui
 
 ## This method sets up the UIs name list
 func setup() -> void:
     _tile_list.clear()
-    _tile_names = get_data().get_wfc_data().get_tile_names()
+    _tile_names = get_data().get_tile_names()
 
     _counter1 = 0
     while _counter1 < _tile_names.size(): # Loop for adding all the items
@@ -56,7 +52,7 @@ func setup() -> void:
 func setup_tile_list(tile:int) -> void:
     _tile_list.deselect_all()
     _tile = tile
-    _rules = get_data().get_wfc_data().get_edge_rules(_tile, _index_edge) # Getting all the rules
+    _rules = get_data().get_edge_rules(_tile, _index_edge) # Getting all the rules
     _counter1 = 0 # Acting as the tile index
     while _counter1 < _tile_names.size(): # Loop for finding all the rules item
         _set_item_colour(_counter1, _red) # Making item red at first
@@ -73,23 +69,23 @@ func _on_btn_add_pressed():
     _counter1 = 0
 
     while _counter1 < _selected_items.size(): # Loop for adding edge rules
-        if !get_data().get_wfc_data().has_rule_element(_tile, _selected_items[_counter1], _index_edge): # Checking if rule NOT added
-            get_data().get_wfc_data().add_edge_rule(_tile, _selected_items[_counter1], _index_edge) # Adding the rule
+        if !get_data().has_rule_element(_tile, _selected_items[_counter1], _index_edge): # Checking if rule NOT added
+            get_data().add_edge_rule(_tile, _selected_items[_counter1], _index_edge) # Adding the rule
             _set_item_colour(_selected_items[_counter1], _green)
         _counter1 += 1
     
-    _ds_wave_function_collapse_ui.show_unsaved_message("Unsaved Changes!")
+    get_main_ui().show_unsaved_message("Unsaved Changes!")
 
 func _on_btn_remove_pressed():
     _selected_items = _tile_list.get_selected_items()
     _counter1 = 0
 
     while _counter1 < _selected_items.size(): # Loop for removing edge rules
-        get_data().get_wfc_data().remove_edge_rule_element(_tile, _selected_items[_counter1], _index_edge) # Removing the rule
+        get_data().remove_edge_rule_element(_tile, _selected_items[_counter1], _index_edge) # Removing the rule
         _set_item_colour(_selected_items[_counter1], _red)
         _counter1 += 1
     
-    _ds_wave_function_collapse_ui.show_unsaved_message("Unsaved Changes!")
+    get_main_ui().show_unsaved_message("Unsaved Changes!")
 
 ## This method sets the colour of the indexth item.
 func _set_item_colour(index:int, colour:Color) -> void:
