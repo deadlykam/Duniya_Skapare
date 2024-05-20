@@ -2,7 +2,6 @@
 extends "res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_base.gd"
 
 # Constants
-const DS_WFC_DATA: GDScript = preload("res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_wfc_data.gd")
 const DS_STRING_VAR: GDScript = preload("res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_string_var.gd")
 
 # Properties from the scene
@@ -35,28 +34,23 @@ func show_menu(is_save:bool) -> void:
     _btn_action.text = "SAVE" if _is_save else "LOAD"
     visible = true
 
-func _on_btn_cancel_pressed():
-    visible =  false
+func _on_btn_cancel_pressed(): visible =  false
 
 func _on_btn_action_pressed():
-    if _is_save: # Checking if the mode is save mode
-        _create_wfc_data() # Creating wfc data
-    else:
-        _load_wfc_data() # Loading new data
-        get_main_ui().load_setup()
+    if _is_save: _create_wfc_data() # Creating wfc data
+    else: _load_wfc_data() # Loading new data
 
     if _is_save: _save_path.save() # Saving the path
     else: _load_path.save() # Savin the path
 
 func _on_txt_path_text_changed(new_text:String):
-    if _is_save:
-        _save_path.set_value(new_text)
-    else:
-        _load_path.set_value(new_text)
+    if _is_save: _save_path.set_value(new_text)
+    else: _load_path.set_value(new_text)
 
 ## This method loads the data.
 func _load_wfc_data() -> void:
     get_main_ui().load_data(load(_load_path.get_value()))
+    get_main_ui().load_setup()
 
 
 ## This method creates the wave function collapse data.
@@ -64,3 +58,5 @@ func _create_wfc_data() -> void:
     _variable = DS_WFC_DATA.new()
     _variable.data_reset()
     ResourceSaver.save(_variable, _save_path.get_value() + "/" + _txt_name.text + ".tres", 0)
+    _load_path.set_value(_save_path.get_value() + "/" + _txt_name.text + ".tres") # Updating the load path
+    _load_wfc_data() # Loading the data

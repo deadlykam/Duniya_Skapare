@@ -9,10 +9,11 @@ const DS_TILE_RULES: GDScript = preload("res://addons/kamran_wali/duniya_skapare
 const DS_SAVE_LOAD: GDScript = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_save_load.gd")
 
 # Properties from the scene
+var _lbl_file_name: Label
 var _msg_save: Label
 
 # Properties for internal usage
-var _data: DS_WFC_DATA = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse/data.tres")
+var _data: DS_WFC_DATA = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse/default.tres")
 var _wfc_settings: DS_WFC_SETTINGS
 var _tile_rules: DS_TILE_RULES
 var _save_load: DS_SAVE_LOAD
@@ -24,7 +25,8 @@ func _enter_tree() -> void:
     _tile_rules = $Main_Container/TabContainer/Tile_Rules
     _save_load = $Save_Load_Container
     _tile_edges = $Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges
-    _msg_save = $Main_Container/ButtonContainer/Msg_Save
+    _lbl_file_name = $Main_Container/FileNameContainer/Lbl_File_Name
+    _msg_save = $Main_Container/FileNameContainer/Msg_Save
 
     _wfc_settings.set_main_ui(self)
     _save_load.set_main_ui(self)
@@ -34,6 +36,7 @@ func _enter_tree() -> void:
     while _counter1 < _tile_edges.get_child_count(): # Loop for initializing the edge rule UIs
         _tile_edges.get_child(_counter1).set_main_ui(self)
         _counter1 += 1
+    
 
 ## This method shows the unsaved message.
 func show_unsaved_message(msg:String) -> void:
@@ -47,11 +50,11 @@ func load_setup() -> void:
 
 ## This method loads a new data.
 func load_data(data: DS_WFC_Data) -> void:
-    _data = data
+    _data = data # Loading the data
+    _lbl_file_name.text = _data.resource_path.get_file() # Showing the data file name
 
 ## This method gets the data.
-func get_data() -> DS_WFC_Data:
-    return _data
+func get_data() -> DS_WFC_Data: return _data
 
 func _on_btn_save_pressed():
     _data.save()
@@ -62,12 +65,6 @@ func _on_btn_reset_pressed():
     _wfc_settings.reset() # Resetting wfc setting
     _tile_rules.setup() # Resetting the edges
 
-func _on_btn_new_pressed():
-    _save_load.show_menu(true)
-
-func _on_btn_load_pressed():
-    _save_load.show_menu(false)
-
-func _on_tab_container_tab_changed(tab:int):
-    if tab == 1: # Condition to show the tile rules tab
-        _tile_rules.setup()
+func _on_btn_new_pressed(): _save_load.show_menu(true)
+func _on_btn_load_pressed(): _save_load.show_menu(false)
+func _on_tab_container_tab_changed(tab:int): if tab == 1: _tile_rules.setup() # Showing the tile rules tab
