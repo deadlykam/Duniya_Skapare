@@ -61,6 +61,7 @@ var _c_convert:= -1
 var _type_stored:= -1
 var _rot_stored:= -1
 var _debug_time:= 1.0
+var _debug_total_time:= 0.0
 var _debug_nuke_counter:= 0
 var _c_loop:= 0
 var _is_processing:= false
@@ -99,24 +100,8 @@ func setup() -> void:
 		if _c_loop == _loop_limit: break # Fail safe loop break
 	
 	if _is_debug: # Condition for showing the debug info
-		_debug_time = ((Time.get_unix_time_from_system() - _debug_time) * 1000)
 		print_rich("[color=purple]===WFC Result===[/color]")
-		print("Grid Size: ", get_grid().get_grid_size_x(), " X ", get_grid().get_grid_size_y(), " X ", get_grid().get_grid_size_z())
-		print("Run Time: ", _debug_time, "ms")
-		
-		if is_gen_success(): print_rich("[color=green]Wave Function Collapse: Successful![/color]")
-		else: print_rich("[color=red]Wave Function Collapse: Failed![/color]")
-
-		_total_successful_tiles() # Finding all the successful tiles
-		print_rich("[color=#40ff70]Tiles Succeeded: ", _c_success,"[/color], [color=red]Tiles Failed: ", 
-			(get_grid().get_size() - _c_success), "[/color], Success Rate: ", ((float(_c_success) / float(get_grid().get_size())) * 100.0), "%")
-		
-		if _debug_nuke_counter == _nuke_limit: print_rich("[color=red]Fail Safe Activated: Maximum nuke fired![/color]")
-		else: print_rich("[color=orange]Number Of Nukes Fired: ", _debug_nuke_counter, "[/color]")
-		
-		if _c_loop == _loop_limit: print_rich("[color=red]Fail Safe Activated: Maximum loop reached![/color]")
-		else: print_rich("[color=orange]Number Of Process Loops: ", _c_loop, "[/color]")
-
+		print_debug_info()
 		print_rich("[color=purple]===XXX===[/color]")
 
 	_is_processing = false # Setting processing flag to false
@@ -134,7 +119,7 @@ func reset() -> void:
 	_c_loop = 0
 
 func get_run_time() -> float: 
-	return _debug_time if !_is_processing else -1.0
+	return _debug_total_time if !_is_processing else -1.0
 
 func is_gen_success() -> bool:
 	_c_success = 0
@@ -145,17 +130,29 @@ func is_gen_success() -> bool:
 	
 	return _c_success == get_grid().get_size()
 
-func get_process_loop() -> int:
-	return _c_loop
+func get_process_loop() -> int: return _c_loop
+func is_gen_process() -> bool: return _is_processing
+func get_data() -> DS_WFC_Data: return _data
+func get_tile_names() -> Array[String]: return _data.get_tile_names()
 
-func is_processing() -> bool:
-	return _is_processing
+func print_debug_info() -> void:
+	super()
+	_debug_total_time = ((Time.get_unix_time_from_system() - _debug_time) * 1000)
+	print("Grid Size: ", get_grid().get_grid_size_x(), " X ", get_grid().get_grid_size_y(), " X ", get_grid().get_grid_size_z())
+	print("Run Time: ", _debug_total_time, "ms")
+	
+	if is_gen_success(): print_rich("[color=green]Wave Function Collapse: Successful![/color]")
+	else: print_rich("[color=red]Wave Function Collapse: Failed![/color]")
 
-func get_data() -> DS_WFC_Data:
-	return _data
-
-func get_tile_names() -> Array[String]:
-	return _data.get_tile_names()
+	_total_successful_tiles() # Finding all the successful tiles
+	print_rich("[color=#40ff70]Tiles Succeeded: ", _c_success,"[/color], [color=red]Tiles Failed: ", 
+		(get_grid().get_size() - _c_success), "[/color], Success Rate: ", ((float(_c_success) / float(get_grid().get_size())) * 100.0), "%")
+	
+	if _debug_nuke_counter == _nuke_limit: print_rich("[color=red]Fail Safe Activated: Maximum nuke fired![/color]")
+	else: print_rich("[color=orange]Number Of Nukes Fired: ", _debug_nuke_counter, "[/color]")
+	
+	if _c_loop == _loop_limit: print_rich("[color=red]Fail Safe Activated: Maximum loop reached![/color]")
+	else: print_rich("[color=orange]Number Of Process Loops: ", _c_loop, "[/color]")
 
 func _process_grid() -> void:
 	while !_tiles_open.is_empty(): # Loop to process all the tiles using wave function collapse

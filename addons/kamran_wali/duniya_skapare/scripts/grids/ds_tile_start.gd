@@ -19,9 +19,12 @@ func _get_configuration_warnings() -> PackedStringArray:
 
     _generator = _get_generator()
     if _generator == null:
-        warnings.append("Generator: Please give a parent containing the generator script")
+        warnings.append("Generator: Please give a parent containing the generator script.")
 
-    if _generator != null: # Checking if the generator is NOT null
+    if _generator.get_data() == null:
+        warnings.append("Generator Data: Please give a data to the generator.")
+
+    if _generator != null and _generator.get_data() != null: # Checking if the generator is NOT null
         if _tiles.size() != 0: # Checking if at least 1 tile is given
             _counter = 0
             while _counter < _tiles.size(): # Loop for setting the data for the tiles

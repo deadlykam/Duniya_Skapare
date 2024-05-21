@@ -22,23 +22,11 @@ func _get_configuration_warnings() -> PackedStringArray:
 func _ready() -> void:
 	if !Engine.is_editor_hint():
 		set_grid()
-		# _grid = search_grid_child()
-		# _counter = 0
-		
-        # # Loop for updating tiles at start
-		# while _counter < _update_tile_info.size():
-		# 	_grid.get_tile(_update_tile_info[_counter].get_index()).set_tile_type(_update_tile_info[_counter].get_tile_type())
-		# 	_counter += 1
-
 		setup() # Setting up the grid
 
 ## This method gets the grid.
 func get_grid() -> DS_BaseGrid:
 	return _grid
-
-## This method gets the DS_Data.
-# func get_data() -> DS_Data:
-# 	return DS_Data.get_instance()
 
 ## This method searches for the grid child.
 func set_grid() -> void:
@@ -90,16 +78,19 @@ func get_run_time() -> float:
 	return -1
 
 ## This method checks if the generator is processing or NOT.
-func is_processing() -> bool:
-	return false
+func is_gen_process() -> bool: return false
 
 ## This method gets the data.
-func get_data():
+func get_data(): # NOTE: The type must be none-type because other gens may NOT have the same data.
 	return null
 
 ## This method gets the name of the tiles.
 func get_tile_names():
 	return null
+
+## This method prints the debug.
+func print_debug_info() -> void:
+	pass
 
 func _to_string() -> String:
 	return _grid.show_grid()
