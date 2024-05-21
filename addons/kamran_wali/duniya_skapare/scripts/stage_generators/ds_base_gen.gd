@@ -56,6 +56,11 @@ func get_start_tiles() -> Array[DS_TileInfo]:
 func add_start_tile(tile:DS_TileInfo) -> void:
 	_start_tiles.append(tile)
 
+## This method gets the starting tile index or the first
+## indexth tile to be processed.
+func get_start_index() -> int:
+	return -1
+
 ## This method checks if the generator for successful or NOT.
 func is_gen_success() -> bool:
 	return false

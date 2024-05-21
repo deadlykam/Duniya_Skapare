@@ -118,6 +118,9 @@ func reset() -> void:
 	_debug_nuke_counter = 0
 	_c_loop = 0
 
+func get_start_index() -> int:
+	return _index_start_tile if get_start_tiles().size() == 0 else get_start_tiles()[0]
+
 func get_run_time() -> float: 
 	return _debug_total_time if !_is_processing else -1.0
 
