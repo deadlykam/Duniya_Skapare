@@ -36,8 +36,12 @@ func get_grid_size_z() -> int:
 	return _grid_z
 
 ## This method gets the total size of the grid.
-func get_size() -> int:
+func get_grid_size() -> int:
 	return _grid_x * _grid_y + ((_grid_x * _grid_y) * _grid_z)
+
+## This method gets the tile array size.
+func get_tiles_size() -> int:
+	return _tiles.size()
 
 ## This method gets the indexth tile.
 func get_tile(index:int) -> DS_Tile:

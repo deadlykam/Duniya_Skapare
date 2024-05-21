@@ -40,12 +40,12 @@ func set_grid() -> void:
 ## This method gets the index of the given tile.
 func get_tile_index(tile:DS_Tile) -> int:
 	_counter = 0
-	while _counter < _grid.get_size(): # Loop for finding the index of the tile
+	while _counter < _grid.get_grid_size(): # Loop for finding the index of the tile
 		if tile == _grid.get_tile(_counter): # Index found for the tile
 			break
 		_counter += 1
 	
-	return _counter if _counter < _grid.get_size() else -1
+	return _counter if _counter < _grid.get_grid_size() else -1
 
 ## This method gets the start tile array.
 func get_start_tiles() -> Array[DS_TileInfo]:
@@ -60,6 +60,16 @@ func add_start_tile(tile:DS_TileInfo) -> void:
 ## indexth tile to be processed.
 func get_start_index() -> int:
 	return -1
+
+## This method gets all the free edges of the given tile.
+func tile_free_edges(tile:int) -> Array[int]:
+	return []
+
+## This method adds new tile/s to the indexth tile. The indexth
+## tile MUST have a free spot to add the tiles otherwise it will
+## NOT.
+func add_tile(index:int) -> void:
+	pass
 
 ## This method checks if the generator for successful or NOT.
 func is_gen_success() -> bool:

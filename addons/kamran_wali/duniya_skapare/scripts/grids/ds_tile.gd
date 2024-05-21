@@ -7,6 +7,7 @@ var _tile_type:= -1
 var _data_edges: Array[DS_Tile] # Edges
 var _rot_value:= 0
 var _is_fixed:= false
+var _is_fixed_actual:= false # This the actual fixed flag which means it can be changed
 
 func _init() -> void:
 	_data_edges.resize(6)
@@ -21,6 +22,7 @@ func _init() -> void:
 func reset() -> void:
 	_tile_type = -1
 	_rot_value = 0
+	_is_fixed_actual = _is_fixed # Setting the actual fixed flag
 
 ## This method does hard reset which will reset all
 ## the values. This method MUST NOT be called during
@@ -34,10 +36,22 @@ func reset_hard() -> void:
 ## a tile type is given.
 func set_is_fixed(is_fix:bool) -> void:
 	_is_fixed = is_fix
+	_is_fixed_actual = _is_fixed
 
 ## This method checks if the tile is fixed.
 func is_fixed() -> bool:
 	return _is_fixed
+
+## This method sets the tile's actual fixed flag which
+## is the temp is fixed flag.
+func set_is_fixed_actual(is_fix_actual:bool) -> void:
+	_is_fixed_actual = is_fix_actual
+
+## This method checks if the tile is fixed. This
+## flag is temp flag and will reset after reset
+## call.
+func is_fixed_actual() -> bool:
+	return _is_fixed_actual
 
 ## This method sets the type of the tile.
 func set_tile_type(tile_type:int) -> void:

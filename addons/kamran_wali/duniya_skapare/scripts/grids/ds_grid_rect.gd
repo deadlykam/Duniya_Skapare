@@ -167,7 +167,7 @@ func show_grid_index() -> String:
 func setup() -> void:
 	_counter_x = 0 # Array setup counter
 
-	while _counter_x < get_size(): # Loop to create tile array
+	while _counter_x < get_grid_size(): # Loop to create tile array
 		add_tile(DS_Tile.new())
 		_counter_x += 1
 	
@@ -233,7 +233,7 @@ func setup() -> void:
 
 func reset() -> void:
 	_counter_z = 0 # Acts as index for all the tiles in grid
-	while _counter_z < get_size(): # Loop for resetting all the tiles
+	while _counter_z < get_grid_size(): # Loop for resetting all the tiles
 		get_tile(_counter_z).reset_hard() # Hard resetting tile
 		_counter_z += 1
 
