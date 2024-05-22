@@ -1,5 +1,4 @@
 @tool
-class_name DS_WFCGen
 extends DS_BaseGen
 
 @export_category("Wave Function Collapse")
@@ -40,6 +39,7 @@ var _tiles_search_closed: Array[DS_Tile]
 var _tile_current: DS_Tile
 var _tile_error: DS_Tile
 var _tile_search: DS_Tile
+var _tile_add: DS_Tile
 var _rules: Array[int] # Final rules
 var _rng = RandomNumberGenerator.new()
 var _prob:= -1.0
@@ -61,12 +61,15 @@ var _c_success2:= -1
 var _c_failed:= -1
 var _c_search:= -1
 var _c_convert:= -1
+# var _c_free:= -1
+# var _c_add1:= -1
+# var _c_add2:= -1
+var _c_loop:= 0
 var _type_stored:= -1
 var _rot_stored:= -1
 var _debug_time:= 1.0
 var _debug_total_time:= 0.0
 var _debug_nuke_counter:= 0
-var _c_loop:= 0
 var _is_processing:= false
 
 func _get_configuration_warnings() -> PackedStringArray:
@@ -77,6 +80,13 @@ func _get_configuration_warnings() -> PackedStringArray:
 		warnings.append("Data: Please give a wave function collapse Data. it can NOT be null.")
 	
 	return warnings
+
+## This method adds the tile to be processed.
+func add_tile_to_process(tile:DS_Tile) -> void: _tiles_open.append(tile)
+
+## This method gets the opposite index of the given edge index.
+func get_edge_opposite_index(index:int, size:int) -> int:
+	return index + 3 if (index + 3) < size else index - 3
 
 func setup() -> void:
 	# _is_processing = true # Setting processing flag to true
@@ -126,16 +136,39 @@ func reset() -> void:
 func get_start_index() -> int:
 	return _index_start_tile if get_start_tiles().size() == 0 else get_start_tiles()[0]
 
-func tile_free_edges(tile:int) -> Array[int]:
-	# TODO: Create a temp array that will store the free edges of the given tile.
-	#		The array data will be the index of the free edges.
-	#		The free edges are the null edges of the given tile.
+# func tile_free_edges(tile:int) -> Array[int]:
+# 	if get_grid().get_tile(tile) != null: # Checking if the tile exists
+# 		_temp.clear() # Clearing previous data
+# 		_c_free = 0
+# 		while _c_free < get_grid().get_tile(tile).get_edge_size(): # Loop for getting all the free edges
+# 			if get_grid().get_tile(tile).get_edge(_c_free) == null: # Checking if free edge found
+# 				_temp.append(_c_free) # Adding the free edge's edge index
+# 			_c_free += 1
+	
+# 	return _temp.duplicate()
 
-	return []
-
-func add_tile(index:int) -> void:
-	# TODO: Add the tiles here.
-	pass
+# func add_tile(tile:int, free_edges:Array[int]) -> void:
+# 	_c_add1 = 0
+# 	while _c_add1 < free_edges.size():
+# 		if (free_edges[_c_add1] >= 0 and
+# 			free_edges[_c_add1] < get_grid().get_tile(tile).get_edge_size() and 
+# 			get_grid().get_tile(tile).get_edge(free_edges[_c_add1]) == null):
+# 				# TODO: Create the tiles first
+# 				_tile_add = DS_Tile.new() # Creating new tile
+# 				get_grid().get_tile(tile).set_edge(_tile_add, free_edges[_c_add1]) # Adding new tile to the existing tile
+				
+# 				_c_add2 = 0
+# 				while _c_add2 < _tile_add.get_edge_size(): # Loop for adding new tiles
+# 					if _c_add2 == _get_edge_opposite_index(free_edges[_c_add1], _tile_add.get_edge_size()): # Checking if edge is current tile
+# 						_tile_add.set_edge(get_grid().get_tile(tile), _c_add2) # Setting the existing tile to the new tile's edge
+# 					else:
+# 						_tile_add.set_edge(DS_Tile.new(), _c_add2) # Adding new edge to the new tile
+# 						_tile_add.get_edge(_c_add2).set_edge( # Connecting new edge to the new tile
+# 							_tile_add, _get_edge_opposite_index(
+# 								_c_add2, 
+# 								_tile_add.get_edge_size()))
+# 					_c_add2 += 1
+# 		_c_add1 += 1
 
 func get_run_time() -> float: 
 	return _debug_total_time if !_is_processing else -1.0
@@ -310,7 +343,7 @@ func _get_rules_temp_tile(tile:DS_Tile, edge:int, type:int) -> Array[int]:
 				_temp2 = _data.get_edge_rules(
 					tile.get_edge(_c_rule1).get_tile_type() if _c_rule1 != edge else type,
 					tile.get_edge(_c_rule1).get_rotational_edge_index(
-						_get_edge_opposite_index(
+						get_edge_opposite_index(
 							_c_rule1,
 							tile.get_edge(_c_rule1).get_edge_size()
 						)
@@ -377,7 +410,7 @@ func _is_found_type(tile:DS_Tile, type:int, rot:int) -> bool:
 							_temp_rules = _data.get_edge_rules(
 								tile.get_edge(_c_found1).get_tile_type(),
 								tile.get_edge(_c_found1).get_rotational_edge_index(
-									_get_edge_opposite_index(
+									get_edge_opposite_index(
 										_c_found1,
 										tile.get_edge(_c_found1).get_edge_size()
 									)
@@ -392,7 +425,7 @@ func _is_found_type(tile:DS_Tile, type:int, rot:int) -> bool:
 						# at least 1 tile rule, which is entropy > 0
 						if (_get_rules_temp_tile(
 								tile.get_edge(_c_found1),
-								_get_edge_opposite_index(
+								get_edge_opposite_index(
 									_c_found1, 
 									tile.get_edge(_c_found1).get_edge_size()
 								),
@@ -421,7 +454,7 @@ func _nuke(tile:DS_Tile, cur:int, counter:int, ignore_edge:int) -> void:
 
 	while counter < tile.get_edge_size(): # Loop for nuking the edges
 		if counter != ignore_edge: # Checking if edge is NOT ignore edge
-			_nuke(tile.get_edge(counter), cur + 1, 0, _get_edge_opposite_index(_counter, tile.get_edge_size())) # Nuking edge
+			_nuke(tile.get_edge(counter), cur + 1, 0, get_edge_opposite_index(_counter, tile.get_edge_size())) # Nuking edge
 		counter += 1
 
 ## This method finds the nearest none processed tile to a processed tile from the given tile.
@@ -452,10 +485,6 @@ func _is_tile_processed(tile:DS_Tile) -> bool:
 	if tile == null: return false # Null tiles are always false
 	return tile.get_tile_type() != -1
 
-## This method gets the opposite index of the given edge index.
-func _get_edge_opposite_index(index:int, size:int) -> int:
-	return index + 3 if (index + 3) < size else index - 3
-
 ## This method gets the total successful tiles.
 func _total_successful_tiles() -> void:
 	_c_success = 0
@@ -482,4 +511,6 @@ func _to_string() -> String:
 	print_rich(get_grid().show_grid_tile_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_tile_index(_index_start_tile))
 	print("") # Next line
 	print_rich(get_grid().show_grid_tile_rot_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_tile_rot_index(_index_start_tile))
+	print("") # Next line
+	print_rich(get_grid().show_grid_coord_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_coord_index(_index_start_tile))
 	return ""

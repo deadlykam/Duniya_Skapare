@@ -36,8 +36,6 @@ _is_debug = true
 
 [node name="Grid" type="Node3D" parent="Test/WFC"]
 script = ExtResource("4_fl04a")
-_grid_x = 4
-_grid_y = 4
 
 [node name="Start_Tiles" type="Node3D" parent="Test/WFC"]
 script = ExtResource("5_gjj74")

@@ -5,6 +5,7 @@ var _index:= -1
 var _counter_x:= -1
 var _counter_y:= -1
 var _counter_z:= -1
+var _c_search:= -1
 var _debug_print: String
 var _is_first_element: bool
 var _has_element: bool
@@ -164,6 +165,46 @@ func show_grid_index_index(index: int) -> String:
 func show_grid_index() -> String:
 	return show_grid_index_index(-1)
 
+func show_grid_coord_array(tiles: Array[int]) -> String:
+	_index = 0
+	_counter_z = 0
+	_is_first_element = true
+	print("Showing Grid with tile information:")
+	_debug_print = ""
+
+	while _counter_z <= get_grid_size_z(): # Loop for going through grid z-axis, which is height
+		_debug_print += "At height " + str(_counter_z) +": \n"
+		_counter_y = 0
+
+		while _counter_y < get_grid_size_y(): # Loop for going through y-axis
+			_counter_x = 0
+
+			while _counter_x < get_grid_size_x(): # Loop for going through x-axis
+				_has_element = tiles.has(_index) # Checking and storing if tiles has the indexth element
+
+				if _has_element: # Condition for showing correct colour
+					_debug_print += ("[color=green]" if _is_first_element else 
+						"[color=#00d5ff]" if _tiles[_index].is_fixed() else "[color=orange]")
+				
+				_debug_print += (
+					"(" + str(_tiles[_index].get_x()) + ", " + str(_tiles[_index].get_y()) + ", " + str(_tiles[_index].get_z()) + ") "
+				)
+
+				if _has_element: # Condition for closing the colour
+					_debug_print += ("[/color]")
+					if _is_first_element: _is_first_element = false # First element has been set
+				
+				_index += 1
+				_counter_x += 1
+			
+			_debug_print += "\n"
+			_counter_y += 1
+		
+		_counter_z += 1
+	
+	_debug_print += "===xxx==="
+	return _debug_print
+
 func setup() -> void:
 	_counter_x = 0 # Array setup counter
 
@@ -224,6 +265,8 @@ func setup() -> void:
 					else null
 				)
 				
+				get_tile(_index).set_coord(_counter_x, _counter_y, _counter_z) # Setting the coordinate of the tile
+				
 				_index += 1
 				_counter_x += 1
 			
@@ -236,6 +279,28 @@ func reset() -> void:
 	while _counter_z < get_grid_size(): # Loop for resetting all the tiles
 		get_tile(_counter_z).reset_hard() # Hard resetting tile
 		_counter_z += 1
+
+func get_tile_coord_x_y_z(x:int, y:int, z:int) -> DS_Tile:
+	# NOTE: The counter _c_search is being used in has_tile_coord_x_y_z.
+	#		So if a match is found then the counter will point to that tile.
+	#		Thus no extra logic writing is needed or copying pasting the code.
+	#		Make sure _c_search does NOT change between these two methods.
+	return _tiles[_c_search] if has_tile_coord_x_y_z(x, y, z) else null
+
+func has_tile_coord(tile:DS_Tile) -> bool:
+	_c_search = 0
+	while _c_search < _tiles.size(): # Loop for searching through all the tiles
+		if _tiles[_c_search].is_coord_match(tile): return true # Match found
+		_c_search += 1
+	return false # Match NOT found
+
+func has_tile_coord_x_y_z(x:int, y:int, z:int) -> bool:
+	_c_search = 0
+	while _c_search < _tiles.size(): # Loop for searching through all the tiles
+		if _tiles[_c_search].is_coord_match_x_y_z(x, y, z): return true # Match found
+		_c_search += 1
+	
+	return false
 
 func _to_string() -> String:
 	print_rich(show_grid_index())

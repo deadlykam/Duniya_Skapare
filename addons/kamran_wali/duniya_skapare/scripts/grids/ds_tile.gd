@@ -8,14 +8,12 @@ var _data_edges: Array[DS_Tile] # Edges
 var _rot_value:= 0
 var _is_fixed:= false
 var _is_fixed_actual:= false # This the actual fixed flag which means it can be changed
+var _x:= 0 # X Coordinate
+var _y:= 0 # Y Coordinate
+var _z:= 0 # Z Coordinate
 
 func _init() -> void:
 	_data_edges.resize(6)
-
-# ## This method resets the tile.
-# func reset_tile() -> void:
-# 	_tile_type = -1
-# 	_rot_value = 0
 
 ## This method resets the necessary values required
 ## for generator.
@@ -68,8 +66,8 @@ func get_tile_type() -> int:
 ## Bottom = 3
 ## South = 4
 ## West = 5
-func set_edge(cd: DS_Tile, index:int) -> void:
-	_data_edges[index] = cd
+func set_edge(tile: DS_Tile, index:int) -> void:
+	_data_edges[index] = tile
 
 ## This method gets the linked tile.
 ## UP = 0
@@ -92,11 +90,11 @@ func get_rotational_edge(index:int) -> DS_Tile:
 func get_edge_size() -> int:
 	return _data_edges.size()
 
-## This method sets the north tile.
+## This method sets the up tile.
 func set_up(up: DS_Tile) -> void:
 	set_edge(up, 0)
 
-## This method gets the north tile.
+## This method gets the up tile.
 func get_up() -> DS_Tile:
 	return get_edge(0)
 
@@ -150,9 +148,6 @@ func set_tile_rotation_value(rot_value:int) -> void:
 	_rot_value = (0 if rot_value < 0
 		else _rot_edge_size - 1 if rot_value >= _rot_edge_size
 		else rot_value)
-	# _rot_value = (0 if rot_value < 0 
-	# 	else _data_edges.size() - 1 if rot_value >= _data_edges.size() 
-	# 	else rot_value)
 
 ## This method gets the rotation value of the tile.
 func get_tile_rotation_value() -> int:
@@ -194,3 +189,28 @@ func get_rotational_edge_index(index:int) -> int:
 		)
 	
 	return -1
+
+## This method sets the coordinate of the tile.
+func set_coord(x:int, y:int, z:int) -> void:
+	_x = x
+	_y = y
+	_z = z
+
+## This method gets the x coordinate.
+func get_x() -> int: return _x
+
+## This method gets the y coordinate.
+func get_y() -> int: return _y
+
+## This method gets the z coordinate.
+func get_z() -> int: return _z
+
+## This method checks if the given tile matches with
+## the self tile's coordinates.
+func is_coord_match(tile:DS_Tile) -> bool:
+	return tile.get_x() == _x and tile.get_y() == _y and tile.get_z() == _z
+
+## This method checks if the given coordinates matches with
+## the self tile's coordinates.
+func is_coord_match_x_y_z(x:int, y:int, z:int) -> bool:
+	return x == _x and y == _y and z == _z
