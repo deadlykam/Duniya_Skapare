@@ -76,4 +76,4 @@ func _print_result() -> void:
         print_rich("[color=orange]Average Run Time: ", (_avg_process_time / _number_of_simulations), "ms[/color]")
         print_rich("Average Process Loop: ", (float(_avg_process_loop) / float(_number_of_simulations)))
     if _is_print_final: print(_generator)
-    print_rich("[rainbow sat=0.5]==XXX==[/rainbow]")
+    print_rich("[rainbow sat=0.5]===XXX===[/rainbow]")

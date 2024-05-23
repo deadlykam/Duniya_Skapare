@@ -43,14 +43,31 @@ func get_tile(index:int) -> DS_Tile: return _tiles[index] if index < _tiles.size
 ## This method adds a tile to the tile array.
 func add_tile(tile:DS_Tile) -> void: _tiles.append(tile)
 
+## This method checks if the given tile exists in the given grid and if it does
+## exists then it will return the tile otherwise will return null.
+func get_tile_coord_grid(tile:DS_Tile, grid:Array[DS_Tile]) -> DS_Tile: return null
+
+## This method checks if the given tile exists and if it does exists then it will return
+## the tile otherwise will return null.
+func get_tile_coord(tile:DS_Tile) -> DS_Tile: return get_tile_coord_grid(tile, _tiles)
+
+## This method searches for the coordinated tile in the given grid and returns it.
+func get_tile_coord_x_y_z_grid(x:int, y:int, z:int, grid:Array[DS_Tile]) -> DS_Tile: return null
+
 ## This method searches for the coordinated tile and returns it.
-func get_tile_coord_x_y_z(x:int, y:int, z:int) -> DS_Tile: return null
+func get_tile_coord_x_y_z(x:int, y:int, z:int) -> DS_Tile: return get_tile_coord_x_y_z_grid(x, y, z, _tiles)
+
+## This method checks if the give tile exists using its coordinates in the given grid.
+func has_tile_coord_grid(tile:DS_Tile, grid:Array[DS_Tile]) -> bool: return false
 
 ## This method checks if the given tile exists using its coordinates.
-func has_tile_coord(tile:DS_Tile) -> bool: return false
+func has_tile_coord(tile:DS_Tile) -> bool: return has_tile_coord_grid(tile, _tiles)
+
+## This method checks if the given coordinate exists in the given tile.
+func has_tile_coord_x_y_z_grid(x:int, y:int, z:int, grid:Array[DS_Tile]) -> bool: return false
 
 ## This method checks if the given coordinate exists.
-func has_tile_coord_x_y_z(x:int, y:int, z:int) -> bool: return false
+func has_tile_coord_x_y_z(x:int, y:int, z:int) -> bool: return has_tile_coord_x_y_z_grid(x, y, z, _tiles)
 
 ## This method sets up the grid.
 func setup() -> void: pass

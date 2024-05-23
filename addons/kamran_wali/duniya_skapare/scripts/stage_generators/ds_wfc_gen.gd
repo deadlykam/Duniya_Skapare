@@ -91,6 +91,7 @@ func get_edge_opposite_index(index:int, size:int) -> int:
 func setup() -> void:
 	# _is_processing = true # Setting processing flag to true
 	# if _is_debug: _debug_time = Time.get_unix_time_from_system() # Condition for starting debug time
+	start_debug_timer() # Starting the debug timer
 
 	if get_start_tiles().size() != 0: # Condition for setting the start tiles
 		_c1 = 0
@@ -105,7 +106,7 @@ func setup() -> void:
 		_index_start_tile = _rng.randi_range(0, get_grid().get_grid_size() - 1) # Getting a random tile for start tile
 		_tiles_open.append(get_grid().get_tile(_index_start_tile)) # Adding the first tile to be processed
 
-	_process_main() # Starting the main process
+	process_main(true) # Starting the main process
 	
 	# while true: # Loop for running the process using wave function collapse
 	# 	_process_grid() # Main process, using wave function collapse to process the grid
@@ -121,99 +122,16 @@ func setup() -> void:
 
 	# _is_processing = false # Setting processing flag to false
 
-func reset() -> void:
-	get_grid().reset()
-	_tiles_open.clear()
-	_tiles_closed.clear()
-	_tiles_search_open.clear()
-	_tiles_search_closed.clear()
-	_tile_current = null
-	_tile_error = null
-	_tile_search = null
-	_debug_nuke_counter = 0
-	_c_loop = 0
-
-func get_start_index() -> int:
-	return _index_start_tile if get_start_tiles().size() == 0 else get_start_tiles()[0]
-
-# func tile_free_edges(tile:int) -> Array[int]:
-# 	if get_grid().get_tile(tile) != null: # Checking if the tile exists
-# 		_temp.clear() # Clearing previous data
-# 		_c_free = 0
-# 		while _c_free < get_grid().get_tile(tile).get_edge_size(): # Loop for getting all the free edges
-# 			if get_grid().get_tile(tile).get_edge(_c_free) == null: # Checking if free edge found
-# 				_temp.append(_c_free) # Adding the free edge's edge index
-# 			_c_free += 1
-	
-# 	return _temp.duplicate()
-
-# func add_tile(tile:int, free_edges:Array[int]) -> void:
-# 	_c_add1 = 0
-# 	while _c_add1 < free_edges.size():
-# 		if (free_edges[_c_add1] >= 0 and
-# 			free_edges[_c_add1] < get_grid().get_tile(tile).get_edge_size() and 
-# 			get_grid().get_tile(tile).get_edge(free_edges[_c_add1]) == null):
-# 				# TODO: Create the tiles first
-# 				_tile_add = DS_Tile.new() # Creating new tile
-# 				get_grid().get_tile(tile).set_edge(_tile_add, free_edges[_c_add1]) # Adding new tile to the existing tile
-				
-# 				_c_add2 = 0
-# 				while _c_add2 < _tile_add.get_edge_size(): # Loop for adding new tiles
-# 					if _c_add2 == _get_edge_opposite_index(free_edges[_c_add1], _tile_add.get_edge_size()): # Checking if edge is current tile
-# 						_tile_add.set_edge(get_grid().get_tile(tile), _c_add2) # Setting the existing tile to the new tile's edge
-# 					else:
-# 						_tile_add.set_edge(DS_Tile.new(), _c_add2) # Adding new edge to the new tile
-# 						_tile_add.get_edge(_c_add2).set_edge( # Connecting new edge to the new tile
-# 							_tile_add, _get_edge_opposite_index(
-# 								_c_add2, 
-# 								_tile_add.get_edge_size()))
-# 					_c_add2 += 1
-# 		_c_add1 += 1
-
-func get_run_time() -> float: 
-	return _debug_total_time if !_is_processing else -1.0
-
-func is_gen_success() -> bool:
-	_c_success = 0
-	while _c_success < get_grid().get_grid_size():
-		if get_grid().get_tile(_c_success).get_tile_type() == -1:
-			break
-		_c_success += 1
-	
-	return _c_success == get_grid().get_grid_size()
-
-func get_process_loop() -> int: return _c_loop
-func is_gen_process() -> bool: return _is_processing
-func get_data() -> DS_WFC_Data: return _data
-func get_tile_names() -> Array[String]: return _data.get_tile_names()
-
-func print_debug_info() -> void:
-	super()
-	_debug_total_time = ((Time.get_unix_time_from_system() - _debug_time) * 1000)
-	print("Grid Size: ", get_grid().get_grid_size_x(), " X ", get_grid().get_grid_size_y(), " X ", get_grid().get_grid_size_z())
-	print("Run Time: ", _debug_total_time, "ms")
-	
-	if is_gen_success(): print_rich("[color=green]Wave Function Collapse: Successful![/color]")
-	else: print_rich("[color=red]Wave Function Collapse: Failed![/color]")
-
-	_total_successful_tiles() # Finding all the successful tiles
-	print_rich("[color=#40ff70]Tiles Succeeded: ", _c_success,"[/color], [color=red]Tiles Failed: ", 
-		(get_grid().get_grid_size() - _c_success), "[/color], Success Rate: ", ((float(_c_success) / float(get_grid().get_grid_size())) * 100.0), "%")
-	
-	if _debug_nuke_counter == _nuke_limit: print_rich("[color=red]Fail Safe Activated: Maximum nuke fired![/color]")
-	else: print_rich("[color=orange]Number Of Nukes Fired: ", _debug_nuke_counter, "[/color]")
-	
-	if _c_loop == _loop_limit: print_rich("[color=red]Fail Safe Activated: Maximum loop reached![/color]")
-	else: print_rich("[color=orange]Number Of Process Loops: ", _c_loop, "[/color]")
-
 ## This is the main process which does all the processes.
-func _process_main() -> void:
+func process_main(is_search:bool) -> void:
 	_is_processing = true # Setting processing flag to true
-	if _is_debug: _debug_time = Time.get_unix_time_from_system() # Condition for starting debug time
+	# if _is_debug: _debug_time = Time.get_unix_time_from_system() # Condition for starting debug time
 	
-	while true: # Loop for running the process using wave function collapse
-		_process_grid() # Main process, using wave function collapse to process the grid
-		if is_gen_success() || (_debug_nuke_counter >= _nuke_limit && _nuke_limit != -1): break # Condition for breaking processing loop
+	while true: # Loop for running the process using wave function collapse, Main Process Loop
+		_process_grid(is_search) # Using wave function collapse to process the grid
+		if is_gen_success() || (_debug_nuke_counter >= _nuke_limit && _nuke_limit != -1): 
+			print("Gen Successful!")
+			break # Condition for breaking processing loop
 		else: _add_failed_tiles() # Getting all the failed tiles to process again
 		_c_loop += 1 # Incrementing the fail safe loop counter
 		if _c_loop == _loop_limit: break # Fail safe loop break
@@ -231,8 +149,73 @@ func _process_main() -> void:
 
 	_is_processing = false # Setting processing flag to false
 
+## This method starts the debug timer.
+func start_debug_timer() -> void:
+	if _is_debug: _debug_time = Time.get_unix_time_from_system() # Condition for starting debug time
+
+## This method gets the debug timer.
+func get_debug_timer() -> float: return ((Time.get_unix_time_from_system() - _debug_time) * 1000)
+
+## This method sets the processing.
+func set_processing(is_enabled:bool) -> void: _is_processing = is_enabled
+
+## This method resets the fail safe values.
+func reset_fail_safe():
+	_debug_nuke_counter = 0
+	_c_loop = 0
+
+func reset() -> void:
+	get_grid().reset()
+	_tiles_open.clear()
+	_tiles_closed.clear()
+	_tiles_search_open.clear()
+	_tiles_search_closed.clear()
+	_tile_current = null
+	_tile_error = null
+	_tile_search = null
+	reset_fail_safe()
+
+func get_start_index() -> int:
+	return _index_start_tile if get_start_tiles().size() == 0 else get_start_tiles()[0]
+
+func get_run_time() -> float: 
+	return _debug_total_time if !_is_processing else -1.0
+
+func is_gen_success() -> bool:
+	_c_success = 0
+	while _c_success < get_grid().get_tiles_size():
+		if get_grid().get_tile(_c_success).get_tile_type() == -1:
+			break
+		_c_success += 1
+	
+	return _c_success == get_grid().get_tiles_size()
+
+func get_process_loop() -> int: return _c_loop
+func is_gen_process() -> bool: return _is_processing
+func get_data() -> DS_WFC_Data: return _data
+func get_tile_names() -> Array[String]: return _data.get_tile_names()
+
+func print_debug_info() -> void:
+	super()
+	_debug_total_time = get_debug_timer()
+	print("Grid Size: ", get_grid().get_grid_size_x(), " X ", get_grid().get_grid_size_y(), " X ", get_grid().get_grid_size_z())
+	print("Run Time: ", _debug_total_time, "ms")
+	
+	if is_gen_success(): print_rich("[color=green]Wave Function Collapse: Successful![/color]")
+	else: print_rich("[color=red]Wave Function Collapse: Failed![/color]")
+
+	_total_successful_tiles() # Finding all the successful tiles
+	print_rich("[color=#40ff70]Tiles Succeeded: ", _c_success,"[/color], [color=red]Tiles Failed: ", 
+		(get_grid().get_grid_size() - _c_success), "[/color], Success Rate: ", ((float(_c_success) / float(get_grid().get_grid_size())) * 100.0), "%")
+	
+	if _debug_nuke_counter == _nuke_limit: print_rich("[color=red]Fail Safe Activated: Maximum nuke fired![/color]")
+	else: print_rich("[color=orange]Number Of Nukes Fired: ", _debug_nuke_counter, "[/color]")
+	
+	if _c_loop == _loop_limit: print_rich("[color=red]Fail Safe Activated: Maximum loop reached![/color]")
+	else: print_rich("[color=orange]Number Of Process Loops: ", _c_loop, "[/color]")
+
 ## This method processes the grid.
-func _process_grid() -> void:
+func _process_grid(is_search:bool) -> void:
 	while !_tiles_open.is_empty(): # Loop to process all the tiles using wave function collapse
 		_c1 = 0 # Index of the open tiles
 		_c2 = 0 # For storing the lowest entropy index
@@ -249,6 +232,9 @@ func _process_grid() -> void:
 			_c1 += 1
 		
 		_tile_current = _tiles_open.pop_at(_c2) # Getting the lowest entropy tile
+		print_rich("[color=green]Tile: ", _c2,"[/color]")
+		print("- Coords: (", _tile_current.get_x(), ", ", _tile_current.get_y(), ", ",_tile_current.get_z(), ")")
+		print("- Rules: ", _rules)
 
 		if _tile_current.get_tile_type() == -1: # Checking if tile NOT processed
 			_process_tile(_tile_current, _rules.duplicate()) # Processing the current tile
@@ -264,19 +250,21 @@ func _process_grid() -> void:
 				
 				_reprocess_tile() # Reprocessing to fix error
 		
-		_c1 = 0
-
-		# Loop for adding more tiles for processing
-		while _c1 < _tile_current.get_edge_size():
-			if _tile_current.get_edge(_c1) != null:
-				# Checking if the tile has NOT been processed
-				if (_tile_current.get_edge(_c1).get_tile_type() == -1
-				&& !_tiles_open.has(_tile_current.get_edge(_c1))
-				&& !_tiles_closed.has(_tile_current.get_edge(_c1))):
-					_tiles_open.append(_tile_current.get_edge(_c1))
-			_c1 += 1
+		if is_search: # Condition to check if to search for more tiles for processing
+			_c1 = 0
+			while _c1 < _tile_current.get_edge_size(): # Loop for adding more tiles for processing
+				if _tile_current.get_edge(_c1) != null:
+					# Checking if the tile has NOT been processed
+					if (_tile_current.get_edge(_c1).get_tile_type() == -1
+					&& !_tiles_open.has(_tile_current.get_edge(_c1))
+					&& !_tiles_closed.has(_tile_current.get_edge(_c1))):
+						_tiles_open.append(_tile_current.get_edge(_c1))
+				_c1 += 1
 		
 		_tiles_closed.append(_tile_current) # The current tile has been processed
+	
+	print("Grid Processing done!")
+	print("Checking Is_Success: ", is_gen_success())
 
 ## This method reprocesses to fix the error.
 func _reprocess_tile() -> void:
@@ -318,6 +306,7 @@ func _reprocess_tile() -> void:
 				_nuke(_tile_current, 0, 0, -1) # Condition for nuking tiles to get better results
 				_tiles_open.append(_find_nearest_none_processed_tile(_tile_current)) # Adding the correct tile to start the process
 				_debug_nuke_counter += 1 # For counting the number nukes being fired
+				print_rich("[shake][color=red]-- Nuked Tile![/color][/shake]")
 
 ## This method adds all the failed tiles back to be processed again.
 func _add_failed_tiles() -> void:
@@ -380,6 +369,7 @@ func _process_tile(tile: DS_Tile, rules: Array[int]) -> void:
 		
 		if _is_found_type(tile, rules[_c_process1], 0): # Found a type to set
 			tile.set_tile_type(rules[_c_process1])
+			print_rich("[rainbow]-- Tile Selected: ", rules[_c_process1], ", rot", tile.get_tile_rotation(),"[/rainbow]")
 			break
 		else: # Found no type, removing currently processed type for checking others
 			rules.remove_at(_c_process1)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://l0oeatlkl4fa"]
+[gd_scene load_steps=10 format=3 uid="uid://l0oeatlkl4fa"]
 
+[ext_resource type="Script" path="res://DELETE_ME/test1.gd" id="1_3r455"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_ed165"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/ds_wfc_gen_thread.gd" id="2_i08fg"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/ds_wfc_gen_c_tile.gd" id="3_0q1cd"]
 [ext_resource type="Resource" uid="uid://c0l88lwcimemk" path="res://addons/kamran_wali/duniya_skapare/settings/data2.tres" id="3_af0i7"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="4_fl04a"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_tile_start.gd" id="5_gjj74"]
@@ -21,7 +22,9 @@ _type = 1
 _index = 6
 _rot_value = 0
 
-[node name="test1" type="Node3D"]
+[node name="test1" type="Node3D" node_paths=PackedStringArray("_generator")]
+script = ExtResource("1_3r455")
+_generator = NodePath("Test/WFC")
 
 [node name="Test" type="Node3D" parent="." node_paths=PackedStringArray("_generator")]
 script = ExtResource("1_ed165")
@@ -30,7 +33,8 @@ _number_of_simulations = 2
 _is_print_success = true
 
 [node name="WFC" type="Node3D" parent="Test"]
-script = ExtResource("2_i08fg")
+script = ExtResource("3_0q1cd")
+_ignore_height = null
 _data = ExtResource("3_af0i7")
 _is_debug = true
 

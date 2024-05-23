@@ -56,19 +56,26 @@ func get_start_tiles() -> Array[DS_TileInfo]:
 func add_start_tile(tile:DS_TileInfo) -> void:
 	_start_tiles.append(tile)
 
+## This method checks if the given height value is within the range or NOT.
+func is_tile_height_z(height:int) -> bool: return height >= 0 and height <= get_grid().get_grid_size_z()
+
+## This method checks if the tile height is within the range or NOT.
+func is_tile_height(tile:DS_Tile) -> bool: return is_tile_height_z(tile.get_z())
+	# return tile.get_z() >= 0 and tile.get_z() <= get_grid().get_grid_size_z()
+
 ## This method gets the starting tile index or the first
 ## indexth tile to be processed.
 func get_start_index() -> int:
 	return -1
 
 ## This method gets all the free edges of the given tile.
-func tile_free_edges(tile:int) -> Array[int]:
+func get_tile_free_edges(tile:int) -> Array[int]:
 	return []
 
 ## This method adds new tile/s to the indexth tile. The indexth
 ## tile MUST have a free spot to add the tiles otherwise it will
 ## NOT.
-func add_tile(tile:int, free_edges:Array[int]) -> void:
+func add_tile(tile:int) -> void:
 	pass
 
 ## This method checks if the generator for successful or NOT.

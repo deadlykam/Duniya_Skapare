@@ -169,7 +169,7 @@ func show_grid_coord_array(tiles: Array[int]) -> String:
 	_index = 0
 	_counter_z = 0
 	_is_first_element = true
-	print("Showing Grid with tile information:")
+	print("Showing Grid with tile coordinates:")
 	_debug_print = ""
 
 	while _counter_z <= get_grid_size_z(): # Loop for going through grid z-axis, which is height
@@ -204,6 +204,12 @@ func show_grid_coord_array(tiles: Array[int]) -> String:
 	
 	_debug_print += "===xxx==="
 	return _debug_print
+
+func show_grid_coord_index(index: int) -> String:
+	return show_grid_coord_array([index])
+
+func show_grid_coord() -> String:
+	return show_grid_coord_index(-1)
 
 func setup() -> void:
 	_counter_x = 0 # Array setup counter
@@ -280,27 +286,55 @@ func reset() -> void:
 		get_tile(_counter_z).reset_hard() # Hard resetting tile
 		_counter_z += 1
 
-func get_tile_coord_x_y_z(x:int, y:int, z:int) -> DS_Tile:
+func get_tile_coord_grid(tile:DS_Tile, grid:Array[DS_Tile]) -> DS_Tile:
 	# NOTE: The counter _c_search is being used in has_tile_coord_x_y_z.
 	#		So if a match is found then the counter will point to that tile.
 	#		Thus no extra logic writing is needed or copying pasting the code.
 	#		Make sure _c_search does NOT change between these two methods.
-	return _tiles[_c_search] if has_tile_coord_x_y_z(x, y, z) else null
+	return _tiles[_c_search] if has_tile_coord_grid(tile, grid) else null
 
-func has_tile_coord(tile:DS_Tile) -> bool:
+func get_tile_coord_x_y_z_grid(x:int, y:int, z:int, grid:Array[DS_Tile]) -> DS_Tile:
+	# NOTE: The counter _c_search is being used in has_tile_coord_x_y_z.
+	#		So if a match is found then the counter will point to that tile.
+	#		Thus no extra logic writing is needed or copying pasting the code.
+	#		Make sure _c_search does NOT change between these two methods.
+	return _tiles[_c_search] if has_tile_coord_x_y_z_grid(x, y, z, grid) else null
+
+# func get_tile_coord_x_y_z(x:int, y:int, z:int) -> DS_Tile:
+	# NOTE: The counter _c_search is being used in has_tile_coord_x_y_z.
+	#		So if a match is found then the counter will point to that tile.
+	#		Thus no extra logic writing is needed or copying pasting the code.
+	#		Make sure _c_search does NOT change between these two methods.
+	# return _tiles[_c_search] if has_tile_coord_x_y_z(x, y, z) else null
+
+func has_tile_coord_grid(tile:DS_Tile, grid:Array[DS_Tile]) -> bool:
 	_c_search = 0
-	while _c_search < _tiles.size(): # Loop for searching through all the tiles
-		if _tiles[_c_search].is_coord_match(tile): return true # Match found
+	while _c_search < grid.size(): # Loop for searching through all the tiles
+		if grid[_c_search].is_coord_match(tile): return true # Match found
 		_c_search += 1
 	return false # Match NOT found
 
-func has_tile_coord_x_y_z(x:int, y:int, z:int) -> bool:
+# func has_tile_coord(tile:DS_Tile) -> bool:
+	# _c_search = 0
+	# while _c_search < _tiles.size(): # Loop for searching through all the tiles
+	# 	if _tiles[_c_search].is_coord_match(tile): return true # Match found
+	# 	_c_search += 1
+	# return false # Match NOT found
+
+func has_tile_coord_x_y_z_grid(x:int, y:int, z:int, grid:Array[DS_Tile]) -> bool:
 	_c_search = 0
-	while _c_search < _tiles.size(): # Loop for searching through all the tiles
-		if _tiles[_c_search].is_coord_match_x_y_z(x, y, z): return true # Match found
+	while _c_search < grid.size(): # Loop for searching through all the tiles
+		if grid[_c_search].is_coord_match_x_y_z(x, y, z): return true # Match found
 		_c_search += 1
-	
 	return false
+
+# func has_tile_coord_x_y_z(x:int, y:int, z:int) -> bool:
+	# _c_search = 0
+	# while _c_search < _tiles.size(): # Loop for searching through all the tiles
+	# 	if _tiles[_c_search].is_coord_match_x_y_z(x, y, z): return true # Match found
+	# 	_c_search += 1
+	
+	# return false
 
 func _to_string() -> String:
 	print_rich(show_grid_index())
