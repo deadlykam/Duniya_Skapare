@@ -103,7 +103,7 @@ func setup() -> void:
 			_tiles_open.append(get_grid().get_tile(get_start_tiles()[_c1].get_index())) # Adding the tile to be processed
 			_c1 += 1
 	else:
-		_index_start_tile = _rng.randi_range(0, get_grid().get_grid_size() - 1) # Getting a random tile for start tile
+		_index_start_tile = _rng.randi_range(0, get_grid().get_tiles_size() - 1) # Getting a random tile for start tile
 		_tiles_open.append(get_grid().get_tile(_index_start_tile)) # Adding the first tile to be processed
 
 	process_main(true) # Starting the main process
@@ -206,7 +206,7 @@ func print_debug_info() -> void:
 
 	_total_successful_tiles() # Finding all the successful tiles
 	print_rich("[color=#40ff70]Tiles Succeeded: ", _c_success,"[/color], [color=red]Tiles Failed: ", 
-		(get_grid().get_grid_size() - _c_success), "[/color], Success Rate: ", ((float(_c_success) / float(get_grid().get_grid_size())) * 100.0), "%")
+		(get_grid().get_tiles_size() - _c_success), "[/color], Success Rate: ", ((float(_c_success) / float(get_grid().get_tiles_size())) * 100.0), "%")
 	
 	if _debug_nuke_counter == _nuke_limit: print_rich("[color=red]Fail Safe Activated: Maximum nuke fired![/color]")
 	else: print_rich("[color=orange]Number Of Nukes Fired: ", _debug_nuke_counter, "[/color]")
@@ -311,7 +311,7 @@ func _reprocess_tile() -> void:
 ## This method adds all the failed tiles back to be processed again.
 func _add_failed_tiles() -> void:
 	_c_failed = 0
-	while _c_failed < get_grid().get_grid_size(): # Loop for finding the failed tiles
+	while _c_failed < get_grid().get_tiles_size(): # Loop for finding the failed tiles
 		if get_grid().get_tile(_c_failed).get_tile_type() == -1: # Failed tile found
 			_tiles_open.append(get_grid().get_tile(_c_failed))
 			_tiles_closed.erase(get_grid().get_tile(_c_failed))
@@ -479,7 +479,7 @@ func _is_tile_processed(tile:DS_Tile) -> bool:
 func _total_successful_tiles() -> void:
 	_c_success = 0
 	_c_success2 = 0
-	while _c_success2 < get_grid().get_grid_size(): # Loop for finding all the successful tiles
+	while _c_success2 < get_grid().get_tiles_size(): # Loop for finding all the successful tiles
 		if get_grid().get_tile(_c_success2).get_tile_type() != -1:
 			_c_success += 1
 		_c_success2 += 1

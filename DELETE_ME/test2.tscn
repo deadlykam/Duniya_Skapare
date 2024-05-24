@@ -34,7 +34,6 @@ _is_print_success = true
 
 [node name="WFC" type="Node3D" parent="Test"]
 script = ExtResource("3_0q1cd")
-_ignore_height = null
 _data = ExtResource("3_af0i7")
 _is_debug = true
 

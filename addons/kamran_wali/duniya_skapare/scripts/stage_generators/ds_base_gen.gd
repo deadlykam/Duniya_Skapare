@@ -40,64 +40,52 @@ func set_grid() -> void:
 ## This method gets the index of the given tile.
 func get_tile_index(tile:DS_Tile) -> int:
 	_counter = 0
-	while _counter < _grid.get_tile_size(): # Loop for finding the index of the tile
+	while _counter < _grid.get_tiles_size(): # Loop for finding the index of the tile
 		if tile == _grid.get_tile(_counter): # Index found for the tile
 			break
 		_counter += 1
 	
-	return _counter if _counter < _grid.get_grid_size() else -1
+	return _counter if _counter < _grid.get_tiles_size() else -1
 
 ## This method gets the start tile array.
-func get_start_tiles() -> Array[DS_TileInfo]:
-	return _start_tiles
+func get_start_tiles() -> Array[DS_TileInfo]: return _start_tiles
 
-## This method adds a tile to be processed first when the 
-## setup starts.
-func add_start_tile(tile:DS_TileInfo) -> void:
-	_start_tiles.append(tile)
+## This method adds a tile to be processed first when the setup starts.
+func add_start_tile(tile:DS_TileInfo) -> void: _start_tiles.append(tile)
 
 ## This method checks if the given height value is within the range or NOT.
 func is_tile_height_z(height:int) -> bool: return height >= 0 and height <= get_grid().get_grid_size_z()
 
 ## This method checks if the tile height is within the range or NOT.
 func is_tile_height(tile:DS_Tile) -> bool: return is_tile_height_z(tile.get_z())
-	# return tile.get_z() >= 0 and tile.get_z() <= get_grid().get_grid_size_z()
 
 ## This method gets the starting tile index or the first
 ## indexth tile to be processed.
-func get_start_index() -> int:
-	return -1
+func get_start_index() -> int: return -1
 
 ## This method gets all the free edges of the given tile.
-func get_tile_free_edges(tile:int) -> Array[int]:
-	return []
+func get_tile_free_edges(tile:int) -> Array[int]: return []
 
 ## This method adds new tile/s to the indexth tile. The indexth
 ## tile MUST have a free spot to add the tiles otherwise it will
 ## NOT.
-func add_tile(tile:int) -> void:
-	pass
+func add_tile(tile:int) -> void: pass
 
 ## This method checks if the generator for successful or NOT.
-func is_gen_success() -> bool:
-	return false
+func is_gen_success() -> bool: return false
 
 ## This method gets the number of process loop value.
-func get_process_loop() -> int:
-	return -1
+func get_process_loop() -> int: return -1
 
 ## This method sets up the generator and MUST be overridden.
-func setup() -> void:
-	pass
+func setup() -> void: pass
 
 ## This method resets the generator.
-func reset() -> void:
-	pass
+func reset() -> void: pass
 
 ## This method gets the complete process time from start to finish
 ## of the generator.
-func get_run_time() -> float:
-	return -1
+func get_run_time() -> float: return -1
 
 ## This method checks if the generator is processing or NOT.
 func is_gen_process() -> bool: return false
@@ -107,18 +95,14 @@ func get_data(): # NOTE: The type must be none-type because other gens may NOT h
 	return null
 
 ## This method gets the name of the tiles.
-func get_tile_names():
-	return null
+func get_tile_names(): return null
 
 ## This method prints the debug.
-func print_debug_info() -> void:
-	pass
+func print_debug_info() -> void: pass
 
-func _to_string() -> String:
-	return _grid.show_grid()
+func _to_string() -> String: return _grid.show_grid()
 
 ## This method always sends true as the script is generator.
 ## This method is needed for duck typing check and SHOULD
 ## NOT be OVERRIDDEN!
-func _is_gen() -> bool:
-	return true
+func _is_gen() -> bool: return true
