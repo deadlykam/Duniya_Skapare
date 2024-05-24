@@ -1,7 +1,11 @@
 @tool
 class_name DS_Tile
 
-const _rot_edge_size = 4
+const _ROT_EDGE_SIZE = 4
+const _QUAT_0 = Quaternion.IDENTITY
+const _QUAT_90 = Quaternion(Vector3.DOWN, deg_to_rad(90))
+const _QUAT_180 = Quaternion(Vector3.UP, deg_to_rad(180))
+const _QUAT_270 = Quaternion(Vector3.DOWN, deg_to_rad(270))
 
 var _tile_type:= -1
 var _data_edges: Array[DS_Tile] # Edges
@@ -138,15 +142,38 @@ func set_west(west: DS_Tile) -> void:
 func get_west() -> DS_Tile:
 	return get_edge(5)
 
-## This method gets the rotation of the tile.
-func get_tile_rotation() -> float:
-	return 90 * _rot_value
+## This method gets the rotation of the tile in quaternions.
+func get_tile_rotation_quat() -> Quaternion:
+	return (_QUAT_90 if _rot_value == 1 else
+			_QUAT_180 if _rot_value == 2 else
+			_QUAT_270 if _rot_value == 3 else
+			_QUAT_0)
+
+## This method gets the rotation of the tile in radians.
+func get_tile_rotation_radian() -> float:
+	return deg_to_rad(get_tile_rotation_degree())
+
+## This method gets the rotation of the tile in degrees.
+func get_tile_rotation_degree() -> float:
+	return (-90.0 if _rot_value == 1 else 
+			180.0 if _rot_value == 2 else 
+			90.0 if _rot_value == 3 else 
+			0.0)
+
+## This method gets the rotation of the tile in degrees.
+## It is recommended to call get_tile_rotation_quat()
+## which is best for rotating tiles or get_tile_rotation_radian()
+## and get_tile_rotation_degree() which are the second best
+## option. NOTE: Using this method for 3D model rotation will
+## give weird results. Please call the recommended methods as
+## mentioned.
+func get_tile_rotation() -> float: return 90 * _rot_value
 
 ## This sets the rotation value of the tile. 1 rot_value 
 ## is equivalent to (360/number of cardinals) degrees.
 func set_tile_rotation_value(rot_value:int) -> void:
 	_rot_value = (0 if rot_value < 0
-		else _rot_edge_size - 1 if rot_value >= _rot_edge_size
+		else _ROT_EDGE_SIZE - 1 if rot_value >= _ROT_EDGE_SIZE
 		else rot_value)
 
 ## This method gets the rotation value of the tile.

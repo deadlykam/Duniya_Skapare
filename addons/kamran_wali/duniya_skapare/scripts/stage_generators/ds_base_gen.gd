@@ -14,6 +14,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 		warnings.append("Gen: Please give a child containing the grid.")
 	else:
 		set_grid()
+		print("Is grid null: ", _grid == null)
 		if _grid == null:
 			warnings.append("Gen: No Grid found in children. Please give a child containing the grid.")
 	
@@ -32,10 +33,13 @@ func get_grid() -> DS_BaseGrid:
 func set_grid() -> void:
 	_counter_warning = 0
 	while _counter_warning < get_child_count(): # Loop for finding grid
+		print("HERE!")
 		if get_child(_counter_warning).has_method("_is_grid"):
+			print("Found")
 			_grid = get_child(_counter_warning)
 			break
 		_counter_warning += 1
+	print("Did actually find: ", _counter_warning != get_child_count())
 
 ## This method gets the index of the given tile.
 func get_tile_index(tile:DS_Tile) -> int:

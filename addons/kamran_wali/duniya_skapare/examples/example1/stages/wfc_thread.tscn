@@ -1,0 +1,47 @@
+[gd_scene load_steps=12 format=3 uid="uid://fk1rbttquthp"]
+
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_nus0v"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/ds_wfc_gen_thread.gd" id="2_1poaf"]
+[ext_resource type="Resource" uid="uid://c0l88lwcimemk" path="res://addons/kamran_wali/duniya_skapare/settings/data2.tres" id="2_qg5y5"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="3_l8jc5"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_world_creator.gd" id="4_5u4vc"]
+[ext_resource type="PackedScene" uid="uid://huss8agrbp71" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_0_s_1_ground.tscn" id="5_gikgg"]
+[ext_resource type="PackedScene" uid="uid://nlf210san7nl" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_1_s_1_water.tscn" id="6_hdn08"]
+[ext_resource type="PackedScene" uid="uid://chp36hfkn8c5a" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_2_s_1_corner_1.tscn" id="7_jhs66"]
+[ext_resource type="PackedScene" uid="uid://bc3h7h8la5err" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_3_s_1_corner_2.tscn" id="8_gp4vy"]
+[ext_resource type="PackedScene" uid="uid://ibf6e3xjblb0" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_4_s_1_corner_3.tscn" id="9_tafk1"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_fly_by_movement.gd" id="11_1tk1x"]
+
+[node name="wfc_thread" type="Node3D"]
+
+[node name="Generator_Holder" type="Node3D" parent="." node_paths=PackedStringArray("_generator")]
+script = ExtResource("1_nus0v")
+_generator = NodePath("WFC")
+
+[node name="WFC" type="Node3D" parent="Generator_Holder"]
+script = ExtResource("2_1poaf")
+_data = ExtResource("2_qg5y5")
+_is_debug = true
+
+[node name="Grid" type="Node3D" parent="Generator_Holder/WFC"]
+script = ExtResource("3_l8jc5")
+_grid_x = 10
+_grid_y = 10
+
+[node name="World_Creator" type="Node3D" parent="." node_paths=PackedStringArray("_generator", "_tile_holder")]
+script = ExtResource("4_5u4vc")
+_tiles = Array[PackedScene]([ExtResource("5_gikgg"), ExtResource("6_hdn08"), ExtResource("7_jhs66"), ExtResource("8_gp4vy"), ExtResource("9_tafk1")])
+_generator = NodePath("../Generator_Holder/WFC")
+_tile_holder = NodePath("../TileHolder")
+_tile_offset_x = 2.0
+_tile_offset_y = 2.0
+_tile_offset_z = 2.0
+
+[node name="TileHolder" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.881559, 0.358073, -0.307632, 1.4267e-08, 0.651662, 0.75851, 0.472074, -0.668671, 0.574478, -2.46905, 22.9978, 33.587)
+script = ExtResource("11_1tk1x")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)

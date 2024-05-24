@@ -61,9 +61,6 @@ var _c_success2:= -1
 var _c_failed:= -1
 var _c_search:= -1
 var _c_convert:= -1
-# var _c_free:= -1
-# var _c_add1:= -1
-# var _c_add2:= -1
 var _c_loop:= 0
 var _type_stored:= -1
 var _rot_stored:= -1
@@ -129,9 +126,7 @@ func process_main(is_search:bool) -> void:
 	
 	while true: # Loop for running the process using wave function collapse, Main Process Loop
 		_process_grid(is_search) # Using wave function collapse to process the grid
-		if is_gen_success() || (_debug_nuke_counter >= _nuke_limit && _nuke_limit != -1): 
-			print("Gen Successful!")
-			break # Condition for breaking processing loop
+		if is_gen_success() || (_debug_nuke_counter >= _nuke_limit && _nuke_limit != -1): break # Condition for breaking processing loop
 		else: _add_failed_tiles() # Getting all the failed tiles to process again
 		_c_loop += 1 # Incrementing the fail safe loop counter
 		if _c_loop == _loop_limit: break # Fail safe loop break
@@ -232,9 +227,6 @@ func _process_grid(is_search:bool) -> void:
 			_c1 += 1
 		
 		_tile_current = _tiles_open.pop_at(_c2) # Getting the lowest entropy tile
-		print_rich("[color=green]Tile: ", _c2,"[/color]")
-		print("- Coords: (", _tile_current.get_x(), ", ", _tile_current.get_y(), ", ",_tile_current.get_z(), ")")
-		print("- Rules: ", _rules)
 
 		if _tile_current.get_tile_type() == -1: # Checking if tile NOT processed
 			_process_tile(_tile_current, _rules.duplicate()) # Processing the current tile
@@ -262,9 +254,6 @@ func _process_grid(is_search:bool) -> void:
 				_c1 += 1
 		
 		_tiles_closed.append(_tile_current) # The current tile has been processed
-	
-	print("Grid Processing done!")
-	print("Checking Is_Success: ", is_gen_success())
 
 ## This method reprocesses to fix the error.
 func _reprocess_tile() -> void:
@@ -306,7 +295,6 @@ func _reprocess_tile() -> void:
 				_nuke(_tile_current, 0, 0, -1) # Condition for nuking tiles to get better results
 				_tiles_open.append(_find_nearest_none_processed_tile(_tile_current)) # Adding the correct tile to start the process
 				_debug_nuke_counter += 1 # For counting the number nukes being fired
-				print_rich("[shake][color=red]-- Nuked Tile![/color][/shake]")
 
 ## This method adds all the failed tiles back to be processed again.
 func _add_failed_tiles() -> void:
@@ -369,7 +357,6 @@ func _process_tile(tile: DS_Tile, rules: Array[int]) -> void:
 		
 		if _is_found_type(tile, rules[_c_process1], 0): # Found a type to set
 			tile.set_tile_type(rules[_c_process1])
-			print_rich("[rainbow]-- Tile Selected: ", rules[_c_process1], ", rot", tile.get_tile_rotation(),"[/rainbow]")
 			break
 		else: # Found no type, removing currently processed type for checking others
 			rules.remove_at(_c_process1)
