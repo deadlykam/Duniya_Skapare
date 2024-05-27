@@ -14,7 +14,6 @@ func _get_configuration_warnings() -> PackedStringArray:
 		warnings.append("Gen: Please give a child containing the grid.")
 	else:
 		set_grid()
-		print("Is grid null: ", _grid == null)
 		if _grid == null:
 			warnings.append("Gen: No Grid found in children. Please give a child containing the grid.")
 	
@@ -26,20 +25,16 @@ func _ready() -> void:
 		setup() # Setting up the grid
 
 ## This method gets the grid.
-func get_grid() -> DS_BaseGrid:
-	return _grid
+func get_grid() -> DS_BaseGrid: return _grid
 
 ## This method searches for the grid child.
 func set_grid() -> void:
 	_counter_warning = 0
 	while _counter_warning < get_child_count(): # Loop for finding grid
-		print("HERE!")
 		if get_child(_counter_warning).has_method("_is_grid"):
-			print("Found")
 			_grid = get_child(_counter_warning)
 			break
 		_counter_warning += 1
-	print("Did actually find: ", _counter_warning != get_child_count())
 
 ## This method gets the index of the given tile.
 func get_tile_index(tile:DS_Tile) -> int:
@@ -67,13 +62,23 @@ func is_tile_height(tile:DS_Tile) -> bool: return is_tile_height_z(tile.get_z())
 ## indexth tile to be processed.
 func get_start_index() -> int: return -1
 
-## This method gets all the free edges of the given tile.
-func get_tile_free_edges(tile:int) -> Array[int]: return []
+# ## This method gets all the free edges of the given tile.
+# func get_tile_free_edges(tile:int) -> Array[int]: return []
 
-## This method adds new tile/s to the indexth tile. The indexth
-## tile MUST have a free spot to add the tiles otherwise it will
-## NOT.
-func add_tile(tile:int) -> void: pass
+## This method gets all the free edges of the given tile.
+func get_tile_free_edges(tile:DS_Tile) -> Array[int]: return []
+
+# ## This method adds new tile/s to the given tile edges'. The given tile MUST have
+# ## at least one free spot to add the new tile otherwise it will NOT.
+# func add_tile(tile:int) -> void: pass
+
+## This method adds new tile/s to the given tile edges'. The given tile MUST have
+## at least one free spot to add the new tile otherwise it will NOT.
+func add_tile(tile:DS_Tile) -> void: pass
+
+## This method adds new tile/s to the given indexth tile edges'. The given 
+## tile MUST have at least one free spot to add the new tile otherwise it will NOT.
+func add_tile_index(tile:int) -> void: add_tile(_grid.get_tile(tile))
 
 ## This method checks if the generator for successful or NOT.
 func is_gen_success() -> bool: return false

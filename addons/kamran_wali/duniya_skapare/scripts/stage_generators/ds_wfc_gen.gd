@@ -29,6 +29,10 @@ extends DS_BaseGen
 
 @export_group("Debug Properties")
 @export var _is_debug: bool
+@export var _is_debug_tile_index:= false
+@export var _is_debug_tile_type:= false
+@export var _is_debug_tile_rot:= false
+@export var _is_debug_tile_coord:= false
 
 # Properties for internal usage ONLY
 var _index_start_tile: int
@@ -257,8 +261,8 @@ func _process_grid(is_search:bool) -> void:
 
 ## This method reprocesses to fix the error.
 func _reprocess_tile() -> void:
-	# Condition for failed rotational fix of the error tile
-	if !_is_found_type(_tile_error, _tile_error.get_tile_type(), _tile_error.get_tile_rotation_value() + 1):
+	# Condition for failed rotational fix of the error tile and also checking if _tile_error is NOT null
+	if (!_is_found_type(_tile_error, _tile_error.get_tile_type(), _tile_error.get_tile_rotation_value() + 1) if _tile_error != null else true):
 		_c_re1 = 0
 		while _c_re1 < _tile_current.get_edge_size(): # Loop for going through all the edges to find a new type for the current tile
 			if _is_tile_processed(_tile_current.get_edge(_c_re1)): # Checking if the edge tile has been processed
@@ -483,11 +487,18 @@ func _convert_start_array() -> Array[int]:
 	return _temp.duplicate()
 
 func _to_string() -> String:
-	print_rich(get_grid().show_grid_index_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_index_index(_index_start_tile))
-	print("") # Next line
-	print_rich(get_grid().show_grid_tile_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_tile_index(_index_start_tile))
-	print("") # Next line
-	print_rich(get_grid().show_grid_tile_rot_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_tile_rot_index(_index_start_tile))
-	print("") # Next line
-	print_rich(get_grid().show_grid_coord_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_coord_index(_index_start_tile))
+	if _is_debug_tile_index: # Debug for showing tile index
+		print_rich(get_grid().show_grid_index_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_index_index(_index_start_tile))
+		print("") # Next line
+	
+	if _is_debug_tile_type: # Debug for showing tile type
+		print_rich(get_grid().show_grid_tile_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_tile_index(_index_start_tile))
+		print("") # Next line
+	
+	if _is_debug_tile_rot: # Debug for showing tile rot
+		print_rich(get_grid().show_grid_tile_rot_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_tile_rot_index(_index_start_tile))
+		print("") # Next line
+	
+	if _is_debug_tile_coord: # Debug for showing tile coordinates
+		print_rich(get_grid().show_grid_coord_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_coord_index(_index_start_tile))
 	return ""

@@ -18,22 +18,22 @@ var _c_free:= -1
 var _c_add1:= -1
 var _c_add2:= -1
 
-func get_tile_free_edges(tile:int) -> Array[int]:
-	if get_grid().get_tile(tile) != null: # Checking if the tile exists
+func get_tile_free_edges(tile:DS_Tile) -> Array[int]:
+	if tile != null: # Checking if the tile exists
 		_temp_tiles.clear() # Clearing previous data
 		_c_free = 0
-		while _c_free < get_grid().get_tile(tile).get_edge_size(): # Loop for getting all the free edges
-			if get_grid().get_tile(tile).get_edge(_c_free) == null: # Checking if free edge found
-				if is_tile_height_z(_get_edge_z(get_grid().get_tile(tile), _c_free)): # Checking if null's height is valid
+		while _c_free < tile.get_edge_size(): # Loop for getting all the free edges
+			if tile.get_edge(_c_free) == null: # Checking if free edge found
+				if is_tile_height_z(_get_edge_z(tile, _c_free)): # Checking if null's height is valid
 					_temp_tiles.append(_c_free) # Adding the free edge's edge index
-			elif get_grid().get_tile(tile).get_edge(_c_free).get_tile_type() == -1:
-				if is_tile_height_z(_get_edge_z(get_grid().get_tile(tile), _c_free)): # Checking if null's height is valid
+			elif tile.get_edge(_c_free).get_tile_type() == -1:
+				if is_tile_height_z(_get_edge_z(tile, _c_free)): # Checking if null's height is valid
 					_temp_tiles.append(_c_free) # Adding the free edge's edge index
 			_c_free += 1
 	
 	return _temp_tiles.duplicate()
 
-func add_tile(tile:int) -> void:
+func add_tile(tile:DS_Tile) -> void:
 	_free_edges = get_tile_free_edges(tile) # Getting all the free edges
 	if _free_edges.is_empty(): return # Stopping process, No edges found
 	set_processing(true) # Starting processing
@@ -41,9 +41,9 @@ func add_tile(tile:int) -> void:
 	
 	_c_add1 = 0
 	while _c_add1 < _free_edges.size(): # Loop for creating new edges from the free spots
-		_tile_new1 = _get_temp_tile(get_grid().get_tile(tile), _free_edges[_c_add1]) # Getting the temp tile
+		_tile_new1 = _get_temp_tile(tile, _free_edges[_c_add1]) # Getting the temp tile
 		if _tile_new1 != null: _temp_grid.erase(_tile_new1) # Condition for finding a temp tile and removing it from the temp grid
-		else: _tile_new1 = _create_tile(get_grid().get_tile(tile), _free_edges[_c_add1]) # Creating a new tile
+		else: _tile_new1 = _create_tile(tile, _free_edges[_c_add1]) # Creating a new tile
 		
 		# Condition to check if the height
 		if is_tile_height(_tile_new1):
