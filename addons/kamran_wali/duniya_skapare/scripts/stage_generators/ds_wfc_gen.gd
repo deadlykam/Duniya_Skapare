@@ -195,7 +195,7 @@ func get_data() -> DS_WFC_Data: return _data
 func get_tile_names() -> Array[String]: return _data.get_tile_names()
 
 func print_debug_info() -> void:
-	super()
+	# super()
 	_debug_total_time = get_debug_timer()
 	print("Grid Size: ", get_grid().get_grid_size_x(), " X ", get_grid().get_grid_size_y(), " X ", get_grid().get_grid_size_z())
 	print("Run Time: ", _debug_total_time, "ms")

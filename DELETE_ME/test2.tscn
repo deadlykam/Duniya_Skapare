@@ -29,15 +29,16 @@ _generator = NodePath("Test/WFC")
 [node name="Test" type="Node3D" parent="." node_paths=PackedStringArray("_generator")]
 script = ExtResource("1_ed165")
 _generator = NodePath("WFC")
-_number_of_simulations = 100
-_is_print_success = true
+_is_print_final = true
 
 [node name="WFC" type="Node3D" parent="Test"]
 script = ExtResource("3_k8av8")
 _data = ExtResource("3_af0i7")
 _is_debug = true
+_is_debug_tile_index = true
 _is_debug_tile_type = true
 _is_debug_tile_rot = true
+_is_debug_tile_coord = true
 
 [node name="Grid" type="Node3D" parent="Test/WFC"]
 script = ExtResource("4_fl04a")
