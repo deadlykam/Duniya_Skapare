@@ -29,8 +29,6 @@ _is_debug_self_print = null
 
 [node name="Grid" type="Node3D" parent="Generator_Holder/WFC"]
 script = ExtResource("4_agr78")
-_grid_x = 5
-_grid_y = 5
 
 [node name="World_Creator" type="Node3D" parent="." node_paths=PackedStringArray("_generator", "_tile_holder")]
 script = ExtResource("5_qc77h")
