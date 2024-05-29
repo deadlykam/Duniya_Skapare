@@ -25,7 +25,6 @@ _nuke_limit = 50
 _loop_limit = 50
 _is_debug = true
 _is_debug_tile_coord = true
-_is_debug_self_print = null
 
 [node name="Grid" type="Node3D" parent="Generator_Holder/WFC"]
 script = ExtResource("4_agr78")
