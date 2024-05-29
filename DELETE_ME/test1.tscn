@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="1_8ckdf"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_m33c4"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/ds_wfc_gen.gd" id="2_iog3d"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen.gd" id="2_iog3d"]
 [ext_resource type="Resource" uid="uid://dguab0cdtiwkh" path="res://addons/kamran_wali/duniya_skapare/settings/simple_roads.tres" id="3_yj0n3"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_tile_start.gd" id="5_ds3v5"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_tile_info.gd" id="6_7o24x"]
