@@ -1,5 +1,5 @@
 @tool
-extends "res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/ds_wfc_gen_c_tile.gd"
+extends "res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen_c_tile.gd"
 
 var _thread: Thread
 var _is_stop_thread:= false
@@ -18,6 +18,8 @@ func add_tile(tile:DS_Tile) -> void:
         _is_stop_thread = false # Thread started
         _thread.start(_thread_start_add_tile.bind(tile)) # Starting tile add thread
 
+func is_gen_process() -> bool: return super() or _thread.is_started()
+
 ## This method starts the thread setup.
 func _thread_start_setup() -> void: super.setup()
 
@@ -35,5 +37,3 @@ func _process(delta) -> void:
                     if !_is_stop_thread: # Checking if thread is NOT stopped
                         _thread_stop() # Stopping thread
                         _is_stop_thread = true # Thread stopped
-
-func is_gen_process() -> bool: return super() or _thread.is_started()

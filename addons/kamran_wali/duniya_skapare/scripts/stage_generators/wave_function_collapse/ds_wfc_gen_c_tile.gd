@@ -1,5 +1,5 @@
 @tool
-extends "res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/ds_wfc_base_continuous.gd"
+extends "res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_base_continuous.gd"
 
 @export_category("Continuous Properties")
 ## Making this flag to true will make the tile addition to ignore height.

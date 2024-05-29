@@ -1,5 +1,5 @@
 @tool
-extends "res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/ds_wfc_gen.gd"
+extends "res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen.gd"
 
 var _tiles_connect: Array[DS_Tile]
 var _tile_connect: DS_Tile

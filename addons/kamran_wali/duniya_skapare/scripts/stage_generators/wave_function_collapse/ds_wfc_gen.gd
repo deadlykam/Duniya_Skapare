@@ -33,6 +33,7 @@ extends DS_BaseGen
 @export var _is_debug_tile_type:= false
 @export var _is_debug_tile_rot:= false
 @export var _is_debug_tile_coord:= false
+@export var _is_debug_self_print:= false
 
 # Properties for internal usage ONLY
 var _index_start_tile: int
@@ -90,8 +91,6 @@ func get_edge_opposite_index(index:int, size:int) -> int:
 	return index + 3 if (index + 3) < size else index - 3
 
 func setup() -> void:
-	# _is_processing = true # Setting processing flag to true
-	# if _is_debug: _debug_time = Time.get_unix_time_from_system() # Condition for starting debug time
 	start_debug_timer() # Starting the debug timer
 
 	if get_start_tiles().size() != 0: # Condition for setting the start tiles
@@ -108,25 +107,10 @@ func setup() -> void:
 		_tiles_open.append(get_grid().get_tile(_index_start_tile)) # Adding the first tile to be processed
 
 	process_main(true) # Starting the main process
-	
-	# while true: # Loop for running the process using wave function collapse
-	# 	_process_grid() # Main process, using wave function collapse to process the grid
-	# 	if is_gen_success() || (_debug_nuke_counter >= _nuke_limit && _nuke_limit != -1): break # Condition for breaking processing loop
-	# 	else: _add_failed_tiles() # Getting all the failed tiles to process again
-	# 	_c_loop += 1 # Incrementing the fail safe loop counter
-	# 	if _c_loop == _loop_limit: break # Fail safe loop break
-	
-	# if _is_debug: # Condition for showing the debug info
-	# 	print_rich("[color=purple]===WFC Result===[/color]")
-	# 	print_debug_info()
-	# 	print_rich("[color=purple]===XXX===[/color]")
-
-	# _is_processing = false # Setting processing flag to false
 
 ## This is the main process which does all the processes.
 func process_main(is_search:bool) -> void:
 	_is_processing = true # Setting processing flag to true
-	# if _is_debug: _debug_time = Time.get_unix_time_from_system() # Condition for starting debug time
 	
 	while true: # Loop for running the process using wave function collapse, Main Process Loop
 		_process_grid(is_search) # Using wave function collapse to process the grid
@@ -195,7 +179,6 @@ func get_data() -> DS_WFC_Data: return _data
 func get_tile_names() -> Array[String]: return _data.get_tile_names()
 
 func print_debug_info() -> void:
-	# super()
 	_debug_total_time = get_debug_timer()
 	print("Grid Size: ", get_grid().get_grid_size_x(), " X ", get_grid().get_grid_size_y(), " X ", get_grid().get_grid_size_z())
 	print("Run Time: ", _debug_total_time, "ms")
@@ -212,6 +195,8 @@ func print_debug_info() -> void:
 	
 	if _c_loop == _loop_limit: print_rich("[color=red]Fail Safe Activated: Maximum loop reached![/color]")
 	else: print_rich("[color=orange]Number Of Process Loops: ", _c_loop, "[/color]")
+
+	if _is_debug_self_print: _to_string() # Printing self
 
 ## This method processes the grid.
 func _process_grid(is_search:bool) -> void:

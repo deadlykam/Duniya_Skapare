@@ -1,52 +1,55 @@
-[gd_scene load_steps=12 format=3 uid="uid://cmm3fnw58uwy1"]
+[gd_scene load_steps=12 format=3 uid="uid://d1g8b0l53aqml"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_kjsbx"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/ds_wfc_gen_expand.gd" id="2_0tnro"]
-[ext_resource type="Resource" uid="uid://c0l88lwcimemk" path="res://addons/kamran_wali/duniya_skapare/settings/data2.tres" id="3_ms6nc"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="4_b12kp"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_world_creator.gd" id="5_vh286"]
-[ext_resource type="PackedScene" uid="uid://huss8agrbp71" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_0_s_1_ground.tscn" id="6_2qia3"]
-[ext_resource type="PackedScene" uid="uid://nlf210san7nl" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_1_s_1_water.tscn" id="7_vpxrh"]
-[ext_resource type="PackedScene" uid="uid://chp36hfkn8c5a" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_2_s_1_corner_1.tscn" id="8_hxnpo"]
-[ext_resource type="PackedScene" uid="uid://bc3h7h8la5err" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_3_s_1_corner_2.tscn" id="9_jtvjd"]
-[ext_resource type="PackedScene" uid="uid://ibf6e3xjblb0" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_4_s_1_corner_3.tscn" id="10_mp1hp"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_grid_expander.gd" id="11_m8l0x"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_nsc6j"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen_expand_thread.gd" id="2_1esnn"]
+[ext_resource type="Resource" uid="uid://c0l88lwcimemk" path="res://addons/kamran_wali/duniya_skapare/settings/data2.tres" id="3_5v6h1"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="4_agr78"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_world_creator.gd" id="5_qc77h"]
+[ext_resource type="PackedScene" uid="uid://huss8agrbp71" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_0_s_1_ground.tscn" id="6_1yoka"]
+[ext_resource type="PackedScene" uid="uid://nlf210san7nl" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_1_s_1_water.tscn" id="7_ywwvx"]
+[ext_resource type="PackedScene" uid="uid://chp36hfkn8c5a" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_2_s_1_corner_1.tscn" id="8_g0gr7"]
+[ext_resource type="PackedScene" uid="uid://bc3h7h8la5err" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_3_s_1_corner_2.tscn" id="9_85qk3"]
+[ext_resource type="PackedScene" uid="uid://ibf6e3xjblb0" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_4_s_1_corner_3.tscn" id="10_ljgs4"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_grid_expander.gd" id="11_xl1y6"]
 
-[node name="wfc_thread" type="Node3D"]
+[node name="wfc_continuous_expand" type="Node3D"]
 
 [node name="Generator_Holder" type="Node3D" parent="." node_paths=PackedStringArray("_generator")]
-script = ExtResource("1_kjsbx")
+script = ExtResource("1_nsc6j")
 _generator = NodePath("WFC")
 
 [node name="WFC" type="Node3D" parent="Generator_Holder"]
-script = ExtResource("2_0tnro")
-_data = ExtResource("3_ms6nc")
-_is_lock_tiles = false
+script = ExtResource("2_1esnn")
+_data = ExtResource("3_5v6h1")
 _nuke_limit = 50
 _loop_limit = 50
 _is_debug = true
 _is_debug_tile_coord = true
+_is_debug_self_print = null
 
 [node name="Grid" type="Node3D" parent="Generator_Holder/WFC"]
-script = ExtResource("4_b12kp")
+script = ExtResource("4_agr78")
+_grid_x = 5
+_grid_y = 5
 
 [node name="World_Creator" type="Node3D" parent="." node_paths=PackedStringArray("_generator", "_tile_holder")]
-script = ExtResource("5_vh286")
-_tiles = Array[PackedScene]([ExtResource("6_2qia3"), ExtResource("7_vpxrh"), ExtResource("8_hxnpo"), ExtResource("9_jtvjd"), ExtResource("10_mp1hp")])
+script = ExtResource("5_qc77h")
+_tiles = Array[PackedScene]([ExtResource("6_1yoka"), ExtResource("7_ywwvx"), ExtResource("8_g0gr7"), ExtResource("9_85qk3"), ExtResource("10_ljgs4")])
 _generator = NodePath("../Generator_Holder/WFC")
-_tile_holder = NodePath("../TileHolder")
+_tile_holder = NodePath("../Tile_Holder")
 _tile_offset_x = 2.0
 _tile_offset_y = 2.0
 _tile_offset_z = 2.0
 
-[node name="TileHolder" type="Node3D" parent="."]
+[node name="Tile_Holder" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.881559, 0.358073, -0.307632, 1.4267e-08, 0.651662, 0.75851, 0.472074, -0.668671, 0.574478, -2.46905, 22.9978, 33.587)
+transform = Transform3D(0.881559, 0.358073, -0.307633, 1.4267e-08, 0.651662, 0.75851, 0.472074, -0.668671, 0.574478, -2.46905, 22.9978, 33.587)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
 
-[node name="Expander_Controls" type="Node3D" parent="." node_paths=PackedStringArray("_generator")]
-script = ExtResource("11_m8l0x")
+[node name="Expander_Control" type="DirectionalLight3D" parent="." node_paths=PackedStringArray("_generator", "_world_creator")]
+script = ExtResource("11_xl1y6")
 _generator = NodePath("../Generator_Holder/WFC")
+_world_creator = NodePath("../World_Creator")
