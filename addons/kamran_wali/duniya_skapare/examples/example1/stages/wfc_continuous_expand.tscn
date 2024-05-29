@@ -21,6 +21,9 @@ _generator = NodePath("WFC")
 [node name="WFC" type="Node3D" parent="Generator_Holder"]
 script = ExtResource("2_0tnro")
 _data = ExtResource("3_ms6nc")
+_is_lock_tiles = false
+_nuke_limit = 50
+_loop_limit = 50
 _is_debug = true
 _is_debug_tile_coord = true
 
