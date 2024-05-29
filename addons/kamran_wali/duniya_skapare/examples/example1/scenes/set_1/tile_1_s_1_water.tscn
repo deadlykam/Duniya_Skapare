@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://nlf210san7nl"]
+
+[ext_resource type="Material" uid="uid://01gn077f7vqw" path="res://addons/kamran_wali/duniya_skapare/examples/example1/materials/tile_set1_atlasmap.tres" id="1_kqoqn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_by2du"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_1hiwn"]
+_surfaces = [{
+"aabb": AABB(-1, -0.2, -1, 2, 9.99868e-06, 2.00001),
+"format": 4097,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0),
+"primitive": 3,
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 128, 191, 205, 204, 76, 190, 0, 0, 128, 63, 0, 0, 128, 63, 205, 204, 76, 190, 0, 0, 128, 63, 0, 0, 128, 191, 205, 204, 76, 190, 0, 0, 128, 191, 0, 0, 128, 63, 205, 204, 76, 190, 0, 0, 128, 191)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_4rncg"]
+resource_name = "s1_water_Plane_001"
+_surfaces = [{
+"aabb": AABB(-1, -0.2, -1, 2, 9.99868e-06, 2.00001),
+"attribute_data": PackedByteArray(120, 107, 2, 61, 112, 157, 78, 61, 120, 107, 2, 61, 112, 157, 78, 61, 120, 107, 2, 61, 112, 157, 78, 61, 120, 107, 2, 61, 112, 157, 78, 61),
+"format": 4119,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_by2du"),
+"primitive": 3,
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 128, 191, 205, 204, 76, 190, 0, 0, 128, 63, 255, 127, 255, 255, 255, 255, 255, 191, 0, 0, 128, 63, 205, 204, 76, 190, 0, 0, 128, 63, 255, 127, 255, 255, 255, 255, 255, 191, 0, 0, 128, 191, 205, 204, 76, 190, 0, 0, 128, 191, 255, 127, 255, 255, 255, 255, 255, 191, 0, 0, 128, 63, 205, 204, 76, 190, 0, 0, 128, 191, 255, 127, 255, 255, 255, 255, 255, 191)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_1hiwn")
+
+[node name="tile_1_s_1_water" type="Node3D"]
+
+[node name="s1_water2" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_kqoqn")
+mesh = SubResource("ArrayMesh_4rncg")
+skeleton = NodePath("")
