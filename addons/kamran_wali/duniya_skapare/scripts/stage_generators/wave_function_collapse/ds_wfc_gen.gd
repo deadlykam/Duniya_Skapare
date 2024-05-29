@@ -55,7 +55,7 @@ var _temp2: Array[int]
 var _entropy:= -1
 var _c1:= -1
 var _c2:= -1
-var _c_lock:= -1
+var _c_lock:= 0
 var _c_re1:= -1
 var _c_rule1:= -1
 var _c_rule2:= -1
@@ -120,7 +120,7 @@ func process_main(is_search:bool) -> void:
 		if _c_loop == _loop_limit: break # Fail safe loop break
 	
 	if _is_lock_tiles: # Condition to check if to lock the tile
-		_c_lock = 0
+		# _c_lock = 0
 		while _c_lock < get_grid().get_tiles_size(): # Loop for locking the tiles
 			get_grid().get_tile(_c_lock).set_is_fixed_actual(true) # Tile locked
 			_c_lock += 1
@@ -156,6 +156,7 @@ func reset() -> void:
 	_tile_current = null
 	_tile_error = null
 	_tile_search = null
+	_c_lock = 0
 	reset_fail_safe()
 
 func get_start_index() -> int:

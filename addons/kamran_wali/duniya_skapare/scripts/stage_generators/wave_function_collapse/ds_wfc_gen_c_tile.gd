@@ -25,7 +25,7 @@ func get_tile_free_edges(tile:DS_Tile) -> Array[int]:
 			if tile.get_edge(_c_free) == null: # Checking if free edge found
 				if is_tile_height_z(get_edge_z(tile, _c_free)): # Checking if null's height is valid
 					_temp_tiles.append(_c_free) # Adding the free edge's edge index
-			elif tile.get_edge(_c_free).get_tile_type() == -1:
+			elif tile.get_edge(_c_free).get_tile_type() == -1: # Checking if a none processed tile found
 				if is_tile_height_z(get_edge_z(tile, _c_free)): # Checking if null's height is valid
 					_temp_tiles.append(_c_free) # Adding the free edge's edge index
 			_c_free += 1
@@ -42,12 +42,21 @@ func add_tile(tile:DS_Tile) -> void:
 	while _c_add1 < _free_edges.size(): # Loop for creating new edges from the free spots
 		_tile_new1 = _get_temp_tile(tile, _free_edges[_c_add1]) # Getting the temp tile
 		if _tile_new1 != null: _temp_grid.erase(_tile_new1) # Condition for finding a temp tile and removing it from the temp grid
-		else: _tile_new1 = _create_tile(tile, _free_edges[_c_add1]) # Creating a new tile
+		else: # Condition for creating a new tile
+			_tile_new1 = get_grid().get_tile_coord_x_y_z( # Getting an existing tile from the main grid
+				get_edge_x(tile, _free_edges[_c_add1]), 
+				get_edge_y(tile, _free_edges[_c_add1]),
+				get_edge_z(tile, _free_edges[_c_add1]))
+
+			if _tile_new1 != null: # Condition for finding a match in the main grid
+				_c_add1 += 1 # Going to the next iteration
+				continue
+			else: _tile_new1 = _create_tile(tile, _free_edges[_c_add1]) # Creating a new tile
 		
 		# Condition to check if the height
 		if is_tile_height(_tile_new1):
 			get_grid().add_tile(_tile_new1) # Adding new tile to the main grid
-			add_tile_to_connect(_tile_new1)
+			add_tile_to_connect(_tile_new1) # Adding new tile to connect processing
 			add_tile_to_process(_tile_new1) # Adding new tile to processing
 
 			_c_add2 = 0
@@ -88,21 +97,3 @@ func _get_temp_tile(tile:DS_Tile, edge:int) -> DS_Tile:
 		get_edge_z(tile, edge),
 		_temp_grid
 	)
-
-# ## This method gets the x value for the edge tile.
-# func _get_edge_x(tile:DS_Tile, edge:int) -> int:
-# 	return (tile.get_x() + 1 if edge == 2 else
-# 			tile.get_x() - 1 if edge == 5 else
-# 			tile.get_x())
-
-# ## This method gets the y value for the edge tile.
-# func _get_edge_y(tile:DS_Tile, edge:int) -> int:
-# 	return (tile.get_y() + 1 if edge == 4 else
-# 			tile.get_y() - 1 if edge == 1 else
-# 			tile.get_y())
-
-# ## This method gets the z value for the edge tile.
-# func _get_edge_z(tile:DS_Tile, edge:int) -> int:
-# 	return (tile.get_z() + 1 if edge == 0 else
-# 			tile.get_z() - 1 if edge == 3 else
-# 			tile.get_z())
