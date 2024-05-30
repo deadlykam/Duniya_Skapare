@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://c0l88lwcimemk" path="res://addons/kamran_wali/duniya_skapare/settings/data2.tres" id="3_5v6h1"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="4_agr78"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_world_creator.gd" id="5_qc77h"]
-[ext_resource type="PackedScene" uid="uid://huss8agrbp71" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_0_s_1_ground.tscn" id="6_1yoka"]
+[ext_resource type="PackedScene" uid="uid://d3nwfq7k3q6lu" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_0_s_1_ground.tscn" id="6_1yoka"]
 [ext_resource type="PackedScene" uid="uid://nlf210san7nl" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_1_s_1_water.tscn" id="7_ywwvx"]
 [ext_resource type="PackedScene" uid="uid://chp36hfkn8c5a" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_2_s_1_corner_1.tscn" id="8_g0gr7"]
 [ext_resource type="PackedScene" uid="uid://bc3h7h8la5err" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_3_s_1_corner_2.tscn" id="9_85qk3"]
@@ -48,7 +48,7 @@ transform = Transform3D(0.881559, 0.358073, -0.307633, 1.4267e-08, 0.651662, 0.7
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
 
-[node name="Expander_Control" type="DirectionalLight3D" parent="." node_paths=PackedStringArray("_generator", "_world_creator")]
+[node name="Expander_Control" type="Node3D" parent="." node_paths=PackedStringArray("_generator", "_world_creator")]
 script = ExtResource("11_xl1y6")
 _generator = NodePath("../Generator_Holder/WFC")
 _world_creator = NodePath("../World_Creator")

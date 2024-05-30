@@ -205,7 +205,8 @@ func _process_grid(is_search:bool) -> void:
 		_c1 = 0 # Index of the open tiles
 		_c2 = 0 # For storing the lowest entropy index
 		_entropy = -1
-
+		_tile_error = null # Resetting the error in case 0 entropy found
+		
 		while _c1 < _tiles_open.size(): # Loop for finding the lowest entropy
 			_temp_rules = _get_rules(_tiles_open[_c1])
 

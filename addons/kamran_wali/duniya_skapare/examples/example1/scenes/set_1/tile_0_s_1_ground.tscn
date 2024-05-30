@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://huss8agrbp71"]
+[gd_scene load_steps=5 format=3 uid="uid://d3nwfq7k3q6lu"]
 
 [ext_resource type="Material" uid="uid://01gn077f7vqw" path="res://addons/kamran_wali/duniya_skapare/examples/example1/materials/tile_set1_atlasmap.tres" id="1_uy6rv"]
 
@@ -32,9 +32,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ap3ax")
 
-[node name="tile_0_s1_ground" type="Node3D"]
+[node name="tile_0_s_1" type="Node3D"]
 
-[node name="s1_ground2" type="MeshInstance3D" parent="."]
+[node name="s1_ground" type="MeshInstance3D" parent="."]
 material_override = ExtResource("1_uy6rv")
 mesh = SubResource("ArrayMesh_lirmf")
 skeleton = NodePath("")

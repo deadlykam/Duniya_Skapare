@@ -26,6 +26,7 @@ func _process(delta) -> void:
 					_tile.position.z = _tile_offset_y * _get_tile(_c).get_y() # Setting new tile's z pos
 					_tile.quaternion = _get_tile(_c).get_tile_rotation_quat() # Setting new tile's rotation
 					_tile_holder.add_child(_tile) # Adding the tile to the game world
+					# print("Created Tile: (", _get_tile(_c).get_x(), ", ", _get_tile(_c).get_y(), ", ", _get_tile(_c).get_z(), "), Type: ", _get_tile(_c).get_tile_type(), ", Rot: ", _get_tile(_c).get_tile_rotation())
 					_tile = null
 				_c += 1
 
