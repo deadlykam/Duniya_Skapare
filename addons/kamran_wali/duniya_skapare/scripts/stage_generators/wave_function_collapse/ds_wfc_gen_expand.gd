@@ -54,6 +54,7 @@ func expand_grid(dir:int) -> void:
 				if !_is_add_first_tile: # Condition for addinthe first tile to be processed
 					add_tile_to_process(_tile_new) # Adding tile to main processing
 					_is_add_first_tile = true # First tile added
+					print("Tile Process: ", _tile_new)
 
 				_c_x += -1 if dir == 5 else 1 # West will be the ONLY one incrementing in the -ve
 			_c_y += -1 if dir == 1 else 1 # North will be the ONLY one incrementing in the -ve
@@ -66,5 +67,6 @@ func expand_grid(dir:int) -> void:
 	elif dir == 5: _x_min -= get_grid().get_grid_size_x() # Updating x min because West updated
 	
 	process_connect_tiles() # Starting connection processing
-	reset_fail_safe() # Resetting fail safe
-	process_main(true) # Starting processing with the need searching for neighbours
+	# reset_fail_safe() # Resetting fail safe
+	reset_gen() # Resetting the generator ONLY
+	process_main(true) # Starting processing with the need for searching for neighbours

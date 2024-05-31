@@ -57,7 +57,6 @@ _data = ExtResource("3_07e2w")
 _nuke_limit = 50
 _loop_limit = 50
 _is_debug = true
-_is_debug_tile_coord = true
 
 [node name="Grid" type="Node3D" parent="Generator_Holder/WFC"]
 script = ExtResource("4_35x5k")

@@ -43,6 +43,7 @@ var _tiles_search_open: Array[DS_Tile]
 var _tiles_search_closed: Array[DS_Tile]
 var _tile_current: DS_Tile
 var _tile_error: DS_Tile
+var _tile_reprocess: DS_Tile
 var _tile_search: DS_Tile
 var _tile_add: DS_Tile
 var _rules: Array[int] # Final rules
@@ -142,22 +143,37 @@ func get_debug_timer() -> float: return ((Time.get_unix_time_from_system() - _de
 ## This method sets the processing.
 func set_processing(is_enabled:bool) -> void: _is_processing = is_enabled
 
-## This method resets the fail safe values.
+# This method resets the fail safe values.
 func reset_fail_safe():
 	_debug_nuke_counter = 0
 	_c_loop = 0
 
-func reset() -> void:
-	get_grid().reset()
+## This method ONLY resets the generator.
+func reset_gen() -> void:
 	_tiles_open.clear()
 	_tiles_closed.clear()
 	_tiles_search_open.clear()
 	_tiles_search_closed.clear()
 	_tile_current = null
 	_tile_error = null
+	_tile_reprocess = null
 	_tile_search = null
-	_c_lock = 0
 	reset_fail_safe()
+
+## This method resets the grid and the generator.
+func reset() -> void:
+	get_grid().reset()
+	reset_gen()
+	# _tiles_open.clear()
+	# _tiles_closed.clear()
+	# _tiles_search_open.clear()
+	# _tiles_search_closed.clear()
+	# _tile_current = null
+	# _tile_error = null
+	# _tile_reprocess = null
+	# _tile_search = null
+	_c_lock = 0
+	# reset_fail_safe()
 
 func get_start_index() -> int:
 	return _index_start_tile if get_start_tiles().size() == 0 else get_start_tiles()[0]
@@ -206,6 +222,7 @@ func _process_grid(is_search:bool) -> void:
 		_c2 = 0 # For storing the lowest entropy index
 		_entropy = -1
 		_tile_error = null # Resetting the error in case 0 entropy found
+		_tile_reprocess = null # Resetting the reprocess tile for further usage
 		
 		while _c1 < _tiles_open.size(): # Loop for finding the lowest entropy
 			_temp_rules = _get_rules(_tiles_open[_c1])
@@ -214,7 +231,6 @@ func _process_grid(is_search:bool) -> void:
 				_c2 = _c1 # Storing the index of the lowest entropy
 				_entropy = _temp_rules.size() # Updating the entropy value
 				_rules = _temp_rules.duplicate() # Storing the lowest entropy rules
-
 			_c1 += 1
 		
 		_tile_current = _tiles_open.pop_at(_c2) # Getting the lowest entropy tile
@@ -222,12 +238,13 @@ func _process_grid(is_search:bool) -> void:
 		if _tile_current.get_tile_type() == -1: # Checking if tile NOT processed
 			_process_tile(_tile_current, _rules.duplicate()) # Processing the current tile
 			if _tile_current.get_tile_type() == -1: # Condition for storing failed tiles
-				if _tile_error == null: # Chekcing if NO error tiles found
+				_tile_reprocess = _tile_error # Storing the error tile to reprocess
+				if _tile_reprocess == null: # Chekcing if NO reprocess tiles found
 					_c1 = 0
-					while _c1 < _tile_current.get_edge_size(): # Loop for finding an error tile
-						if _is_tile_processed(_tile_current.get_edge(_c1)): # Condition for finding the first processed tile as error tile
+					while _c1 < _tile_current.get_edge_size(): # Loop for finding a tile to reprocess
+						if _is_tile_processed(_tile_current.get_edge(_c1)): # Condition for finding the first processed tile to reprocess
 							if !_tile_current.get_edge(_c1).is_fixed_actual(): # Checking if the tile is NOT fixed
-								_tile_error = _tile_current.get_edge(_c1) # Setting the error tile
+								_tile_reprocess = _tile_current.get_edge(_c1) # Setting the tile to be reprocessed
 								break
 						_c1 += 1
 				
@@ -246,60 +263,134 @@ func _process_grid(is_search:bool) -> void:
 		
 		_tiles_closed.append(_tile_current) # The current tile has been processed
 
+# ## This method reprocesses to fix the error.
+# func _reprocess_tile() -> void:
+# 	if _tile_reprocess != null: # Condition for storing the reprocessed tile's type and rot value
+# 		_type_stored = _tile_reprocess.get_tile_type() # Storing the reprocessed tile's type
+# 		_rot_stored = _tile_reprocess.get_tile_rotation_value() # Storing the reprocessed tile's rotation
+	
+# 	# Condition for failed rotational fix of the reprocessed tile and also checking if _tile_reprocess is NOT null
+# 	if (!_is_found_type(_tile_reprocess, _tile_reprocess.get_tile_type(), _tile_reprocess.get_tile_rotation_value() + 1) if _tile_reprocess != null else true):
+# 		if _tile_reprocess != null: # Condition to reset the reprocessed tile's type and rotation values
+# 			_tile_reprocess.set_tile_type(_type_stored) # Resetting the reprocessed tile's type
+# 			_tile_reprocess.set_tile_rotation_value(_rot_stored) # Resetting the reprocessed tile's rotation
+		
+# 		_c_re1 = 0
+# 		while _c_re1 < _tile_current.get_edge_size(): # Loop for going through all the edges to find a new type for the current tile
+# 			if _is_tile_processed(_tile_current.get_edge(_c_re1)): # Checking if the edge tile has been processed
+# 				if !_tile_current.get_edge(_c_re1).is_fixed_actual(): # Checking if the tile is NOT fixed
+# 					_type_stored = _tile_current.get_edge(_c_re1).get_tile_type() # Storing edge's type
+# 					_rot_stored = _tile_current.get_edge(_c_re1).get_tile_rotation_value() # Storing edge's rot value
+
+# 					# Checking if new rotation found for the neighbouring tile
+# 					if _is_found_type(_tile_current.get_edge(_c_re1), _type_stored, _rot_stored + 1):
+# 						_process_tile(_tile_current, _get_rules(_tile_current)) # Processing the current tile
+# 						if _tile_current.get_tile_type() != -1: break # Condition for find type for the current tile
+							
+# 					_rules = _get_rules(_tile_current.get_edge(_c_re1)) # Getting all the rules for the edge tile
+# 					_rules.erase(_type_stored) # Removing the current type of the edge from the rules
+
+# 					while !_rules.is_empty(): # Loop to check if new edge tile type will fix the issue
+# 						_tile_current.get_edge(_c_re1).reset() # Resetting the edge tile
+# 						_process_tile(_tile_current.get_edge(_c_re1), _rules.duplicate()) # Processing the edge tile
+
+# 						if _tile_current.get_edge(_c_re1).get_tile_type() != -1: # Checking if the edge tile has a new type
+# 							_process_tile(_tile_current, _get_rules(_tile_current)) # Processing the current tile
+# 							if _tile_current.get_tile_type() != -1: break # Checking if current tile found a type and ending loop
+# 							else: _rules.erase(_tile_current.get_edge(_c_re1).get_tile_type()) # Removing the edge's tile type from the rule list
+# 						else: break # No type found for the edge tile breaking the loop
+
+# 					if _tile_current.get_tile_type() != -1: break # Condition for found new tile type and stopping further searches
+# 					else: # Condition for resetting the edge's value to stored values
+# 						_tile_current.get_edge(_c_re1).set_tile_type(_type_stored)
+# 						_tile_current.get_edge(_c_re1).set_tile_rotation_value(_rot_stored)
+				
+# 			_c_re1 += 1
+		
+# 		if _tile_current.get_tile_type() == -1: # Condition for nuking the current tile
+# 			if _nuke_limit == -1 || _debug_nuke_counter < _nuke_limit:
+# 				_nuke(_tile_current, 0, 0, -1) # Condition for nuking tiles to get better results
+# 				_tiles_open.append(_find_nearest_none_processed_tile(_tile_current)) # Adding the correct tile to start the process
+# 				_debug_nuke_counter += 1 # For counting the number nukes being fired
+
 ## This method reprocesses to fix the error.
 func _reprocess_tile() -> void:
-	# Condition for failed rotational fix of the error tile and also checking if _tile_error is NOT null
-	if (!_is_found_type(_tile_error, _tile_error.get_tile_type(), _tile_error.get_tile_rotation_value() + 1) if _tile_error != null else true):
+	if _tile_reprocess != null: # Condition for storing the reprocessed tile's type and rot value
+		_type_stored = _tile_reprocess.get_tile_type() # Storing the reprocessed tile's type
+		_rot_stored = _tile_reprocess.get_tile_rotation_value() # Storing the reprocessed tile's rotation
+	
+	# Condition for failed rotational fix of the reprocessed tile and also checking if _tile_reprocess is NOT null
+	if (!_is_found_type(_tile_reprocess, _tile_reprocess.get_tile_type(), _tile_reprocess.get_tile_rotation_value() + 1) if _tile_reprocess != null else true):
+		if _tile_reprocess != null: # Condition to reset the reprocessed tile's type and rotation values
+			_tile_reprocess.set_tile_type(_type_stored) # Resetting the reprocessed tile's type
+			_tile_reprocess.set_tile_rotation_value(_rot_stored) # Resetting the reprocessed tile's rotation
+		
 		_c_re1 = 0
 		while _c_re1 < _tile_current.get_edge_size(): # Loop for going through all the edges to find a new type for the current tile
 			if _is_tile_processed(_tile_current.get_edge(_c_re1)): # Checking if the edge tile has been processed
-				_type_stored = _tile_current.get_edge(_c_re1).get_tile_type() # Storing edge's type
-				_rot_stored = _tile_current.get_edge(_c_re1).get_tile_rotation_value() # Storing edge's rot value
+				if !_tile_current.get_edge(_c_re1).is_fixed_actual(): # Checking if the tile is NOT fixed
+					_type_stored = _tile_current.get_edge(_c_re1).get_tile_type() # Storing edge's type
+					_rot_stored = _tile_current.get_edge(_c_re1).get_tile_rotation_value() # Storing edge's rot value
 
-				# Checking if new rotation found for the neighbouring tile
-				if _is_found_type(_tile_current.get_edge(_c_re1), _type_stored, _rot_stored + 1):
-					_process_tile(_tile_current, _get_rules(_tile_current)) # Processing the current tile
-					if _tile_current.get_tile_type() != -1: break # Condition for find type for the current tile
-						
-				_rules = _get_rules(_tile_current.get_edge(_c_re1)) # Getting all the rules for the edge tile
-				_rules.erase(_type_stored) # Removing the current type of the edge from the rules
-
-				while !_rules.is_empty(): # Loop to check if new edge tile type will fix the issue
-					_tile_current.get_edge(_c_re1).reset() # Resetting the edge tile
-					_process_tile(_tile_current.get_edge(_c_re1), _rules.duplicate()) # Processing the edge tile
-
-					if _tile_current.get_edge(_c_re1).get_tile_type() != -1: # Checking if the edge tile has a new type
+					# Checking if new rotation found for the neighbouring tile
+					if _is_found_type(_tile_current.get_edge(_c_re1), _type_stored, _rot_stored + 1):
 						_process_tile(_tile_current, _get_rules(_tile_current)) # Processing the current tile
-						if _tile_current.get_tile_type() != -1: break # Checking if current tile found a type and ending loop
-						else: _rules.erase(_tile_current.get_edge(_c_re1).get_tile_type()) # Removing the edge's tile type from the rule list
-					else: break # No type found for the edge tile breaking the loop
+						if _tile_current.get_tile_type() != -1: break # Condition for find type for the current tile
+							
+					_rules = _get_rules(_tile_current.get_edge(_c_re1)) # Getting all the rules for the edge tile
+					_rules.erase(_type_stored) # Removing the current type of the edge from the rules
 
-				if _tile_current.get_tile_type() != -1: break # Condition for found new tile type and stopping further searches
-				else: # Condition for resetting the edge's value to stored values
-					_tile_current.get_edge(_c_re1).set_tile_type(_type_stored)
-					_tile_current.get_edge(_c_re1).set_tile_rotation_value(_rot_stored)
+					while !_rules.is_empty(): # Loop to check if new edge tile type will fix the issue
+						_tile_current.get_edge(_c_re1).reset() # Resetting the edge tile
+						_process_tile(_tile_current.get_edge(_c_re1), _rules.duplicate()) # Processing the edge tile
+
+						if _tile_current.get_edge(_c_re1).get_tile_type() != -1: # Checking if the edge tile has a new type
+							_process_tile(_tile_current, _get_rules(_tile_current)) # Processing the current tile
+							if _tile_current.get_tile_type() != -1: break # Checking if current tile found a type and ending loop
+							else: _rules.erase(_tile_current.get_edge(_c_re1).get_tile_type()) # Removing the edge's tile type from the rule list
+						else: break # No type found for the edge tile breaking the loop
+
+					if _tile_current.get_tile_type() != -1: break # Condition for found new tile type and stopping further searches
+					else: # Condition for resetting the edge's value to stored values
+						_tile_current.get_edge(_c_re1).set_tile_type(_type_stored)
+						_tile_current.get_edge(_c_re1).set_tile_rotation_value(_rot_stored)
 				
 			_c_re1 += 1
-		
-		if _tile_current.get_tile_type() == -1: # Condition for nuking the current tile
-			if _nuke_limit == -1 || _debug_nuke_counter < _nuke_limit:
-				_nuke(_tile_current, 0, 0, -1) # Condition for nuking tiles to get better results
-				_tiles_open.append(_find_nearest_none_processed_tile(_tile_current)) # Adding the correct tile to start the process
-				_debug_nuke_counter += 1 # For counting the number nukes being fired
+	else: _process_tile(_tile_current, _get_rules(_tile_current)) # Processing current tile after successful reprocess tile rotation match
+
+	if _tile_current.get_tile_type() == -1: # Condition for nuking the current tile
+		if _nuke_limit == -1 || _debug_nuke_counter < _nuke_limit:
+			_nuke(_tile_current, 0, 0, -1) # Condition for nuking tiles to get better results
+			_tiles_open.append(_find_nearest_none_processed_tile(_tile_current)) # Adding the correct tile to start the process
+			_debug_nuke_counter += 1 # For counting the number nukes being fired
 
 ## This method adds all the failed tiles back to be processed again.
 func _add_failed_tiles() -> void:
-	_c_failed = 0
-	while _c_failed < get_grid().get_tiles_size(): # Loop for finding the failed tiles
+	# _c_failed = 0
+	# while _c_failed < get_grid().get_tiles_size(): # Loop for finding the failed tiles
+	# 	if get_grid().get_tile(_c_failed).get_tile_type() == -1: # Failed tile found
+	# 		_tiles_open.append(get_grid().get_tile(_c_failed))
+	# 		_tiles_closed.erase(get_grid().get_tile(_c_failed))
+	# 	_c_failed += 1
+	
+	# region NOTE:
+	#	The reason for starting from the back is to give the newly failed tiles
+	#	a chance first to be processed. This is mainly needed for continuous
+	#	generators. If newly failed tiles are NOT given a chance first then
+	#	the old failed tiles will gobble up all of the nukes and this will keep
+	#	giving more and more failed tiles.
+	# endregion
+	_c_failed = get_grid().get_tiles_size() - 1
+	while _c_failed >= 0: # Loop for finding the failed tiles
 		if get_grid().get_tile(_c_failed).get_tile_type() == -1: # Failed tile found
 			_tiles_open.append(get_grid().get_tile(_c_failed))
 			_tiles_closed.erase(get_grid().get_tile(_c_failed))
-		_c_failed += 1
+		_c_failed -= 1
 
 ## This method gets the available rules for a tile but also using one edge of the tile
 ## as a temp value.
 func _get_rules_temp_tile(tile:DS_Tile, edge:int, type:int) -> Array[int]:
-	_temp = _data.get_all_rules()
+	_temp = _data.get_all_rules() # Storing all the rules for deduction
 	_c_rule1 = 0 # Edge index
 	while _c_rule1 < tile.get_edge_size(): # Loop for going through all the edges
 		if tile.get_edge(_c_rule1) != null:
@@ -371,7 +462,7 @@ func _is_found_type(tile:DS_Tile, type:int, rot:int) -> bool:
 
 						# Condition for NOT finding any matches so breaking the loop for the next check
 						if !_temp_rules.has(tile.get_edge(_c_found1).get_tile_type()):
-							_tile_error = tile.get_edge(_c_found1) # Storing the tile that caused error
+							_tile_error = tile.get_edge(_c_found1) if !tile.get_edge(_c_found1).is_fixed_actual() else _tile_error # Storing the tile that caused error
 							break
 						else: # Condtion to check if neighbour allows to set the tile
 							# Storing the neighbour's edge rules toward the current tile
@@ -386,7 +477,7 @@ func _is_found_type(tile:DS_Tile, type:int, rot:int) -> bool:
 							)
 
 							if !_temp_rules.has(type): # NO matches found from the neighbour's edge
-								_tile_error = tile.get_edge(_c_found1) # Storing the tile that caused error
+								_tile_error = tile.get_edge(_c_found1) if !tile.get_edge(_c_found1).is_fixed_actual() else _tile_error # Storing the tile that caused error
 								break
 					else: # Neighbour tile has NOT been set
 						# Condition to check if current tile rotation does NOT allows neighbour tile to have

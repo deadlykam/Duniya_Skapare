@@ -58,12 +58,11 @@ _is_debug = true
 _is_debug_tile_index = true
 _is_debug_tile_type = true
 _is_debug_tile_rot = true
-_is_debug_self_print = true
 
 [node name="Grid" type="Node3D" parent="Generator_Holder/WFC"]
 script = ExtResource("4_kl3so")
-_grid_x = 6
-_grid_y = 6
+_grid_x = 50
+_grid_y = 50
 
 [node name="World_Creator" type="Node3D" parent="." node_paths=PackedStringArray("_generator", "_tile_holder")]
 script = ExtResource("5_ni4v5")
@@ -77,8 +76,9 @@ _tile_offset_z = 2.0
 [node name="TileHolder" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.881559, 0.358073, -0.307632, 1.4267e-08, 0.651662, 0.75851, 0.472074, -0.668671, 0.574478, -2.46905, 22.9978, 33.587)
+transform = Transform3D(0.881559, 0.358073, -0.307633, 1.4267e-08, 0.651662, 0.75851, 0.472074, -0.668671, 0.574478, 4.99932, 47.4558, 61.4221)
 script = ExtResource("11_3hykn")
+_speed = 5.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)

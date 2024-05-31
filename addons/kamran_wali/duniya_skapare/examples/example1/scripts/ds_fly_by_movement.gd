@@ -2,7 +2,7 @@ extends Node3D
 
 const _SPEED_OFFSET = 1.0
 
-var _speed:= 1.0
+@export var _speed:= 1.0
 var _is_enabled = true
 
 ## This method enables/disables the script.
