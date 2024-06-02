@@ -34,10 +34,6 @@ func _enter_tree() -> void:
     _green.a = _alpha
     _red.a = _alpha
 
-## This method initializes the edge rule ui.
-# func init(ds_wave_function_collapse_ui:DS_WAVE_FUNCTION_COLLAPSE_UI) -> void:
-#     _ds_wave_function_collapse_ui = ds_wave_function_collapse_ui
-
 ## This method sets up the UIs name list
 func setup() -> void:
     _tile_list.clear()
@@ -45,7 +41,7 @@ func setup() -> void:
 
     _counter1 = 0
     while _counter1 < _tile_names.size(): # Loop for adding all the items
-        _tile_list.add_item(_tile_names[_counter1])
+        _tile_list.add_item("(" + str(_counter1) + ") " + _tile_names[_counter1])
         _counter1 += 1
 
 ## This method shows the edge's tile lists.

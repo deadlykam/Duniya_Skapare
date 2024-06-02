@@ -254,4 +254,4 @@ func _to_string() -> String:
 		("East: (" + str(_data_edges[2].get_x()) + ", " + str(_data_edges[2].get_y()) + ", " + str(_data_edges[2].get_z()) + ") \n" if _data_edges[2] != null else "") + 
 		("Bottom: (" + str(_data_edges[3].get_x()) + ", " + str(_data_edges[3].get_y()) + ", " + str(_data_edges[3].get_z()) + ") \n" if _data_edges[3] != null else "") + 
 		("South: (" + str(_data_edges[4].get_x()) + ", " + str(_data_edges[4].get_y()) + ", " + str(_data_edges[4].get_z()) + ") \n" if _data_edges[4] != null else "") + 
-		("West: (" + str(_data_edges[5].get_x()) + ", " + str(_data_edges[5].get_y()) + ", " + str(_data_edges[5].get_z()) + ") \n" if _data_edges[5] != null else ""))
+		("West: (" + str(_data_edges[5].get_x()) + ", " + str(_data_edges[5].get_y()) + ", " + str(_data_edges[5].get_z()) + ")" if _data_edges[5] != null else ""))

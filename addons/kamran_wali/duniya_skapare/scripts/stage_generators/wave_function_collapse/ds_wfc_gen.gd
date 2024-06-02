@@ -116,7 +116,9 @@ func process_main(is_search:bool) -> void:
 	while true: # Loop for running the process using wave function collapse, Main Process Loop
 		_process_grid(is_search) # Using wave function collapse to process the grid
 		if is_gen_success() || (_debug_nuke_counter >= _nuke_limit && _nuke_limit != -1): break # Condition for breaking processing loop
-		else: _add_failed_tiles() # Getting all the failed tiles to process again
+		else: # Condition for adding back all the failed tiles
+			_add_failed_tiles() # Getting all the failed tiles to process again
+			if _tiles_open.is_empty(): break # Stopping process as NO more tiles found for processing
 		_c_loop += 1 # Incrementing the fail safe loop counter
 		if _c_loop == _loop_limit: break # Fail safe loop break
 	
@@ -164,16 +166,7 @@ func reset_gen() -> void:
 func reset() -> void:
 	get_grid().reset()
 	reset_gen()
-	# _tiles_open.clear()
-	# _tiles_closed.clear()
-	# _tiles_search_open.clear()
-	# _tiles_search_closed.clear()
-	# _tile_current = null
-	# _tile_error = null
-	# _tile_reprocess = null
-	# _tile_search = null
 	_c_lock = 0
-	# reset_fail_safe()
 
 func get_start_index() -> int:
 	return _index_start_tile if get_start_tiles().size() == 0 else get_start_tiles()[0]
@@ -183,11 +176,9 @@ func get_run_time() -> float:
 
 func is_gen_success() -> bool:
 	_c_success = 0
-	while _c_success < get_grid().get_tiles_size():
-		if get_grid().get_tile(_c_success).get_tile_type() == -1:
-			break
+	while _c_success < get_grid().get_tiles_size(): # Loop to check if generation was successful
+		if (get_grid().get_tile(_c_success).get_tile_type() == -1): break # Condition for finding a failed tile
 		_c_success += 1
-	
 	return _c_success == get_grid().get_tiles_size()
 
 func get_process_loop() -> int: return _c_loop
@@ -366,26 +357,14 @@ func _reprocess_tile() -> void:
 
 ## This method adds all the failed tiles back to be processed again.
 func _add_failed_tiles() -> void:
-	# _c_failed = 0
-	# while _c_failed < get_grid().get_tiles_size(): # Loop for finding the failed tiles
-	# 	if get_grid().get_tile(_c_failed).get_tile_type() == -1: # Failed tile found
-	# 		_tiles_open.append(get_grid().get_tile(_c_failed))
-	# 		_tiles_closed.erase(get_grid().get_tile(_c_failed))
-	# 	_c_failed += 1
-	
-	# region NOTE:
-	#	The reason for starting from the back is to give the newly failed tiles
-	#	a chance first to be processed. This is mainly needed for continuous
-	#	generators. If newly failed tiles are NOT given a chance first then
-	#	the old failed tiles will gobble up all of the nukes and this will keep
-	#	giving more and more failed tiles.
-	# endregion
-	_c_failed = get_grid().get_tiles_size() - 1
-	while _c_failed >= 0: # Loop for finding the failed tiles
-		if get_grid().get_tile(_c_failed).get_tile_type() == -1: # Failed tile found
+	_c_failed = 0
+	while _c_failed < get_grid().get_tiles_size(): # Loop for finding the failed tiles
+		# Condition for finding a failed tile
+		if (get_grid().get_tile(_c_failed).get_tile_type() == -1 and
+			!get_grid().get_tile(_c_failed).is_fixed_actual()):
 			_tiles_open.append(get_grid().get_tile(_c_failed))
 			_tiles_closed.erase(get_grid().get_tile(_c_failed))
-		_c_failed -= 1
+		_c_failed += 1
 
 ## This method gets the available rules for a tile but also using one edge of the tile
 ## as a temp value.
