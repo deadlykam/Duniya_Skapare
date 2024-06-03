@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bc2joqlpfqxui"]
+[gd_scene load_steps=9 format=3 uid="uid://bc2joqlpfqxui"]
 
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wave_function_collapse_ui.gd" id="1_2jk17"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wfc_settings.gd" id="1_s6hkl"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_tile_rules.gd" id="4_0a3y5"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_save_load.gd" id="5_fudd3"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_invalid_combo.gd" id="5_lwmug"]
 [ext_resource type="PackedScene" uid="uid://cxvsmixrg237s" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/edge_rule_ui.tscn" id="5_xeytb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u4eh3"]
@@ -134,11 +135,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 28
 item_count = 3
 selected = 0
-popup/item_0/text = "ground"
+popup/item_0/text = "(0) ground"
 popup/item_0/id = 0
-popup/item_1/text = "water"
+popup/item_1/text = "(1) water"
 popup/item_1/id = 1
-popup/item_2/text = "coast"
+popup/item_2/text = "(2) coast"
 popup/item_2/id = 2
 
 [node name="Tile_Edges" type="GridContainer" parent="Main_Container/TabContainer/Tile_Rules/Holder"]
@@ -187,6 +188,163 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 _edge_name = "WEST (-x)"
 _index_edge = 5
+
+[node name="Invalid_Combos" type="ScrollContainer" parent="Main_Container/TabContainer"]
+visible = false
+layout_mode = 2
+script = ExtResource("5_lwmug")
+
+[node name="Holder" type="VBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos"]
+layout_mode = 2
+
+[node name="Tile_Selection_Container" type="HBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Holder"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Tile_Selection_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Tile"
+
+[node name="OB_Tile_List" type="OptionButton" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Tile_Selection_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+item_count = 3
+selected = 0
+popup/item_0/text = "(0) ground"
+popup/item_0/id = 0
+popup/item_1/text = "(1) water"
+popup/item_1/id = 1
+popup/item_2/text = "(2) coast"
+popup/item_2/id = 2
+
+[node name="Ignore_Combo_Container" type="HBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Holder"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Invalid_List" type="ItemList" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Ignore_Combo_Container"]
+custom_minimum_size = Vector2(500, 250)
+layout_mode = 2
+size_flags_horizontal = 3
+select_mode = 1
+item_count = 2
+item_0/text = "90 Edge Type 90"
+item_1/text = "180 Edge Type 270"
+
+[node name="Remove_Button_Container" type="HBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Holder"]
+layout_mode = 2
+
+[node name="Btn_Remove" type="Button" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Remove_Button_Container"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "REMOVE"
+
+[node name="HSeparator" type="HSeparator" parent="Main_Container/TabContainer/Invalid_Combos/Holder"]
+layout_mode = 2
+
+[node name="Input_Header_Container" type="HBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Holder"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Input_Header_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Input"
+
+[node name="Input_Container" type="HBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Holder"]
+layout_mode = 2
+
+[node name="Lbl_Self_Rot" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Input_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Self Rotation"
+
+[node name="OB_Self_Rot" type="OptionButton" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Input_Container"]
+layout_mode = 2
+item_count = 4
+selected = 0
+popup/item_0/text = "0"
+popup/item_0/id = 0
+popup/item_1/text = "90"
+popup/item_1/id = 1
+popup/item_2/text = "180"
+popup/item_2/id = 2
+popup/item_3/text = "270"
+popup/item_3/id = 3
+
+[node name="VSeparator" type="VSeparator" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Input_Container"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Lbl_Edge" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Input_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Edge"
+
+[node name="OB_Edge" type="OptionButton" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Input_Container"]
+layout_mode = 2
+item_count = 6
+selected = 0
+popup/item_0/text = "UP"
+popup/item_0/id = 0
+popup/item_1/text = "NORTH"
+popup/item_1/id = 1
+popup/item_2/text = "EAST"
+popup/item_2/id = 2
+popup/item_3/text = "DOWN"
+popup/item_3/id = 3
+popup/item_4/text = "SOUTH"
+popup/item_4/id = 4
+popup/item_5/text = "WEST"
+popup/item_5/id = 5
+
+[node name="VSeparator2" type="VSeparator" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Input_Container"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Lbl_Type" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Input_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Type"
+
+[node name="OB_Type" type="OptionButton" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Input_Container"]
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "(0) ground"
+popup/item_0/id = 0
+popup/item_1/text = "(2) coast"
+popup/item_1/id = 1
+
+[node name="VSeparator3" type="VSeparator" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Input_Container"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Lbl_Rot" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Input_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Rotation"
+
+[node name="OB_Rot" type="OptionButton" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Input_Container"]
+layout_mode = 2
+item_count = 4
+selected = 0
+popup/item_0/text = "0"
+popup/item_0/id = 0
+popup/item_1/text = "90"
+popup/item_1/id = 1
+popup/item_2/text = "180"
+popup/item_2/id = 2
+popup/item_3/text = "270"
+popup/item_3/id = 3
+
+[node name="Add_Button_Container" type="HBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Holder"]
+layout_mode = 2
+
+[node name="Btn_Add" type="Button" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Add_Button_Container"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "ADD"
 
 [node name="Save_Load_Container" type="Panel" parent="."]
 visible = false
@@ -282,6 +440,7 @@ text = "CANCEL"
 [connection signal="text_changed" from="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container/Txt_NoT" to="Main_Container/TabContainer/WFC_Settings" method="_on_txt_no_t_text_changed"]
 [connection signal="pressed" from="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container/Btn_NOT_OK" to="Main_Container/TabContainer/WFC_Settings" method="_on_btn_not_ok_pressed"]
 [connection signal="item_selected" from="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Selection_Container/OB_Tile_List" to="Main_Container/TabContainer/Tile_Rules" method="_on_ob_tile_list_item_selected"]
+[connection signal="item_selected" from="Main_Container/TabContainer/Invalid_Combos/Holder/Tile_Selection_Container/OB_Tile_List" to="Main_Container/TabContainer/Invalid_Combos" method="_on_ob_tile_list_item_selected"]
 [connection signal="text_changed" from="Save_Load_Container/PathContainer/Txt_Path" to="Save_Load_Container" method="_on_txt_path_text_changed"]
 [connection signal="pressed" from="Save_Load_Container/ButtonContainer/Btn_Action" to="Save_Load_Container" method="_on_btn_action_pressed"]
 [connection signal="pressed" from="Save_Load_Container/ButtonContainer/Btn_Cancel" to="Save_Load_Container" method="_on_btn_cancel_pressed"]

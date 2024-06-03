@@ -1,30 +1,30 @@
-[gd_resource type="Resource" script_class="DS_WFC_Data" load_steps=8 format=3 uid="uid://blwbrwmunu245"]
+[gd_resource type="Resource" script_class="DS_WFC_Data" load_steps=8 format=3 uid="uid://bc7mr3hp4k1yb"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_manager.gd" id="1_1yyf5"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_wfc_data.gd" id="1_nrsju"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_wfc_data.gd" id="1_gfrvv"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_manager.gd" id="2_hcbwj"]
 
-[sub_resource type="Resource" id="Resource_2qy2w"]
-script = ExtResource("1_1yyf5")
+[sub_resource type="Resource" id="Resource_mjq4a"]
+script = ExtResource("2_hcbwj")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
-[sub_resource type="Resource" id="Resource_m8pw3"]
-script = ExtResource("1_1yyf5")
+[sub_resource type="Resource" id="Resource_w18wg"]
+script = ExtResource("2_hcbwj")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
-[sub_resource type="Resource" id="Resource_1dqmc"]
-script = ExtResource("1_1yyf5")
+[sub_resource type="Resource" id="Resource_q77ru"]
+script = ExtResource("2_hcbwj")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
-[sub_resource type="Resource" id="Resource_fjuhx"]
-script = ExtResource("1_1yyf5")
+[sub_resource type="Resource" id="Resource_epm5v"]
+script = ExtResource("2_hcbwj")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
-[sub_resource type="Resource" id="Resource_rrrfs"]
-script = ExtResource("1_1yyf5")
+[sub_resource type="Resource" id="Resource_0mbnu"]
+script = ExtResource("2_hcbwj")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
 [resource]
-script = ExtResource("1_nrsju")
+script = ExtResource("1_gfrvv")
 _number_of_tiles = 5
 _tile_names = Array[String](["ground", "water", "coast1", "coast2", "coast3"])
 _up_rules = Array[int]([])
@@ -45,4 +45,4 @@ _east_size = Array[int]([3, 3, 1, 2, 2])
 _bottom_size = Array[int]([0, 0, 0, 0, 0])
 _south_size = Array[int]([3, 3, 3, 2, 2])
 _west_size = Array[int]([3, 3, 1, 2, 2])
-_invalid_combos = Array[ExtResource("1_1yyf5")]([SubResource("Resource_2qy2w"), SubResource("Resource_m8pw3"), SubResource("Resource_1dqmc"), SubResource("Resource_fjuhx"), SubResource("Resource_rrrfs")])
+_invalid_combos = Array[ExtResource("2_hcbwj")]([SubResource("Resource_mjq4a"), SubResource("Resource_w18wg"), SubResource("Resource_q77ru"), SubResource("Resource_epm5v"), SubResource("Resource_0mbnu")])

@@ -6,6 +6,7 @@ extends Control
 const DS_WFC_DATA: GDScript = preload("res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_wfc_data.gd")
 const DS_WFC_SETTINGS: GDScript = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wfc_settings.gd")
 const DS_TILE_RULES: GDScript = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_tile_rules.gd")
+const DS_INVALID_COMBO: GDScript = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_invalid_combo.gd")
 const DS_SAVE_LOAD: GDScript = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_save_load.gd")
 
 # Properties from the scene
@@ -16,6 +17,7 @@ var _msg_save: Label
 var _data: DS_WFC_DATA = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse/default.tres")
 var _wfc_settings: DS_WFC_SETTINGS
 var _tile_rules: DS_TILE_RULES
+var _invalid_combo: DS_INVALID_COMBO
 var _save_load: DS_SAVE_LOAD
 var _tile_edges: Control
 var _counter1:= -1
@@ -23,6 +25,7 @@ var _counter1:= -1
 func _enter_tree() -> void:
     _wfc_settings = $Main_Container/TabContainer/WFC_Settings
     _tile_rules = $Main_Container/TabContainer/Tile_Rules
+    _invalid_combo = $Main_Container/TabContainer/Invalid_Combos
     _save_load = $Save_Load_Container
     _tile_edges = $Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges
     _lbl_file_name = $Main_Container/FileNameContainer/Lbl_File_Name
@@ -31,6 +34,7 @@ func _enter_tree() -> void:
     _wfc_settings.set_main_ui(self)
     _save_load.set_main_ui(self)
     _tile_rules.set_main_ui(self)
+    _invalid_combo.set_main_ui(self)
     
     _counter1 = 0
     while _counter1 < _tile_edges.get_child_count(): # Loop for initializing the edge rule UIs
@@ -67,4 +71,6 @@ func _on_btn_reset_pressed():
 
 func _on_btn_new_pressed(): _save_load.show_menu(true)
 func _on_btn_load_pressed(): _save_load.show_menu(false)
-func _on_tab_container_tab_changed(tab:int): if tab == 1: _tile_rules.setup() # Showing the tile rules tab
+func _on_tab_container_tab_changed(tab:int):
+    if tab == 1: _tile_rules.setup() # Showing the tile rules tab
+    elif tab == 2: _invalid_combo.setup() # Showing the invalid combo tab
