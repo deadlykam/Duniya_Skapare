@@ -474,6 +474,7 @@ func _is_found_type(tile:DS_Tile, type:int, rot:int) -> bool:
 				_c_found1 += 1
 			
 			if _c_found1 == tile.get_edge_size(): # Found a match
+				# TODO: Check the invalid combination here? Make the logic into a method <- !*
 				return true
 			rot += 1
 
