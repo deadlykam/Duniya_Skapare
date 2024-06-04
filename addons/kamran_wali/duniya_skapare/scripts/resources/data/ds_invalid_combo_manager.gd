@@ -19,3 +19,6 @@ func get_size() -> int: return _data.size()
 
 ## This method gets the indexth element from the data.
 func get_element(index:int) -> DS_InvalidComboData: return _data[index]
+
+## This method resets the data to default state.
+func reset_data() -> void: _data.clear()

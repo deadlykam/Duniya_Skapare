@@ -3,23 +3,23 @@
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_wfc_data.gd" id="1_ntvhm"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_manager.gd" id="1_pafb8"]
 
-[sub_resource type="Resource" id="Resource_0rop4"]
+[sub_resource type="Resource" id="Resource_ty6mv"]
 script = ExtResource("1_pafb8")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
-[sub_resource type="Resource" id="Resource_056bd"]
+[sub_resource type="Resource" id="Resource_hm4gh"]
 script = ExtResource("1_pafb8")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
-[sub_resource type="Resource" id="Resource_5nb21"]
+[sub_resource type="Resource" id="Resource_3wk8f"]
 script = ExtResource("1_pafb8")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
-[sub_resource type="Resource" id="Resource_jjxar"]
+[sub_resource type="Resource" id="Resource_8fx5n"]
 script = ExtResource("1_pafb8")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
-[sub_resource type="Resource" id="Resource_c5qcm"]
+[sub_resource type="Resource" id="Resource_3sc33"]
 script = ExtResource("1_pafb8")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
@@ -45,4 +45,4 @@ _east_size = Array[int]([3, 3, 1, 2, 1])
 _bottom_size = Array[int]([0, 0, 0, 0, 0])
 _south_size = Array[int]([3, 3, 3, 1, 2])
 _west_size = Array[int]([3, 3, 1, 1, 2])
-_invalid_combos = Array[ExtResource("1_pafb8")]([SubResource("Resource_0rop4"), SubResource("Resource_056bd"), SubResource("Resource_5nb21"), SubResource("Resource_jjxar"), SubResource("Resource_c5qcm")])
+_invalid_combos = Array[ExtResource("1_pafb8")]([SubResource("Resource_ty6mv"), SubResource("Resource_hm4gh"), SubResource("Resource_3wk8f"), SubResource("Resource_8fx5n"), SubResource("Resource_3sc33")])

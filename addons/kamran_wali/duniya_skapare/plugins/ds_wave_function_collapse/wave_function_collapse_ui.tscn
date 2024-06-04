@@ -82,7 +82,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="WFC_Settings" type="ScrollContainer" parent="Main_Container/TabContainer"]
-visible = false
 layout_mode = 2
 script = ExtResource("1_s6hkl")
 
@@ -191,6 +190,7 @@ _edge_name = "WEST (-x)"
 _index_edge = 5
 
 [node name="Invalid_Combos" type="ScrollContainer" parent="Main_Container/TabContainer"]
+visible = false
 layout_mode = 2
 script = ExtResource("5_lwmug")
 

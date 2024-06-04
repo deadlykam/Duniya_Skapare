@@ -3,15 +3,15 @@
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_manager.gd" id="1_njsos"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_wfc_data.gd" id="1_ted4v"]
 
-[sub_resource type="Resource" id="Resource_pbwg2"]
+[sub_resource type="Resource" id="Resource_s6xuj"]
 script = ExtResource("1_njsos")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
-[sub_resource type="Resource" id="Resource_wlipp"]
+[sub_resource type="Resource" id="Resource_p8cm3"]
 script = ExtResource("1_njsos")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
-[sub_resource type="Resource" id="Resource_w551x"]
+[sub_resource type="Resource" id="Resource_ftp2i"]
 script = ExtResource("1_njsos")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
@@ -37,4 +37,4 @@ _east_size = Array[int]([1, 1, 2])
 _bottom_size = Array[int]([0, 0, 0])
 _south_size = Array[int]([1, 2, 2])
 _west_size = Array[int]([1, 1, 2])
-_invalid_combos = Array[ExtResource("1_njsos")]([SubResource("Resource_pbwg2"), SubResource("Resource_wlipp"), SubResource("Resource_w551x")])
+_invalid_combos = Array[ExtResource("1_njsos")]([SubResource("Resource_s6xuj"), SubResource("Resource_p8cm3"), SubResource("Resource_ftp2i")])

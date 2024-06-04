@@ -67,7 +67,8 @@ func _on_btn_save_pressed():
 func _on_btn_reset_pressed():
     _data.data_reset()
     _wfc_settings.reset() # Resetting wfc setting
-    _tile_rules.setup() # Resetting the edges
+    _tile_rules.setup() # Resetting the tile rules
+    _invalid_combo.setup() # Resetting the invalid combo
 
 func _on_btn_new_pressed(): _save_load.show_menu(true)
 func _on_btn_load_pressed(): _save_load.show_menu(false)

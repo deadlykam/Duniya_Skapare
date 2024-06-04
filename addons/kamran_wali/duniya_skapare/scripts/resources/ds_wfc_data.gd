@@ -525,8 +525,9 @@ func data_reset() -> void:
     _tile_names[0] = "Tile"
 
     # Resetting invalid combinations
-    _invalid_combos.clear()
     _invalid_combos.resize(1)
+    if _invalid_combos[0] != null: _invalid_combos[0].reset_data() # Resetting data if NOT null
+    else: _invalid_combos[0] = DS_InvalidComboManager.new() # Creating new manager if null
 
     # Removing all the rules
     _up_rules.resize(0)
