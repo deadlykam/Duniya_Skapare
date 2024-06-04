@@ -62,6 +62,9 @@ func add_invalid_combo(tile:int, element:DS_InvalidComboData) -> void: _invalid_
 ## This method removes an invalid combo element from the given tile.
 func remove_invalid_combo(tile:int, element:DS_InvalidComboData) -> void: _invalid_combos[tile].remove_element(element)
 
+## This method removes the indexth invalid combo element from the given tile.
+func remove_invalid_combo_index(tile:int, index:int) -> void: _invalid_combos[tile].remove_element_index(index)
+
 ## This method gets the indexth invalid combo element of the given tile.
 func get_invalid_combo_element(tile:int, index:int) -> DS_InvalidComboData: return _invalid_combos[tile].get_element(index)
 
@@ -73,11 +76,19 @@ func has_invalid_combo_element(tile:int, element:DS_InvalidComboData) -> bool:
         _counter1 += 1
     return false
 
+## This method gets the index of the invalid combo element data IF it exists otherwise -1 is returned
+func get_invalid_combo_element_index(tile:int, element:DS_InvalidComboData) -> int:
+    #region NOTE get_invalid_combo_element_index():
+    #           The counter from the method has_invalid_combo_element() is returned instead
+    #           if an element exists. This is because that method already does the searching
+    #           and stops the _counter1 right when an element is found. So NO need to re-write
+    #           the logic for searching again. -1 is returend if that method returns false.
+    #endregion
+    if has_invalid_combo_element(tile, element): return _counter1
+    return -1
+
 ## This method gets the size for the invalid combo element's data.
-func get_invalid_combo_element_size(tile:int) -> int: 
-    print("Has method get_size ", tile,": ", _invalid_combos[tile].has_method("get_size"))
-    print("Invalid Combo Size: ", _invalid_combos.size())
-    return _invalid_combos[tile].get_size()
+func get_invalid_combo_element_size(tile:int) -> int: return _invalid_combos[tile].get_size()
 
 ## This method gets the size of the invalid combo data.
 func get_invalid_combo_data_size() -> int: return _invalid_combos.size()

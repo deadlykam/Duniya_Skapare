@@ -82,6 +82,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="WFC_Settings" type="ScrollContainer" parent="Main_Container/TabContainer"]
+visible = false
 layout_mode = 2
 script = ExtResource("1_s6hkl")
 
@@ -190,7 +191,6 @@ _edge_name = "WEST (-x)"
 _index_edge = 5
 
 [node name="Invalid_Combos" type="ScrollContainer" parent="Main_Container/TabContainer"]
-visible = false
 layout_mode = 2
 script = ExtResource("5_lwmug")
 
@@ -226,9 +226,6 @@ custom_minimum_size = Vector2(500, 250)
 layout_mode = 2
 size_flags_horizontal = 3
 select_mode = 1
-item_count = 2
-item_0/text = "90 Edge Type 90"
-item_1/text = "180 Edge Type 270"
 
 [node name="Remove_Button_Container" type="HBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Holder"]
 layout_mode = 2
@@ -441,6 +438,8 @@ text = "CANCEL"
 [connection signal="pressed" from="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container/Btn_NOT_OK" to="Main_Container/TabContainer/WFC_Settings" method="_on_btn_not_ok_pressed"]
 [connection signal="item_selected" from="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Selection_Container/OB_Tile_List" to="Main_Container/TabContainer/Tile_Rules" method="_on_ob_tile_list_item_selected"]
 [connection signal="item_selected" from="Main_Container/TabContainer/Invalid_Combos/Holder/Tile_Selection_Container/OB_Tile_List" to="Main_Container/TabContainer/Invalid_Combos" method="_on_ob_tile_list_item_selected"]
+[connection signal="pressed" from="Main_Container/TabContainer/Invalid_Combos/Holder/Remove_Button_Container/Btn_Remove" to="Main_Container/TabContainer/Invalid_Combos" method="_on_btn_remove_pressed"]
+[connection signal="pressed" from="Main_Container/TabContainer/Invalid_Combos/Holder/Add_Button_Container/Btn_Add" to="Main_Container/TabContainer/Invalid_Combos" method="_on_btn_add_pressed"]
 [connection signal="text_changed" from="Save_Load_Container/PathContainer/Txt_Path" to="Save_Load_Container" method="_on_txt_path_text_changed"]
 [connection signal="pressed" from="Save_Load_Container/ButtonContainer/Btn_Action" to="Save_Load_Container" method="_on_btn_action_pressed"]
 [connection signal="pressed" from="Save_Load_Container/ButtonContainer/Btn_Cancel" to="Save_Load_Container" method="_on_btn_cancel_pressed"]

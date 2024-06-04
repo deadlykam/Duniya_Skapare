@@ -1,3 +1,4 @@
+@tool
 class_name DS_InvalidComboData
 extends Resource
 
