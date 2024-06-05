@@ -46,6 +46,7 @@ var _tile_error: DS_Tile
 var _tile_reprocess: DS_Tile
 var _tile_search: DS_Tile
 var _tile_add: DS_Tile
+var _temp_ic: DS_InvalidComboData
 var _rules: Array[int] # Final rules
 var _rng = RandomNumberGenerator.new()
 var _prob:= -1.0
@@ -68,6 +69,7 @@ var _c_failed:= -1
 var _c_search:= -1
 var _c_convert:= -1
 var _c_loop:= 0
+var _c_ic:= -1
 var _type_stored:= -1
 var _rot_stored:= -1
 var _debug_time:= 1.0
@@ -107,6 +109,7 @@ func setup() -> void:
 		_index_start_tile = _rng.randi_range(0, get_grid().get_tiles_size() - 1) # Getting a random tile for start tile
 		_tiles_open.append(get_grid().get_tile(_index_start_tile)) # Adding the first tile to be processed
 
+	if _temp_ic == null: _temp_ic = DS_InvalidComboData.new() # Initiating the invalid combo data
 	process_main(true) # Starting the main process
 
 ## This is the main process which does all the processes.
@@ -429,7 +432,7 @@ func _is_found_type(tile:DS_Tile, type:int, rot:int) -> bool:
 			tile.set_tile_rotation_value(rot) # Setting the rotation of the tile
 			_c_found1 = 0 # This counter acts as edge index
 
-			while _c_found1 < tile.get_edge_size(): # Loop for finding a match
+			while _c_found1 < tile.get_edge_size(): # Loop for finding a match by checking all the edges
 				if tile.get_edge(_c_found1) != null:
 					if tile.get_edge(_c_found1).get_tile_type() != -1: # Checking if neighbour tile has been set
 						
@@ -439,7 +442,7 @@ func _is_found_type(tile:DS_Tile, type:int, rot:int) -> bool:
 							tile.get_rotational_edge_index(_c_found1)
 						)
 
-						# Condition for NOT finding any matches so breaking the loop for the next check
+						# Condition for NOT finding any matches with edge so breaking the loop for the next check
 						if !_temp_rules.has(tile.get_edge(_c_found1).get_tile_type()):
 							_tile_error = tile.get_edge(_c_found1) if !tile.get_edge(_c_found1).is_fixed_actual() else _tile_error # Storing the tile that caused error
 							break
@@ -458,6 +461,25 @@ func _is_found_type(tile:DS_Tile, type:int, rot:int) -> bool:
 							if !_temp_rules.has(type): # NO matches found from the neighbour's edge
 								_tile_error = tile.get_edge(_c_found1) if !tile.get_edge(_c_found1).is_fixed_actual() else _tile_error # Storing the tile that caused error
 								break
+							
+							# Checking if invalid combination found, breaking loop for next check
+							if !_is_valid_combination(tile.get_tile_rotation_value(), 
+														type,
+														tile.get_edge(_c_found1).get_tile_type(), 
+														tile.get_edge(_c_found1).get_tile_rotation_value(), 
+														_c_found1):
+								_tile_error = tile.get_edge(_c_found1) if !tile.get_edge(_c_found1).is_fixed_actual() else _tile_error # Storing the tile that caused error
+								break
+
+							# Checking the valid combination in the edge tile against the current tile							
+							if !_is_valid_combination(tile.get_edge(_c_found1).get_tile_rotation_value(),
+														tile.get_edge(_c_found1).get_tile_type(),
+														type,
+														tile.get_tile_rotation_value(),
+														get_edge_opposite_index(_c_found1, tile.get_edge_size())):
+								_tile_error = tile.get_edge(_c_found1) if !tile.get_edge(_c_found1).is_fixed_actual() else _tile_error # Storing the tile that caused error
+								break
+
 					else: # Neighbour tile has NOT been set
 						# Condition to check if current tile rotation does NOT allows neighbour tile to have
 						# at least 1 tile rule, which is entropy > 0
@@ -473,12 +495,30 @@ func _is_found_type(tile:DS_Tile, type:int, rot:int) -> bool:
 
 				_c_found1 += 1
 			
-			if _c_found1 == tile.get_edge_size(): # Found a match
-				# TODO: Check the invalid combination here? Make the logic into a method <- !*
-				return true
+			# Found a match by checking all the edges
+			if _c_found1 == tile.get_edge_size(): return true
 			rot += 1
 
 	return false
+
+## This method checks if the given tile combinations are valid.
+func _is_valid_combination(tile_rot:int, tile_type:int, edge_tile_type:int, edge_tile_rot:int, edge_index:int) -> bool:
+	#region NOTE:
+	#			The reason for NOT making the _temp_ic null is because
+	#			then it will be needed to be initiated again which may
+	#			cause performance issue by generating garbage each time
+	#			this method is caused. So the 2nd best action to take is
+	#			to just reset the values in _temp_ic and setting them again
+	#endregion
+	_temp_ic.reset_data() # Resetting the temp ic data
+	_temp_ic.set_ic_data( # Setting the new temp ic data
+		tile_rot,
+		edge_index,
+		edge_tile_type,
+		edge_tile_rot
+	)
+
+	return !get_data().has_invalid_combo_element(tile_type, _temp_ic)
 
 ## This method nukes the tiles.
 func _nuke(tile:DS_Tile, cur:int, counter:int, ignore_edge:int) -> void:

@@ -3,23 +3,23 @@
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_manager.gd" id="1_1yyf5"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_wfc_data.gd" id="1_nrsju"]
 
-[sub_resource type="Resource" id="Resource_cljy7"]
+[sub_resource type="Resource" id="Resource_4u783"]
 script = ExtResource("1_1yyf5")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
-[sub_resource type="Resource" id="Resource_wrf6r"]
+[sub_resource type="Resource" id="Resource_0eqqv"]
 script = ExtResource("1_1yyf5")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
-[sub_resource type="Resource" id="Resource_nw8xr"]
+[sub_resource type="Resource" id="Resource_cwupl"]
 script = ExtResource("1_1yyf5")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
-[sub_resource type="Resource" id="Resource_vlt7b"]
+[sub_resource type="Resource" id="Resource_xjhqh"]
 script = ExtResource("1_1yyf5")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
-[sub_resource type="Resource" id="Resource_mjv02"]
+[sub_resource type="Resource" id="Resource_gkc6c"]
 script = ExtResource("1_1yyf5")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
@@ -45,4 +45,4 @@ _east_size = Array[int]([3, 3, 1, 2, 2])
 _bottom_size = Array[int]([0, 0, 0, 0, 0])
 _south_size = Array[int]([3, 3, 3, 2, 2])
 _west_size = Array[int]([3, 3, 1, 2, 2])
-_invalid_combos = Array[ExtResource("1_1yyf5")]([SubResource("Resource_cljy7"), SubResource("Resource_wrf6r"), SubResource("Resource_nw8xr"), SubResource("Resource_vlt7b"), SubResource("Resource_mjv02")])
+_invalid_combos = Array[ExtResource("1_1yyf5")]([SubResource("Resource_4u783"), SubResource("Resource_0eqqv"), SubResource("Resource_cwupl"), SubResource("Resource_xjhqh"), SubResource("Resource_gkc6c")])

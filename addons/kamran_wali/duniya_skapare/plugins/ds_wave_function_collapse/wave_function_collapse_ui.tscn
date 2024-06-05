@@ -334,6 +334,18 @@ popup/item_2/id = 2
 popup/item_3/text = "270"
 popup/item_3/id = 3
 
+[node name="VSeparator4" type="VSeparator" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Input_Container"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="Lbl_Multi" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Input_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Multiple"
+
+[node name="CB_Multi" type="CheckBox" parent="Main_Container/TabContainer/Invalid_Combos/Holder/Input_Container"]
+layout_mode = 2
+
 [node name="Add_Button_Container" type="HBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Holder"]
 layout_mode = 2
 

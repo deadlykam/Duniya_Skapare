@@ -8,6 +8,7 @@ var _ob_self_rot: OptionButton
 var _ob_edge: OptionButton
 var _ob_type: OptionButton
 var _ob_rot: OptionButton
+var _cb_multi: CheckBox
 
 # Properties for internal usage
 var _rules: Array[int]
@@ -24,6 +25,7 @@ func _enter_tree() -> void:
     _ob_edge = $Holder/Input_Container/OB_Edge
     _ob_type = $Holder/Input_Container/OB_Type
     _ob_rot = $Holder/Input_Container/OB_Rot
+    _cb_multi = $Holder/Input_Container/CB_Multi
 
 ## This method sets up the invalid combo tab.
 func setup() -> void:
@@ -49,6 +51,7 @@ func _on_btn_add_pressed():
     _element_ic.set_edge(_ob_edge.selected)
     _element_ic.set_type(_rules[_ob_type.selected])
     _element_ic.set_rot(_ob_rot.selected)
+    _element_ic.set_multi(_cb_multi.button_pressed)
     _index_exists = get_data().get_invalid_combo_element_index(_tile, _element_ic) # Getting the index of existing element
     
     if _index_exists == -1: # Checking if the element does NOT exists already
@@ -87,7 +90,8 @@ func _add_invalid_combo_list(element: DS_InvalidComboData) -> void:
         "Self Rot: " + str(element.get_self_rot() * 90) + ", " +
         "Edge: " + _get_edge_name(element.get_edge()) + ", " +
         "Type: " + "(" + str(element.get_type()) + ") " + get_data().get_tile_name(element.get_type()) + ", " +
-        "Rot: " + str(element.get_rot() * 90)
+        "Rot: " + str(element.get_rot() * 90) + ", " +
+        "Multiple: " + str(element.is_multi())
     )
 
 ## This method sets the rule items.
