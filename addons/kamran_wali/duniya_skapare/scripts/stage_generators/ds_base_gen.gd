@@ -123,6 +123,12 @@ func get_tile_names():
 	print_rich("[color=orange]WARNING: get_tile_names() has NOT been implemented![/color]")
 	return null
 
+## This method gets the stage loaded normal value which is the percentage loaded value.
+## Range is from 0.0 to 1.0.
+func get_percentage_loaded_normal() -> float:
+	print_rich("[color=orange]WARNING: get_percentage_loaded_normal() has NOT been implemented![/color]")
+	return -1.0
+
 ## This method prints the debug.
 func print_debug_info() -> void:
 	print_rich("[color=orange]WARNING: [i]void print_debug_info()[/i] has NOT been implemented![/color]")

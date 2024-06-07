@@ -1,12 +1,10 @@
-[gd_scene load_steps=28 format=3 uid="uid://dhs5or17ml3y"]
+[gd_scene load_steps=19 format=3 uid="uid://dhs5or17ml3y"]
 
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_gljhc"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen_thread.gd" id="2_ss7t6"]
 [ext_resource type="Resource" uid="uid://c0l88lwcimemk" path="res://addons/kamran_wali/duniya_skapare/settings/data2.tres" id="3_v65nl"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="4_kl3so"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_tile_start.gd" id="5_6vsu4"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_world_creator.gd" id="5_ni4v5"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_tile_info.gd" id="6_7ogbm"]
 [ext_resource type="PackedScene" uid="uid://d3nwfq7k3q6lu" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_0_s_1_ground.tscn" id="6_f7lkp"]
 [ext_resource type="PackedScene" uid="uid://nlf210san7nl" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_1_s_1_water.tscn" id="7_sraw2"]
 [ext_resource type="PackedScene" uid="uid://chp36hfkn8c5a" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_2_s_1_corner_1.tscn" id="8_utvqn"]
@@ -16,62 +14,7 @@
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_tile_expander.gd" id="12_uv55h"]
 [ext_resource type="Material" uid="uid://dq41i7obiprt7" path="res://addons/kamran_wali/duniya_skapare/examples/example1/materials/highlight.tres" id="13_58pl7"]
 [ext_resource type="Script" path="res://DELETE_ME/test4.gd" id="14_ykk8b"]
-
-[sub_resource type="Resource" id="Resource_wv6o1"]
-script = ExtResource("6_7ogbm")
-_is_fixed = true
-_type = 2
-_index = 1
-_rot_value = 3
-
-[sub_resource type="Resource" id="Resource_ur0xe"]
-script = ExtResource("6_7ogbm")
-_is_fixed = true
-_type = 2
-_index = 10
-_rot_value = 2
-
-[sub_resource type="Resource" id="Resource_5q4qs"]
-script = ExtResource("6_7ogbm")
-_is_fixed = true
-_type = 2
-_index = 8
-_rot_value = 3
-
-[sub_resource type="Resource" id="Resource_x8jpy"]
-script = ExtResource("6_7ogbm")
-_is_fixed = true
-_type = 2
-_index = 19
-_rot_value = 0
-
-[sub_resource type="Resource" id="Resource_equus"]
-script = ExtResource("6_7ogbm")
-_is_fixed = true
-_type = 2
-_index = 80
-_rot_value = 2
-
-[sub_resource type="Resource" id="Resource_3vrhy"]
-script = ExtResource("6_7ogbm")
-_is_fixed = true
-_type = 2
-_index = 91
-_rot_value = 1
-
-[sub_resource type="Resource" id="Resource_gpknw"]
-script = ExtResource("6_7ogbm")
-_is_fixed = true
-_type = 2
-_index = 89
-_rot_value = 0
-
-[sub_resource type="Resource" id="Resource_oebh2"]
-script = ExtResource("6_7ogbm")
-_is_fixed = true
-_type = 2
-_index = 98
-_rot_value = 1
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_example_ui.gd" id="15_68h2a"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bk58"]
 
@@ -119,12 +62,8 @@ _is_debug_tile_rot = true
 
 [node name="Grid" type="Node3D" parent="Generator_Holder/WFC"]
 script = ExtResource("4_kl3so")
-_grid_x = 10
-_grid_y = 10
-
-[node name="StartingTiles" type="Node" parent="Generator_Holder/WFC"]
-script = ExtResource("5_6vsu4")
-_tiles = Array[ExtResource("6_7ogbm")]([SubResource("Resource_wv6o1"), SubResource("Resource_ur0xe"), SubResource("Resource_5q4qs"), SubResource("Resource_x8jpy"), SubResource("Resource_equus"), SubResource("Resource_3vrhy"), SubResource("Resource_gpknw"), SubResource("Resource_oebh2")])
+_grid_x = 30
+_grid_y = 30
 
 [node name="World_Creator" type="Node3D" parent="." node_paths=PackedStringArray("_generator", "_tile_holder")]
 script = ExtResource("5_ni4v5")
@@ -163,3 +102,27 @@ skeleton = NodePath("")
 script = ExtResource("14_ykk8b")
 _camera_control = NodePath("../Camera3D")
 _tile_control = NodePath("../Highlighter")
+
+[node name="UI" type="Control" parent="." node_paths=PackedStringArray("_generator", "_stage_progress_bar")]
+layout_mode = 3
+anchor_right = 0.999
+anchor_bottom = 1.0
+offset_right = 0.151855
+script = ExtResource("15_68h2a")
+_generator = NodePath("../Generator_Holder/WFC")
+_stage_progress_bar = NodePath("Stage_ProgressBar")
+
+[node name="Label" type="Label" parent="UI"]
+layout_mode = 1
+offset_right = 113.0
+offset_bottom = 26.0
+text = "Generating Stage:"
+
+[node name="Stage_ProgressBar" type="ProgressBar" parent="UI"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 146.0
+offset_right = -658.0
+offset_bottom = 27.0
+grow_horizontal = 2
