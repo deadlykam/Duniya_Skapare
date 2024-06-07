@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_wfc_data.gd" id="1_i1alm"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_manager.gd" id="1_q86ma"]
 
-[sub_resource type="Resource" id="Resource_u8sdo"]
+[sub_resource type="Resource" id="Resource_e382n"]
 script = ExtResource("1_q86ma")
 _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
 
@@ -29,4 +29,4 @@ _east_size = Array[int]([0])
 _bottom_size = Array[int]([0])
 _south_size = Array[int]([0])
 _west_size = Array[int]([0])
-_invalid_combos = Array[ExtResource("1_q86ma")]([SubResource("Resource_u8sdo")])
+_invalid_combos = Array[ExtResource("1_q86ma")]([SubResource("Resource_e382n")])

@@ -32,7 +32,7 @@ func _get_property_list():
             # Loop for loading up all the tile type names
             while _counter < _names.size():
                 _type_names += (
-                    _names[_counter] + (
+                    "(" + str(_counter) + ") " + _names[_counter] + (
                         "," if _counter < _names.size() - 1
                         else ""
                     )

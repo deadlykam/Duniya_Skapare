@@ -62,19 +62,37 @@ func add_invalid_combo(tile:int, element:DS_InvalidComboData) -> void: _invalid_
 ## This method removes an invalid combo element from the given tile.
 func remove_invalid_combo(tile:int, element:DS_InvalidComboData) -> void: _invalid_combos[tile].remove_element(element)
 
+## This method updates the tile's indexth element.
+func update_invalid_combo(tile:int, element:DS_InvalidComboData, index:int) -> void: _invalid_combos[tile].update_element_index(element, index)
+
 ## This method removes the indexth invalid combo element from the given tile.
 func remove_invalid_combo_index(tile:int, index:int) -> void: _invalid_combos[tile].remove_element_index(index)
 
 ## This method gets the indexth invalid combo element of the given tile.
 func get_invalid_combo_element(tile:int, index:int) -> DS_InvalidComboData: return _invalid_combos[tile].get_element(index)
 
-## This method checks if the given invalid combo element already exists for the given tile.
-func has_invalid_combo_element(tile:int, element:DS_InvalidComboData) -> bool:
+## This method checks if the given invalid combo element already exists for the given tile but also ignores the given index.
+func has_invalid_combo_element_ignore_index(tile:int, element:DS_InvalidComboData, _ignore_index:int) -> bool:
     _counter1 = 0
     while _counter1 < _invalid_combos[tile].get_size(): # Loop to check if element already exists
-        if _invalid_combos[tile].get_element(_counter1).is_equal_to(element): return true # Element exists
+        if _invalid_combos[tile].get_element(_counter1).is_equal_to(element) and _counter1 != _ignore_index: return true # Element exists
         _counter1 += 1
     return false
+
+## This method checks if the given invalid combo element already exists for the given tile.
+func has_invalid_combo_element(tile:int, element:DS_InvalidComboData) -> bool:
+    return has_invalid_combo_element_ignore_index(tile, element, -1)
+
+## This method gets the index of the invalid combo element data IF it exists otherwise -1 is returned. Also ignores the given index.
+func get_invalid_combo_element_index_ignore_index(tile:int, element:DS_InvalidComboData, ignore_index:int) -> int:
+    #region NOTE get_invalid_combo_element_index_ignore_index():
+    #           The counter from the method has_invalid_combo_element_ignore_index() is returned instead
+    #           if an element exists. This is because that method already does the searching
+    #           and stops the _counter1 right when an element is found. So NO need to re-write
+    #           the logic for searching again. -1 is returend if that method returns false.
+    #endregion
+    if has_invalid_combo_element_ignore_index(tile, element, ignore_index): return _counter1
+    return -1
 
 ## This method gets the index of the invalid combo element data IF it exists otherwise -1 is returned
 func get_invalid_combo_element_index(tile:int, element:DS_InvalidComboData) -> int:
@@ -525,8 +543,9 @@ func data_reset() -> void:
     _tile_names[0] = "Tile"
 
     # Resetting invalid combinations
-    _invalid_combos.clear()
     _invalid_combos.resize(1)
+    if _invalid_combos[0] != null: _invalid_combos[0].reset_data() # Resetting data if NOT null
+    else: _invalid_combos[0] = DS_InvalidComboManager.new() # Creating new manager if null
 
     # Removing all the rules
     _up_rules.resize(0)
