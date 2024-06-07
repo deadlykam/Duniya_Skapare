@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://01gn077f7vqw"]
+
+[ext_resource type="Texture2D" uid="uid://c3utyhs36olwu" path="res://addons/kamran_wali/duniya_skapare/examples/example1/textures/Tile_Set1_Atlasmap.png" id="1_7ii5e"]
+
+[resource]
+albedo_texture = ExtResource("1_7ii5e")

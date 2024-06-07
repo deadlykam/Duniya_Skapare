@@ -1,0 +1,65 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxvsmixrg237s"]
+
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_edge_rule_ui.gd" id="1_qmaok"]
+
+[node name="edge_rule_ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qmaok")
+
+[node name="Lbl_Edge" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 38.0
+grow_horizontal = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 25
+horizontal_alignment = 1
+
+[node name="Tile_List" type="ItemList" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.838
+offset_top = 39.0
+offset_bottom = -0.0240479
+grow_horizontal = 2
+select_mode = 1
+item_count = 3
+item_0/text = "Tile1"
+item_1/text = "Tile2"
+item_2/text = "Tile3"
+
+[node name="Btn_Add" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -36.0
+offset_right = 125.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "ADD"
+
+[node name="Btn_Remove" type="Button" parent="."]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -125.0
+offset_top = -36.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "REMOVE"
+
+[connection signal="pressed" from="Btn_Add" to="." method="_on_btn_add_pressed"]
+[connection signal="pressed" from="Btn_Remove" to="." method="_on_btn_remove_pressed"]

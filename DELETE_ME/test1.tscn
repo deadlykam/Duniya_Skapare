@@ -1,0 +1,36 @@
+[gd_scene load_steps=8 format=3 uid="uid://i1802nm42enj"]
+
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="1_8ckdf"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_m33c4"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen.gd" id="2_iog3d"]
+[ext_resource type="Resource" uid="uid://dguab0cdtiwkh" path="res://addons/kamran_wali/duniya_skapare/settings/simple_roads.tres" id="3_yj0n3"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_tile_start.gd" id="5_ds3v5"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_tile_info.gd" id="6_7o24x"]
+
+[sub_resource type="Resource" id="Resource_b6kr8"]
+script = ExtResource("6_7o24x")
+_is_fixed = true
+_type = 0
+_index = 0
+_rot_value = 0
+
+[node name="test1" type="Node3D"]
+
+[node name="Test" type="Node3D" parent="." node_paths=PackedStringArray("_generator")]
+script = ExtResource("1_m33c4")
+_generator = NodePath("WFC")
+_is_print_final = true
+
+[node name="WFC" type="Node3D" parent="Test"]
+script = ExtResource("2_iog3d")
+_data = ExtResource("3_yj0n3")
+_is_debug = true
+
+[node name="Grid" type="Node3D" parent="Test/WFC"]
+script = ExtResource("1_8ckdf")
+_grid_x = 5
+_grid_y = 5
+
+[node name="Node3D" type="Node3D" parent="Test/WFC"]
+script = ExtResource("5_ds3v5")
+_tiles = Array[ExtResource("6_7o24x")]([SubResource("Resource_b6kr8")])
