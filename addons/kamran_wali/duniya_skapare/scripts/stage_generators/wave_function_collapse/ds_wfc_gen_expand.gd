@@ -11,6 +11,7 @@ var _z_min:= -1
 var _c_x:= -1
 var _c_y:= -1
 var _c_z:= -1
+var _is_add_first_tile = false
 
 func setup() -> void:
 	super()
@@ -23,6 +24,7 @@ func setup() -> void:
 func expand_grid(dir:int) -> void:
 	set_processing(true) # Starting processing
 	start_debug_timer() # Starting the debug timer
+	_is_add_first_tile = false # First tile has NOT been added for processing
 	
 	# Dynamic loop for expanding the grid
 	_c_z = _z_min + 1 if dir == 0 else 0 # Up condition and correct starting z coordinate
@@ -48,7 +50,11 @@ func expand_grid(dir:int) -> void:
 				_tile_new.set_coord(_c_x, _c_y, _c_z) # Setting new tile's coordinates
 				get_grid().add_tile(_tile_new) # Adding new tile to the main grid
 				add_tile_to_connect(_tile_new) # Adding tile to connection processing
-				add_tile_to_process(_tile_new) # Adding tile to main processing
+
+				if !_is_add_first_tile: # Condition for addinthe first tile to be processed
+					add_tile_to_process(_tile_new) # Adding tile to main processing
+					_is_add_first_tile = true # First tile added
+
 				_c_x += -1 if dir == 5 else 1 # West will be the ONLY one incrementing in the -ve
 			_c_y += -1 if dir == 1 else 1 # North will be the ONLY one incrementing in the -ve
 		_c_z += 1
@@ -60,5 +66,6 @@ func expand_grid(dir:int) -> void:
 	elif dir == 5: _x_min -= get_grid().get_grid_size_x() # Updating x min because West updated
 	
 	process_connect_tiles() # Starting connection processing
-	reset_fail_safe() # Resetting fail safe
-	process_main(false) # Starting processing without the need searching for neighbours
+	# reset_fail_safe() # Resetting fail safe
+	reset_gen() # Resetting the generator ONLY
+	process_main(true) # Starting processing with the need for searching for neighbours

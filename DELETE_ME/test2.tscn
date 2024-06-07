@@ -1,26 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://l0oeatlkl4fa"]
+[gd_scene load_steps=6 format=3 uid="uid://l0oeatlkl4fa"]
 
 [ext_resource type="Script" path="res://DELETE_ME/test1.gd" id="1_3r455"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_ed165"]
 [ext_resource type="Resource" uid="uid://c0l88lwcimemk" path="res://addons/kamran_wali/duniya_skapare/settings/data2.tres" id="3_af0i7"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen_thread.gd" id="3_k8av8"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="4_fl04a"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_tile_start.gd" id="5_gjj74"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_tile_info.gd" id="6_40rky"]
-
-[sub_resource type="Resource" id="Resource_chabu"]
-script = ExtResource("6_40rky")
-_is_fixed = true
-_type = 0
-_index = 0
-_rot_value = 0
-
-[sub_resource type="Resource" id="Resource_72twf"]
-script = ExtResource("6_40rky")
-_is_fixed = true
-_type = 1
-_index = 6
-_rot_value = 0
 
 [node name="test1" type="Node3D" node_paths=PackedStringArray("_generator")]
 script = ExtResource("1_3r455")
@@ -29,7 +13,7 @@ _generator = NodePath("Test/WFC")
 [node name="Test" type="Node3D" parent="." node_paths=PackedStringArray("_generator")]
 script = ExtResource("1_ed165")
 _generator = NodePath("WFC")
-_is_print_final = true
+_number_of_simulations = 100
 
 [node name="WFC" type="Node3D" parent="Test"]
 script = ExtResource("3_k8av8")
@@ -42,7 +26,5 @@ _is_debug_tile_coord = true
 
 [node name="Grid" type="Node3D" parent="Test/WFC"]
 script = ExtResource("4_fl04a")
-
-[node name="Start_Tiles" type="Node3D" parent="Test/WFC"]
-script = ExtResource("5_gjj74")
-_tiles = Array[ExtResource("6_40rky")]([SubResource("Resource_chabu"), SubResource("Resource_72twf")])
+_grid_x = 30
+_grid_y = 30

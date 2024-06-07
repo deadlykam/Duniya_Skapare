@@ -75,6 +75,7 @@ func add_tile(tile:DS_Tile) -> void:
 	
 	process_connect_tiles() # Starting connection processing
 	reset_fail_safe() # Resetting fail safe
+	# reset_gen() # Resetting the generator ONLY
 	process_main(false) # Starting processing without the need for searching for neighbours
 
 func is_tile_height_z(height:int) -> bool: return super(height) if !_ignore_height else height >= 0
