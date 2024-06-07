@@ -27,8 +27,8 @@ func setup() -> void:
     _counter = 0
     
     # Loop to update the option list with the tile names
-    while _counter < get_data().get_wfc_data().get_number_of_tiles():
-        _ob_tile_list.add_item(get_data().get_wfc_data().get_tile_name(_counter))
+    while _counter < get_data().get_number_of_tiles():
+        _ob_tile_list.add_item("(" + str(_counter) + ") " + get_data().get_tile_name(_counter))
         _counter += 1
     
     _update_tile_edges_tile_list() # Updating tile edges tile names

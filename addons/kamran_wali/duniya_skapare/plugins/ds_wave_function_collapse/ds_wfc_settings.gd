@@ -1,9 +1,6 @@
 @tool
 extends "res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_base.gd"
 
-# Constants
-const DS_WAVE_FUNCTION_COLLAPSE_UI = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wave_function_collapse_ui.gd")
-
 # Templates
 var _template_tile_name_ui = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/tile_name_ui.tscn")
 
@@ -13,7 +10,6 @@ var _txt_not: LineEdit
 var _btn_not_ok: Button
 
 # Properties for internal usage ONLY
-var _wave_function_collapse_ui: DS_WAVE_FUNCTION_COLLAPSE_UI
 var _number_of_tiles:= -1
 var _tiles_current:= 0
 var _counter1:= -1
@@ -25,35 +21,31 @@ func _enter_tree() -> void:
     _txt_not = $Holder/NOT_Container/Txt_NoT
     _btn_not_ok = $Holder/NOT_Container/Btn_NOT_OK
 
-## This method initializes the edge rule ui.
-func init(wave_function_collapse_ui:DS_WAVE_FUNCTION_COLLAPSE_UI) -> void:
-    _wave_function_collapse_ui = wave_function_collapse_ui
-
 func _ready() -> void:
     setup() # Setting up the UI at start up
 
 ## This method sets up the UI.
 func setup() -> void:
     _remove_all_inputs() # Making sure all inputs are removed at the start
-    _txt_not.text = str(get_data().get_wfc_data().get_number_of_tiles()) # Setting the txt_not value to number of tiles
-    _number_of_tiles = get_data().get_wfc_data().get_number_of_tiles()
+    _txt_not.text = str(get_data().get_number_of_tiles()) # Setting the txt_not value to number of tiles
+    _number_of_tiles = get_data().get_number_of_tiles()
     _update_tile_name_inputs(_number_of_tiles, true)
 
 ## This method updates the name of the data.
 func update_tile_name_data(name:String, index:int) -> void:
-    get_data().get_wfc_data().update_tile_name(name, index)
+    get_data().update_tile_name(name, index)
     _show_save_msg()
 
 ## This method resets the UI to its default state.
 func reset() -> void:
     _update_tile_name_inputs(1, false)
-    _tile_container.get_child(0).set_txt_name(get_data().get_wfc_data().get_tile_name(0))
-    _txt_not.text = str(get_data().get_wfc_data().get_number_of_tiles())
+    _tile_container.get_child(0).set_txt_name(get_data().get_tile_name(0))
+    _txt_not.text = str(get_data().get_number_of_tiles())
 
 func _on_btn_not_ok_pressed() -> void:
     if _number_of_tiles != int(_txt_not.text): # Condition to check if to update the data
         _update_tile_name_inputs(int(_txt_not.text), false) # Updating the number of tile name inputs to show
-        get_data().get_wfc_data().data_resize(_number_of_tiles) # Resizing the entire data
+        get_data().data_resize(_number_of_tiles) # Resizing the entire data
 
 func _on_txt_no_t_text_changed(new_text:String) -> void:
     if (new_text.is_valid_int() && new_text != "0" && !new_text.contains("-")
@@ -99,7 +91,7 @@ func _remove_all_inputs() -> void:
 func _add_new_tile_input(is_set_name:bool) -> void:
     _temp = _template_tile_name_ui.instantiate()
     _temp.setup(self, _counter_id) # Setting the tile name UI
-    if is_set_name: _temp.setup_name(get_data().get_wfc_data().get_tile_name(_counter1)) # Setting the name
+    if is_set_name: _temp.setup_name(get_data().get_tile_name(_counter1)) # Setting the name
     _tile_container.add_child(_temp)
     _temp = null
     _counter_id += 1 # Increasing the tile id
@@ -115,4 +107,4 @@ func _set_font_colour(control:Control, colour:Color) -> void:
 
 ## This method shows the unsaved messages.
 func _show_save_msg() -> void:
-    _wave_function_collapse_ui.show_unsaved_message("Unsaved Chagnes!")
+    get_main_ui().show_unsaved_message("Unsaved Chagnes!")
