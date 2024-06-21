@@ -201,13 +201,7 @@ func get_percentage_loaded_normal() -> float:
 		_c_loaded += 1
 	
 	_percentage_loaded = _c_loaded2 if _percentage_loaded < _c_loaded2 else _percentage_loaded
-	
-	return float(_percentage_loaded) / get_grid().get_tiles_size()
-	# _c_loaded = 0
-	# while _c_loaded < get_grid().get_tiles_size():
-	# 	if get_grid().get_tile(_c_loaded).get_tile_type() != -1:
-
-	# 	_c_loaded += 1
+	return float(_percentage_loaded) / get_grid().get_tiles_size() if _is_processing else 1.0
 
 func print_debug_info() -> void:
 	_debug_total_time = get_debug_timer()

@@ -13,8 +13,8 @@
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_fly_by_movement.gd" id="11_3hykn"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_tile_expander.gd" id="12_uv55h"]
 [ext_resource type="Material" uid="uid://dq41i7obiprt7" path="res://addons/kamran_wali/duniya_skapare/examples/example1/materials/highlight.tres" id="13_58pl7"]
-[ext_resource type="Script" path="res://DELETE_ME/test4.gd" id="14_ykk8b"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_example_ui.gd" id="15_68h2a"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_control_1.gd" id="14_rag3x"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_example_ui2.gd" id="15_qw8yc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bk58"]
 
@@ -76,13 +76,13 @@ _tile_offset_z = 2.0
 
 [node name="TileHolder" type="Node3D" parent="."]
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
+
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.881559, 0.358073, -0.307633, 1.4267e-08, 0.651662, 0.75851, 0.472074, -0.668671, 0.574478, 4.99932, 47.4558, 61.4221)
 script = ExtResource("11_3hykn")
 _speed = 5.0
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
 
 [node name="Highlighter" type="Node" parent="." node_paths=PackedStringArray("_generator", "_world_creator", "_highlighter")]
 script = ExtResource("12_uv55h")
@@ -98,31 +98,94 @@ material_override = ExtResource("13_58pl7")
 mesh = SubResource("ArrayMesh_lirmf")
 skeleton = NodePath("")
 
-[node name="Node" type="Node" parent="." node_paths=PackedStringArray("_camera_control", "_tile_control")]
-script = ExtResource("14_ykk8b")
+[node name="Control" type="Node" parent="." node_paths=PackedStringArray("_camera_control", "_tile_control")]
+script = ExtResource("14_rag3x")
 _camera_control = NodePath("../Camera3D")
 _tile_control = NodePath("../Highlighter")
 
-[node name="UI" type="Control" parent="." node_paths=PackedStringArray("_generator", "_stage_progress_bar")]
+[node name="UI" type="Control" parent="." node_paths=PackedStringArray("_control_1", "_generator", "_stage_progress_bar", "_lbl_current_mode", "_control_container", "_lbl_camera_controls", "_lbl_tile_controls")]
 layout_mode = 3
 anchor_right = 0.999
 anchor_bottom = 1.0
 offset_right = 0.151855
-script = ExtResource("15_68h2a")
+script = ExtResource("15_qw8yc")
+_control_1 = NodePath("../Control")
 _generator = NodePath("../Generator_Holder/WFC")
-_stage_progress_bar = NodePath("Stage_ProgressBar")
+_stage_progress_bar = NodePath("Main_Container/Loading_Container/Stage_ProgressBar")
+_lbl_current_mode = NodePath("Main_Container/Mode_Container/Lbl_Current_Mode")
+_control_container = NodePath("Control_Container")
+_lbl_camera_controls = NodePath("Control_Container/Lbl_Camera_Controls")
+_lbl_tile_controls = NodePath("Control_Container/Lbl_Tile_Controls")
 
-[node name="Label" type="Label" parent="UI"]
-layout_mode = 1
-offset_right = 113.0
-offset_bottom = 26.0
+[node name="Main_Container" type="VBoxContainer" parent="UI"]
+layout_mode = 0
+offset_right = 389.0
+offset_bottom = 40.0
+
+[node name="Loading_Container" type="HBoxContainer" parent="UI/Main_Container"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Main_Container/Loading_Container"]
+layout_mode = 2
 text = "Generating Stage:"
 
-[node name="Stage_ProgressBar" type="ProgressBar" parent="UI"]
+[node name="Stage_ProgressBar" type="ProgressBar" parent="UI/Main_Container/Loading_Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control_Settings_Container" type="HBoxContainer" parent="UI/Main_Container"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Main_Container/Control_Settings_Container"]
+layout_mode = 2
+text = "Show Controls"
+
+[node name="CB_Control" type="CheckBox" parent="UI/Main_Container/Control_Settings_Container"]
+layout_mode = 2
+
+[node name="Mode_Info_Container" type="HBoxContainer" parent="UI/Main_Container"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Main_Container/Mode_Info_Container"]
+layout_mode = 2
+text = "Press Del Key To Change Mode."
+
+[node name="Mode_Container" type="HBoxContainer" parent="UI/Main_Container"]
+layout_mode = 2
+
+[node name="Lbl_Current_Mode" type="Label" parent="UI/Main_Container/Mode_Container"]
+layout_mode = 2
+text = "Current Mode: Nones"
+
+[node name="Control_Container" type="VBoxContainer" parent="UI"]
+visible = false
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 1
+anchor_left = 1.0
 anchor_right = 1.0
-offset_left = 146.0
-offset_right = -658.0
-offset_bottom = 27.0
-grow_horizontal = 2
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="Lbl_Camera_Controls" type="Label" parent="UI/Control_Container"]
+visible = false
+layout_mode = 2
+text = "Arrow Key Up: Move Camera Forward
+Arrow Key Down: Move Camera Backward
+Arrow Key Left: Move Camera Left
+Arrorw Key Right: Move Camera Right
+Page Up Key: Move Camera Up
+Page Down Key: Move Camera Down
+Home Key: Increase Camera Speed
+End Key: Decrease Camera Speed"
+
+[node name="Lbl_Tile_Controls" type="Label" parent="UI/Control_Container"]
+visible = false
+layout_mode = 2
+text = "Arrow Key Up: Move Highlighter Up
+Arrow Key Down: Move Highlighter Down
+Arrow Key Left: Move Highlighter Left
+Arrorw Key Right: Move Highlighter Right
+Home Key: Check Tile"
+
+[connection signal="toggled" from="UI/Main_Container/Control_Settings_Container/CB_Control" to="UI" method="_on_cb_control_toggled"]
