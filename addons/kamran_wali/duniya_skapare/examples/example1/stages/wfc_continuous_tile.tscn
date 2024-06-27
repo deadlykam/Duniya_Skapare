@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bu1tsgjqfrypf"]
+[gd_scene load_steps=17 format=3 uid="uid://bu1tsgjqfrypf"]
 
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_5aswj"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen_c_tile_thread.gd" id="2_n623a"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://ibf6e3xjblb0" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_4_s_1_corner_3.tscn" id="10_qsb35"]
 [ext_resource type="Material" uid="uid://dq41i7obiprt7" path="res://addons/kamran_wali/duniya_skapare/examples/example1/materials/highlight.tres" id="11_2fmi1"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_tile_expander.gd" id="11_ov7l4"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_example_ui4.gd" id="13_pqtxl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bk58"]
 
@@ -93,3 +94,74 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 material_override = ExtResource("11_2fmi1")
 mesh = SubResource("ArrayMesh_lirmf")
 skeleton = NodePath("")
+
+[node name="UI" type="Control" parent="." node_paths=PackedStringArray("_generator", "_stage_progress_bar", "_control_container")]
+layout_mode = 3
+anchor_right = 0.999
+anchor_bottom = 1.0
+offset_right = 0.151855
+script = ExtResource("13_pqtxl")
+_generator = NodePath("../Generator_Holder/WFC")
+_stage_progress_bar = NodePath("Main_Container/Loading_Container/Stage_ProgressBar")
+_control_container = NodePath("Control_Container")
+
+[node name="Main_Container" type="VBoxContainer" parent="UI"]
+layout_mode = 0
+offset_right = 389.0
+offset_bottom = 40.0
+
+[node name="Loading_Container" type="HBoxContainer" parent="UI/Main_Container"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Main_Container/Loading_Container"]
+layout_mode = 2
+text = "Generating Stage:"
+
+[node name="Stage_ProgressBar" type="ProgressBar" parent="UI/Main_Container/Loading_Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control_Settings_Container" type="HBoxContainer" parent="UI/Main_Container"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Main_Container/Control_Settings_Container"]
+layout_mode = 2
+text = "Show Controls"
+
+[node name="CB_Control" type="CheckBox" parent="UI/Main_Container/Control_Settings_Container"]
+layout_mode = 2
+
+[node name="Mode_Info_Container" type="HBoxContainer" parent="UI/Main_Container"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Main_Container/Mode_Info_Container"]
+layout_mode = 2
+text = "Press Del Key To Change Mode."
+
+[node name="Mode_Container" type="HBoxContainer" parent="UI/Main_Container"]
+layout_mode = 2
+
+[node name="Lbl_Current_Mode" type="Label" parent="UI/Main_Container/Mode_Container"]
+layout_mode = 2
+text = "Current Mode: Nones"
+
+[node name="Control_Container" type="VBoxContainer" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="Lbl_Tile_Controls" type="Label" parent="UI/Control_Container"]
+layout_mode = 2
+text = "Arrow Key Up: Move Highlighter Up
+Arrow Key Down: Move Highlighter Down
+Arrow Key Left: Move Highlighter Left
+Arrorw Key Right: Move Highlighter Right
+Home Key: Check Tile
+End Key: Create New Tiles"
+
+[connection signal="toggled" from="UI/Main_Container/Control_Settings_Container/CB_Control" to="UI" method="_on_cb_control_toggled"]
