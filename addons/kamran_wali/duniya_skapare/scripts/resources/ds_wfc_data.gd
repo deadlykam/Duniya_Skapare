@@ -527,12 +527,23 @@ func data_resize(resize:int) -> void:
         _west_size.resize(resize)
         
         # Resizing positions
+        _counter1 = _up_pos.size() # Acting as previous size
         _up_pos.resize(resize)
         _north_pos.resize(resize)
         _east_pos.resize(resize)
         _bottom_pos.resize(resize)
         _south_pos.resize(resize)
         _west_pos.resize(resize)
+
+        _counter2 = _counter1 # Starting the counter from the new pos
+        while _counter2 < _up_pos.size(): # Loop for setting the correct pos pointer
+            _up_pos[_counter2] = _up_pos[_counter1 - 1] + _up_size[_counter1 - 1]
+            _north_pos[_counter2] = _north_pos[_counter1 - 1] + _north_size[_counter1 - 1]
+            _east_pos[_counter2] = _east_pos[_counter1 - 1] + _east_size[_counter1 - 1]
+            _bottom_pos[_counter2] = _bottom_pos[_counter1 - 1] + _bottom_size[_counter1 - 1]
+            _south_pos[_counter2] = _south_pos[_counter1 - 1] + _south_size[_counter1 - 1]
+            _west_pos[_counter2] = _west_pos[_counter1 - 1] + _west_size[_counter1 - 1]
+            _counter2 += 1
 
 ## This method resets the data.
 func data_reset() -> void:

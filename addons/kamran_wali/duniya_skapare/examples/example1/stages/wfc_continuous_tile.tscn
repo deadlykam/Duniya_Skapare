@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bu1tsgjqfrypf"]
+[gd_scene load_steps=23 format=3 uid="uid://bu1tsgjqfrypf"]
 
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_5aswj"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen_c_tile_thread.gd" id="2_n623a"]
@@ -17,6 +17,8 @@
 [ext_resource type="PackedScene" uid="uid://c6thmebkid70g" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_7_s_1_corner_5.tscn" id="13_4212o"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_example_ui4.gd" id="13_pqtxl"]
 [ext_resource type="PackedScene" uid="uid://rtr0rtuuwirl" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_8_s_1_corner_5m.tscn" id="14_utffi"]
+[ext_resource type="PackedScene" uid="uid://c2l623sb63m0t" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_9_s_1_corner_6.tscn" id="15_tj5p1"]
+[ext_resource type="PackedScene" uid="uid://yh6ewxcvdjoq" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_10_s_1_corner_7.tscn" id="16_byk4b"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bk58"]
 
@@ -69,7 +71,7 @@ script = ExtResource("4_ptjwx")
 
 [node name="World_Creator" type="Node3D" parent="." node_paths=PackedStringArray("_generator", "_tile_holder")]
 script = ExtResource("5_pnblb")
-_tiles = Array[PackedScene]([ExtResource("6_8dbbu"), ExtResource("7_j0xsf"), ExtResource("8_dcb1v"), ExtResource("9_ouv8l"), ExtResource("10_qsb35"), ExtResource("11_hdtsk"), ExtResource("12_ko54t"), ExtResource("13_4212o"), ExtResource("14_utffi")])
+_tiles = Array[PackedScene]([ExtResource("6_8dbbu"), ExtResource("7_j0xsf"), ExtResource("8_dcb1v"), ExtResource("9_ouv8l"), ExtResource("10_qsb35"), ExtResource("11_hdtsk"), ExtResource("12_ko54t"), ExtResource("13_4212o"), ExtResource("14_utffi"), ExtResource("15_tj5p1"), ExtResource("16_byk4b")])
 _generator = NodePath("../Generator_Holder/WFC")
 _tile_holder = NodePath("../Tile_Holder")
 _tile_offset_x = 2.0
