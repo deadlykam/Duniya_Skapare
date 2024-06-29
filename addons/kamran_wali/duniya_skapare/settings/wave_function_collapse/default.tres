@@ -1,12 +1,61 @@
-[gd_resource type="Resource" script_class="DS_WFC_Data" load_steps=10 format=3 uid="uid://uqomi1evvyby"]
+[gd_resource type="Resource" script_class="DS_WFC_Data" load_steps=19 format=3 uid="uid://uqomi1evvyby"]
 
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_manager.gd" id="1_hypky"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_wfc_data.gd" id="1_vl38s"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd" id="2_5i8na"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_wfc_rules_data.gd" id="2_ep3ea"]
 
 [sub_resource type="Resource" id="Resource_b8voa"]
 script = ExtResource("1_hypky")
-_data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd")]([])
+_data = Array[ExtResource("2_5i8na")]([])
+
+[sub_resource type="Resource" id="Resource_1tn10"]
+script = ExtResource("1_hypky")
+_data = Array[ExtResource("2_5i8na")]([])
+
+[sub_resource type="Resource" id="Resource_0nrpk"]
+script = ExtResource("1_hypky")
+_data = Array[ExtResource("2_5i8na")]([])
+
+[sub_resource type="Resource" id="Resource_thrke"]
+script = ExtResource("2_5i8na")
+_self_rot = 0
+_edge = 1
+_type = 2
+_rot = 2
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_q1gd0"]
+script = ExtResource("2_5i8na")
+_self_rot = 0
+_edge = 2
+_type = 2
+_rot = 1
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_4sbma"]
+script = ExtResource("1_hypky")
+_data = Array[ExtResource("2_5i8na")]([SubResource("Resource_thrke"), SubResource("Resource_q1gd0")])
+
+[sub_resource type="Resource" id="Resource_i7t7u"]
+script = ExtResource("2_5i8na")
+_self_rot = 0
+_edge = 4
+_type = 2
+_rot = 2
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_vcn0k"]
+script = ExtResource("2_5i8na")
+_self_rot = 0
+_edge = 5
+_type = 2
+_rot = 1
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_nubrv"]
+script = ExtResource("1_hypky")
+_data = Array[ExtResource("2_5i8na")]([SubResource("Resource_i7t7u"), SubResource("Resource_vcn0k")])
 
 [sub_resource type="Resource" id="Resource_d67rj"]
 script = ExtResource("2_ep3ea")
@@ -17,7 +66,7 @@ _bottom_rules = Array[int]([])
 _south_rules = Array[int]([0, 2, 3])
 _west_rules = Array[int]([0, 2, 3])
 
-[sub_resource type="Resource" id="Resource_4rbsh"]
+[sub_resource type="Resource" id="Resource_4r05n"]
 script = ExtResource("2_ep3ea")
 _up_rules = Array[int]([])
 _north_rules = Array[int]([1, 2, 4])
@@ -26,7 +75,7 @@ _bottom_rules = Array[int]([])
 _south_rules = Array[int]([1, 2, 4])
 _west_rules = Array[int]([1, 2, 4])
 
-[sub_resource type="Resource" id="Resource_n7nwp"]
+[sub_resource type="Resource" id="Resource_1m8bn"]
 script = ExtResource("2_ep3ea")
 _up_rules = Array[int]([])
 _north_rules = Array[int]([2, 3, 4])
@@ -35,7 +84,7 @@ _bottom_rules = Array[int]([])
 _south_rules = Array[int]([2, 3, 4])
 _west_rules = Array[int]([0])
 
-[sub_resource type="Resource" id="Resource_tv6ia"]
+[sub_resource type="Resource" id="Resource_8jejk"]
 script = ExtResource("2_ep3ea")
 _up_rules = Array[int]([])
 _north_rules = Array[int]([2, 4])
@@ -44,7 +93,7 @@ _bottom_rules = Array[int]([])
 _south_rules = Array[int]([0])
 _west_rules = Array[int]([0])
 
-[sub_resource type="Resource" id="Resource_140rp"]
+[sub_resource type="Resource" id="Resource_5epun"]
 script = ExtResource("2_ep3ea")
 _up_rules = Array[int]([])
 _north_rules = Array[int]([1])
@@ -57,23 +106,5 @@ _west_rules = Array[int]([2, 3])
 script = ExtResource("1_vl38s")
 _number_of_tiles = 5
 _tile_names = Array[String](["Ground", "Water", "Corner1", "Corner2", "Corner3"])
-_tile_rules = Array[ExtResource("2_ep3ea")]([SubResource("Resource_d67rj"), SubResource("Resource_4rbsh"), SubResource("Resource_n7nwp"), SubResource("Resource_tv6ia"), SubResource("Resource_140rp")])
-_up_rules = Array[int]([])
-_north_rules = Array[int]([2, 0, 2, 1, 2])
-_east_rules = Array[int]([2, 0, 2, 1, 1])
-_bottom_rules = Array[int]([])
-_south_rules = Array[int]([2, 0, 2, 1, 2])
-_west_rules = Array[int]([2, 0, 2, 1, 0])
-_up_pos = Array[int]([0, 0, 0])
-_north_pos = Array[int]([0, 2, 4])
-_east_pos = Array[int]([0, 2, 4])
-_bottom_pos = Array[int]([0, 0, 0])
-_south_pos = Array[int]([0, 2, 4])
-_west_pos = Array[int]([0, 2, 4])
-_up_size = Array[int]([0, 0, 0])
-_north_size = Array[int]([2, 2, 1])
-_east_size = Array[int]([2, 2, 1])
-_bottom_size = Array[int]([0, 0, 0])
-_south_size = Array[int]([2, 2, 1])
-_west_size = Array[int]([2, 2, 1])
-_invalid_combos = Array[ExtResource("1_hypky")]([SubResource("Resource_b8voa"), null, null, null, null])
+_tile_rules = Array[ExtResource("2_ep3ea")]([SubResource("Resource_d67rj"), SubResource("Resource_4r05n"), SubResource("Resource_1m8bn"), SubResource("Resource_8jejk"), SubResource("Resource_5epun")])
+_invalid_combos = Array[ExtResource("1_hypky")]([SubResource("Resource_b8voa"), SubResource("Resource_1tn10"), SubResource("Resource_0nrpk"), SubResource("Resource_4sbma"), SubResource("Resource_nubrv")])

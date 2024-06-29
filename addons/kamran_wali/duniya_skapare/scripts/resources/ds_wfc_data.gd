@@ -303,10 +303,11 @@ func data_resize(resize:int) -> void:
                     _counter3 -= 1
                 _counter2 += 1
             _counter1 += 1
-    elif resize > _size_pre_rules: # Condition for adding rules
+    elif resize > _size_pre_rules: # Condition for adding new data
         _counter1 = _size_pre_rules # Starting index from previous size
         while _counter1 < resize: # Loop for creating new data
             _tile_rules[_counter1] = DS_WFCRulesData.new() # Creating new data
+            _invalid_combos[_counter1] = DS_InvalidComboManager.new() # Creating new invalid combo data
             _counter1 += 1
 
 ## This method resets the data.
