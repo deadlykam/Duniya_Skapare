@@ -60,6 +60,7 @@ _data = Array[ExtResource("2_x1tey")]([SubResource("Resource_jmmpt"), SubResourc
 script = ExtResource("1_ntvhm")
 _number_of_tiles = 5
 _tile_names = Array[String](["ground", "water", "coast1", "coast2", "coast3"])
+_tile_rules = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_wfc_rules_data.gd")]([])
 _up_rules = Array[int]([])
 _north_rules = Array[int]([3, 2, 0, 4, 2, 1, 4, 3, 2, 4, 2, 1])
 _east_rules = Array[int]([3, 2, 0, 4, 2, 1, 1, 4, 2, 1])

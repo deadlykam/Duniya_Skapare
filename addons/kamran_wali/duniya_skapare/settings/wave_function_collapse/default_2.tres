@@ -11,6 +11,7 @@ _data = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resource
 script = ExtResource("3_5efxi")
 _number_of_tiles = 11
 _tile_names = Array[String](["Ground", "Water", "Corner1", "Corner2", "Corner3", "Corner4", "Corner4_m", "Corner5", "Corner5_m", "Corner6", "Corner7"])
+_tile_rules = Array[Resource("res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_wfc_rules_data.gd")]([])
 _up_rules = Array[int]([])
 _north_rules = Array[int]([10, 9, 8, 7, 6, 5, 3, 2, 0, 10, 9, 8, 7, 6, 5, 4, 2, 1, 8, 7, 6, 5, 4, 3, 2, 8, 7, 6, 5, 4, 2, 1, 1, 1, 8, 4, 3, 2, 7, 4, 2, 3, 2, 1, 0])
 _east_rules = Array[int]([6, 5, 2, 0, 8, 7, 3, 10, 9, 10, 9, 1, 2, 8, 7, 6, 5, 4, 1, 4, 1, 5, 4, 2, 8, 7, 6, 1, 0, 1, 0, 1, 1, 0])
