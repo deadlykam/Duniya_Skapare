@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bu1tsgjqfrypf"]
+[gd_scene load_steps=24 format=3 uid="uid://bu1tsgjqfrypf"]
 
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_5aswj"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen_c_tile_thread.gd" id="2_n623a"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://rtr0rtuuwirl" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_8_s_1_corner_5m.tscn" id="14_utffi"]
 [ext_resource type="PackedScene" uid="uid://c2l623sb63m0t" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_9_s_1_corner_6.tscn" id="15_tj5p1"]
 [ext_resource type="PackedScene" uid="uid://yh6ewxcvdjoq" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_10_s_1_corner_7.tscn" id="16_byk4b"]
+[ext_resource type="PackedScene" uid="uid://dexrl1ilh03pm" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_11_s_1_corner_8.tscn" id="17_cuova"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bk58"]
 
@@ -59,7 +60,7 @@ _generator = NodePath("WFC")
 [node name="WFC" type="Node3D" parent="Generator_Holder"]
 script = ExtResource("2_n623a")
 _data = ExtResource("3_sboh8")
-_nuke_limit = 2
+_nuke_limit = 10
 _is_debug = true
 _is_debug_tile_index = true
 _is_debug_tile_type = true
@@ -71,7 +72,7 @@ script = ExtResource("4_ptjwx")
 
 [node name="World_Creator" type="Node3D" parent="." node_paths=PackedStringArray("_generator", "_tile_holder")]
 script = ExtResource("5_pnblb")
-_tiles = Array[PackedScene]([ExtResource("6_8dbbu"), ExtResource("7_j0xsf"), ExtResource("8_dcb1v"), ExtResource("9_ouv8l"), ExtResource("10_qsb35"), ExtResource("11_hdtsk"), ExtResource("12_ko54t"), ExtResource("13_4212o"), ExtResource("14_utffi"), ExtResource("15_tj5p1"), ExtResource("16_byk4b")])
+_tiles = Array[PackedScene]([ExtResource("6_8dbbu"), ExtResource("7_j0xsf"), ExtResource("8_dcb1v"), ExtResource("9_ouv8l"), ExtResource("10_qsb35"), ExtResource("11_hdtsk"), ExtResource("12_ko54t"), ExtResource("13_4212o"), ExtResource("14_utffi"), ExtResource("15_tj5p1"), ExtResource("16_byk4b"), ExtResource("17_cuova")])
 _generator = NodePath("../Generator_Holder/WFC")
 _tile_holder = NodePath("../Tile_Holder")
 _tile_offset_x = 2.0

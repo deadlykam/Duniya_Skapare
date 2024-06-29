@@ -35,7 +35,7 @@ shadow_mesh = SubResource("ArrayMesh_rwjic")
 [node name="tile_11_s_1_corner8" type="Node3D"]
 
 [node name="s1_corner82" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -1, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(4.37114e-08, 0, -1, 0, -1, 0, 1, 0, 4.37114e-08, 0, 0, 0)
 material_override = ExtResource("1_a2nuo")
 mesh = SubResource("ArrayMesh_0jnq1")
 skeleton = NodePath("")
