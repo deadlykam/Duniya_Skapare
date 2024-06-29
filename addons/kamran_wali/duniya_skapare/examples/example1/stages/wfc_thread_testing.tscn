@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_gljhc"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen_thread.gd" id="2_ss7t6"]
-[ext_resource type="Resource" uid="uid://c0l88lwcimemk" path="res://addons/kamran_wali/duniya_skapare/settings/data2.tres" id="3_v65nl"]
+[ext_resource type="Resource" uid="uid://uqomi1evvyby" path="res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse/default.tres" id="3_raeiy"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="4_kl3so"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_world_creator.gd" id="5_ni4v5"]
 [ext_resource type="PackedScene" uid="uid://d3nwfq7k3q6lu" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_0_s_1_ground.tscn" id="6_f7lkp"]
@@ -54,7 +54,7 @@ _generator = NodePath("WFC")
 
 [node name="WFC" type="Node3D" parent="Generator_Holder"]
 script = ExtResource("2_ss7t6")
-_data = ExtResource("3_v65nl")
+_data = ExtResource("3_raeiy")
 _is_debug = true
 _is_debug_tile_index = true
 _is_debug_tile_type = true
