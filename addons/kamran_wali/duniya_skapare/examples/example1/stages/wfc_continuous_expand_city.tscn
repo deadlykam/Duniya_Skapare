@@ -1,0 +1,58 @@
+[gd_scene load_steps=16 format=3 uid="uid://cjf1isorcb0ie"]
+
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_qisls"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen_expand_thread.gd" id="2_u278w"]
+[ext_resource type="Resource" uid="uid://ble42xc8gmib8" path="res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse/city_1.tres" id="3_wvk11"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="4_yt5ki"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_world_creator.gd" id="5_sndwy"]
+[ext_resource type="PackedScene" uid="uid://ia0so1fyapad" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_0_ground.tscn" id="6_wd70p"]
+[ext_resource type="PackedScene" uid="uid://xheh8w0hpb5v" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_1_intersection.tscn" id="7_snwau"]
+[ext_resource type="PackedScene" uid="uid://bjepjuceglk2t" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_2_road.tscn" id="8_2weh3"]
+[ext_resource type="PackedScene" uid="uid://cya775jvy65j6" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_3_road_l.tscn" id="9_100ap"]
+[ext_resource type="PackedScene" uid="uid://c2ka6i07in0eu" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_4_forest_t.tscn" id="10_q3l25"]
+[ext_resource type="PackedScene" uid="uid://b7wcwt163pvv6" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_5_forest.tscn" id="11_0q708"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_grid_expander.gd" id="11_xkemx"]
+[ext_resource type="PackedScene" uid="uid://6ca6b4o5w3nu" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_6_city_t.tscn" id="12_vxwpi"]
+[ext_resource type="PackedScene" uid="uid://bfp5garfl2xft" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_7_city.tscn" id="13_m5iyv"]
+[ext_resource type="PackedScene" uid="uid://c7rgkg1b3eigi" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_8_road_end.tscn" id="14_r8qyr"]
+
+[node name="wfc_continuous_expand" type="Node3D"]
+
+[node name="Generator_Holder" type="Node3D" parent="." node_paths=PackedStringArray("_generator")]
+script = ExtResource("1_qisls")
+_generator = NodePath("WFC")
+
+[node name="WFC" type="Node3D" parent="Generator_Holder"]
+script = ExtResource("2_u278w")
+_data = ExtResource("3_wvk11")
+_nuke_limit = 50
+_loop_limit = 50
+_is_debug = true
+_is_debug_tile_coord = true
+
+[node name="Grid" type="Node3D" parent="Generator_Holder/WFC"]
+script = ExtResource("4_yt5ki")
+_grid_x = 5
+_grid_y = 5
+
+[node name="World_Creator" type="Node3D" parent="." node_paths=PackedStringArray("_generator", "_tile_holder")]
+script = ExtResource("5_sndwy")
+_tiles = Array[PackedScene]([ExtResource("6_wd70p"), ExtResource("7_snwau"), ExtResource("8_2weh3"), ExtResource("9_100ap"), ExtResource("10_q3l25"), ExtResource("11_0q708"), ExtResource("12_vxwpi"), ExtResource("13_m5iyv"), ExtResource("14_r8qyr")])
+_generator = NodePath("../Generator_Holder/WFC")
+_tile_holder = NodePath("../Tile_Holder")
+_tile_offset_x = 2.0
+_tile_offset_y = 2.0
+_tile_offset_z = 2.0
+
+[node name="Tile_Holder" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.881559, 0.358073, -0.307633, 1.4267e-08, 0.651662, 0.75851, 0.472074, -0.668671, 0.574478, -2.46905, 22.9978, 33.587)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
+
+[node name="Expander_Control" type="Node3D" parent="." node_paths=PackedStringArray("_generator", "_world_creator")]
+script = ExtResource("11_xkemx")
+_generator = NodePath("../Generator_Holder/WFC")
+_world_creator = NodePath("../World_Creator")
