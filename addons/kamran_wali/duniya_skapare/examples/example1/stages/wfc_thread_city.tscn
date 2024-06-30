@@ -1,8 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://dcchw1nste6sj"]
+[gd_scene load_steps=17 format=3 uid="uid://dcchw1nste6sj"]
 
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_c8reu"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen_thread.gd" id="2_pwxom"]
-[ext_resource type="Resource" uid="uid://clgsyq7jfiv8k" path="res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse/city_1.tres" id="3_2sxec"]
+[ext_resource type="Resource" uid="uid://ble42xc8gmib8" path="res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse/city_1.tres" id="3_2sxec"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="4_k6ko2"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_world_creator.gd" id="5_bs0ih"]
 [ext_resource type="PackedScene" uid="uid://ia0so1fyapad" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_0_ground.tscn" id="6_vjn7f"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_example_ui.gd" id="12_c87cv"]
 [ext_resource type="PackedScene" uid="uid://6ca6b4o5w3nu" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_6_city_t.tscn" id="12_ofdb7"]
 [ext_resource type="PackedScene" uid="uid://bfp5garfl2xft" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_7_city.tscn" id="13_nibmc"]
+[ext_resource type="PackedScene" uid="uid://c7rgkg1b3eigi" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_8_road_end.tscn" id="14_8ssv3"]
 
 [node name="wfc_thread" type="Node3D"]
 
@@ -36,7 +37,7 @@ _grid_y = 30
 
 [node name="World_Creator" type="Node3D" parent="." node_paths=PackedStringArray("_generator", "_tile_holder")]
 script = ExtResource("5_bs0ih")
-_tiles = Array[PackedScene]([ExtResource("6_vjn7f"), ExtResource("7_yso40"), ExtResource("8_1gwqs"), ExtResource("9_f2nr2"), ExtResource("10_p14cs"), ExtResource("11_xyk4h"), ExtResource("12_ofdb7"), ExtResource("13_nibmc")])
+_tiles = Array[PackedScene]([ExtResource("6_vjn7f"), ExtResource("7_yso40"), ExtResource("8_1gwqs"), ExtResource("9_f2nr2"), ExtResource("10_p14cs"), ExtResource("11_xyk4h"), ExtResource("12_ofdb7"), ExtResource("13_nibmc"), ExtResource("14_8ssv3")])
 _generator = NodePath("../Generator_Holder/WFC")
 _tile_holder = NodePath("../TileHolder")
 _tile_offset_x = 2.0
