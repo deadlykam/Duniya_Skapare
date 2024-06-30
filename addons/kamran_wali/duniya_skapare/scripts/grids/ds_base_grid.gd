@@ -13,10 +13,20 @@ extends Node
 		if _grid_y != grid_y:
 			_grid_y = grid_y if grid_y >= 1 else 1
 
-@export var _grid_z:= 0:
-	set(grid_z):
-		if _grid_z != grid_z:
-			_grid_z = grid_z if grid_z >= 0 else 0
+# region Grid_Z
+# NOTE: For now the input for grid z is disabled as height requires
+#		further testing and atm it seems like height isn't working.
+#		Keeping the zombie code for taking the grid z input. Making
+#		_grid_z value to zero as default for now. Below is the
+#		the zombie code for taking _grid_z input value and below
+#		that is the current default value for _grid_z.
+
+# @export var _grid_z:= 0:
+# 	set(grid_z):
+# 		if _grid_z != grid_z:
+# 			_grid_z = grid_z if grid_z >= 0 else 0
+var _grid_z = 0
+#endregion
 
 var _tiles: Array[DS_Tile]
 

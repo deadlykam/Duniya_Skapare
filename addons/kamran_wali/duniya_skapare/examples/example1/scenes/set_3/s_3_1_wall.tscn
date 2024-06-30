@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://djjn6o6df4q47"]
+
+[ext_resource type="Material" uid="uid://b3sor7a7nlg8j" path="res://addons/kamran_wali/duniya_skapare/examples/example1/materials/tile_set2_atlasmap.tres" id="1_bfplm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f2ey5"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_yuruu"]
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2.00001, 2, 1.00136e-05),
+"format": 4097,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0),
+"primitive": 3,
+"vertex_count": 4,
+"vertex_data": PackedByteArray(255, 255, 127, 63, 0, 0, 0, 0, 0, 0, 128, 191, 255, 255, 127, 191, 0, 0, 0, 0, 254, 255, 127, 191, 255, 255, 127, 63, 0, 0, 0, 64, 0, 0, 128, 191, 255, 255, 127, 191, 0, 0, 0, 64, 254, 255, 127, 191)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_vq82y"]
+resource_name = "s_3_1_wall_Plane_001"
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2.00001, 2, 1.00136e-05),
+"attribute_data": PackedByteArray(152, 105, 187, 61, 240, 125, 197, 61, 152, 105, 187, 61, 240, 125, 197, 61, 152, 105, 187, 61, 240, 125, 197, 61, 152, 105, 187, 61, 240, 125, 197, 61),
+"format": 4119,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_f2ey5"),
+"primitive": 3,
+"vertex_count": 4,
+"vertex_data": PackedByteArray(255, 255, 127, 63, 0, 0, 0, 0, 0, 0, 128, 191, 255, 255, 255, 255, 255, 255, 255, 191, 255, 255, 127, 191, 0, 0, 0, 0, 254, 255, 127, 191, 255, 255, 255, 255, 255, 255, 255, 191, 255, 255, 127, 63, 0, 0, 0, 64, 0, 0, 128, 191, 255, 255, 255, 255, 255, 255, 255, 191, 255, 255, 127, 191, 0, 0, 0, 64, 254, 255, 127, 191, 255, 255, 255, 255, 255, 255, 255, 191)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_yuruu")
+
+[node name="s_3_1_wall" type="Node3D"]
+
+[node name="s_3_1_wall2" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_bfplm")
+mesh = SubResource("ArrayMesh_vq82y")
+skeleton = NodePath("")
