@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://dl7dorc54w6vs"]
+
+[ext_resource type="Material" uid="uid://b3sor7a7nlg8j" path="res://addons/kamran_wali/duniya_skapare/examples/example1/materials/tile_set2_atlasmap.tres" id="1_cqrop"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bvyp5"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_0bmv6"]
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2, 1e-05, 2.00001),
+"format": 4097,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0),
+"primitive": 3,
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 191)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ew2l2"]
+resource_name = "s_3_0_ground_Plane"
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2, 1e-05, 2.00001),
+"attribute_data": PackedByteArray(62, 239, 86, 63, 152, 105, 187, 61, 62, 239, 86, 63, 152, 105, 187, 61, 62, 239, 86, 63, 152, 105, 187, 61, 62, 239, 86, 63, 152, 105, 187, 61),
+"format": 4119,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_bvyp5"),
+"primitive": 3,
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 255, 255, 255, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 255, 255, 255, 191, 0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 191, 255, 127, 255, 255, 255, 255, 255, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 191, 255, 127, 255, 255, 255, 255, 255, 191)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_0bmv6")
+
+[node name="s_3_0_ground" type="Node3D"]
+
+[node name="s_3_0_ground2" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_cqrop")
+mesh = SubResource("ArrayMesh_ew2l2")
+skeleton = NodePath("")
