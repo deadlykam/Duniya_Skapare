@@ -23,9 +23,23 @@ Godot version **v4.1.3.stable.mono.official [f06b6836a]** and above should work.
 ### Wave Function Collapse:
 Let me give a brief explanation of Wave Function Collapse. Wave Function Collapse or WFC is a constraint based algorithm that can be used to generate anything for example images, 2D stages, 3D stages etc. Basically that means the algorithm uses a set of rules to generate the desired result. In this tool we are going to use WFC to generate stages.
 #### Wave Function Collapse Tool:
-| ![Protagonist.png](https://imgur.com/fkUBzdn.png) | ![ProtagonistIdea.png](https://imgur.com/ybsQrBB.png) | ![Shoe.png](https://imgur.com/4BQ8koF.png) |
+| ![WFC_UI_1.png](https://imgur.com/fkUBzdn.png) | ![WFC_UI_2.png](https://imgur.com/ybsQrBB.png) | ![WFC_UI_3.png](https://imgur.com/z9fg8P7.png) |
 |:--:|:--:|:--:| 
 | *Fig 1a: Wave Function Collapse Tool: WFC Settings* | *Fig 1b: Wave Function Collapse Tool: Tile Rules* | *Fig 1c: Wave Function Collapse Tool: Invalid Combos* |
 
 After [installation](#installation) the Wave Function Collapse Tool can be opened by clicking the _AssetLib_ then clicking the _Plugins_ button. This will open up the plugin window. There just enable the **DS Wave Function Collapse** and this will open up Wave Function Collapse tool and dock it. The tool has 3 tabs which are _WFC Settings_, _Tile Rules_ and _Invalid Combos_. I will explain them all below.
 ##### 1. WFC Settings:
+| ![WFC_UI_1.png](https://imgur.com/G8Z0SmK.png) | 
+|:--:| 
+| *Fig 2a: Wave Function Collapse Tool: WFC Settings* |
+
+The purpose of the _WFC Settings_ tab is to set the number of tiles that is going to be used and to name each tile. The _default_ WFC file will be selected when you open up the tool for the first time. It is recommended to create a new WFC file and use that for your project. I will explain what each part does in the _WFC Settings_ tab with the help of _Fig 2a_
+
+- **a.** _File Name_ - This is the file name of the current data being used. When the tool starts for the first time then the default WFC file is select and in this case it is showing the name of the default file.
+- **b.** _Save_ - The _Save_ button will save any changes made to the data file. Changes can be done in any of the tab and will save all of the changes in all the tabs.
+- **c.** _Number of Tiles_ - This number indicates how many tiles are going to be used in the WFC. Minimum amount is 1.
+- **d.** _Tile Name_ - This is where you can give the names for the tiles.
+- **e.** _New_ - The _New_ button will pop up a new window that will allow you to create a new WFC file. In the _Path_ field give the full folder location where you want to save the new WFC file. You can get the full folder location by selecting the folder in the _FileSystem_ and then pressing _ctrl + shift + c_. In the _Name_ filed you must give the name of the WFC file. Once everything is set then press the _Save_ button and a new WFC File will be created and the newly created WFC file will be loaded.
+- **f.** _Load_ - The _Load_ button will pop up a new window that will allow you to load any WFC files. In the _Path_ field give the full WFC file location. You can get the full file location by selecting the WFC file in the _FileSystem_ and then pressing _ctrl + shift + c_. Once everythign is set then press the _Load_ button. The selected WFC file will be loaded.
+- **g.** _Reset_ - The _Reset_ button will reset the currently loaded WFC file to it's default state. This means there will be only 1 tile with a default name and all the rules and invalid combos will be removed. Be caution when pressing this button.
+- **h.** _Ok_ - This will update the _Number of Tiles_ value to the newly given value.
