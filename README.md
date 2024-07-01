@@ -33,7 +33,7 @@ After [installation](#installation) the Wave Function Collapse Tool can be opene
 |:--:| 
 | *Fig 2a: Wave Function Collapse Tool: WFC Settings* |
 
-The purpose of the _WFC Settings_ tab is to set the number of tiles that is going to be used and to name each tile. The _default_ WFC file will be selected when you open up the tool for the first time. It is recommended to create a new WFC file and use that for your project. I will explain what each part does in the _WFC Settings_ tab with the help of _Fig 2a_
+The purpose of the _WFC Settings_ tab is to set the number of tiles that is going to be used and to name each tile. The _default_ WFC file will be selected when you open up the tool for the first time. It is recommended to create a new WFC file and use that for your project. I will explain what each part does in the _WFC Settings_ tab with the help of _Fig 2a_.
 
 - **a.** _File Name_ - This is the file name of the current data being used. When the tool starts for the first time then the default WFC file is select and in this case it is showing the name of the default file.
 - **b.** _Save_ - The _Save_ button will save any changes made to the data file. Changes can be done in any of the tab and will save all of the changes in all the tabs.
@@ -43,3 +43,11 @@ The purpose of the _WFC Settings_ tab is to set the number of tiles that is goin
 - **f.** _Load_ - The _Load_ button will pop up a new window that will allow you to load any WFC files. In the _Path_ field give the full WFC file location. You can get the full file location by selecting the WFC file in the _FileSystem_ and then pressing _ctrl + shift + c_. Once everythign is set then press the _Load_ button. The selected WFC file will be loaded.
 - **g.** _Reset_ - The _Reset_ button will reset the currently loaded WFC file to it's default state. This means there will be only 1 tile with a default name and all the rules and invalid combos will be removed. Be caution when pressing this button.
 - **h.** _Ok_ - This will update the _Number of Tiles_ value to the newly given value.
+##### 2. Tile Rules:
+| ![WFC_UI_2.png](https://imgur.com/crgM5DG.png) | ![WFC_UI_2.png](https://imgur.com/B5ugEOj.png) | ![WFC_UI_2.png](https://imgur.com/v5Crzro.png) |
+|:--:|:--:|:--:|
+| *Fig 3a: Wave Function Collapse Tool: Tile Rules* | *Fig 3b: Top Down View of Tile Model in Blender* | *Fig 3c: Top Down View of Tile Model in Godot* |
+
+The purpose of the _Tile Rules_ tab is to set the rules for each tile. This will tell the WFC how to generate a stage using the rules. I will explain what each part does in the _Tile Rules_ tab with the help of _Fig 3a, Fig 3b and Fig 3c_.
+
+- **a.** _Tile_ - Here you can select the tile you want to work with. Clicking on the drop down menu will reveal all the tiles created in the [WFC Settings Tab](#1-wfc-settings). The post-fix number of the tile name is the index number of the tile. So if you named your 0th tile Ground then the tile name will be _(0) Ground_. The reason for adding this post-fix index number is to help you further if you are using numbers to create the rules.
