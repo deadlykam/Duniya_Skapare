@@ -57,7 +57,20 @@ The purpose of the _Tile Rules_ tab is to set the rules for each tile. This will
 - **e.** _Added Rule_ - The green highlighted tile in the list indicates that the rule has been added for an edge for the _Tile_.
 - **f.** _Removed Rule_ - The red highlighted tile in the list indicates that the rule has been removed for an edge for the _Tile_. By default newly added tiles will NOT have any rules added.
 ##### 3. Invalid Combos:
-| ![WFC_UI_1.png](https://imgur.com/G8Z0SmK.png) | 
+| ![WFC_UI_1.png](https://imgur.com/skzVbWv.png) | 
 |:--:| 
-| *Fig 2a: Wave Function Collapse Tool: WFC Settings* |
-##TODO: Finish the Invalid Rule##
+| *Fig 4a: Wave Function Collapse Tool: Invalid Combos* |
+
+The task of the _Invalid Combos_ is to tell the WFC that certain combinations should be ignored in the given rules. So while generating the stage the WFC will look for these combinations amongst the tiles and mark them as invalid or wrong. I will explain what each part does in the _Invalid Combos_ tab with the help of _Fig 4a_.
+
+- **a.** _Tile_ - Here you can select the tile you want to work with. Clicking on the drop down menu will reveal all the tiles created in the [WFC Settings Tab](#1-wfc-settings). The post_fix number of the tile name is the index number of the tile. So if you named your 0th tile Ground then the tile name will be _(0) Ground_. The reason for adding this post-fix index number is to help you further if you are using numbers to create the rules.
+- **b.** _Invalid Combo List_ - This list contains all the invalid combinations add to the WFC. It is shown as the invalid combination. You can select the indiviual rules by clicking them and then you can either update them or delete them.
+- **c.** _Self Rotation_ - This input indicates what must be the rotation of the current _Tile_ selected for the invalid combination rule. Clicking it will reveal the 4 rotation types which are 0, 90, 180 and 270 degree.
+- **d.** _Edge_ - This input indicates in which edge of the current _Tile_ selected should the invalid combination rule apply. Clicking it will reveal the 6 edge types which are UP, NORTH, EAST, BOTTOM, SOUTH and WEST.
+- **e.** _Type_ - This input indicates which tile type of the current _Tile_ selected should the invalid combination rule apply. Clicking it will reveal only the tiles the current _Tile_ have rules for and NOT all the tiles in the WFC.
+- **f.** _Rotation_ - This input indicates what must be the rotation of the _Type_ selected for the invalid combination rule. Clicking it will reveal the 4 rotation types which are 0, 90, 180 and 270 degree.
+- **g.** _Multiple_ - This flag indicates if the given invalid combination rule should be applied to only 1 rotation or more. If the flag is kept false then only the current combination given will be the invalid combination rule. If the flag is true then the WFC will look for multiple rotations of the _Tile_ that matches this invalid combination rule. This will allow you to set one invalid rule that covers for all the rotations.
+- **h.** _ADD_ - The _ADD_ button will add an invalid combination rule. The added rule will be shown in the invalid combo list, **b.**. If a similar rule is given then it will NOT be added but instead will highlight the already added rule in the invalid combo list, **b.**.
+- **i** _UPDATE_ - The _UPDATE_ button will update a selected invalid combination rule. The button will ONLY be shown when an invalid combination rule has been selected. When the _UPDATE_ button is clicked then another window will pop up which will allow you to update the invalid combination rule.
+- **j** _DESELECT_ - The _DESELECT_ button will only deselect the currently selected invalid combination rule. The button will ONLY be shown when an invalid combination rule has been selected.
+- **k.** _REMOVE_ - The _REMOVE_ button will remove the selected individual combination rule. The button will ONLY be shown when an invalid combination rule has been selected.
