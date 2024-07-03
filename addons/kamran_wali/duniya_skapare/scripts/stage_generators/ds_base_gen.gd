@@ -2,6 +2,9 @@
 class_name DS_BaseGen
 extends Node
 
+@export_category("DS_BaseGen")
+@export var _is_start_setup:= true
+
 var _grid: DS_BaseGrid
 var _start_tiles: Array[DS_TileInfo]
 var _counter_warning:= -1 # This counter is for warnings ONLY
@@ -21,8 +24,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
-		set_grid()
-		setup() # Setting up the grid
+		set_grid() # Searching for grid child
+		if _is_start_setup: setup() # Condition for setting up the grid
 
 ## This method gets the grid.
 func get_grid() -> DS_BaseGrid: return _grid
@@ -87,6 +90,9 @@ func add_tile(tile:DS_Tile) -> void:
 ## This method adds new tile/s to the given indexth tile edges'. The given 
 ## tile MUST have at least one free spot to add the new tile otherwise it will NOT.
 func add_tile_index(tile:int) -> void: add_tile(_grid.get_tile(tile))
+
+## This method checks if the start setup has been enabled or disabled.
+func is_start_setup() -> bool: return _is_start_setup
 
 ## This method checks if the generator for successful or NOT.
 func is_gen_success() -> bool: return false
