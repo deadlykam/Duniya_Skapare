@@ -94,7 +94,7 @@ func add_tile_index(tile:int) -> void: add_tile(_grid.get_tile(tile))
 ## This method checks if the start setup has been enabled or disabled.
 func is_start_setup() -> bool: return _is_start_setup
 
-## This method checks if the generator for successful or NOT.
+## This method checks if the generator was successful or NOT.
 func is_gen_success() -> bool: return false
 
 ## This method gets the number of process loop value.
