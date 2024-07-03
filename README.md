@@ -74,3 +74,7 @@ The task of the _Invalid Combos_ is to tell the WFC that certain combinations sh
 - **i.** _UPDATE_ - The _UPDATE_ button will update a selected invalid combination rule. The button will ONLY be shown when an invalid combination rule has been selected. When the _UPDATE_ button is clicked then another window will pop up which will allow you to update the invalid combination rule.
 - **j.** _DESELECT_ - The _DESELECT_ button will only deselect the currently selected invalid combination rule. The button will ONLY be shown when an invalid combination rule has been selected.
 - **k.** _REMOVE_ - The _REMOVE_ button will remove the selected individual combination rule. The button will ONLY be shown when an invalid combination rule has been selected.
+#### Wave Function Collapse Scripts:
+In my tool/plugin there are three types of Wave Function Collapse. Simple WFC, Continuous WFC and Expand WFC. I will explain them thoroughly below but please first read the [DS_BaseGen Documentation](https://github.com/deadlykam/Duniya_Skapare/wiki/DS_BaseGen). That will help to understand about the scripts a bit better.
+
+first I will explain the base script _DS_BaseGen_ which is the parent of all the WFC scripts.
