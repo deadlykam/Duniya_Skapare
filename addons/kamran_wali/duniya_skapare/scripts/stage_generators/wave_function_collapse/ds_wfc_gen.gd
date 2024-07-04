@@ -152,7 +152,7 @@ func get_debug_timer() -> float: return ((Time.get_unix_time_from_system() - _de
 func set_processing(is_enabled:bool) -> void: _is_processing = is_enabled
 
 # This method resets the fail safe values.
-func reset_fail_safe():
+func reset_fail_safe() -> void:
 	_debug_nuke_counter = 0
 	_c_loop = 0
 
