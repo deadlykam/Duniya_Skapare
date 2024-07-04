@@ -66,6 +66,5 @@ func expand_grid(dir:int) -> void:
 	elif dir == 5: _x_min -= get_grid().get_grid_size_x() # Updating x min because West updated
 	
 	process_connect_tiles() # Starting connection processing
-	# reset_fail_safe() # Resetting fail safe
 	reset_gen() # Resetting the generator ONLY
 	process_main(true) # Starting processing with the need for searching for neighbours
