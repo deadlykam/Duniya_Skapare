@@ -51,7 +51,7 @@ func expand_grid(dir:int) -> void:
 				get_grid().add_tile(_tile_new) # Adding new tile to the main grid
 				add_tile_to_connect(_tile_new) # Adding tile to connection processing
 
-				if !_is_add_first_tile: # Condition for addinthe first tile to be processed
+				if !_is_add_first_tile: # Condition for adding the first tile to be processed
 					add_tile_to_process(_tile_new) # Adding tile to main processing
 					_is_add_first_tile = true # First tile added
 
