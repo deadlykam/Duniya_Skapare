@@ -471,7 +471,7 @@ func _is_valid_combination(tile_rot:int, tile_type:int, edge_tile_type:int, edge
 	#			The reason for NOT making the _temp_ic null is because
 	#			then it will be needed to be initiated again which may
 	#			cause performance issue by generating garbage each time
-	#			this method is caused. So the 2nd best action to take is
+	#			this method is called. So the 2nd best action to take is
 	#			to just reset the values in _temp_ic and setting them again
 	#endregion
 	_temp_ic.reset_data() # Resetting the temp ic data
