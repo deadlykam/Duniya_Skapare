@@ -548,11 +548,6 @@ func _convert_start_array() -> Array[int]:
 	
 	return _temp.duplicate()
 
-## This method calculates the perentage loaded value.
-# func _calculate_percentage_loaded(dir:float) -> void:
-# 	_c_percentage_loaded += dir
-# 	_percentage_loaded = _percentage_loaded + 1 if _percentage_loaded < _c_percentage_loaded else _percentage_loaded
-
 func _to_string() -> String:
 	if _is_debug_tile_index: # Debug for showing tile index
 		print_rich(get_grid().show_grid_index_array(_convert_start_array())) if get_start_tiles().size() != 0 else print_rich(get_grid().show_grid_index_index(_index_start_tile))
