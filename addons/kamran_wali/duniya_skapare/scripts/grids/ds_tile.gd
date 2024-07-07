@@ -16,8 +16,7 @@ var _x:= 0 # X Coordinate
 var _y:= 0 # Y Coordinate
 var _z:= 0 # Z Coordinate
 
-func _init() -> void:
-	_data_edges.resize(6)
+func _init() -> void: _data_edges.resize(6)
 
 ## This method resets the necessary values required
 ## for generator.
