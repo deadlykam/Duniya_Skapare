@@ -244,13 +244,3 @@ func is_coord_match_x_y_z(x:int, y:int, z:int) -> bool:
 func _to_string() -> String:
 	return ("Type: " + str(_tile_type) + ", Rot: " + str(get_tile_rotation()) +
 		", Coord: (" + str(_x) + ", " + str(_y) + ", "+ str(_z) + ")")
-
-# func _to_string() -> String:
-# 	return ("Type: " + str(_tile_type) + ", Rot: " + str(get_tile_rotation()) +
-# 		", Coord: (" + str(_x) + ", " + str(_y) + ", "+ str(_z) + ") \n" + 
-# 		("Up: (" + str(_data_edges[0].get_x()) + ", " + str(_data_edges[0].get_y()) + ", " + str(_data_edges[0].get_z()) + ") \n" if _data_edges[0] != null else "") + 
-# 		("North: (" + str(_data_edges[1].get_x()) + ", " + str(_data_edges[1].get_y()) + ", " + str(_data_edges[1].get_z()) + ") \n" if _data_edges[1] != null else "") + 
-# 		("East: (" + str(_data_edges[2].get_x()) + ", " + str(_data_edges[2].get_y()) + ", " + str(_data_edges[2].get_z()) + ") \n" if _data_edges[2] != null else "") + 
-# 		("Bottom: (" + str(_data_edges[3].get_x()) + ", " + str(_data_edges[3].get_y()) + ", " + str(_data_edges[3].get_z()) + ") \n" if _data_edges[3] != null else "") + 
-# 		("South: (" + str(_data_edges[4].get_x()) + ", " + str(_data_edges[4].get_y()) + ", " + str(_data_edges[4].get_z()) + ") \n" if _data_edges[4] != null else "") + 
-# 		("West: (" + str(_data_edges[5].get_x()) + ", " + str(_data_edges[5].get_y()) + ", " + str(_data_edges[5].get_z()) + ") \n" if _data_edges[5] != null else ""))
