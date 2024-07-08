@@ -156,8 +156,7 @@ func set_tile_rotation_value(rot_value:int) -> void:
 		else rot_value)
 
 ## This method gets the rotation value of the tile.
-func get_tile_rotation_value() -> int:
-	return _rot_value
+func get_tile_rotation_value() -> int: return _rot_value
 
 ## This method gets the edge index after the tile 
 ## has been rotated.
