@@ -40,8 +40,7 @@ func set_is_fixed(is_fix:bool) -> void:
 	_is_fixed_actual = _is_fixed
 
 ## This method checks if the tile is fixed.
-func is_fixed() -> bool:
-	return _is_fixed
+func is_fixed() -> bool: return _is_fixed
 
 ## This method sets the tile's actual fixed flag which
 ## is the temp is fixed flag.
