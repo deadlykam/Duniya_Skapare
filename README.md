@@ -1,9 +1,16 @@
-# Duniya_Skapare
+# Duniya Skapare
 
 ### Introduction
 A godot tool that creates a grid world using different type of algorithms.
 
 ## Table of Contents:
+- [Prerequisites](#prerequisites)
+  - [Godot Game Engine](#godot-game-engine)
+- [Stable Build](#stable-build)
+- [Installation](#installation)
+- [Features](#features)
+  - [Wave Function Collapse](#wave-function-collapse)
+    - [Wave Function Collapse Examples](#wave-function-collapse-examples)
 
 ## Prerequisites
 #### Godot Game Engine
