@@ -1,3 +1,5 @@
+<p align="center"><img src="https://imgur.com/PJ5RGEH.png"></p>
+
 # Duniya Skapare
 
 ### Introduction
