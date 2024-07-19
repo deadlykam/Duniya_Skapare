@@ -1,4 +1,4 @@
-<p align="center"><img src="https://imgur.com/PJ5RGEH.png"></p>
+<p align="center"><img src="https://imgur.com/yX8oJXm.png"></p>
 
 # Duniya Skapare
 
