@@ -47,7 +47,7 @@ _tile_offset_z = 2.0
 [node name="TileHolder" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.881559, 0.358073, -0.307632, 1.4267e-08, 0.651662, 0.75851, 0.472074, -0.668671, 0.574478, -2.46905, 22.9978, 33.587)
+transform = Transform3D(0.881559, 0.358073, -0.307633, 1.4267e-08, 0.651662, 0.75851, 0.472074, -0.668671, 0.574478, -2.46905, 22.9978, 33.587)
 script = ExtResource("11_cm3iy")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
