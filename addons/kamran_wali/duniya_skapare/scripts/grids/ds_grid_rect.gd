@@ -56,11 +56,8 @@ func show_grid_tile_array(tiles: Array[int]) -> String:
 	_debug_print += "===xxx==="
 	return _debug_print
 
-func show_grid_tile_index(index:int) -> String:
-	return show_grid_tile_array([index])
-
-func show_grid_tile() -> String:
-	return show_grid_tile_index(-1)
+func show_grid_tile_index(index:int) -> String: return show_grid_tile_array([index])
+func show_grid_tile() -> String: return show_grid_tile_index(-1)
 
 func show_grid_tile_rot_array(tiles: Array[int]) -> String:
 	_index = 0
@@ -107,14 +104,12 @@ func show_grid_tile_rot_array(tiles: Array[int]) -> String:
 	_debug_print += "===xxx==="
 	return _debug_print
 
-func show_grid_tile_rot_index(index:int) -> String:
-	return show_grid_tile_rot_array([index])
+func show_grid_tile_rot_index(index:int) -> String: return show_grid_tile_rot_array([index])
 
 ## This method returns the grid in string format.
 ## The tile rotation information are shown in the grid.
 ## Use this for debugging.
-func show_grid_tile_rot() -> String:
-	return show_grid_tile_rot_index(-1)
+func show_grid_tile_rot() -> String: return show_grid_tile_rot_index(-1)
 
 func show_grid_index_array(tiles: Array[int]) -> String:
 	_index = 0
@@ -159,11 +154,8 @@ func show_grid_index_array(tiles: Array[int]) -> String:
 	_debug_print += "===xxx==="
 	return _debug_print
 
-func show_grid_index_index(index: int) -> String:
-	return show_grid_index_array([index])
-
-func show_grid_index() -> String:
-	return show_grid_index_index(-1)
+func show_grid_index_index(index: int) -> String: return show_grid_index_array([index])
+func show_grid_index() -> String: return show_grid_index_index(-1)
 
 func show_grid_coord_array(tiles: Array[int]) -> String:
 	_index = 0
@@ -205,11 +197,8 @@ func show_grid_coord_array(tiles: Array[int]) -> String:
 	_debug_print += "===xxx==="
 	return _debug_print
 
-func show_grid_coord_index(index: int) -> String:
-	return show_grid_coord_array([index])
-
-func show_grid_coord() -> String:
-	return show_grid_coord_index(-1)
+func show_grid_coord_index(index: int) -> String: return show_grid_coord_array([index])
+func show_grid_coord() -> String: return show_grid_coord_index(-1)
 
 func setup() -> void:
 	_counter_x = 0 # Array setup counter

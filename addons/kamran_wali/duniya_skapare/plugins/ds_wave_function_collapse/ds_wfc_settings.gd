@@ -21,8 +21,7 @@ func _enter_tree() -> void:
     _txt_not = $Holder/NOT_Container/Txt_NoT
     _btn_not_ok = $Holder/NOT_Container/Btn_NOT_OK
 
-func _ready() -> void:
-    setup() # Setting up the UI at start up
+func _ready() -> void: setup() # Setting up the UI at start up
 
 ## This method sets up the UI.
 func setup() -> void:
@@ -106,5 +105,4 @@ func _set_font_colour(control:Control, colour:Color) -> void:
     control.add_theme_color_override("font_color", colour)
 
 ## This method shows the unsaved messages.
-func _show_save_msg() -> void:
-    get_main_ui().show_unsaved_message("Unsaved Chagnes!")
+func _show_save_msg() -> void: get_main_ui().show_unsaved_message("Unsaved Chagnes!")
