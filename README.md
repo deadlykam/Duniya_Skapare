@@ -37,3 +37,7 @@ See [Wave Function Collapse Tool](https://github.com/deadlykam/Duniya_Skapare/wi
 | ![Continuous_Tile_WFC_Animation](https://imgur.com/4VHxug0.gif) | ![Tiles](https://imgur.com/oxMiJAU.png) |
 |:--:|:--:|
 | *Fig 3a: Continuous Tile WFC - Animation* | *Fig 3b: Tile Sets* |
+
+| ![Simple_WFC_Animation](https://imgur.com/I8Pa5Rc.gif) | ![Tiles](https://imgur.com/LNf4oaW.png) |
+|:--:|:--:|
+| *Fig 4a: Simple WFC - Animation* | *Fig 4b: Tile Sets* |
