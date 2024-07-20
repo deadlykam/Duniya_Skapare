@@ -21,16 +21,12 @@ func setup(manager:DS_WFC_SETTINGS, id:int) -> void:
     _id = id
 
 ## This method set the name of the tile.
-func setup_name(name:String) -> void:
-    _name = name
+func setup_name(name:String) -> void: _name = name
 
 ## This method sets the name of the text name.
-func set_txt_name(name: String) -> void:
-    _txt_name.text = name
+func set_txt_name(name: String) -> void: _txt_name.text = name
 
-func _on_txt_name_text_changed(new_text:String):
-    _manager.update_tile_name_data(new_text, _id)
+func _on_txt_name_text_changed(new_text:String): _manager.update_tile_name_data(new_text, _id)
 
 ## This method sets the lable id name.
-func _set_label_id() -> void:
-    _lbl_id.text = "Tile " + str(_id) + ":"
+func _set_label_id() -> void: _lbl_id.text = "Tile " + str(_id) + ":"

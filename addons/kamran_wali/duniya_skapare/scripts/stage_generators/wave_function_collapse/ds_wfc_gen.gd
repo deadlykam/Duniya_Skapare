@@ -152,7 +152,7 @@ func get_debug_timer() -> float: return ((Time.get_unix_time_from_system() - _de
 func set_processing(is_enabled:bool) -> void: _is_processing = is_enabled
 
 # This method resets the fail safe values.
-func reset_fail_safe():
+func reset_fail_safe() -> void:
 	_debug_nuke_counter = 0
 	_c_loop = 0
 
@@ -471,7 +471,7 @@ func _is_valid_combination(tile_rot:int, tile_type:int, edge_tile_type:int, edge
 	#			The reason for NOT making the _temp_ic null is because
 	#			then it will be needed to be initiated again which may
 	#			cause performance issue by generating garbage each time
-	#			this method is caused. So the 2nd best action to take is
+	#			this method is called. So the 2nd best action to take is
 	#			to just reset the values in _temp_ic and setting them again
 	#endregion
 	_temp_ic.reset_data() # Resetting the temp ic data
@@ -547,11 +547,6 @@ func _convert_start_array() -> Array[int]:
 		_c_convert += 1
 	
 	return _temp.duplicate()
-
-## This method calculates the perentage loaded value.
-# func _calculate_percentage_loaded(dir:float) -> void:
-# 	_c_percentage_loaded += dir
-# 	_percentage_loaded = _percentage_loaded + 1 if _percentage_loaded < _c_percentage_loaded else _percentage_loaded
 
 func _to_string() -> String:
 	if _is_debug_tile_index: # Debug for showing tile index

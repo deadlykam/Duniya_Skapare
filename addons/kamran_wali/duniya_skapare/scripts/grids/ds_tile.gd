@@ -16,8 +16,7 @@ var _x:= 0 # X Coordinate
 var _y:= 0 # Y Coordinate
 var _z:= 0 # Z Coordinate
 
-func _init() -> void:
-	_data_edges.resize(6)
+func _init() -> void: _data_edges.resize(6)
 
 ## This method resets the necessary values required
 ## for generator.
@@ -41,8 +40,7 @@ func set_is_fixed(is_fix:bool) -> void:
 	_is_fixed_actual = _is_fixed
 
 ## This method checks if the tile is fixed.
-func is_fixed() -> bool:
-	return _is_fixed
+func is_fixed() -> bool: return _is_fixed
 
 ## This method sets the tile's actual fixed flag which
 ## is the temp is fixed flag.
@@ -52,16 +50,13 @@ func set_is_fixed_actual(is_fix_actual:bool) -> void:
 ## This method checks if the tile is fixed. This
 ## flag is temp flag and will reset after reset
 ## call.
-func is_fixed_actual() -> bool:
-	return _is_fixed_actual
+func is_fixed_actual() -> bool: return _is_fixed_actual
 
 ## This method sets the type of the tile.
-func set_tile_type(tile_type:int) -> void:
-	_tile_type = tile_type
+func set_tile_type(tile_type:int) -> void: _tile_type = tile_type
 
 ## This method gets the type of the tile.
-func get_tile_type() -> int:
-	return _tile_type
+func get_tile_type() -> int: return _tile_type
 
 ## This method sets the type of tile for the linked tiles.
 ## UP = 0
@@ -70,8 +65,7 @@ func get_tile_type() -> int:
 ## Bottom = 3
 ## South = 4
 ## West = 5
-func set_edge(tile: DS_Tile, index:int) -> void:
-	_data_edges[index] = tile
+func set_edge(tile: DS_Tile, index:int) -> void: _data_edges[index] = tile
 
 ## This method gets the linked tile.
 ## UP = 0
@@ -80,8 +74,7 @@ func set_edge(tile: DS_Tile, index:int) -> void:
 ## Bottom = 3
 ## South = 4
 ## West = 5
-func get_edge(index:int) -> DS_Tile:
-	return _data_edges[index]
+func get_edge(index:int) -> DS_Tile: return _data_edges[index]
 
 ## This method gets the linked tile after rotating the tile. So 
 ## depending on the rotation of the tile the edges can be anywhere.
@@ -89,58 +82,44 @@ func get_edge(index:int) -> DS_Tile:
 func get_rotational_edge(index:int) -> DS_Tile:
 	return _data_edges[get_rotational_edge_index(index)]
 
-## This method gets the size of the edge array 
-## which MUST always be 4.
-func get_edge_size() -> int:
-	return _data_edges.size()
+## This method gets the size of the edge array.
+func get_edge_size() -> int: return _data_edges.size()
 
 ## This method sets the up tile.
-func set_up(up: DS_Tile) -> void:
-	set_edge(up, 0)
+func set_up(up: DS_Tile) -> void: set_edge(up, 0)
 
 ## This method gets the up tile.
-func get_up() -> DS_Tile:
-	return get_edge(0)
+func get_up() -> DS_Tile: return get_edge(0)
 
 ## This method sets the north tile.
-func set_north(north: DS_Tile) -> void:
-	set_edge(north, 1)
+func set_north(north: DS_Tile) -> void: set_edge(north, 1)
 
 ## This method gets the north tile.
-func get_north() -> DS_Tile:
-	return get_edge(1)
+func get_north() -> DS_Tile: return get_edge(1)
 
 ## This method sets the east tile.
-func set_east(east: DS_Tile) -> void:
-	set_edge(east, 2)
+func set_east(east: DS_Tile) -> void: set_edge(east, 2)
 
 ## This method gets the east tile.
-func get_east() -> DS_Tile:
-	return get_edge(2)
+func get_east() -> DS_Tile: return get_edge(2)
 
 ## This method sets the bottom tile.
-func set_bottom(bottom: DS_Tile) -> void:
-	set_edge(bottom, 3)
+func set_bottom(bottom: DS_Tile) -> void: set_edge(bottom, 3)
 
 ## This method gets the bottom tile.
-func get_bottom() -> DS_Tile:
-	return get_edge(3)
+func get_bottom() -> DS_Tile: return get_edge(3)
 
 ## This method sets the south tile.
-func set_south(south: DS_Tile) -> void:
-	set_edge(south, 4)
+func set_south(south: DS_Tile) -> void: set_edge(south, 4)
 
 ## This method gets the south tile.
-func get_south() -> DS_Tile:
-	return get_edge(4)
+func get_south() -> DS_Tile: return get_edge(4)
 
 ## This method sets the west tile.
-func set_west(west: DS_Tile) -> void:
-	set_edge(west, 5)
+func set_west(west: DS_Tile) -> void: set_edge(west, 5)
 
 ## This method gets the north tile.
-func get_west() -> DS_Tile:
-	return get_edge(5)
+func get_west() -> DS_Tile: return get_edge(5)
 
 ## This method gets the rotation of the tile in quaternions.
 func get_tile_rotation_quat() -> Quaternion:
@@ -177,8 +156,7 @@ func set_tile_rotation_value(rot_value:int) -> void:
 		else rot_value)
 
 ## This method gets the rotation value of the tile.
-func get_tile_rotation_value() -> int:
-	return _rot_value
+func get_tile_rotation_value() -> int: return _rot_value
 
 ## This method gets the edge index after the tile 
 ## has been rotated.
@@ -245,13 +223,3 @@ func is_coord_match_x_y_z(x:int, y:int, z:int) -> bool:
 func _to_string() -> String:
 	return ("Type: " + str(_tile_type) + ", Rot: " + str(get_tile_rotation()) +
 		", Coord: (" + str(_x) + ", " + str(_y) + ", "+ str(_z) + ")")
-
-# func _to_string() -> String:
-# 	return ("Type: " + str(_tile_type) + ", Rot: " + str(get_tile_rotation()) +
-# 		", Coord: (" + str(_x) + ", " + str(_y) + ", "+ str(_z) + ") \n" + 
-# 		("Up: (" + str(_data_edges[0].get_x()) + ", " + str(_data_edges[0].get_y()) + ", " + str(_data_edges[0].get_z()) + ") \n" if _data_edges[0] != null else "") + 
-# 		("North: (" + str(_data_edges[1].get_x()) + ", " + str(_data_edges[1].get_y()) + ", " + str(_data_edges[1].get_z()) + ") \n" if _data_edges[1] != null else "") + 
-# 		("East: (" + str(_data_edges[2].get_x()) + ", " + str(_data_edges[2].get_y()) + ", " + str(_data_edges[2].get_z()) + ") \n" if _data_edges[2] != null else "") + 
-# 		("Bottom: (" + str(_data_edges[3].get_x()) + ", " + str(_data_edges[3].get_y()) + ", " + str(_data_edges[3].get_z()) + ") \n" if _data_edges[3] != null else "") + 
-# 		("South: (" + str(_data_edges[4].get_x()) + ", " + str(_data_edges[4].get_y()) + ", " + str(_data_edges[4].get_z()) + ") \n" if _data_edges[4] != null else "") + 
-# 		("West: (" + str(_data_edges[5].get_x()) + ", " + str(_data_edges[5].get_y()) + ", " + str(_data_edges[5].get_z()) + ") \n" if _data_edges[5] != null else ""))
