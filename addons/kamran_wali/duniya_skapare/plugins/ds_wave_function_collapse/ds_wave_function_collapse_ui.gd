@@ -8,12 +8,15 @@ const DS_WFC_SETTINGS: GDScript = preload("res://addons/kamran_wali/duniya_skapa
 const DS_TILE_RULES: GDScript = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_tile_rules.gd")
 const DS_INVALID_COMBO: GDScript = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_invalid_combo.gd")
 const DS_SAVE_LOAD: GDScript = preload("res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_save_load.gd")
+const DS_STRING_VAR: GDScript = preload("res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_string_var.gd")
 
 # Properties from the scene
 var _lbl_file_name: Label
 var _msg_save: Label
+var _version_lbl: Label
 
 # Properties for internal usage
+var _version: DS_STRING_VAR
 var _data: DS_WFC_DATA = load("res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse/default.tres")
 var _wfc_settings: DS_WFC_SETTINGS
 var _tile_rules: DS_TILE_RULES
@@ -30,12 +33,16 @@ func _enter_tree() -> void:
     _tile_edges = $Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges
     _lbl_file_name = $Main_Container/FileNameContainer/Lbl_File_Name
     _msg_save = $Main_Container/FileNameContainer/Msg_Save
+    _version_lbl = $Main_Container/Version
 
     _wfc_settings.set_main_ui(self)
     _save_load.set_main_ui(self)
     _tile_rules.set_main_ui(self)
     _invalid_combo.set_main_ui(self)
     
+    _version = load("res://addons/kamran_wali/duniya_skapare/settings/version.tres")
+    _version_lbl.text = _version.get_value()
+
     _counter1 = 0
     while _counter1 < _tile_edges.get_child_count(): # Loop for initializing the edge rule UIs
         _tile_edges.get_child(_counter1).set_main_ui(self)
