@@ -2,6 +2,9 @@
 class_name DS_BaseGen
 extends Node
 
+@export_category("DS_BaseGen")
+@export var _is_start_setup:= true
+
 var _grid: DS_BaseGrid
 var _start_tiles: Array[DS_TileInfo]
 var _counter_warning:= -1 # This counter is for warnings ONLY
@@ -21,8 +24,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
-		set_grid()
-		setup() # Setting up the grid
+		set_grid() # Searching for grid child
+		if _is_start_setup: setup() # Condition for setting up the grid
 
 ## This method gets the grid.
 func get_grid() -> DS_BaseGrid: return _grid
@@ -88,7 +91,10 @@ func add_tile(tile:DS_Tile) -> void:
 ## tile MUST have at least one free spot to add the new tile otherwise it will NOT.
 func add_tile_index(tile:int) -> void: add_tile(_grid.get_tile(tile))
 
-## This method checks if the generator for successful or NOT.
+## This method checks if the start setup has been enabled or disabled.
+func is_start_setup() -> bool: return _is_start_setup
+
+## This method checks if the generator was successful in generating a grid stage or NOT.
 func is_gen_success() -> bool: return false
 
 ## This method gets the number of process loop value.
@@ -122,6 +128,12 @@ func get_data(): # NOTE: The type must be none-type because other gens may NOT h
 func get_tile_names():
 	print_rich("[color=orange]WARNING: get_tile_names() has NOT been implemented![/color]")
 	return null
+
+## This method gets the stage loaded normal value which is the percentage loaded value.
+## Range is from 0.0 to 1.0.
+func get_percentage_loaded_normal() -> float:
+	print_rich("[color=orange]WARNING: get_percentage_loaded_normal() has NOT been implemented![/color]")
+	return -1.0
 
 ## This method prints the debug.
 func print_debug_info() -> void:

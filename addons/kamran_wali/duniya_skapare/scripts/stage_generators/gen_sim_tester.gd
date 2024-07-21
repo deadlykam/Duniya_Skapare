@@ -30,6 +30,7 @@ var _c_fail:= 0
 var _is_show_result:= false
 var _avg_process_time:= 0.0
 var _avg_process_loop:= 0
+var _check_start_setup:= false
 
 func _get_configuration_warnings():
 	var warnings: Array[String]
@@ -39,10 +40,16 @@ func _get_configuration_warnings():
 
 	return warnings
 
-func _ready() -> void: _counter = _number_of_simulations
+func _ready() -> void:
+	_counter = _number_of_simulations
+	_check_start_setup = false
 
 func _process(delta) -> void:
 	if !Engine.is_editor_hint(): # Play Mode
+		if !_check_start_setup: # Condition for checking if start setup is enabled or disabled
+			if !_generator.is_start_setup(): _generator.setup() # Condition for calling generator setup
+			_check_start_setup = true
+		
 		if _counter > 0: # Counter to check how many simulation to run
 			if !_generator.is_gen_process(): # Checking if generator processing is done
 				if _generator.is_gen_success():

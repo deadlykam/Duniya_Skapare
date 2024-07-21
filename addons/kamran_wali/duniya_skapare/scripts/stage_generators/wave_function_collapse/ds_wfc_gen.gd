@@ -70,6 +70,9 @@ var _c_search:= -1
 var _c_convert:= -1
 var _c_loop:= 0
 var _c_ic:= -1
+var _c_loaded:= 0
+var _c_loaded2:= 0
+var _percentage_loaded:= 0
 var _type_stored:= -1
 var _rot_stored:= -1
 var _debug_time:= 1.0
@@ -149,7 +152,7 @@ func get_debug_timer() -> float: return ((Time.get_unix_time_from_system() - _de
 func set_processing(is_enabled:bool) -> void: _is_processing = is_enabled
 
 # This method resets the fail safe values.
-func reset_fail_safe():
+func reset_fail_safe() -> void:
 	_debug_nuke_counter = 0
 	_c_loop = 0
 
@@ -163,6 +166,7 @@ func reset_gen() -> void:
 	_tile_error = null
 	_tile_reprocess = null
 	_tile_search = null
+	_percentage_loaded = 0
 	reset_fail_safe()
 
 ## This method resets the grid and the generator.
@@ -188,6 +192,16 @@ func get_process_loop() -> int: return _c_loop
 func is_gen_process() -> bool: return _is_processing
 func get_data() -> DS_WFC_Data: return _data
 func get_tile_names() -> Array[String]: return _data.get_tile_names()
+
+func get_percentage_loaded_normal() -> float:
+	_c_loaded = 0
+	_c_loaded2 = 0
+	while _c_loaded < get_grid().get_tiles_size():
+		if get_grid().get_tile(_c_loaded).get_tile_type() != -1: _c_loaded2 += 1
+		_c_loaded += 1
+	
+	_percentage_loaded = _c_loaded2 if _percentage_loaded < _c_loaded2 else _percentage_loaded
+	return float(_percentage_loaded) / get_grid().get_tiles_size() if _is_processing else 1.0
 
 func print_debug_info() -> void:
 	_debug_total_time = get_debug_timer()
@@ -256,56 +270,6 @@ func _process_grid(is_search:bool) -> void:
 				_c1 += 1
 		
 		_tiles_closed.append(_tile_current) # The current tile has been processed
-
-# ## This method reprocesses to fix the error.
-# func _reprocess_tile() -> void:
-# 	if _tile_reprocess != null: # Condition for storing the reprocessed tile's type and rot value
-# 		_type_stored = _tile_reprocess.get_tile_type() # Storing the reprocessed tile's type
-# 		_rot_stored = _tile_reprocess.get_tile_rotation_value() # Storing the reprocessed tile's rotation
-	
-# 	# Condition for failed rotational fix of the reprocessed tile and also checking if _tile_reprocess is NOT null
-# 	if (!_is_found_type(_tile_reprocess, _tile_reprocess.get_tile_type(), _tile_reprocess.get_tile_rotation_value() + 1) if _tile_reprocess != null else true):
-# 		if _tile_reprocess != null: # Condition to reset the reprocessed tile's type and rotation values
-# 			_tile_reprocess.set_tile_type(_type_stored) # Resetting the reprocessed tile's type
-# 			_tile_reprocess.set_tile_rotation_value(_rot_stored) # Resetting the reprocessed tile's rotation
-		
-# 		_c_re1 = 0
-# 		while _c_re1 < _tile_current.get_edge_size(): # Loop for going through all the edges to find a new type for the current tile
-# 			if _is_tile_processed(_tile_current.get_edge(_c_re1)): # Checking if the edge tile has been processed
-# 				if !_tile_current.get_edge(_c_re1).is_fixed_actual(): # Checking if the tile is NOT fixed
-# 					_type_stored = _tile_current.get_edge(_c_re1).get_tile_type() # Storing edge's type
-# 					_rot_stored = _tile_current.get_edge(_c_re1).get_tile_rotation_value() # Storing edge's rot value
-
-# 					# Checking if new rotation found for the neighbouring tile
-# 					if _is_found_type(_tile_current.get_edge(_c_re1), _type_stored, _rot_stored + 1):
-# 						_process_tile(_tile_current, _get_rules(_tile_current)) # Processing the current tile
-# 						if _tile_current.get_tile_type() != -1: break # Condition for find type for the current tile
-							
-# 					_rules = _get_rules(_tile_current.get_edge(_c_re1)) # Getting all the rules for the edge tile
-# 					_rules.erase(_type_stored) # Removing the current type of the edge from the rules
-
-# 					while !_rules.is_empty(): # Loop to check if new edge tile type will fix the issue
-# 						_tile_current.get_edge(_c_re1).reset() # Resetting the edge tile
-# 						_process_tile(_tile_current.get_edge(_c_re1), _rules.duplicate()) # Processing the edge tile
-
-# 						if _tile_current.get_edge(_c_re1).get_tile_type() != -1: # Checking if the edge tile has a new type
-# 							_process_tile(_tile_current, _get_rules(_tile_current)) # Processing the current tile
-# 							if _tile_current.get_tile_type() != -1: break # Checking if current tile found a type and ending loop
-# 							else: _rules.erase(_tile_current.get_edge(_c_re1).get_tile_type()) # Removing the edge's tile type from the rule list
-# 						else: break # No type found for the edge tile breaking the loop
-
-# 					if _tile_current.get_tile_type() != -1: break # Condition for found new tile type and stopping further searches
-# 					else: # Condition for resetting the edge's value to stored values
-# 						_tile_current.get_edge(_c_re1).set_tile_type(_type_stored)
-# 						_tile_current.get_edge(_c_re1).set_tile_rotation_value(_rot_stored)
-				
-# 			_c_re1 += 1
-		
-# 		if _tile_current.get_tile_type() == -1: # Condition for nuking the current tile
-# 			if _nuke_limit == -1 || _debug_nuke_counter < _nuke_limit:
-# 				_nuke(_tile_current, 0, 0, -1) # Condition for nuking tiles to get better results
-# 				_tiles_open.append(_find_nearest_none_processed_tile(_tile_current)) # Adding the correct tile to start the process
-# 				_debug_nuke_counter += 1 # For counting the number nukes being fired
 
 ## This method reprocesses to fix the error.
 func _reprocess_tile() -> void:
@@ -507,7 +471,7 @@ func _is_valid_combination(tile_rot:int, tile_type:int, edge_tile_type:int, edge
 	#			The reason for NOT making the _temp_ic null is because
 	#			then it will be needed to be initiated again which may
 	#			cause performance issue by generating garbage each time
-	#			this method is caused. So the 2nd best action to take is
+	#			this method is called. So the 2nd best action to take is
 	#			to just reset the values in _temp_ic and setting them again
 	#endregion
 	_temp_ic.reset_data() # Resetting the temp ic data

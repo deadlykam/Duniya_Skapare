@@ -92,7 +92,7 @@ func _get_property_list():
     return properties
 
 ## This method sets the data for the Tile Info.
-func set_data(data:Array[DS_TileInfo], names: Array[String], grid_size:int, id:int) -> void:
+func set_data(data:Array[DS_TileInfo], names:Array[String], grid_size:int, id:int) -> void:
     _data = data
     _names = names
     _grid_size = grid_size

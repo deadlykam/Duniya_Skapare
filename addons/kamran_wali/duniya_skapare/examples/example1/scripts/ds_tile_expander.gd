@@ -67,10 +67,6 @@ func _process(delta) -> void:
 			elif Input.is_action_just_pressed("ui_home"):
 				_tile = _generator.get_grid().get_tile_coord_x_y_z(_x, _y, _z)
 				print(_tile)
-				# print("Tile: ", _generator.get_tile_index(_tile))
-				# print("- Type: ", _tile.get_tile_type())
-				# print("- Rot: ", _tile.get_tile_rotation())
-				# print("- Coord: (", _tile.get_x(), ", ", _tile.get_y(), ", ", _tile.get_z(), ")")
 
 ## This method sets the position of the highlighter.
 func _set_highlighter_pos() -> void:
