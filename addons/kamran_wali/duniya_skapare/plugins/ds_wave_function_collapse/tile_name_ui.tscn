@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0wnd8p2eqr3d"]
+
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_tile_name_ui.gd" id="1_gyfpt"]
+
+[node name="tile_name_ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_gyfpt")
+
+[node name="Holder" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+
+[node name="Lbl_ID" type="Label" parent="Holder"]
+layout_mode = 2
+text = "Tile -1:"
+
+[node name="Txt_Name" type="LineEdit" parent="Holder"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="text_changed" from="Holder/Txt_Name" to="." method="_on_txt_name_text_changed"]

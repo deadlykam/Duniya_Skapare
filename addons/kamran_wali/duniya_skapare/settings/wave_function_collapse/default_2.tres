@@ -1,0 +1,284 @@
+[gd_resource type="Resource" script_class="DS_WFC_Data" load_steps=43 format=3 uid="uid://dpbwvgje7n62n"]
+
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_manager.gd" id="1_o2je4"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd" id="2_mes10"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_wfc_rules_data.gd" id="2_r43f7"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_wfc_data.gd" id="3_5efxi"]
+
+[sub_resource type="Resource" id="Resource_i4yvd"]
+script = ExtResource("1_o2je4")
+_data = Array[ExtResource("2_mes10")]([])
+
+[sub_resource type="Resource" id="Resource_3q3n7"]
+script = ExtResource("1_o2je4")
+_data = Array[ExtResource("2_mes10")]([])
+
+[sub_resource type="Resource" id="Resource_skdrm"]
+script = ExtResource("1_o2je4")
+_data = Array[ExtResource("2_mes10")]([])
+
+[sub_resource type="Resource" id="Resource_lo5r2"]
+script = ExtResource("2_mes10")
+_self_rot = 0
+_edge = 1
+_type = 2
+_rot = 2
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_2vki2"]
+script = ExtResource("2_mes10")
+_self_rot = 0
+_edge = 2
+_type = 2
+_rot = 1
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_6ifv4"]
+script = ExtResource("1_o2je4")
+_data = Array[ExtResource("2_mes10")]([SubResource("Resource_lo5r2"), SubResource("Resource_2vki2")])
+
+[sub_resource type="Resource" id="Resource_tlkfa"]
+script = ExtResource("2_mes10")
+_self_rot = 0
+_edge = 4
+_type = 2
+_rot = 2
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_l18ij"]
+script = ExtResource("2_mes10")
+_self_rot = 0
+_edge = 5
+_type = 2
+_rot = 1
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_o7sfv"]
+script = ExtResource("1_o2je4")
+_data = Array[ExtResource("2_mes10")]([SubResource("Resource_tlkfa"), SubResource("Resource_l18ij")])
+
+[sub_resource type="Resource" id="Resource_mhhxm"]
+script = ExtResource("2_mes10")
+_self_rot = 0
+_edge = 4
+_type = 2
+_rot = 0
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_ujeql"]
+script = ExtResource("2_mes10")
+_self_rot = 0
+_edge = 4
+_type = 3
+_rot = 0
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_rip7y"]
+script = ExtResource("2_mes10")
+_self_rot = 0
+_edge = 4
+_type = 4
+_rot = 1
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_wjmac"]
+script = ExtResource("1_o2je4")
+_data = Array[ExtResource("2_mes10")]([SubResource("Resource_mhhxm"), SubResource("Resource_ujeql"), SubResource("Resource_rip7y")])
+
+[sub_resource type="Resource" id="Resource_o2q1g"]
+script = ExtResource("2_mes10")
+_self_rot = 0
+_edge = 4
+_type = 2
+_rot = 2
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_5bjfu"]
+script = ExtResource("2_mes10")
+_self_rot = 0
+_edge = 4
+_type = 3
+_rot = 3
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_143vy"]
+script = ExtResource("2_mes10")
+_self_rot = 0
+_edge = 4
+_type = 4
+_rot = 2
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_l3qvm"]
+script = ExtResource("1_o2je4")
+_data = Array[ExtResource("2_mes10")]([SubResource("Resource_o2q1g"), SubResource("Resource_5bjfu"), SubResource("Resource_143vy")])
+
+[sub_resource type="Resource" id="Resource_fe35o"]
+script = ExtResource("2_mes10")
+_self_rot = 0
+_edge = 1
+_type = 4
+_rot = 0
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_kkxgw"]
+script = ExtResource("2_mes10")
+_self_rot = 0
+_edge = 1
+_type = 3
+_rot = 1
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_wyfgo"]
+script = ExtResource("2_mes10")
+_self_rot = 0
+_edge = 1
+_type = 2
+_rot = 0
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_ynibm"]
+script = ExtResource("1_o2je4")
+_data = Array[ExtResource("2_mes10")]([SubResource("Resource_fe35o"), SubResource("Resource_kkxgw"), SubResource("Resource_wyfgo")])
+
+[sub_resource type="Resource" id="Resource_k1rgb"]
+script = ExtResource("2_mes10")
+_self_rot = 0
+_edge = 1
+_type = 3
+_rot = 2
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_gp606"]
+script = ExtResource("2_mes10")
+_self_rot = 0
+_edge = 1
+_type = 4
+_rot = 3
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_4jtij"]
+script = ExtResource("2_mes10")
+_self_rot = 0
+_edge = 1
+_type = 2
+_rot = 2
+_is_multi = true
+
+[sub_resource type="Resource" id="Resource_lrkgm"]
+script = ExtResource("1_o2je4")
+_data = Array[ExtResource("2_mes10")]([SubResource("Resource_k1rgb"), SubResource("Resource_gp606"), SubResource("Resource_4jtij")])
+
+[sub_resource type="Resource" id="Resource_8nkb6"]
+script = ExtResource("1_o2je4")
+_data = Array[ExtResource("2_mes10")]([])
+
+[sub_resource type="Resource" id="Resource_sopla"]
+script = ExtResource("1_o2je4")
+_data = Array[ExtResource("2_mes10")]([])
+
+[sub_resource type="Resource" id="Resource_m235x"]
+script = ExtResource("2_r43f7")
+_up_rules = Array[int]([])
+_north_rules = Array[int]([0, 2, 3, 5, 6, 7, 8, 9, 10])
+_east_rules = Array[int]([0, 2, 3, 5, 6, 7, 8, 9, 10])
+_bottom_rules = Array[int]([])
+_south_rules = Array[int]([0, 2, 3, 5, 6, 7, 8, 9, 10])
+_west_rules = Array[int]([0, 2, 3, 5, 6, 7, 8, 9, 10])
+
+[sub_resource type="Resource" id="Resource_d0hvl"]
+script = ExtResource("2_r43f7")
+_up_rules = Array[int]([])
+_north_rules = Array[int]([1, 2, 4, 5, 6, 7, 8, 9, 10])
+_east_rules = Array[int]([1, 2, 4, 5, 6, 7, 8, 9, 10])
+_bottom_rules = Array[int]([])
+_south_rules = Array[int]([1, 2, 4, 5, 6, 7, 8, 9, 10])
+_west_rules = Array[int]([1, 2, 4, 5, 6, 7, 8, 9, 10])
+
+[sub_resource type="Resource" id="Resource_m552t"]
+script = ExtResource("2_r43f7")
+_up_rules = Array[int]([])
+_north_rules = Array[int]([2, 3, 4, 5, 6, 7, 8])
+_east_rules = Array[int]([1])
+_bottom_rules = Array[int]([])
+_south_rules = Array[int]([2, 3, 4, 5, 6, 7, 8])
+_west_rules = Array[int]([0])
+
+[sub_resource type="Resource" id="Resource_aspww"]
+script = ExtResource("2_r43f7")
+_up_rules = Array[int]([])
+_north_rules = Array[int]([2, 4, 5, 6, 7, 8])
+_east_rules = Array[int]([2, 4, 5, 6, 7, 8])
+_bottom_rules = Array[int]([])
+_south_rules = Array[int]([0])
+_west_rules = Array[int]([0])
+
+[sub_resource type="Resource" id="Resource_ppg23"]
+script = ExtResource("2_r43f7")
+_up_rules = Array[int]([])
+_north_rules = Array[int]([1])
+_east_rules = Array[int]([1])
+_bottom_rules = Array[int]([])
+_south_rules = Array[int]([2, 3, 5, 6, 7, 8])
+_west_rules = Array[int]([2, 3, 5, 6, 7, 8])
+
+[sub_resource type="Resource" id="Resource_4cjl4"]
+script = ExtResource("2_r43f7")
+_up_rules = Array[int]([])
+_north_rules = Array[int]([1])
+_east_rules = Array[int]([0])
+_bottom_rules = Array[int]([])
+_south_rules = Array[int]([2, 3, 4, 6])
+_west_rules = Array[int]([1])
+
+[sub_resource type="Resource" id="Resource_keid2"]
+script = ExtResource("2_r43f7")
+_up_rules = Array[int]([])
+_north_rules = Array[int]([1])
+_east_rules = Array[int]([1])
+_bottom_rules = Array[int]([])
+_south_rules = Array[int]([2, 3, 4, 5])
+_west_rules = Array[int]([0])
+
+[sub_resource type="Resource" id="Resource_gew2q"]
+script = ExtResource("2_r43f7")
+_up_rules = Array[int]([])
+_north_rules = Array[int]([2, 3, 4, 8])
+_east_rules = Array[int]([0])
+_bottom_rules = Array[int]([])
+_south_rules = Array[int]([0])
+_west_rules = Array[int]([1])
+
+[sub_resource type="Resource" id="Resource_cxetj"]
+script = ExtResource("2_r43f7")
+_up_rules = Array[int]([])
+_north_rules = Array[int]([2, 3, 4, 7])
+_east_rules = Array[int]([1])
+_bottom_rules = Array[int]([])
+_south_rules = Array[int]([0])
+_west_rules = Array[int]([0])
+
+[sub_resource type="Resource" id="Resource_a123m"]
+script = ExtResource("2_r43f7")
+_up_rules = Array[int]([])
+_north_rules = Array[int]([1])
+_east_rules = Array[int]([1])
+_bottom_rules = Array[int]([])
+_south_rules = Array[int]([0])
+_west_rules = Array[int]([1])
+
+[sub_resource type="Resource" id="Resource_q1232"]
+script = ExtResource("2_r43f7")
+_up_rules = Array[int]([])
+_north_rules = Array[int]([0])
+_east_rules = Array[int]([0])
+_bottom_rules = Array[int]([])
+_south_rules = Array[int]([1])
+_west_rules = Array[int]([0])
+
+[resource]
+script = ExtResource("3_5efxi")
+_number_of_tiles = 11
+_tile_names = Array[String](["Ground", "Water", "Corner1", "Corner2", "Corner3", "Corner4", "Corner4_m", "Corner5", "Corner5_m", "Corner6", "Corner7"])
+_tile_rules = Array[ExtResource("2_r43f7")]([SubResource("Resource_m235x"), SubResource("Resource_d0hvl"), SubResource("Resource_m552t"), SubResource("Resource_aspww"), SubResource("Resource_ppg23"), SubResource("Resource_4cjl4"), SubResource("Resource_keid2"), SubResource("Resource_gew2q"), SubResource("Resource_cxetj"), SubResource("Resource_a123m"), SubResource("Resource_q1232")])
+_invalid_combos = Array[ExtResource("1_o2je4")]([SubResource("Resource_i4yvd"), SubResource("Resource_3q3n7"), SubResource("Resource_skdrm"), SubResource("Resource_6ifv4"), SubResource("Resource_o7sfv"), SubResource("Resource_wjmac"), SubResource("Resource_l3qvm"), SubResource("Resource_ynibm"), SubResource("Resource_lrkgm"), SubResource("Resource_8nkb6"), SubResource("Resource_sopla")])

@@ -1,0 +1,657 @@
+[gd_scene load_steps=11 format=3 uid="uid://bc2joqlpfqxui"]
+
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wave_function_collapse_ui.gd" id="1_2jk17"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wfc_settings.gd" id="1_s6hkl"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_tile_rules.gd" id="4_0a3y5"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_save_load.gd" id="5_fudd3"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_invalid_combo.gd" id="5_lwmug"]
+[ext_resource type="PackedScene" uid="uid://cxvsmixrg237s" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/edge_rule_ui.tscn" id="5_xeytb"]
+[ext_resource type="Texture2D" uid="uid://bvv6t6038d4l6" path="res://addons/kamran_wali/duniya_skapare/settings/logos/Duniya_Skapare_Logo_Name_400_3.png" id="6_dls12"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_semua"]
+bg_color = Color(0.113725, 0.133333, 0.160784, 0.898039)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u4eh3"]
+bg_color = Color(0.113725, 0.133333, 0.160784, 0.898039)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h5i1a"]
+bg_color = Color(0.113725, 0.133333, 0.160784, 1)
+
+[node name="Wave Function Collapse" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_2jk17")
+
+[node name="Main_Container" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FileNameContainer" type="HBoxContainer" parent="Main_Container"]
+layout_mode = 2
+
+[node name="Lbl_File_Name" type="Label" parent="Main_Container/FileNameContainer"]
+layout_mode = 2
+text = "default"
+
+[node name="Control" type="Control" parent="Main_Container/FileNameContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="Msg_Save" type="Label" parent="Main_Container/FileNameContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "Unsaved Changes!"
+
+[node name="ButtonContainer" type="HBoxContainer" parent="Main_Container"]
+layout_mode = 2
+
+[node name="Btn_Save" type="Button" parent="Main_Container/ButtonContainer"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "SAVE"
+
+[node name="Btn_New" type="Button" parent="Main_Container/ButtonContainer"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "NEW"
+
+[node name="Btn_Load" type="Button" parent="Main_Container/ButtonContainer"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "LOAD"
+
+[node name="Btn_Reset" type="Button" parent="Main_Container/ButtonContainer"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 24
+text = "RESET"
+
+[node name="TabContainer" type="TabContainer" parent="Main_Container"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="WFC_Settings" type="ScrollContainer" parent="Main_Container/TabContainer"]
+layout_mode = 2
+script = ExtResource("1_s6hkl")
+
+[node name="Holder" type="VBoxContainer" parent="Main_Container/TabContainer/WFC_Settings"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="NOT_Container" type="HBoxContainer" parent="Main_Container/TabContainer/WFC_Settings/Holder"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Number of Tiles:"
+
+[node name="Txt_NoT" type="LineEdit" parent="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "5"
+
+[node name="Btn_NOT_OK" type="Button" parent="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "OK"
+
+[node name="Tile_Container" type="GridContainer" parent="Main_Container/TabContainer/WFC_Settings/Holder"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 3
+
+[node name="Tile_Rules" type="ScrollContainer" parent="Main_Container/TabContainer"]
+visible = false
+layout_mode = 2
+script = ExtResource("4_0a3y5")
+
+[node name="Holder" type="VBoxContainer" parent="Main_Container/TabContainer/Tile_Rules"]
+layout_mode = 2
+
+[node name="Tile_Selection_Container" type="HBoxContainer" parent="Main_Container/TabContainer/Tile_Rules/Holder"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Selection_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Tile"
+
+[node name="OB_Tile_List" type="OptionButton" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Selection_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+item_count = 3
+selected = 0
+popup/item_0/text = "(0) ground"
+popup/item_0/id = 0
+popup/item_1/text = "(1) water"
+popup/item_1/id = 1
+popup/item_2/text = "(2) coast"
+popup/item_2/id = 2
+
+[node name="Tile_Edges" type="GridContainer" parent="Main_Container/TabContainer/Tile_Rules/Holder"]
+custom_minimum_size = Vector2(1152, 512)
+layout_mode = 2
+size_flags_vertical = 3
+columns = 3
+
+[node name="UP" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+_edge_name = "UP (+y)"
+
+[node name="NORTH" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+_edge_name = "NORTH (-z)"
+_index_edge = 1
+
+[node name="EAST" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+_edge_name = "EAST (+x)"
+_index_edge = 2
+
+[node name="BOTTOM" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+_edge_name = "BOTTOM (-y)"
+_index_edge = 3
+
+[node name="SOUTH" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+_edge_name = "SOUTH (+z)"
+_index_edge = 4
+
+[node name="WEST" parent="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Edges" instance=ExtResource("5_xeytb")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+_edge_name = "WEST (-x)"
+_index_edge = 5
+
+[node name="Invalid_Combos" type="ScrollContainer" parent="Main_Container/TabContainer"]
+visible = false
+layout_mode = 2
+script = ExtResource("5_lwmug")
+
+[node name="Main_Holder" type="Control" parent="Main_Container/TabContainer/Invalid_Combos"]
+clip_contents = true
+custom_minimum_size = Vector2(930, 500)
+layout_mode = 2
+
+[node name="Holder" type="VBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder"]
+layout_mode = 2
+offset_right = 930.0
+offset_bottom = 467.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Tile_Selection_Container" type="HBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Tile_Selection_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Tile"
+
+[node name="OB_Tile_List" type="OptionButton" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Tile_Selection_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+item_count = 3
+selected = 0
+popup/item_0/text = "(0) ground"
+popup/item_0/id = 0
+popup/item_1/text = "(1) water"
+popup/item_1/id = 1
+popup/item_2/text = "(2) coast"
+popup/item_2/id = 2
+
+[node name="Ignore_Combo_Container" type="HBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Invalid_List" type="ItemList" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Ignore_Combo_Container"]
+custom_minimum_size = Vector2(500, 250)
+layout_mode = 2
+size_flags_horizontal = 3
+select_mode = 1
+item_count = 1
+item_0/text = "Self Rot: 0, Edge: UP, Type: (0) ground, Rot: 0, Multiple: false"
+
+[node name="HSeparator" type="HSeparator" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder"]
+layout_mode = 2
+
+[node name="Input_Header_Container" type="HBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Input_Header_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Input"
+
+[node name="Input_Container" type="HBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder"]
+layout_mode = 2
+
+[node name="Lbl_Self_Rot" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Input_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Self Rotation"
+
+[node name="OB_Self_Rot" type="OptionButton" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Input_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+item_count = 4
+selected = 0
+popup/item_0/text = "0"
+popup/item_0/id = 0
+popup/item_1/text = "90"
+popup/item_1/id = 1
+popup/item_2/text = "180"
+popup/item_2/id = 2
+popup/item_3/text = "270"
+popup/item_3/id = 3
+
+[node name="VSeparator" type="VSeparator" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Input_Container"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Lbl_Edge" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Input_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Edge"
+
+[node name="OB_Edge" type="OptionButton" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Input_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+item_count = 6
+selected = 0
+popup/item_0/text = "UP"
+popup/item_0/id = 0
+popup/item_1/text = "NORTH"
+popup/item_1/id = 1
+popup/item_2/text = "EAST"
+popup/item_2/id = 2
+popup/item_3/text = "DOWN"
+popup/item_3/id = 3
+popup/item_4/text = "SOUTH"
+popup/item_4/id = 4
+popup/item_5/text = "WEST"
+popup/item_5/id = 5
+
+[node name="VSeparator2" type="VSeparator" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Input_Container"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Lbl_Type" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Input_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Type"
+
+[node name="OB_Type" type="OptionButton" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Input_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+item_count = 2
+selected = 0
+popup/item_0/text = "(0) ground"
+popup/item_0/id = 0
+popup/item_1/text = "(2) coast"
+popup/item_1/id = 1
+
+[node name="VSeparator3" type="VSeparator" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Input_Container"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Lbl_Rot" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Input_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Rotation"
+
+[node name="OB_Rot" type="OptionButton" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Input_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+item_count = 4
+selected = 0
+popup/item_0/text = "0"
+popup/item_0/id = 0
+popup/item_1/text = "90"
+popup/item_1/id = 1
+popup/item_2/text = "180"
+popup/item_2/id = 2
+popup/item_3/text = "270"
+popup/item_3/id = 3
+
+[node name="VSeparator4" type="VSeparator" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Input_Container"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="Lbl_Multi" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Input_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Multiple"
+
+[node name="CB_Multi" type="CheckBox" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Input_Container"]
+layout_mode = 2
+
+[node name="Button_Container" type="HBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder"]
+layout_mode = 2
+
+[node name="Btn_Add" type="Button" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Button_Container"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "ADD"
+
+[node name="Btn_Update" type="Button" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Button_Container"]
+visible = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "UPDATE"
+
+[node name="Btn_Deselect" type="Button" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Button_Container"]
+visible = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "DESELECT"
+
+[node name="Btn_Remove" type="Button" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Button_Container"]
+visible = false
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 30
+text = "REMOVE"
+
+[node name="Update_Container" type="Panel" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_semua")
+
+[node name="Holder" type="VBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Header_Container" type="HBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Header_Container"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Update Data"
+
+[node name="HSeparator" type="HSeparator" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder"]
+layout_mode = 2
+
+[node name="Update_Properties_Holder" type="HBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder"]
+layout_mode = 2
+alignment = 1
+
+[node name="Lbl_Self_Rot" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Update_Properties_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Self Rotation"
+
+[node name="OB_Self_Rot" type="OptionButton" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Update_Properties_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+item_count = 4
+selected = 0
+popup/item_0/text = "0"
+popup/item_0/id = 0
+popup/item_1/text = "90"
+popup/item_1/id = 1
+popup/item_2/text = "180"
+popup/item_2/id = 2
+popup/item_3/text = "270"
+popup/item_3/id = 3
+
+[node name="VSeparator" type="VSeparator" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Update_Properties_Holder"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Lbl_Edge" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Update_Properties_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Edge"
+
+[node name="OB_Edge" type="OptionButton" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Update_Properties_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+item_count = 6
+selected = 0
+popup/item_0/text = "UP"
+popup/item_0/id = 0
+popup/item_1/text = "NORTH"
+popup/item_1/id = 1
+popup/item_2/text = "EAST"
+popup/item_2/id = 2
+popup/item_3/text = "BOTTOM"
+popup/item_3/id = 3
+popup/item_4/text = "SOUTH"
+popup/item_4/id = 4
+popup/item_5/text = "WEST"
+popup/item_5/id = 5
+
+[node name="VSeparator2" type="VSeparator" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Update_Properties_Holder"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Lbl_Type" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Update_Properties_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Type"
+
+[node name="OB_Type" type="OptionButton" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Update_Properties_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+
+[node name="VSeparator3" type="VSeparator" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Update_Properties_Holder"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Lbl_Rot" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Update_Properties_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Rotation"
+
+[node name="OB_Rot" type="OptionButton" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Update_Properties_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+item_count = 4
+selected = 0
+popup/item_0/text = "0"
+popup/item_0/id = 0
+popup/item_1/text = "90"
+popup/item_1/id = 1
+popup/item_2/text = "180"
+popup/item_2/id = 2
+popup/item_3/text = "270"
+popup/item_3/id = 3
+
+[node name="VSeparator4" type="VSeparator" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Update_Properties_Holder"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+
+[node name="Lbl_Multi" type="Label" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Update_Properties_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Multiple"
+
+[node name="CB_Multi" type="CheckBox" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Update_Properties_Holder"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+
+[node name="Seperator" type="Control" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Buttons_Container" type="HBoxContainer" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder"]
+layout_mode = 2
+alignment = 1
+
+[node name="Btn_Update_Update" type="Button" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Buttons_Container"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "UPDATE"
+
+[node name="Btn_Update_Cancel" type="Button" parent="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Buttons_Container"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "CANCEL"
+
+[node name="Logo" type="TextureRect" parent="Main_Container"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("6_dls12")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Version" type="Label" parent="Main_Container"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "Version - v1.0.0"
+
+[node name="Save_Load_Container" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_u4eh3")
+script = ExtResource("5_fudd3")
+
+[node name="HeaderPanel" type="Panel" parent="Save_Load_Container"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 58.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_h5i1a")
+
+[node name="Lbl_Menu_Name" type="Label" parent="Save_Load_Container/HeaderPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "SAVE/LOAD"
+
+[node name="PathContainer" type="HBoxContainer" parent="Save_Load_Container"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 145.0
+offset_bottom = 187.0
+grow_horizontal = 2
+
+[node name="Lbl_Path" type="Label" parent="Save_Load_Container/PathContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Path:"
+
+[node name="Txt_Path" type="LineEdit" parent="Save_Load_Container/PathContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+
+[node name="NameContainer" type="HBoxContainer" parent="Save_Load_Container"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 208.0
+offset_bottom = 250.0
+grow_horizontal = 2
+
+[node name="Lbl_Name" type="Label" parent="Save_Load_Container/NameContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Name:"
+
+[node name="Txt_Name" type="LineEdit" parent="Save_Load_Container/NameContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+
+[node name="ButtonContainer" type="HBoxContainer" parent="Save_Load_Container"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 300.0
+offset_bottom = 342.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="Btn_Action" type="Button" parent="Save_Load_Container/ButtonContainer"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "ACTION"
+
+[node name="Btn_Cancel" type="Button" parent="Save_Load_Container/ButtonContainer"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "CANCEL"
+
+[connection signal="pressed" from="Main_Container/ButtonContainer/Btn_Save" to="." method="_on_btn_save_pressed"]
+[connection signal="pressed" from="Main_Container/ButtonContainer/Btn_New" to="." method="_on_btn_new_pressed"]
+[connection signal="pressed" from="Main_Container/ButtonContainer/Btn_Load" to="." method="_on_btn_load_pressed"]
+[connection signal="pressed" from="Main_Container/ButtonContainer/Btn_Reset" to="." method="_on_btn_reset_pressed"]
+[connection signal="tab_changed" from="Main_Container/TabContainer" to="." method="_on_tab_container_tab_changed"]
+[connection signal="text_changed" from="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container/Txt_NoT" to="Main_Container/TabContainer/WFC_Settings" method="_on_txt_no_t_text_changed"]
+[connection signal="pressed" from="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container/Btn_NOT_OK" to="Main_Container/TabContainer/WFC_Settings" method="_on_btn_not_ok_pressed"]
+[connection signal="item_selected" from="Main_Container/TabContainer/Tile_Rules/Holder/Tile_Selection_Container/OB_Tile_List" to="Main_Container/TabContainer/Tile_Rules" method="_on_ob_tile_list_item_selected"]
+[connection signal="item_selected" from="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Tile_Selection_Container/OB_Tile_List" to="Main_Container/TabContainer/Invalid_Combos" method="_on_ob_tile_list_item_selected"]
+[connection signal="multi_selected" from="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Ignore_Combo_Container/Invalid_List" to="Main_Container/TabContainer/Invalid_Combos" method="_on_invalid_list_multi_selected"]
+[connection signal="pressed" from="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Button_Container/Btn_Add" to="Main_Container/TabContainer/Invalid_Combos" method="_on_btn_add_pressed"]
+[connection signal="pressed" from="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Button_Container/Btn_Update" to="Main_Container/TabContainer/Invalid_Combos" method="_on_btn_update_pressed"]
+[connection signal="pressed" from="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Button_Container/Btn_Deselect" to="Main_Container/TabContainer/Invalid_Combos" method="_on_btn_deselect_pressed"]
+[connection signal="pressed" from="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Holder/Button_Container/Btn_Remove" to="Main_Container/TabContainer/Invalid_Combos" method="_on_btn_remove_pressed"]
+[connection signal="pressed" from="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Buttons_Container/Btn_Update_Update" to="Main_Container/TabContainer/Invalid_Combos" method="_on_btn_update_update_pressed"]
+[connection signal="pressed" from="Main_Container/TabContainer/Invalid_Combos/Main_Holder/Update_Container/Holder/Buttons_Container/Btn_Update_Cancel" to="Main_Container/TabContainer/Invalid_Combos" method="_on_btn_update_cancel_pressed"]
+[connection signal="text_changed" from="Save_Load_Container/PathContainer/Txt_Path" to="Save_Load_Container" method="_on_txt_path_text_changed"]
+[connection signal="pressed" from="Save_Load_Container/ButtonContainer/Btn_Action" to="Save_Load_Container" method="_on_btn_action_pressed"]
+[connection signal="pressed" from="Save_Load_Container/ButtonContainer/Btn_Cancel" to="Save_Load_Container" method="_on_btn_cancel_pressed"]

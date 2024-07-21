@@ -1,0 +1,190 @@
+[gd_scene load_steps=19 format=3 uid="uid://pes8xsqgg6xs"]
+
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_lrc0f"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen_expand_thread.gd" id="2_d5bog"]
+[ext_resource type="Resource" uid="uid://uqomi1evvyby" path="res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse/default.tres" id="3_yrow5"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="4_35x5k"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_world_creator.gd" id="5_ncdxt"]
+[ext_resource type="PackedScene" uid="uid://d3nwfq7k3q6lu" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_0_s_1_ground.tscn" id="6_uv2qc"]
+[ext_resource type="PackedScene" uid="uid://nlf210san7nl" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_1_s_1_water.tscn" id="7_a66vi"]
+[ext_resource type="PackedScene" uid="uid://chp36hfkn8c5a" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_2_s_1_corner_1.tscn" id="8_1hy2u"]
+[ext_resource type="PackedScene" uid="uid://bc3h7h8la5err" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_3_s_1_corner_2.tscn" id="9_vo4sp"]
+[ext_resource type="PackedScene" uid="uid://ibf6e3xjblb0" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_4_s_1_corner_3.tscn" id="10_wcocp"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_grid_expander.gd" id="11_54r8l"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_tile_expander.gd" id="12_plj65"]
+[ext_resource type="Material" uid="uid://dq41i7obiprt7" path="res://addons/kamran_wali/duniya_skapare/examples/example1/materials/highlight.tres" id="13_18wss"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_control_2.gd" id="14_7t0vk"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_example_ui3.gd" id="15_jiaxo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_570fc"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_uwhml"]
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2, 1e-05, 2.00001),
+"format": 4097,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0),
+"primitive": 3,
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 191)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_70ya6"]
+resource_name = "s1_ground_Plane"
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2, 1e-05, 2.00001),
+"attribute_data": PackedByteArray(224, 239, 7, 63, 112, 30, 15, 61, 224, 239, 7, 63, 112, 30, 15, 61, 224, 239, 7, 63, 112, 30, 15, 61, 224, 239, 7, 63, 112, 30, 15, 61),
+"format": 4119,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_570fc"),
+"primitive": 3,
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 255, 255, 255, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 255, 255, 255, 191, 0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 191, 255, 127, 255, 255, 255, 255, 255, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 191, 255, 127, 255, 255, 255, 255, 255, 191)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_uwhml")
+
+[node name="wfc_continuous_expand" type="Node3D"]
+
+[node name="Generator_Holder" type="Node3D" parent="." node_paths=PackedStringArray("_generator")]
+script = ExtResource("1_lrc0f")
+_generator = NodePath("WFC")
+
+[node name="WFC" type="Node3D" parent="Generator_Holder"]
+script = ExtResource("2_d5bog")
+_data = ExtResource("3_yrow5")
+_nuke_limit = 50
+_loop_limit = 50
+_is_debug = true
+
+[node name="Grid" type="Node3D" parent="Generator_Holder/WFC"]
+script = ExtResource("4_35x5k")
+_grid_x = 5
+_grid_y = 5
+
+[node name="World_Creator" type="Node3D" parent="." node_paths=PackedStringArray("_generator", "_tile_holder")]
+script = ExtResource("5_ncdxt")
+_tiles = Array[PackedScene]([ExtResource("6_uv2qc"), ExtResource("7_a66vi"), ExtResource("8_1hy2u"), ExtResource("9_vo4sp"), ExtResource("10_wcocp")])
+_generator = NodePath("../Generator_Holder/WFC")
+_tile_holder = NodePath("../Tile_Holder")
+_tile_offset_x = 2.0
+_tile_offset_y = 2.0
+_tile_offset_z = 2.0
+
+[node name="Tile_Holder" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.881559, 0.358073, -0.307633, 1.4267e-08, 0.651662, 0.75851, 0.472074, -0.668671, 0.574478, -2.46905, 22.9978, 33.587)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
+
+[node name="Expander_Control" type="Node3D" parent="." node_paths=PackedStringArray("_generator", "_world_creator")]
+script = ExtResource("11_54r8l")
+_generator = NodePath("../Generator_Holder/WFC")
+_world_creator = NodePath("../World_Creator")
+
+[node name="Tile_Control" type="Node3D" parent="." node_paths=PackedStringArray("_generator", "_world_creator", "_highlighter")]
+script = ExtResource("12_plj65")
+_generator = NodePath("../Generator_Holder/WFC")
+_world_creator = NodePath("../World_Creator")
+_highlighter = NodePath("s1_ground2")
+_offset_x = 2.0
+_offset_y = 2.0
+_offset_z = 2.0
+
+[node name="s1_ground2" type="MeshInstance3D" parent="Tile_Control"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = ExtResource("13_18wss")
+mesh = SubResource("ArrayMesh_70ya6")
+skeleton = NodePath("")
+
+[node name="Main_Control" type="Node" parent="." node_paths=PackedStringArray("_grid_control", "_tile_control")]
+script = ExtResource("14_7t0vk")
+_grid_control = NodePath("../Expander_Control")
+_tile_control = NodePath("../Tile_Control")
+
+[node name="UI" type="Control" parent="." node_paths=PackedStringArray("_control_1", "_generator", "_stage_progress_bar", "_lbl_current_mode", "_control_container", "_lbl_expander_controls", "_lbl_tile_controls")]
+layout_mode = 3
+anchor_right = 0.999
+anchor_bottom = 1.0
+offset_right = 0.151855
+script = ExtResource("15_jiaxo")
+_control_1 = NodePath("../Main_Control")
+_generator = NodePath("../Generator_Holder/WFC")
+_stage_progress_bar = NodePath("Main_Container/Loading_Container/Stage_ProgressBar")
+_lbl_current_mode = NodePath("Main_Container/Mode_Container/Lbl_Current_Mode")
+_control_container = NodePath("Control_Container")
+_lbl_expander_controls = NodePath("Control_Container/Lbl_Expander_Controls")
+_lbl_tile_controls = NodePath("Control_Container/Lbl_Tile_Controls")
+
+[node name="Main_Container" type="VBoxContainer" parent="UI"]
+layout_mode = 0
+offset_right = 389.0
+offset_bottom = 40.0
+
+[node name="Loading_Container" type="HBoxContainer" parent="UI/Main_Container"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Main_Container/Loading_Container"]
+layout_mode = 2
+text = "Generating Stage:"
+
+[node name="Stage_ProgressBar" type="ProgressBar" parent="UI/Main_Container/Loading_Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control_Settings_Container" type="HBoxContainer" parent="UI/Main_Container"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Main_Container/Control_Settings_Container"]
+layout_mode = 2
+text = "Show Controls"
+
+[node name="CB_Control" type="CheckBox" parent="UI/Main_Container/Control_Settings_Container"]
+layout_mode = 2
+
+[node name="Mode_Info_Container" type="HBoxContainer" parent="UI/Main_Container"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Main_Container/Mode_Info_Container"]
+layout_mode = 2
+text = "Press Del Key To Change Mode."
+
+[node name="Mode_Container" type="HBoxContainer" parent="UI/Main_Container"]
+layout_mode = 2
+
+[node name="Lbl_Current_Mode" type="Label" parent="UI/Main_Container/Mode_Container"]
+layout_mode = 2
+text = "Current Mode: Nones"
+
+[node name="Control_Container" type="VBoxContainer" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="Lbl_Expander_Controls" type="Label" parent="UI/Control_Container"]
+visible = false
+layout_mode = 2
+text = "Arrow Key Up: Expand Up
+Arrow Key Down: Expand Down
+Arrow Key Left: Expand Left
+Arrorw Key Right: Expand Right"
+
+[node name="Lbl_Tile_Controls" type="Label" parent="UI/Control_Container"]
+visible = false
+layout_mode = 2
+text = "Arrow Key Up: Move Highlighter Up
+Arrow Key Down: Move Highlighter Down
+Arrow Key Left: Move Highlighter Left
+Arrorw Key Right: Move Highlighter Right
+Home Key: Check Tile"
+
+[connection signal="toggled" from="UI/Main_Container/Control_Settings_Container/CB_Control" to="UI" method="_on_cb_control_toggled"]

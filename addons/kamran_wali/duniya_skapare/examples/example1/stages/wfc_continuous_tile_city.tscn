@@ -1,0 +1,171 @@
+[gd_scene load_steps=21 format=3 uid="uid://b6rr6ajhkew05"]
+
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_w8ypk"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen_c_tile_thread.gd" id="2_w5nfo"]
+[ext_resource type="Resource" uid="uid://clgsyq7jfiv8k" path="res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse/city_2.tres" id="3_jjt3j"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="4_x6pc0"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_world_creator.gd" id="5_o3y1u"]
+[ext_resource type="PackedScene" uid="uid://ia0so1fyapad" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_0_ground.tscn" id="6_7a3uo"]
+[ext_resource type="PackedScene" uid="uid://xheh8w0hpb5v" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_1_intersection.tscn" id="7_qo3v7"]
+[ext_resource type="PackedScene" uid="uid://bjepjuceglk2t" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_2_road.tscn" id="8_veh4a"]
+[ext_resource type="PackedScene" uid="uid://cya775jvy65j6" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_3_road_l.tscn" id="9_sgg12"]
+[ext_resource type="PackedScene" uid="uid://c2ka6i07in0eu" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_4_forest_t.tscn" id="10_msu3g"]
+[ext_resource type="PackedScene" uid="uid://b7wcwt163pvv6" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_5_forest.tscn" id="11_41r6o"]
+[ext_resource type="PackedScene" uid="uid://6ca6b4o5w3nu" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_6_city_t.tscn" id="12_6v7rm"]
+[ext_resource type="PackedScene" uid="uid://bfp5garfl2xft" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_7_city.tscn" id="13_kfl7g"]
+[ext_resource type="PackedScene" uid="uid://c7rgkg1b3eigi" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_2/s_2_8_road_end.tscn" id="14_3jwiw"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_tile_expander.gd" id="18_wadq7"]
+[ext_resource type="Material" uid="uid://dq41i7obiprt7" path="res://addons/kamran_wali/duniya_skapare/examples/example1/materials/highlight.tres" id="19_fodlq"]
+[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_example_ui4.gd" id="20_xctck"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bk58"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ap3ax"]
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2, 1e-05, 2.00001),
+"format": 4097,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0),
+"primitive": 3,
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 191)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_lirmf"]
+resource_name = "s1_ground_Plane"
+_surfaces = [{
+"aabb": AABB(-1, 0, -1, 2, 1e-05, 2.00001),
+"attribute_data": PackedByteArray(224, 239, 7, 63, 112, 30, 15, 61, 224, 239, 7, 63, 112, 30, 15, 61, 224, 239, 7, 63, 112, 30, 15, 61, 224, 239, 7, 63, 112, 30, 15, 61),
+"format": 4119,
+"index_count": 6,
+"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0),
+"material": SubResource("StandardMaterial3D_1bk58"),
+"primitive": 3,
+"vertex_count": 4,
+"vertex_data": PackedByteArray(0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 255, 255, 255, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 255, 255, 255, 191, 0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 191, 255, 127, 255, 255, 255, 255, 255, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 191, 255, 127, 255, 255, 255, 255, 255, 191)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_ap3ax")
+
+[node name="wfc_continuous_expand" type="Node3D"]
+
+[node name="Generator_Holder" type="Node3D" parent="." node_paths=PackedStringArray("_generator")]
+script = ExtResource("1_w8ypk")
+_generator = NodePath("WFC")
+
+[node name="WFC" type="Node3D" parent="Generator_Holder"]
+script = ExtResource("2_w5nfo")
+_data = ExtResource("3_jjt3j")
+_nuke_limit = 10
+_is_debug = true
+_is_debug_tile_index = true
+_is_debug_tile_type = true
+_is_debug_tile_rot = true
+_is_debug_tile_coord = true
+
+[node name="Grid" type="Node3D" parent="Generator_Holder/WFC"]
+script = ExtResource("4_x6pc0")
+
+[node name="World_Creator" type="Node3D" parent="." node_paths=PackedStringArray("_generator", "_tile_holder")]
+script = ExtResource("5_o3y1u")
+_tiles = Array[PackedScene]([ExtResource("6_7a3uo"), ExtResource("7_qo3v7"), ExtResource("8_veh4a"), ExtResource("9_sgg12"), ExtResource("10_msu3g"), ExtResource("11_41r6o"), ExtResource("12_6v7rm"), ExtResource("13_kfl7g"), ExtResource("14_3jwiw")])
+_generator = NodePath("../Generator_Holder/WFC")
+_tile_holder = NodePath("../Tile_Holder")
+_tile_offset_x = 2.0
+_tile_offset_y = 2.0
+_tile_offset_z = 2.0
+
+[node name="Tile_Holder" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.881559, 0.358073, -0.307633, 1.4267e-08, 0.651662, 0.75851, 0.472074, -0.668671, 0.574478, -2.46905, 22.9978, 33.587)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
+
+[node name="Highlight" type="Node3D" parent="." node_paths=PackedStringArray("_generator", "_world_creator", "_highlighter")]
+script = ExtResource("18_wadq7")
+_generator = NodePath("../Generator_Holder/WFC")
+_world_creator = NodePath("../World_Creator")
+_highlighter = NodePath(".")
+_offset_x = 2.0
+_offset_y = 2.0
+_offset_z = 2.0
+
+[node name="s1_ground2" type="MeshInstance3D" parent="Highlight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = ExtResource("19_fodlq")
+mesh = SubResource("ArrayMesh_lirmf")
+skeleton = NodePath("")
+
+[node name="UI" type="Control" parent="." node_paths=PackedStringArray("_generator", "_stage_progress_bar", "_control_container")]
+layout_mode = 3
+anchor_right = 0.999
+anchor_bottom = 1.0
+offset_right = 0.151855
+script = ExtResource("20_xctck")
+_generator = NodePath("../Generator_Holder/WFC")
+_stage_progress_bar = NodePath("Main_Container/Loading_Container/Stage_ProgressBar")
+_control_container = NodePath("Control_Container")
+
+[node name="Main_Container" type="VBoxContainer" parent="UI"]
+layout_mode = 0
+offset_right = 389.0
+offset_bottom = 40.0
+
+[node name="Loading_Container" type="HBoxContainer" parent="UI/Main_Container"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Main_Container/Loading_Container"]
+layout_mode = 2
+text = "Generating Stage:"
+
+[node name="Stage_ProgressBar" type="ProgressBar" parent="UI/Main_Container/Loading_Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control_Settings_Container" type="HBoxContainer" parent="UI/Main_Container"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Main_Container/Control_Settings_Container"]
+layout_mode = 2
+text = "Show Controls"
+
+[node name="CB_Control" type="CheckBox" parent="UI/Main_Container/Control_Settings_Container"]
+layout_mode = 2
+
+[node name="Mode_Info_Container" type="HBoxContainer" parent="UI/Main_Container"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Main_Container/Mode_Info_Container"]
+layout_mode = 2
+text = "Press Del Key To Change Mode."
+
+[node name="Mode_Container" type="HBoxContainer" parent="UI/Main_Container"]
+layout_mode = 2
+
+[node name="Lbl_Current_Mode" type="Label" parent="UI/Main_Container/Mode_Container"]
+layout_mode = 2
+text = "Current Mode: Nones"
+
+[node name="Control_Container" type="VBoxContainer" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="Lbl_Tile_Controls" type="Label" parent="UI/Control_Container"]
+layout_mode = 2
+text = "Arrow Key Up: Move Highlighter Up
+Arrow Key Down: Move Highlighter Down
+Arrow Key Left: Move Highlighter Left
+Arrorw Key Right: Move Highlighter Right
+Home Key: Check Tile
+End Key: Create New Tiles"
+
+[connection signal="toggled" from="UI/Main_Container/Control_Settings_Container/CB_Control" to="UI" method="_on_cb_control_toggled"]
