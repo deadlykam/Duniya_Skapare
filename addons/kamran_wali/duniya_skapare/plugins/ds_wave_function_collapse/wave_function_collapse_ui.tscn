@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bc2joqlpfqxui"]
+[gd_scene load_steps=11 format=3 uid="uid://bc2joqlpfqxui"]
 
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wave_function_collapse_ui.gd" id="1_2jk17"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wfc_settings.gd" id="1_s6hkl"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_save_load.gd" id="5_fudd3"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_invalid_combo.gd" id="5_lwmug"]
 [ext_resource type="PackedScene" uid="uid://cxvsmixrg237s" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/edge_rule_ui.tscn" id="5_xeytb"]
+[ext_resource type="Texture2D" uid="uid://bvv6t6038d4l6" path="res://addons/kamran_wali/duniya_skapare/settings/logos/Duniya_Skapare_Logo_Name_400_3.png" id="6_dls12"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_semua"]
 bg_color = Color(0.113725, 0.133333, 0.160784, 0.898039)
@@ -104,7 +105,7 @@ text = "Number of Tiles:"
 [node name="Txt_NoT" type="LineEdit" parent="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "3"
+text = "5"
 
 [node name="Btn_NOT_OK" type="Button" parent="Main_Container/TabContainer/WFC_Settings/Holder/NOT_Container"]
 custom_minimum_size = Vector2(50, 0)
@@ -535,6 +536,19 @@ custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "CANCEL"
+
+[node name="Logo" type="TextureRect" parent="Main_Container"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("6_dls12")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Main_Container"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "Version - v1.0.0"
 
 [node name="Save_Load_Container" type="Panel" parent="."]
 visible = false
