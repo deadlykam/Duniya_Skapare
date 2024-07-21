@@ -545,7 +545,7 @@ texture = ExtResource("6_dls12")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Main_Container"]
+[node name="Version" type="Label" parent="Main_Container"]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 text = "Version - v1.0.0"
