@@ -13,6 +13,7 @@ A godot tool that creates a grid world using different type of algorithms.
 - [Features](#features)
   - [Wave Function Collapse](#wave-function-collapse)
     - [Wave Function Collapse Examples](#wave-function-collapse-examples)
+- [Duniya Skapare Meaning](#duniya-skapare-meaning)
 
 ## Prerequisites
 #### Godot Game Engine
@@ -50,3 +51,7 @@ See [Wave Function Collapse Tool](https://github.com/deadlykam/Duniya_Skapare/wi
 | ![Simple_WFC_Animation](https://imgur.com/6lYrHWm.gif) | ![Tiles](https://imgur.com/LNf4oaW.png) |
 |:--:|:--:|
 | *Fig 4a: Simple WFC - Animation* | *Fig 4b: Tile Sets* |
+***
+## Duniya Skapare Meaning:
+The meaning of _Duniya Skapare_ is _World Creator_. [Duniya](https://en.wikipedia.org/wiki/Dunya#:~:text=%22Dunya%22%20is%20an%20Arabic%20word,%2C%20this%20world%20here%20below%22.) means _World_ in Arabic/Bengali. [Skapare](https://dictionary.cambridge.org/dictionary/swedish-english/skapare) means _Creator_ in Swedish. As I speak the mentioned languages I thought about merging them to give a unique name.
+***
