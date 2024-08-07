@@ -14,6 +14,7 @@ A godot tool that creates a grid world using different type of algorithms.
   - [Wave Function Collapse](#wave-function-collapse)
     - [Wave Function Collapse Examples](#wave-function-collapse-examples)
 - [Duniya Skapare Meaning](#duniya-skapare-meaning)
+- [Tutorials](#tutorials)
 - [Versioning](#versioning)
 - [Authors](#authors)
 - [License](#license)
@@ -57,6 +58,9 @@ See [Wave Function Collapse Tool](https://github.com/deadlykam/Duniya_Skapare/wi
 ***
 ## Duniya Skapare Meaning:
 The meaning of _Duniya Skapare_ is _World Creator_. [Duniya](https://en.wikipedia.org/wiki/Dunya#:~:text=%22Dunya%22%20is%20an%20Arabic%20word,%2C%20this%20world%20here%20below%22.) means _World_ in Arabic/Bengali. [Skapare](https://dictionary.cambridge.org/dictionary/swedish-english/skapare) means _Creator_ in Swedish. As I speak the mentioned languages I thought about merging them to give a unique name.
+***
+## Tutorials:
+1. [Tutorial Duniya Skapare - Wave Function Collapse](https://github.com/deadlykam/Tutorial_Duniya_Skapare)
 ***
 ## Versioning
 The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
