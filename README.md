@@ -37,7 +37,7 @@ Godot version **v4.1.3.stable.mono.official [f06b6836a]** and above should work.
 ### Wave Function Collapse:
 Let me give a brief explanation of Wave Function Collapse. Wave Function Collapse or WFC is a constraint based algorithm that can be used to procedurally generate anything from images to 2D or 3D worlds. Basically that means the algorithm uses a set of rules to generate the desired result. In this tool we are going to use WFC to generate 2D or 3D worlds.
 
-See [Wave Function Collapse Tool](https://github.com/deadlykam/Duniya_Skapare/wiki/Wave-Function-Collapse-Tool) and [Wiki](https://github.com/deadlykam/Duniya_Skapare/wiki) documentations to understand how to use the tool. It is very simple to use and soon I will be making a tutorial on how to use the tool.
+See [Wave Function Collapse Tool](https://github.com/deadlykam/Duniya_Skapare/wiki/Wave-Function-Collapse-Tool) and [Wiki](https://github.com/deadlykam/Duniya_Skapare/wiki) documentations to understand how to use the tool.
 
 #### Wave Function Collapse Examples:
 | ![Simple_WFC_Animation](https://imgur.com/ut4uUWh.gif) | ![Tiles](https://imgur.com/yMyUTXS.png) |
