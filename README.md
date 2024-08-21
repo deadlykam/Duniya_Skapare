@@ -25,10 +25,10 @@ A godot tool that creates a grid world using different type of algorithms.
 Godot version **v4.3.stable.mono.official [77dcf97d8]** and above should work. Previous Godot 4 versions should work but those have not been tested.
 ***
 ## Stable Build
-[Stable-v1.0.0](https://github.com/deadlykam/Duniya_Skapare/tree/Stable-v1.0.1) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
+[Stable-v1.0.1](https://github.com/deadlykam/Duniya_Skapare/tree/Stable-v1.0.1) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
 ***
 ## Installation
-1. First download the latest [Duniya_Skapare-v1.0.0.zip](https://github.com/deadlykam/Duniya_Skapare/releases/tag/v1.0.0) from the latest Stable build.
+1. First download the latest [Duniya_Skapare-v1.0.1.zip](https://github.com/deadlykam/Duniya_Skapare/releases/tag/v1.0.1) from the latest Stable build.
 2. Once downloaded extract/unzip the file.
 3. Enter the folder and copy the folder named **kamran_wali**.
 4. Now paste the folder in the **addons** folder of your Godot project. If your Godot project does not have the **addons** folder then just create it in the root folder, **res://**, and paste the copied folder there.
