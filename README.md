@@ -13,6 +13,7 @@ A godot tool that creates a grid world using different type of algorithms.
 - [Features](#features)
   - [Wave Function Collapse](#wave-function-collapse)
     - [Wave Function Collapse Examples](#wave-function-collapse-examples)
+- [Updates](#updates)
 - [Duniya Skapare Meaning](#duniya-skapare-meaning)
 - [Tutorials](#tutorials)
 - [Versioning](#versioning)
@@ -21,10 +22,10 @@ A godot tool that creates a grid world using different type of algorithms.
 
 ## Prerequisites
 #### Godot Game Engine
-Godot version **v4.1.3.stable.mono.official [f06b6836a]** and above should work. Previous Godot 4 versions should work but those have not been tested.
+Godot version **v4.3.stable.mono.official [77dcf97d8]** and above should work. Previous Godot 4 versions should work but those have not been tested.
 ***
 ## Stable Build
-[Stable-v1.0.0](https://github.com/deadlykam/Duniya_Skapare/tree/Stable-v1.0.0) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
+[Stable-v1.0.0](https://github.com/deadlykam/Duniya_Skapare/tree/Stable-v1.0.1) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
 ***
 ## Installation
 1. First download the latest [Duniya_Skapare-v1.0.0.zip](https://github.com/deadlykam/Duniya_Skapare/releases/tag/v1.0.0) from the latest Stable build.
@@ -56,10 +57,12 @@ See [Wave Function Collapse Tool](https://github.com/deadlykam/Duniya_Skapare/wi
 |:--:|:--:|
 | *Fig 4a: Simple WFC - Animation* | *Fig 4b: Tile Sets* |
 ***
+## Updates
+Updated the project for Godot 4.3, **v4.3.stable.mono.official [77dcf97d8]**. From code perspective had to change 2 lines because in Godot 4.3 you can no longer give a type return to an overridden method that has no type. So had to change some methods in child scripts and remove their return types. Everything else is working fine. Also if you are following the tutorial then it is recommended to use Godot 4.1 and plugin [Stable-v1.0.0](https://github.com/deadlykam/Duniya_Skapare/releases/tag/v1.0.0). But if you want to use Godot 4.3 then you can do so as well but must use the plugin [Stable-v1.0.0](https://github.com/deadlykam/Duniya_Skapare/tree/Stable-v1.0.1) instead.
 ## Duniya Skapare Meaning:
 The meaning of _Duniya Skapare_ is _World Creator_. [Duniya](https://en.wikipedia.org/wiki/Dunya#:~:text=%22Dunya%22%20is%20an%20Arabic%20word,%2C%20this%20world%20here%20below%22.) means _World_ in Arabic/Bengali. [Skapare](https://dictionary.cambridge.org/dictionary/swedish-english/skapare) means _Creator_ in Swedish. As I speak the mentioned languages I thought about merging them to give a unique name.
 ***
-## Tutorials:
+## Tutorials
 1. [Tutorial Duniya Skapare - Wave Function Collapse](https://github.com/deadlykam/Tutorial_Duniya_Skapare)
 ***
 ## Versioning
