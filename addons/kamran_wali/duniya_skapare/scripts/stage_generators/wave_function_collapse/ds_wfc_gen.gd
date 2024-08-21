@@ -190,8 +190,8 @@ func is_gen_success() -> bool:
 
 func get_process_loop() -> int: return _c_loop
 func is_gen_process() -> bool: return _is_processing
-func get_data() -> DS_WFC_Data: return _data
-func get_tile_names() -> Array[String]: return _data.get_tile_names()
+func get_data(): return _data
+func get_tile_names(): return _data.get_tile_names()
 
 func get_percentage_loaded_normal() -> float:
 	_c_loaded = 0

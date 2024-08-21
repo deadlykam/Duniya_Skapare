@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bu1tsgjqfrypf"]
+[gd_scene load_steps=24 format=4 uid="uid://bu1tsgjqfrypf"]
 
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_5aswj"]
 [ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen_c_tile_thread.gd" id="2_n623a"]
@@ -26,12 +26,13 @@
 [sub_resource type="ArrayMesh" id="ArrayMesh_ap3ax"]
 _surfaces = [{
 "aabb": AABB(-1, 0, -1, 2, 1e-05, 2.00001),
-"format": 4097,
+"format": 34359742465,
 "index_count": 6,
-"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0),
+"index_data": PackedByteArray("AAADAAEAAAACAAMA"),
 "primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 4,
-"vertex_data": PackedByteArray(0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 191)
+"vertex_data": PackedByteArray("AACAvwAAAAAAAIA/AACAPwAAAAAAAIA/AACAvwAAAAAAAIC/AACAPwAAAAAAAIC/")
 }]
 blend_shape_mode = 0
 
@@ -39,14 +40,15 @@ blend_shape_mode = 0
 resource_name = "s1_ground_Plane"
 _surfaces = [{
 "aabb": AABB(-1, 0, -1, 2, 1e-05, 2.00001),
-"attribute_data": PackedByteArray(224, 239, 7, 63, 112, 30, 15, 61, 224, 239, 7, 63, 112, 30, 15, 61, 224, 239, 7, 63, 112, 30, 15, 61, 224, 239, 7, 63, 112, 30, 15, 61),
-"format": 4119,
+"attribute_data": PackedByteArray("4O8HP3AeDz3g7wc/cB4PPeDvBz9wHg894O8HP3AeDz0="),
+"format": 34359742487,
 "index_count": 6,
-"index_data": PackedByteArray(0, 0, 3, 0, 1, 0, 0, 0, 2, 0, 3, 0),
+"index_data": PackedByteArray("AAADAAEAAAACAAMA"),
 "material": SubResource("StandardMaterial3D_1bk58"),
 "primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 4,
-"vertex_data": PackedByteArray(0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 255, 255, 255, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 255, 127, 255, 255, 255, 255, 255, 191, 0, 0, 128, 191, 0, 0, 0, 0, 0, 0, 128, 191, 255, 127, 255, 255, 255, 255, 255, 191, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 191, 255, 127, 255, 255, 255, 255, 255, 191)
+"vertex_data": PackedByteArray("AACAvwAAAAAAAIA/AACAPwAAAAAAAIA/AACAvwAAAAAAAIC/AACAPwAAAAAAAIC//3///////7//f///////v/9///////+//3///////78=")
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ap3ax")
