@@ -58,7 +58,7 @@ See [Wave Function Collapse Tool](https://github.com/deadlykam/Duniya_Skapare/wi
 | *Fig 4a: Simple WFC - Animation* | *Fig 4b: Tile Sets* |
 ***
 ## Updates
-Updated the project for Godot 4.3, **v4.3.stable.mono.official [77dcf97d8]**. From code perspective had to change 2 lines because in Godot 4.3 you can no longer give a type return to an overridden method that has no type. So had to change some methods in child scripts and remove their return types. Everything else is working fine. Also if you are following the tutorial then it is recommended to use Godot 4.1 and plugin [Stable-v1.0.0](https://github.com/deadlykam/Duniya_Skapare/releases/tag/v1.0.0). But if you want to use Godot 4.3 then you can do so as well but must use the plugin [Stable-v1.0.1](https://github.com/deadlykam/Duniya_Skapare/tree/Stable-v1.0.1) instead.
+1. Added tile custom co-ordinate while generating tiles feature. This means you can now give the starting tile co-ordinates for the x and y axis tiles and the logic will use that starting value to set the co-ordinate for the rest of the tiles. This is helpful if you know where to place your tiles in the game co-ordinate. If no values are given then the default co-ordinate will be used which is 0.
 ## Duniya Skapare Meaning
 The meaning of _Duniya Skapare_ is _World Creator_. [Duniya](https://en.wikipedia.org/wiki/Dunya#:~:text=%22Dunya%22%20is%20an%20Arabic%20word,%2C%20this%20world%20here%20below%22.) means _World_ in Arabic/Bengali. [Skapare](https://dictionary.cambridge.org/dictionary/swedish-english/skapare) means _Creator_ in Swedish. As I speak the mentioned languages I thought about merging them to give a unique name.
 ***
