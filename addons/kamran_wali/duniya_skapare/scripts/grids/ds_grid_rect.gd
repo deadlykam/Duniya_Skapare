@@ -1,6 +1,14 @@
 @tool
 extends DS_BaseGrid
 
+@export_category("Custom Co-ordinate Properties")
+## The custom and starting co-ordinate for x axis.
+@export var _custom_coord_x:= 0
+
+## The custom and starting co-ordinate for y axis.
+@export var _custom_coord_y:= 0
+
+var _custom_coord_z:= 0
 var _index:= -1
 var _counter_x:= -1
 var _counter_y:= -1
@@ -260,7 +268,10 @@ func setup() -> void:
 					else null
 				)
 				
-				get_tile(_index).set_coord(_counter_x, _counter_y, _counter_z) # Setting the coordinate of the tile
+				# Setting the coordinate of the tile
+				get_tile(_index).set_coord(_counter_x + _custom_coord_x, 
+										   _counter_y + _custom_coord_y, 
+										   _counter_z + _custom_coord_z)
 				
 				_index += 1
 				_counter_x += 1
@@ -268,6 +279,11 @@ func setup() -> void:
 			_counter_y += 1
 		
 		_counter_z += 1
+
+func set_custom_coords(x:int, y:int, z:int) -> void:
+	_custom_coord_x = x
+	_custom_coord_y = y
+	_custom_coord_z = z
 
 func reset() -> void:
 	_counter_z = 0 # Acts as index for all the tiles in grid

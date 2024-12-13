@@ -3,11 +3,13 @@ class_name DS_BaseGrid
 extends Node
 
 @export_category("Grid")
+## The grid size in x axis.
 @export var _grid_x:= 3:
 	set(grid_x):
 		if _grid_x != grid_x:
 			_grid_x = grid_x if grid_x >= 1 else 1
 
+## The grid size in y axis.
 @export var _grid_y:= 3:
 	set(grid_y):
 		if _grid_y != grid_y:
@@ -81,6 +83,12 @@ func has_tile_coord_x_y_z(x:int, y:int, z:int) -> bool: return has_tile_coord_x_
 
 ## This method sets up the grid.
 func setup() -> void: pass
+
+## This method sets the custom co-ordinates for the tiles from which
+## the tiles co-ordinates will start. Default is 0.
+## Example: If -1 is given for x and the grid size is 3x3 then the 
+## 			co-ordinates for x will be -1, 0 and 1.
+func set_custom_coords(x:int, y:int, z:int) -> void: pass
 
 ## This method resets the grid.
 func reset() -> void: pass
