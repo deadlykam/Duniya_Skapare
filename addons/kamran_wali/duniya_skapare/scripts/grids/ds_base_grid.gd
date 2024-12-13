@@ -30,9 +30,15 @@ extends Node
 var _grid_z = 0
 #endregion
 
+## This flag checks if the grid should be setup when the game starts.
+## True means the grid will be setup at game start. False means the grid
+## will NOT be setup when the game starts and the setup() method MUST be
+## called through other scripts.
+@export var _is_start_setup:= true
+
 var _tiles: Array[DS_Tile]
 
-func _ready() -> void: setup()
+func _ready() -> void: if _is_start_setup: setup()
 
 ## This method gets the x-axis size of the grid.
 func get_grid_size_x() -> int: return _grid_x
