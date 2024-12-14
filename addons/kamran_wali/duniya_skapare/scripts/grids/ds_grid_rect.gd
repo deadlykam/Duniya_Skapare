@@ -272,6 +272,7 @@ func setup() -> void:
 				get_tile(_index).set_coord(_counter_x + _custom_coord_x, 
 										   _counter_y + _custom_coord_y, 
 										   _counter_z + _custom_coord_z)
+				get_tile(_index).set_index(_index) # Setting the index of the tile
 				
 				_index += 1
 				_counter_x += 1
