@@ -15,6 +15,7 @@ var _is_fixed_actual:= false # This the actual fixed flag which means it can be 
 var _x:= 0 # X Coordinate
 var _y:= 0 # Y Coordinate
 var _z:= 0 # Z Coordinate
+var _index:= -1
 
 func _init() -> void: _data_edges.resize(6)
 
@@ -32,6 +33,13 @@ func reset() -> void:
 func reset_hard() -> void:
 	reset()
 	_is_fixed = false
+
+## This method sets the index of the tile, it is recommended NOT to set the
+## index of the tile manually or by the user.
+func set_index(index:int) -> void: _index = index
+
+## This method gets the index of the tile.
+func get_index() -> int: return _index
 
 ## This method sets if the tile is fixed or NOT once
 ## a tile type is given.
