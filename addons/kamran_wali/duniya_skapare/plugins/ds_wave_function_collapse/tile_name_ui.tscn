@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c0wnd8p2eqr3d"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_tile_name_ui.gd" id="1_gyfpt"]
+[ext_resource type="Script" uid="uid://dup1tknjxbx72" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_tile_name_ui.gd" id="1_gyfpt"]
 
 [node name="tile_name_ui" type="Control"]
 layout_mode = 3

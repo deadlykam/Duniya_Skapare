@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="DS_WFC_Data" load_steps=49 format=3 uid="uid://ble42xc8gmib8"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd" id="1_tq5f7"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_manager.gd" id="2_dflop"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_wfc_rules_data.gd" id="3_ku3su"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_wfc_data.gd" id="4_j0w6j"]
+[ext_resource type="Script" uid="uid://dvcnnni8f5skq" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_data.gd" id="1_tq5f7"]
+[ext_resource type="Script" uid="uid://s63qshdy8343" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_invalid_combo_manager.gd" id="2_dflop"]
+[ext_resource type="Script" uid="uid://ccu06yas50lgn" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/data/ds_wfc_rules_data.gd" id="3_ku3su"]
+[ext_resource type="Script" uid="uid://77j1i83ay35s" path="res://addons/kamran_wali/duniya_skapare/scripts/resources/ds_wfc_data.gd" id="4_j0w6j"]
 
 [sub_resource type="Resource" id="Resource_b5j8f"]
 script = ExtResource("1_tq5f7")
