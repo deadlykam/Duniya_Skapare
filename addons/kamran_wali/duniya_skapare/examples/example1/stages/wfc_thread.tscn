@@ -1,17 +1,17 @@
 [gd_scene load_steps=13 format=3 uid="uid://fk1rbttquthp"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_nus0v"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen_thread.gd" id="2_1poaf"]
+[ext_resource type="Script" uid="uid://cgiwrs4poej27" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/gen_sim_tester.gd" id="1_nus0v"]
+[ext_resource type="Script" uid="uid://bspbsog3dmph" path="res://addons/kamran_wali/duniya_skapare/scripts/stage_generators/wave_function_collapse/ds_wfc_gen_thread.gd" id="2_1poaf"]
 [ext_resource type="Resource" uid="uid://uqomi1evvyby" path="res://addons/kamran_wali/duniya_skapare/settings/wave_function_collapse/default.tres" id="3_dg027"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="3_l8jc5"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_world_creator.gd" id="4_5u4vc"]
+[ext_resource type="Script" uid="uid://dktsjgy5axfpr" path="res://addons/kamran_wali/duniya_skapare/scripts/grids/ds_grid_rect.gd" id="3_l8jc5"]
+[ext_resource type="Script" uid="uid://dj3buwvvep316" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_world_creator.gd" id="4_5u4vc"]
 [ext_resource type="PackedScene" uid="uid://d3nwfq7k3q6lu" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_0_s_1_ground.tscn" id="5_gikgg"]
 [ext_resource type="PackedScene" uid="uid://nlf210san7nl" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_1_s_1_water.tscn" id="6_hdn08"]
 [ext_resource type="PackedScene" uid="uid://chp36hfkn8c5a" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_2_s_1_corner_1.tscn" id="7_jhs66"]
 [ext_resource type="PackedScene" uid="uid://bc3h7h8la5err" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_3_s_1_corner_2.tscn" id="8_gp4vy"]
 [ext_resource type="PackedScene" uid="uid://ibf6e3xjblb0" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scenes/set_1/tile_4_s_1_corner_3.tscn" id="9_tafk1"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_fly_by_movement.gd" id="11_1tk1x"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_example_ui.gd" id="12_7va6j"]
+[ext_resource type="Script" uid="uid://cyosg0b8oihqb" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_fly_by_movement.gd" id="11_1tk1x"]
+[ext_resource type="Script" uid="uid://g2fmn5m1m2yu" path="res://addons/kamran_wali/duniya_skapare/examples/example1/scripts/ds_example_ui.gd" id="12_7va6j"]
 
 [node name="wfc_thread" type="Node3D"]
 

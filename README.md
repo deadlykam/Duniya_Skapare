@@ -22,13 +22,13 @@ A godot tool that creates a grid world using different type of algorithms.
 
 ## Prerequisites
 #### Godot Game Engine
-Godot version **v4.3.stable.mono.official [77dcf97d8]** and above should work. Previous Godot 4 versions should work but those have not been tested.
+Godot version **v4.4.1.stable.mono.official [49a5bc7b6]** and above should work. Previous Godot 4 versions and **v4.3.stable.mono.official [77dcf97d8]** should work but those have not been tested.
 ***
 ## Stable Build
-[Stable-v1.0.2](https://github.com/deadlykam/Duniya_Skapare/tree/Stable-v1.0.2) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
+[Stable-v1.0.3](https://github.com/deadlykam/Duniya_Skapare/tree/Stable-v1.0.3) is the latest stable build of the project. The compressed file for this project can also be found there. If development is going to be done on this project then it is adviced to branch off of any _Stable_ branches because they will **NOT** be changed or updated except for README.md. Any other branches are subjected to change including the main branch.
 ***
 ## Installation
-1. First download the latest [Duniya_Skapare-v1.0.2.zip](https://github.com/deadlykam/Duniya_Skapare/releases/tag/v1.0.2) from the latest Stable build.
+1. First download the latest [Duniya_Skapare-v1.0.3.zip](https://github.com/deadlykam/Duniya_Skapare/releases/tag/v1.0.3) from the latest Stable build.
 2. Once downloaded extract/unzip the file.
 3. Enter the folder and copy the folder named **kamran_wali**.
 4. Now paste the folder in the **addons** folder of your Godot project. If your Godot project does not have the **addons** folder then just create it in the root folder, **res://**, and paste the copied folder there.
@@ -58,9 +58,7 @@ See [Wave Function Collapse Tool](https://github.com/deadlykam/Duniya_Skapare/wi
 | *Fig 4a: Simple WFC - Animation* | *Fig 4b: Tile Sets* |
 ***
 ## Updates
-1. Added tile custom co-ordinate while generating tiles feature. This means you can now give the starting tile co-ordinates for the x and y axis tiles and the logic will use that starting value to set the co-ordinate for the rest of the tiles. This is helpful if you know where to place your tiles in the game co-ordinate. If no values are given then the default co-ordinate will be used which is 0.
-2. Added a flag that checks if the grid should be setup automatically during application start. This is to give more control to the user.
-3. Added tile index. This way it will help the user to sync the tile's with other array.
+1. Updated the Godot version to **v4.4.1.stable.mono.official [49a5bc7b6]**. This will make sure that Duniya Skapare is working with the latest Godot version. Also it is safe to upgrade from Godot 4.3. Just make sure to fix the UIDs when prompted or from _Project -> Tools -> Upgrade UIDs_.
 ## Duniya Skapare Meaning
 The meaning of _Duniya Skapare_ is _World Creator_. [Duniya](https://en.wikipedia.org/wiki/Dunya#:~:text=%22Dunya%22%20is%20an%20Arabic%20word,%2C%20this%20world%20here%20below%22.) means _World_ in Arabic/Bengali. [Skapare](https://dictionary.cambridge.org/dictionary/swedish-english/skapare) means _Creator_ in Swedish. As I speak the mentioned languages I thought about merging them to give a unique name.
 ***
@@ -68,7 +66,7 @@ The meaning of _Duniya Skapare_ is _World Creator_. [Duniya](https://en.wikipedi
 1. [Tutorial Duniya Skapare - Wave Function Collapse](https://github.com/deadlykam/Tutorial_Duniya_Skapare)
 ***
 ## Versioning
-The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/CodeOptPro_Godot/tags).
+The project uses [Semantic Versioning](https://semver.org/). Available versions can be seen in [tags on this repository](https://github.com/deadlykam/Duniya_Skapare/tags).
 ***
 ## Authors
 - Syed Shaiyan Kamran Waliullah 

@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://bc2joqlpfqxui"]
 
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wave_function_collapse_ui.gd" id="1_2jk17"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wfc_settings.gd" id="1_s6hkl"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_tile_rules.gd" id="4_0a3y5"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_save_load.gd" id="5_fudd3"]
-[ext_resource type="Script" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_invalid_combo.gd" id="5_lwmug"]
+[ext_resource type="Script" uid="uid://du1681vt74d0k" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wave_function_collapse_ui.gd" id="1_2jk17"]
+[ext_resource type="Script" uid="uid://cbggb30lvlsg1" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_wfc_settings.gd" id="1_s6hkl"]
+[ext_resource type="Script" uid="uid://eu8ukp26nujg" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_tile_rules.gd" id="4_0a3y5"]
+[ext_resource type="Script" uid="uid://cd56m65wwt2av" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_save_load.gd" id="5_fudd3"]
+[ext_resource type="Script" uid="uid://co10dm2lmfup" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/ds_invalid_combo.gd" id="5_lwmug"]
 [ext_resource type="PackedScene" uid="uid://cxvsmixrg237s" path="res://addons/kamran_wali/duniya_skapare/plugins/ds_wave_function_collapse/edge_rule_ui.tscn" id="5_xeytb"]
 [ext_resource type="Texture2D" uid="uid://bvv6t6038d4l6" path="res://addons/kamran_wali/duniya_skapare/settings/logos/Duniya_Skapare_Logo_Name_400_3.png" id="6_dls12"]
 
